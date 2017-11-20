@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZdl{}} ps aux \PYG{p}{|} wc
+\PYG{g+go}{	188    2344   19581}
+\end{Verbatim}

@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZdl{}} tar \PYGZhy{}xvf /root/etc2.tgz \PYGZhy{}C / etc/wgetrc
+\end{Verbatim}

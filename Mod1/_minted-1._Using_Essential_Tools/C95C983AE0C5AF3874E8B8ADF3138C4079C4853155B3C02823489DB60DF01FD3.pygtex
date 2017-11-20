@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZdl{}} sudo usermod \PYGZhy{}aG account laura
+\PYG{g+gp}{	\PYGZdl{}} sudo usermod \PYGZhy{}aG \PYG{l+m}{5010} lisa
+\PYG{g+gp}{	\PYGZdl{}} tail \PYGZhy{}n \PYG{l+m}{1} /etc/group
+\PYG{g+go}{	account:x:5010:laura,lisa}
+\end{Verbatim}

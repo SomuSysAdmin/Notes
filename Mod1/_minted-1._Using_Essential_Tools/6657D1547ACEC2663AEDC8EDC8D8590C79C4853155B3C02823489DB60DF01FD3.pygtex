@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZdl{}} sudo useradd \PYGZhy{}c \PYG{l+s+s2}{\PYGZdq{}New Test User\PYGZdq{}} \PYGZhy{}s /bin/tcsh \PYGZhy{}e \PYG{l+m}{2017}\PYGZhy{}12\PYGZhy{}31 laura
+\PYG{g+go}{	[sudo] password for somu:}
+\PYG{g+gp}{	\PYGZdl{}} \PYG{c+c1}{\PYGZsh{} To verify the addition of the new user}
+\PYG{g+gp}{	\PYGZdl{}} tail \PYGZhy{}n \PYG{l+m}{1} /etc/passwd
+\PYG{g+go}{	laura:x:1001:1001:New Test User:/home/laura:/bin/tcsh}
+\end{Verbatim}

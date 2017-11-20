@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZdl{}} cat names
+\PYG{g+go}{	Somu}
+\PYG{g+go}{	Arpi}
+\PYG{g+go}{	Neha}
+\PYG{g+go}{	Santy}
+\PYG{g+go}{	Debu}
+\PYG{g+gp}{	\PYGZdl{}} sed \PYGZhy{}i \PYG{l+s+s1}{\PYGZsq{}s/Santy/Dickwad/g\PYGZsq{}} names
+\PYG{g+gp}{	\PYGZdl{}} cat names
+\PYG{g+go}{	Somu}
+\PYG{g+go}{	Arpi}
+\PYG{g+go}{	Neha}
+\PYG{g+go}{	Dickwad}
+\PYG{g+go}{	Debu}
+\end{Verbatim}

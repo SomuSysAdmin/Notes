@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZdl{}} tar \PYGZhy{}tvf /root/etc2.tgz
+\end{Verbatim}
