@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} ssh\PYGZhy{}copy\PYGZhy{}id \PYG{l+m}{192}.168.152.129
+\PYG{g+go}{/usr/bin/ssh\PYGZhy{}copy\PYGZhy{}id: INFO: attempting to log in with the new key(s), to filter out any that are already installed}
+\PYG{g+go}{/usr/bin/ssh\PYGZhy{}copy\PYGZhy{}id: INFO: 1 key(s) remain to be installed \PYGZhy{}\PYGZhy{} if you are prompted now it is to install the new keys}
+\PYG{g+go}{somu@192.168.152.129\PYGZsq{}s password:}
+
+\PYG{g+go}{Number of key(s) added: 1}
+
+\PYG{g+go}{Now try logging into the machine, with:   \PYGZdq{}ssh \PYGZsq{}192.168.152.129\PYGZsq{}\PYGZdq{}}
+\PYG{g+go}{and check to make sure that only the key(s) you wanted were added.}
+
+\PYG{g+gp}{\PYGZdl{}} ssh \PYG{l+m}{192}.168.152.129
+\PYG{g+go}{Last login: Wed Nov 15 11:59:03 2017 from 192.168.152.128}
+\end{Verbatim}

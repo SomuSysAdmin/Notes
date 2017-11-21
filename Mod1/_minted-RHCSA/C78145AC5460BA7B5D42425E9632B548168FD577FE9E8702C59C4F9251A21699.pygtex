@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ln /etc/hosts computers
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}il /etc/hosts computers
+\PYG{g+go}{8388733 \PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 2 root root 158 Jun  7  2013 computers}
+\PYG{g+go}{8388733 \PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 2 root root 158 Jun  7  2013 /etc/hosts}
+\PYG{g+gp}{\PYGZsh{}} ln \PYGZhy{}s computers newcomputers
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}il /etc/hosts computers newcomputers
+\PYG{g+go}{8388733 \PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 2 root root 158 Jun  7  2013 computers}
+\PYG{g+go}{8388733 \PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 2 root root 158 Jun  7  2013 /etc/hosts}
+\PYG{g+go}{27604468 lrwxrwxrwx. 1 root root   9 Sep  7 19:26 newcomputers \PYGZhy{}\PYGZgt{} computers}
+\PYG{g+gp}{\PYGZsh{}} rm \PYGZhy{}f computers
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}il /etc/hosts newcomputers
+\PYG{g+go}{8388733 \PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 root root 158 Jun  7  2013 /etc/hosts}
+\PYG{g+go}{27604468 lrwxrwxrwx. 1 root root   9 Sep  7 19:26 newcomputers \PYGZhy{}\PYGZgt{} computers}
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{exit}
+\PYG{g+go}{exit}
+\PYG{g+gp}{\PYGZdl{}} ln /etc/shadow mydata
+\PYG{g+go}{ln: failed to create hard link ‘mydata’ =\PYGZgt{} ‘/etc/shadow’: Operation not permitted}
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}l /etc/shadow
+\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}. 1 root root 1375 Sep  5 21:04 /etc/shadow}
+\end{Verbatim}

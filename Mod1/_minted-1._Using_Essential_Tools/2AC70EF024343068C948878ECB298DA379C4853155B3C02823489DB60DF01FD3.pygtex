@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} showmount \PYGZhy{}e localhost
+\PYG{g+go}{	Export list for localhost:}
+\PYG{g+go}{	/data *}
+\PYG{g+gp}{	\PYGZsh{}} mount localhost:/data /mnt/nfs
+\PYG{g+gp}{	\PYGZsh{}} ls /nfs
+\PYG{g+go}{	localNFSfile1  localNFSfile2  localNFSfile3}
+\end{Verbatim}

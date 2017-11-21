@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} ssh \PYG{l+m}{192}.168.152.129
+\PYG{g+go}{somu@192.168.152.129\PYGZsq{}s password:}
+\PYG{g+go}{Last login: Mon Nov 13 12:37:26 2017 from 192.168.152.128}
+\end{Verbatim}

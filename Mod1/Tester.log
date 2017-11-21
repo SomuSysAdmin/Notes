@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  21 NOV 2017 12:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  21 NOV 2017 13:25
 entering extended mode
-**"./1. Using Essential Tools.tex"
-("1. Using Essential Tools.tex"
+**./Tester.tex
+(Tester.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 75 language(s) loaded.
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\report.cls"
+(format.tex ("C:\Program Files\MiKTeX 2.9\tex\latex\base\report.cls"
 Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
 File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
@@ -700,8 +700,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@listing=\toks21
 \c@listing=\count121
 )
-runsystem(if not exist _minted-1._Using_Essential_Tools mkdir _minted-1._Using_
-Essential_Tools)...executed.
+runsystem(if not exist _minted-Tester mkdir _minted-Tester)...executed.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty"
@@ -751,7 +750,7 @@ Package grffile Info: Option `multidot' is set to `true'.
 Package grffile Info: Option `extendedchars' is set to `false'.
 Package grffile Info: Option `space' is set to `true'.
 Package grffile Info: \Gin@ii of package `graphicx' fixed on input line 486.
-)
+))
 ("C:\Program Files\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty"
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 
@@ -769,54 +768,40 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > 1.
-_Using_Essential_Tools.aex <nul: /p x=^%~$PATH:i>> 1._Using_Essential_Tools.aex
-)...executed.
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > Te
+ster.aex <nul: /p x=^%~$PATH:i>> Tester.aex)...executed.
 
-runsystem(del 1._Using_Essential_Tools.aex)...executed.
+runsystem(del Tester.aex)...executed.
 
+ (Tester.aux)
+\openout1 = `Tester.aux'.
 
-("1. Using Essential Tools.aux"
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 2.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 2.
 
-LaTeX Warning: Label `fig:1' multiply defined.
-
-
-LaTeX Warning: Label `fig:1' multiply defined.
-
-
-LaTeX Warning: Label `fig:1' multiply defined.
-
-
-LaTeX Warning: Label `fig:1' multiply defined.
-
-)
-\openout1 = `"1. Using Essential Tools.aux"'.
-
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 55.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 55.
- ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Try loading font information for T1+phv on input line 55.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 2.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1phv.fd"
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 55.
+(Font)              scaled to size 9.49997pt on input line 2.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -881,650 +866,36 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 16.41594pt on input line 56.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 56.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 56.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 56.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 56.
-
-[1
-
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 19.70294pt on input line 59.
+(Font)              scaled to size 19.70294pt on input line 5.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 59.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 5.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 19.70294pt on input line 59.
+(Font)              scaled to size 19.70294pt on input line 5.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 59.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 5.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 23.63593pt on input line 59.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 13.67995pt on input line 60.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 60.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 13.67995pt on input line 60.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 62.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 62.
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 62.
-LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 9.49997pt on input line 62.
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-(_minted-1._Using_Essential_Tools/default-pyg-prefix.pygstyle)
-(_minted-1._Using_Essential_Tools/default.pygstyle)
-(_minted-1._Using_Essential_Tools/8372456104C601F310D320FE3FD76E5E79C4853155B3C
-02823489DB60DF01FD3.pygtex
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 1.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 1.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
-)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/029EC0008394DB15F095CC4D2553DA8079C4853155B3C
-02823489DB60DF01FD3.pygtex
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 11.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 4.74998pt on input line 11.
-)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/870B29D69A947061FD5BB8C410B15A8979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 100.
-
-Underfull \hbox (badness 10000) in paragraph at lines 102--102
-[]\T1/phv/m/n/10 Section
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 104--104
-[]\T1/phv/m/n/10 Commands (Pro-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 110--110
-[]\T1/phv/m/n/10 Overview, con-ven-
- []
-
-
-Underfull \hbox (badness 6157) in paragraph at lines 110--110
-\T1/phv/m/n/10 tions, and mis-cel-la-
- []
-
-
-Underfull \hbox (badness 4048) in paragraph at lines 111--111
-[]\T1/phv/m/n/10 System man-age-ment
- []
-
-
-Overfull \hbox (16.96973pt too wide) in paragraph at lines 99--114
-[] 
- []
-
+(Font)              scaled to size 23.63593pt on input line 5.
 [1
 
-]
-\openout3 = `1._Using_Essential_Tools.pyg'.
 
-
-(_minted-1._Using_Essential_Tools/402B3A5979DA39F77A393CF4A1AAE2A979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-Overfull \hbox (5.26126pt too wide) in paragraph at lines 145--153
-[] 
- []
-
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 155.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 155.
-[2]
-Overfull \hbox (17.18716pt too wide) in paragraph at lines 158--164
-[] 
- []
-
-
-Overfull \hbox (6.7261pt too wide) in paragraph at lines 168--175
-[] 
- []
-
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/7E952CF762F4D09CB47668C0B038FFF379C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/404FA21AF79994EB5E48FEE6F434C87679C4853155B3C
-02823489DB60DF01FD3.pygtex
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 2.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmtt.fd"
-File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [3])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/6ABEEAA55DBC7BBD13B098EE03E6C53B79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/725BE31F9A58E978C2EDD6BCE0246E7679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/4C21373AE365934E97393F0389F74DF879C4853155B3C
-02823489DB60DF01FD3.pygtex) [4]
-Chapter 2.
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/F1AFAF193DB3B396D33A3B7C8C5F740979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/11D88F333A0C1FD91DB85EE40E2D372C79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/65D669D2F21965C4862AAD9C60A161A279C4853155B3C
-02823489DB60DF01FD3.pygtex [5
-
-])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/9CDDB1E9DD28FD2FE7A0FB384B68A61479C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/669F2ABE8AE09D505B1F99884BF23A0879C4853155B3C
-02823489DB60DF01FD3.pygtex [6])
-Overfull \hbox (56.43706pt too wide) in paragraph at lines 340--349
-[][] 
- []
-
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/74AA042E0D74EDEFA08AC0465F09A45D79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/8E03FD9A4B08DBF0DC65C0E831EF732079C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/3B65D8D862F7EBBB274D4329EF9A789779C4853155B3C
-02823489DB60DF01FD3.pygtex [7])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/47B9420439CD56D3997017C6D6283DCD79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/65A467590164D138406AFC239B9CDA2679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/11C4E79E1A2576C539E55E739440964579C4853155B3C
-02823489DB60DF01FD3.pygtex) [8]
-Chapter 3.
-
-<D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installing RH
-EL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg, id=43, 
-1028.34187pt x 578.16pt>
-File: D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installi
-ng RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg Gra
-phic file (type jpg)
-
-<use D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installin
-g RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg>
-Package pdftex.def Info: D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video
- Course/1. Installing RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx 
-Cheat Sheet.jpg used on input line 397.
-(pdftex.def)             Requested size: 380.69788pt x 214.03935pt.
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/2F4946D2220663FD4ECE631C16409EFE79C4853155B3C
-02823489DB60DF01FD3.pygtex [9
-
- <D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installing R
-HEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg>])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/DE632AD86796B03C3C61210F617DDB7479C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/24737657848A9B0F7E229E1C95DE136479C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/777D12BAB123C048D58944CB5FA4118C79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/18B4EC5DF6D143C52E7F0EC9270F5FA379C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/9A03685FE7E106674C7D17208F948AC779C4853155B3C
-02823489DB60DF01FD3.pygtex [10])
-Overfull \hbox (6.029pt too wide) in paragraph at lines 455--459
-[][] 
- []
-
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/6556FE29044A84446DF91F5C4D69574D79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/827AB125FFE9054A4DA0C596AC9AD9B979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-Overfull \hbox (62.06465pt too wide) in paragraph at lines 483--485
-\T1/phv/m/n/10 Another use for [][]\T1/cmtt/m/n/10 grep []\T1/phv/m/n/10 is sea
-rch-ing files. The syn-tax is [][]\T1/cmtt/m/n/10 grep <filename-pattern> <sear
-ch-directory>[]\T1/phv/m/n/10 . 
- []
-
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/8E9E28EDF891DEDEADD89A43E21363C779C4853155B3C
-02823489DB60DF01FD3.pygtex
-Overfull \hbox (201.40997pt too wide) in paragraph at lines 9--9
-| | | |[][]\T1/cmtt/m/n/8 shadow:lisa:$6$0l/zSJkh$xjJNYNnj1rPs7Fq0hDWt8VucS0nLL
-82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT/:17414:0:99999:7:::[]|
-  
- []
-
-[11])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/0F19E39B3540D79BC1F0E7D9EE56054D79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/F32D8209B0BE5DBC147E5BF41D756BA679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/958223E7E5ACA4643DF66962BD1FF7A379C4853155B3C
-02823489DB60DF01FD3.pygtex [12])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/4D2AABF5A6A51858D9B17287E5A8A97079C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/58C4F12842016467AD480218B4E98F2A79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/7678B26D68CCC22F33E9F6E67D4A7E1079C4853155B3C
-02823489DB60DF01FD3.pygtex [13])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/766B30C6AA433820A861055F26C0F36B79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/4816F8A1DB88E732E3E8AF357D9CE50F79C4853155B3C
-02823489DB60DF01FD3.pygtex) [14]
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/6C7FD3A84A0E97E60510C8096F0F5BCA79C4853155B3C
-02823489DB60DF01FD3.pygtex) [15]
-Chapter 4.
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/3492253EF15CD182187B5F7A541887B979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/D21E6EDCEFD36E0F02DFDB378A916B6079C4853155B3C
-02823489DB60DF01FD3.pygtex) [16
-
-]
-Overfull \hbox (38.63005pt too wide) in paragraph at lines 686--694
-[][] 
- []
-
-<"1.5.a Server auth".jpg, id=69, 1028.34187pt x 578.16pt>
-File: "1.5.a Server auth".jpg Graphic file (type jpg)
-
-<use "1.5.a Server auth".jpg>
-Package pdftex.def Info: "1.5.a Server auth".jpg used on input line 702.
-(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
-
-<"1.5.b Client auth with no password".jpg, id=70, 1028.34187pt x 578.16pt>
-File: "1.5.b Client auth with no password".jpg Graphic file (type jpg)
-
-<use "1.5.b Client auth with no password".jpg>
-Package pdftex.def Info: "1.5.b Client auth with no password".jpg used on input
- line 712.
-(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
- [17 <./1.5.a Server auth.jpg>]
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/1B0C25BB3F68916D51853CE9526CEA7679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/56D694A224ADBB20D78B57059866138B79C4853155B3C
-02823489DB60DF01FD3.pygtex [18 <./1.5.b Client auth with no password.jpg>])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/C174314F67DC9458170924B0456BD49479C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/356C3A733198D0E49D61D772D5C223CA79C4853155B3C
-02823489DB60DF01FD3.pygtex) [19]
-Chapter 5.
-
-Overfull \hbox (1.09393pt too wide) in paragraph at lines 792--793
-\T1/phv/m/n/10 each with the fol-low-ing de-tails :- [][]\T1/cmtt/m/n/10 somu:x
-:1000:1000:Somu:/home/somu:/bin/bash[]\T1/phv/m/n/10 . Here,
- []
-
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/B62007AB0E7E4DA907D5B68B5704EB9D79C4853155B3C
-02823489DB60DF01FD3.pygtex) [20
-
-]
-Overfull \hbox (7.79176pt too wide) in paragraph at lines 823--832
-[][] 
- []
-
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/6657D1547ACEC2663AEDC8EDC8D8590C79C4853155B3C
-02823489DB60DF01FD3.pygtex [21])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/92CFA298E5E56DAB0E75AE717A41072B79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/95BF622D0F9B0B17E3E2004BF5342CE179C4853155B3C
-02823489DB60DF01FD3.pygtex) [22]
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/C95C983AE0C5AF3874E8B8ADF3138C4079C4853155B3C
-02823489DB60DF01FD3.pygtex)
-Overfull \hbox (11.65884pt too wide) in paragraph at lines 897--910
-[] 
- []
-
-
-Overfull \hbox (4.30598pt too wide) in paragraph at lines 915--929
-[] 
- []
-
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/D7910ACC911922D71BB89466367643A279C4853155B3C
-02823489DB60DF01FD3.pygtex [23])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/338660DF3EF2D39A786B17241A7085AB79C4853155B3C
-02823489DB60DF01FD3.pygtex) [24]
-Chapter 6.
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/BCD0F16D5CDF93514A6B3C0832C9683A79C4853155B3C
-02823489DB60DF01FD3.pygtex [25
-
-])
-Overfull \hbox (4.44765pt too wide) in paragraph at lines 1020--1021
-\T1/phv/m/n/10 bunch of rules in the syn-tax : [][]\T1/cmtt/m/n/10 <service-typ
-e> <control> <module-path> <arugments>[]\T1/phv/m/n/10 . 
- []
-
-
-Overfull \hbox (2.61452pt too wide) in paragraph at lines 1024--1034
-[] 
- []
-
-
-Overfull \hbox (22.38416pt too wide) in paragraph at lines 1037--1050
-[] 
- []
-
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/53F3B0C9E29F5B684D3F9A0F05944892580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/FC323D77214C93BF2D9F9FE1F178B4F7580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [26])
-<"1.6.a LDAP Authentication".jpg, id=104, 1028.34187pt x 578.16pt>
-File: "1.6.a LDAP Authentication".jpg Graphic file (type jpg)
-
-<use "1.6.a LDAP Authentication".jpg>
-Package pdftex.def Info: "1.6.a LDAP Authentication".jpg used on input line 107
-2.
-(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
- [27 <./1.6.a LDAP Authentication.jpg>]
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/8D79E17342A1F4C2877AB7955BDA89DC79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/CCA157DFD3275024A33266CCD395B183580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex) [28]
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/2F2CE2E1B4E31A71DFA4D4FE4217709B580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-<"1.7.a NFS Automount".jpg, id=111, 1028.34187pt x 578.16pt>
-File: "1.7.a NFS Automount".jpg Graphic file (type jpg)
-
-<use "1.7.a NFS Automount".jpg>
-Package pdftex.def Info: "1.7.a NFS Automount".jpg used on input line 1129.
-(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/178FCF63B89F2230B61C0B6690E3CA60580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/C958B4765E22CE3BC1BCE2E451D71E0F580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [29 <./1.7.a NFS Automount.jpg>])
-Overfull \hbox (2.99486pt too wide) in paragraph at lines 1153--1155
-\T1/phv/m/n/10 So, if any-one goes to [][]\T1/cmtt/m/n/10 * []\T1/phv/m/n/10 (i
-.e., any di-rec-tory in [][]\T1/cmtt/m/n/10 /data/guests[]\T1/phv/m/n/10 ), lik
-e [][]\T1/cmtt/m/n/10 /home/guests/ldapuser1
- []
-
-<"1.7.b Samba Automount".jpg, id=115, 1028.34187pt x 578.16pt>
-File: "1.7.b Samba Automount".jpg Graphic file (type jpg)
-
-<use "1.7.b Samba Automount".jpg>
-Package pdftex.def Info: "1.7.b Samba Automount".jpg used on input line 1160.
-(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/178FCF63B89F2230B61C0B6690E3CA60580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/91AB60BC2E5B3325B6EDC8A64D990B3B580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [30 <./1.7.b Samba Automount.jpg>])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/29288F307571354DFADFAD6ADE3A9F14580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/B5E9B44687AE3B6AFF1E87FAEE1F446079C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/8282C266351A25384715611B25097A93580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [31])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/D72A70F9922280E2691BBB0F62A3F02C79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/5E6993B953D306FE7E26F3318181E86679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/2AC70EF024343068C948878ECB298DA379C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/648A40F20FBFA6A9BB1EDAF37463AA37580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [32])
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/42BE86D35DB76DB255D1CFE415AA2C5E580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/A94DD73F70D40FEEF8D35454B3A1386879C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/E2A7DA85A57769E7318A526C4B0FC40F79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/BF225A2C8D5948E03E1257AEDBAC6968580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex) [33]
-Overfull \hbox (7.97385pt too wide) in paragraph at lines 1343--1359
-[] 
- []
-
-[34]
-Chapter 7.
-[35
-
-] ("1. Using Essential Tools.aux")
-
-LaTeX Warning: There were multiply-defined labels.
-
-runsystem(del 1._Using_Essential_Tools.pyg)...executed.
-
- ) 
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] (Tester.aux) ) 
 Here is how much of TeX's memory you used:
- 7042 strings out of 493323
- 136824 string characters out of 3139068
- 244318 words of memory out of 3000000
- 10223 multiletter control sequences out of 15000+200000
- 42500 words of font info for 53 fonts, out of 3000000 for 9000
+ 6426 strings out of 493323
+ 104880 string characters out of 3139068
+ 217284 words of memory out of 3000000
+ 9856 multiletter control sequences out of 15000+200000
+ 14489 words of font info for 22 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,10n,38p,863b,533s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
-cit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
-\dpi600\tctt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
-nappen\ec\dpi600\ectt1000.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\
-ljfour\jknappen\ec\dpi600\ectt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\
-fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0500.pk>{C:/Program Files/MiKTeX 2.9/fon
-ts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-mi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Progra
-m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/u
-hvro8a.pfb>
-Output written on "1. Using Essential Tools.pdf" (36 pages, 1516723 bytes).
+ 41i,5n,35p,858b,129s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program
+ Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX 2.9/font
+s/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/he
+lvetic/uhvr8a.pfb>
+Output written on Tester.pdf (1 page, 11606 bytes).
 PDF statistics:
- 356 PDF objects out of 1000 (max. 8388607)
+ 15 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

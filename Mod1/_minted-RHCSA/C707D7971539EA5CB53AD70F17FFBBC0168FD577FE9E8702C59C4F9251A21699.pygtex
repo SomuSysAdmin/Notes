@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} mail \PYGZhy{}s hi root \PYGZlt{} .
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZgt{} myFile
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}lh \PYGZgt{}\PYGZgt{} myFile
+\PYG{g+gp}{\PYGZdl{}} grep hi * \PYG{l+m}{2}\PYGZgt{} /dev/tty6
+\end{Verbatim}

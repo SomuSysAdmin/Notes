@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} touch sinha
+\PYG{g+gp}{\PYGZsh{}} ls
+\PYG{g+go}{sinha}
+\PYG{g+gp}{\PYGZsh{}} locate sinha
+\PYG{g+go}{/usr/share/vim/vim74/keymap/sinhala\PYGZhy{}phonetic\PYGZus{}utf\PYGZhy{}8.vim}
+\PYG{g+go}{/usr/share/vim/vim74/keymap/sinhala.vim}
+\PYG{g+gp}{\PYGZsh{}} updatedb
+\PYG{g+gp}{\PYGZsh{}} locate sinha
+\PYG{g+go}{/home/somu/Documents/sinha}
+\PYG{g+go}{/usr/share/vim/vim74/keymap/sinhala\PYGZhy{}phonetic\PYGZus{}utf\PYGZhy{}8.vim}
+\PYG{g+go}{/usr/share/vim/vim74/keymap/sinhala.vim}
+\end{Verbatim}

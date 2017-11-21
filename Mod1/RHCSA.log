@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  21 NOV 2017 12:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  21 NOV 2017 13:20
 entering extended mode
-**"./1. Using Essential Tools.tex"
-("1. Using Essential Tools.tex"
+**./RHCSA.tex
+(RHCSA.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 75 language(s) loaded.
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\report.cls"
+(format.tex ("C:\Program Files\MiKTeX 2.9\tex\latex\base\report.cls"
 Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
 File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
@@ -700,8 +700,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@listing=\toks21
 \c@listing=\count121
 )
-runsystem(if not exist _minted-1._Using_Essential_Tools mkdir _minted-1._Using_
-Essential_Tools)...executed.
+runsystem(if not exist _minted-RHCSA mkdir _minted-RHCSA)...executed.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty"
@@ -751,7 +750,7 @@ Package grffile Info: Option `multidot' is set to `true'.
 Package grffile Info: Option `extendedchars' is set to `false'.
 Package grffile Info: Option `space' is set to `true'.
 Package grffile Info: \Gin@ii of package `graphicx' fixed on input line 486.
-)
+))
 ("C:\Program Files\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty"
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 
@@ -769,14 +768,12 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > 1.
-_Using_Essential_Tools.aex <nul: /p x=^%~$PATH:i>> 1._Using_Essential_Tools.aex
-)...executed.
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > RH
+CSA.aex <nul: /p x=^%~$PATH:i>> RHCSA.aex)...executed.
 
-runsystem(del 1._Using_Essential_Tools.aex)...executed.
+runsystem(del RHCSA.aex)...executed.
 
-
-("1. Using Essential Tools.aux"
+ (RHCSA.aux
 
 LaTeX Warning: Label `fig:1' multiply defined.
 
@@ -790,33 +787,33 @@ LaTeX Warning: Label `fig:1' multiply defined.
 LaTeX Warning: Label `fig:1' multiply defined.
 
 )
-\openout1 = `"1. Using Essential Tools.aux"'.
+\openout1 = `RHCSA.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 55.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 55.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 3.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Try loading font information for T1+phv on input line 55.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 3.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1phv.fd"
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 55.
+(Font)              scaled to size 9.49997pt on input line 3.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -882,225 +879,223 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 16.41594pt on input line 56.
+(Font)              scaled to size 16.41594pt on input line 4.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 56.
+(Font)              scaled to size 11.39996pt on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 56.
+(Font)              <12> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 56.
+(Font)              <8> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 56.
+(Font)              <6> on input line 4.
 
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+("1. Installing RHEL Server.tex" ("chapters/1.2 Using Essential Tools.tex"
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 19.70294pt on input line 59.
+(Font)              scaled to size 19.70294pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 59.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 19.70294pt on input line 59.
+(Font)              scaled to size 19.70294pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 59.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 23.63593pt on input line 59.
+(Font)              scaled to size 23.63593pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 13.67995pt on input line 60.
+(Font)              scaled to size 13.67995pt on input line 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 60.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 2.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 13.67995pt on input line 60.
+(Font)              scaled to size 13.67995pt on input line 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 62.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 4.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 62.
+(Font)              scaled to size 9.49997pt on input line 4.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 62.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 4.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 9.49997pt on input line 62.
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(Font)              scaled to size 9.49997pt on input line 4.
+\openout3 = `RHCSA.pyg'.
 
-(_minted-1._Using_Essential_Tools/default-pyg-prefix.pygstyle)
-(_minted-1._Using_Essential_Tools/default.pygstyle)
-(_minted-1._Using_Essential_Tools/8372456104C601F310D320FE3FD76E5E79C4853155B3C
-02823489DB60DF01FD3.pygtex
+(_minted-RHCSA/default-pyg-prefix.pygstyle) (_minted-RHCSA/default.pygstyle)
+(_minted-RHCSA/3FADC0CF3FD57D89C2B66360AECC679E168FD577FE9E8702C59C4F9251A21699
+.pygtex
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 1.
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 1.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
 )
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/029EC0008394DB15F095CC4D2553DA8079C4853155B3C
-02823489DB60DF01FD3.pygtex
+(_minted-RHCSA/0DE3FFBD7288F7261B63480C494DCE35168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/553B05DB22C948B6ECE79A7FCFF7AEDB168FD577FE9E8702C59C4F9251A21699
+.pygtex)
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 11.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 4.74998pt on input line 11.
-)
-\openout3 = `1._Using_Essential_Tools.pyg'.
-
-
-(_minted-1._Using_Essential_Tools/870B29D69A947061FD5BB8C410B15A8979C4853155B3C
-02823489DB60DF01FD3.pygtex)
+(Font)              <7> on input line 42.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 100.
+(Font)              <5> on input line 42.
 
-Underfull \hbox (badness 10000) in paragraph at lines 102--102
+Underfull \hbox (badness 10000) in paragraph at lines 44--44
 []\T1/phv/m/n/10 Section
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 104--104
+Underfull \hbox (badness 10000) in paragraph at lines 46--46
 []\T1/phv/m/n/10 Commands (Pro-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 110--110
+Underfull \hbox (badness 10000) in paragraph at lines 52--52
 []\T1/phv/m/n/10 Overview, con-ven-
  []
 
 
-Underfull \hbox (badness 6157) in paragraph at lines 110--110
+Underfull \hbox (badness 6157) in paragraph at lines 52--52
 \T1/phv/m/n/10 tions, and mis-cel-la-
  []
 
 
-Underfull \hbox (badness 4048) in paragraph at lines 111--111
+Underfull \hbox (badness 4048) in paragraph at lines 53--53
 []\T1/phv/m/n/10 System man-age-ment
  []
 
 
-Overfull \hbox (16.96973pt too wide) in paragraph at lines 99--114
+Overfull \hbox (16.96973pt too wide) in paragraph at lines 41--56
 [] 
  []
 
 [1
 
 ]
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/402B3A5979DA39F77A393CF4A1AAE2A979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-Overfull \hbox (5.26126pt too wide) in paragraph at lines 145--153
+(_minted-RHCSA/CA6DD385A6D4D4681AE0FFE14F525A96168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+Overfull \hbox (5.26126pt too wide) in paragraph at lines 87--95
 [] 
  []
 
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 155.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 97.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 155.
+(Font)              scaled to size 11.39996pt on input line 97.
 [2]
-Overfull \hbox (17.18716pt too wide) in paragraph at lines 158--164
+Overfull \hbox (17.18716pt too wide) in paragraph at lines 100--106
 [] 
  []
 
 
-Overfull \hbox (6.7261pt too wide) in paragraph at lines 168--175
+Overfull \hbox (6.7261pt too wide) in paragraph at lines 110--117
 [] 
  []
 
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/7E952CF762F4D09CB47668C0B038FFF379C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/C707D7971539EA5CB53AD70F17FFBBC0168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/404FA21AF79994EB5E48FEE6F434C87679C4853155B3C
-02823489DB60DF01FD3.pygtex
+(_minted-RHCSA/CCFB14641B7E51BE05A55D5BC0296825168FD577FE9E8702C59C4F9251A21699
+.pygtex
 LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 2.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmtt.fd"
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmtt.fd"
 File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ) [3])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/6ABEEAA55DBC7BBD13B098EE03E6C53B79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/C07E109D3A5991710687E34419B83CFF168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/725BE31F9A58E978C2EDD6BCE0246E7679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/2318D4496DBF098F8E8A11F8BB2E9F0D168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/4C21373AE365934E97393F0389F74DF879C4853155B3C
-02823489DB60DF01FD3.pygtex) [4]
+(_minted-RHCSA/A15FCD4F734F0402E512FEB2B791721D168FD577FE9E8702C59C4F9251A21699
+.pygtex)) ("chapters/1.3 Essential File Management Tools.tex" [4]
 Chapter 2.
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/F1AFAF193DB3B396D33A3B7C8C5F740979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/1887904EE33C3CB2032922116B8006BB168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/11D88F333A0C1FD91DB85EE40E2D372C79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/8FBE2AC48ABD9AD5919DD29F2F4E9500168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/65D669D2F21965C4862AAD9C60A161A279C4853155B3C
-02823489DB60DF01FD3.pygtex [5
+(_minted-RHCSA/D69AEBD1A76BDC1987263FC3FAE44452168FD577FE9E8702C59C4F9251A21699
+.pygtex
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 4.74998pt on input line 3.
+ [5
 
 ])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/9CDDB1E9DD28FD2FE7A0FB384B68A61479C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/0528E51DE3079083E524FDA8675C7125168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/669F2ABE8AE09D505B1F99884BF23A0879C4853155B3C
-02823489DB60DF01FD3.pygtex [6])
-Overfull \hbox (56.43706pt too wide) in paragraph at lines 340--349
+(_minted-RHCSA/C78145AC5460BA7B5D42425E9632B548168FD577FE9E8702C59C4F9251A21699
+.pygtex [6])
+Overfull \hbox (56.43706pt too wide) in paragraph at lines 106--115
 [][] 
  []
 
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/74AA042E0D74EDEFA08AC0465F09A45D79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/D0A69B1EBF151413C14973F8EAEFA553168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/8E03FD9A4B08DBF0DC65C0E831EF732079C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/0291B2C3345450544FDD618C7766439C168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/3B65D8D862F7EBBB274D4329EF9A789779C4853155B3C
-02823489DB60DF01FD3.pygtex [7])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/F08C6A3243CF3F7DE65E6A01FB209398168FD577FE9E8702C59C4F9251A21699
+.pygtex [7])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/47B9420439CD56D3997017C6D6283DCD79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/942049F05390567558CF6CA822FFD5C8168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/65A467590164D138406AFC239B9CDA2679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/599B819A10B72069719D0D8ABE683827168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/11C4E79E1A2576C539E55E739440964579C4853155B3C
-02823489DB60DF01FD3.pygtex) [8]
+(_minted-RHCSA/689D844CB0BAC1417AB6D27F42FAA721168FD577FE9E8702C59C4F9251A21699
+.pygtex)) ("chapters/1.4 Working with Text Files.tex" [8]
 Chapter 3.
 
 <D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installing RH
@@ -1114,399 +1109,402 @@ phic file (type jpg)
 g RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg>
 Package pdftex.def Info: D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video
  Course/1. Installing RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx 
-Cheat Sheet.jpg used on input line 397.
+Cheat Sheet.jpg used on input line 5.
 (pdftex.def)             Requested size: 380.69788pt x 214.03935pt.
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/2F4946D2220663FD4ECE631C16409EFE79C4853155B3C
-02823489DB60DF01FD3.pygtex [9
+(_minted-RHCSA/DD281B35C97689622CEBB95CB79839FD168FD577FE9E8702C59C4F9251A21699
+.pygtex [9
 
  <D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installing R
 HEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg>])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/DE632AD86796B03C3C61210F617DDB7479C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/DEF0941FF2B2593FA48B677D0CE1BFB5168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/24737657848A9B0F7E229E1C95DE136479C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/709D668F3615EF10E185C683E2F5BE37168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/777D12BAB123C048D58944CB5FA4118C79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/7DDE0ECA33A94C85F761CDB81BCAD2C1168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/18B4EC5DF6D143C52E7F0EC9270F5FA379C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/18922008674A75DF01FF2F048E2D9813168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/9A03685FE7E106674C7D17208F948AC779C4853155B3C
-02823489DB60DF01FD3.pygtex [10])
-Overfull \hbox (6.029pt too wide) in paragraph at lines 455--459
+(_minted-RHCSA/A7874D942814CBCE3E88F7990035088E168FD577FE9E8702C59C4F9251A21699
+.pygtex [10])
+Overfull \hbox (6.029pt too wide) in paragraph at lines 63--67
 [][] 
  []
 
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/6556FE29044A84446DF91F5C4D69574D79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/33215F2985F2054B068CCB04D106B595168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/827AB125FFE9054A4DA0C596AC9AD9B979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-Overfull \hbox (62.06465pt too wide) in paragraph at lines 483--485
+(_minted-RHCSA/3B11BC47CAF5A3C99C6E21B4C49D99BA168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+Overfull \hbox (62.06465pt too wide) in paragraph at lines 91--93
 \T1/phv/m/n/10 Another use for [][]\T1/cmtt/m/n/10 grep []\T1/phv/m/n/10 is sea
 rch-ing files. The syn-tax is [][]\T1/cmtt/m/n/10 grep <filename-pattern> <sear
 ch-directory>[]\T1/phv/m/n/10 . 
  []
 
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/8E9E28EDF891DEDEADD89A43E21363C779C4853155B3C
-02823489DB60DF01FD3.pygtex
-Overfull \hbox (201.40997pt too wide) in paragraph at lines 9--9
-| | | |[][]\T1/cmtt/m/n/8 shadow:lisa:$6$0l/zSJkh$xjJNYNnj1rPs7Fq0hDWt8VucS0nLL
-82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT/:17414:0:99999:7:::[]|
-  
+(_minted-RHCSA/DB3F499A660BCAE93ABB43D08EEAAB75168FD577FE9E8702C59C4F9251A21699
+.pygtex
+Overfull \hbox (167.41827pt too wide) in paragraph at lines 9--9
+| | | |[]\T1/cmtt/m/n/8 shadow:lisa:$[][]6[][]$0[]l/zSJkh[]$xjJNYNnj1rPs7Fq0hDW
+t8VucS0nLL82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT[]/:17414:0:9
+9999:7:::|  
  []
 
 [11])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/0F19E39B3540D79BC1F0E7D9EE56054D79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/47FA377201318F9117E473270A76D4EB168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/F32D8209B0BE5DBC147E5BF41D756BA679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/303BAF2954A4B75CCF7CAA81EA9D5317168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/958223E7E5ACA4643DF66962BD1FF7A379C4853155B3C
-02823489DB60DF01FD3.pygtex [12])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/5D8C2F4C7C9AA0D296FCF584B18B261F168FD577FE9E8702C59C4F9251A21699
+.pygtex [12])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/4D2AABF5A6A51858D9B17287E5A8A97079C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/A2F642242F21F01715F4816D9BD97417168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/58C4F12842016467AD480218B4E98F2A79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/915AC3F2B70E71FA8FBC6B281BE2BC6C168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/7678B26D68CCC22F33E9F6E67D4A7E1079C4853155B3C
-02823489DB60DF01FD3.pygtex [13])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/48CC6A88A48F660371A8EF5C4EC9CCEC168FD577FE9E8702C59C4F9251A21699
+.pygtex [13])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/766B30C6AA433820A861055F26C0F36B79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/C09293D48F7289208F131A0093E8D6EC168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/4816F8A1DB88E732E3E8AF357D9CE50F79C4853155B3C
-02823489DB60DF01FD3.pygtex) [14]
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/6C2F4A55E4F169179A209DB121A74E41168FD577FE9E8702C59C4F9251A21699
+.pygtex) [14]
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/6C7FD3A84A0E97E60510C8096F0F5BCA79C4853155B3C
-02823489DB60DF01FD3.pygtex) [15]
+(_minted-RHCSA/EBDD9E1EC461A9C75243B06B0DC3550A168FD577FE9E8702C59C4F9251A21699
+.pygtex)) ("chapters/1.5 Connecting to a RHEL Server.tex" [15]
 Chapter 4.
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/3492253EF15CD182187B5F7A541887B979C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/D3540A37E41E93AEFEE05DB2E17493F9168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/D21E6EDCEFD36E0F02DFDB378A916B6079C4853155B3C
-02823489DB60DF01FD3.pygtex) [16
+(_minted-RHCSA/AE3135A64E5EAC56697A6A10DA9B9BFD168FD577FE9E8702C59C4F9251A21699
+.pygtex) [16
 
 ]
-Overfull \hbox (38.63005pt too wide) in paragraph at lines 686--694
+Overfull \hbox (38.63005pt too wide) in paragraph at lines 27--35
 [][] 
  []
 
-<"1.5.a Server auth".jpg, id=69, 1028.34187pt x 578.16pt>
-File: "1.5.a Server auth".jpg Graphic file (type jpg)
+<"chapters/1.5.a Server auth".jpg, id=69, 1028.34187pt x 578.16pt>
+File: "chapters/1.5.a Server auth".jpg Graphic file (type jpg)
 
-<use "1.5.a Server auth".jpg>
-Package pdftex.def Info: "1.5.a Server auth".jpg used on input line 702.
+<use "chapters/1.5.a Server auth".jpg>
+Package pdftex.def Info: "chapters/1.5.a Server auth".jpg used on input line 43
+.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
 
-<"1.5.b Client auth with no password".jpg, id=70, 1028.34187pt x 578.16pt>
-File: "1.5.b Client auth with no password".jpg Graphic file (type jpg)
+<"chapters/1.5.b Client auth with no password".jpg, id=70, 1028.34187pt x 578.1
+6pt>
+File: "chapters/1.5.b Client auth with no password".jpg Graphic file (type jpg)
 
-<use "1.5.b Client auth with no password".jpg>
-Package pdftex.def Info: "1.5.b Client auth with no password".jpg used on input
- line 712.
+ <use "chapters/1.5.b Client auth with no password".jpg>
+Package pdftex.def Info: "chapters/1.5.b Client auth with no password".jpg used
+ on input line 53.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
- [17 <./1.5.a Server auth.jpg>]
-\openout3 = `1._Using_Essential_Tools.pyg'.
+ [17 <./chapters/1.5.a Server auth.jpg>]
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/1B0C25BB3F68916D51853CE9526CEA7679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/AD1F83511A00F8F82FE7BCA9C794B835168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/56D694A224ADBB20D78B57059866138B79C4853155B3C
-02823489DB60DF01FD3.pygtex [18 <./1.5.b Client auth with no password.jpg>])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/4F9FB1004C50142F934DABBAE9E85DDC168FD577FE9E8702C59C4F9251A21699
+.pygtex [18 <./chapters/1.5.b Client auth with no password.jpg>])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/C174314F67DC9458170924B0456BD49479C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/1E2974F8712BF81D0E56F0446998644E168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/356C3A733198D0E49D61D772D5C223CA79C4853155B3C
-02823489DB60DF01FD3.pygtex) [19]
+(_minted-RHCSA/05A76AA0D22DA7C2EE7F8C89DC8C5404168FD577FE9E8702C59C4F9251A21699
+.pygtex)) ("chapters/1.6 Managing Users and Groups.tex" [19]
 Chapter 5.
 
-Overfull \hbox (1.09393pt too wide) in paragraph at lines 792--793
+Overfull \hbox (1.09393pt too wide) in paragraph at lines 10--11
 \T1/phv/m/n/10 each with the fol-low-ing de-tails :- [][]\T1/cmtt/m/n/10 somu:x
 :1000:1000:Somu:/home/somu:/bin/bash[]\T1/phv/m/n/10 . Here,
  []
 
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/B62007AB0E7E4DA907D5B68B5704EB9D79C4853155B3C
-02823489DB60DF01FD3.pygtex) [20
+(_minted-RHCSA/FA931C2B7DA9E13832839410B8050DA2168FD577FE9E8702C59C4F9251A21699
+.pygtex) [20
 
 ]
-Overfull \hbox (7.79176pt too wide) in paragraph at lines 823--832
+Overfull \hbox (7.79176pt too wide) in paragraph at lines 41--50
 [][] 
  []
 
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/6657D1547ACEC2663AEDC8EDC8D8590C79C4853155B3C
-02823489DB60DF01FD3.pygtex [21])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/8A2FAF5C13E2D08EA111ABAE6818D14A168FD577FE9E8702C59C4F9251A21699
+.pygtex [21])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/92CFA298E5E56DAB0E75AE717A41072B79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/FC8A9C4E534D10EDC05B5D71919652EB168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/95BF622D0F9B0B17E3E2004BF5342CE179C4853155B3C
-02823489DB60DF01FD3.pygtex) [22]
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/A6F1AA7C427CFA0A72DA651669059435168FD577FE9E8702C59C4F9251A21699
+.pygtex) [22]
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/C95C983AE0C5AF3874E8B8ADF3138C4079C4853155B3C
-02823489DB60DF01FD3.pygtex)
-Overfull \hbox (11.65884pt too wide) in paragraph at lines 897--910
+(_minted-RHCSA/2B6FA078D7462FA2E59F0C0C949D13F8168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+Overfull \hbox (11.65884pt too wide) in paragraph at lines 115--128
 [] 
  []
 
 
-Overfull \hbox (4.30598pt too wide) in paragraph at lines 915--929
+Overfull \hbox (4.30598pt too wide) in paragraph at lines 133--147
 [] 
  []
 
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/D7910ACC911922D71BB89466367643A279C4853155B3C
-02823489DB60DF01FD3.pygtex [23])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/E09B0195AA5C672DF51B7DA0FC340537168FD577FE9E8702C59C4F9251A21699
+.pygtex [23])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/338660DF3EF2D39A786B17241A7085AB79C4853155B3C
-02823489DB60DF01FD3.pygtex) [24]
+(_minted-RHCSA/FF330399576D7ACF3D83E67D131FFE52168FD577FE9E8702C59C4F9251A21699
+.pygtex)) ("chapters/1.7 Connecting to a LDAP Server.tex" [24]
 Chapter 6.
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/BCD0F16D5CDF93514A6B3C0832C9683A79C4853155B3C
-02823489DB60DF01FD3.pygtex [25
+(_minted-RHCSA/918257B94ECBC87F046B1D360705CBFF168FD577FE9E8702C59C4F9251A21699
+.pygtex [25
 
 ])
-Overfull \hbox (4.44765pt too wide) in paragraph at lines 1020--1021
+Overfull \hbox (4.44765pt too wide) in paragraph at lines 34--35
 \T1/phv/m/n/10 bunch of rules in the syn-tax : [][]\T1/cmtt/m/n/10 <service-typ
 e> <control> <module-path> <arugments>[]\T1/phv/m/n/10 . 
  []
 
 
-Overfull \hbox (2.61452pt too wide) in paragraph at lines 1024--1034
+Overfull \hbox (2.61452pt too wide) in paragraph at lines 38--48
 [] 
  []
 
 
-Overfull \hbox (22.38416pt too wide) in paragraph at lines 1037--1050
+Overfull \hbox (22.38416pt too wide) in paragraph at lines 51--64
 [] 
  []
 
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/53F3B0C9E29F5B684D3F9A0F05944892580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/B85EF7D6D63604AD8CBC0ECC5F0B7CB41D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/FC323D77214C93BF2D9F9FE1F178B4F7580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [26])
-<"1.6.a LDAP Authentication".jpg, id=104, 1028.34187pt x 578.16pt>
-File: "1.6.a LDAP Authentication".jpg Graphic file (type jpg)
+(_minted-RHCSA/CCBDFD86689EE3012A78CA4148785B811D0A1B86B4D2A4C28753BFB971395912
+.pygtex [26])
+<"chapters/1.6.a LDAP Authentication".jpg, id=104, 1028.34187pt x 578.16pt>
+File: "chapters/1.6.a LDAP Authentication".jpg Graphic file (type jpg)
 
-<use "1.6.a LDAP Authentication".jpg>
-Package pdftex.def Info: "1.6.a LDAP Authentication".jpg used on input line 107
-2.
+<use "chapters/1.6.a LDAP Authentication".jpg>
+Package pdftex.def Info: "chapters/1.6.a LDAP Authentication".jpg used on input
+ line 86.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
- [27 <./1.6.a LDAP Authentication.jpg>]
-\openout3 = `1._Using_Essential_Tools.pyg'.
+ [27 <./chapters/1.6.a LDAP Authentication.jpg>]
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/8D79E17342A1F4C2877AB7955BDA89DC79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/BD485D8984497C24DFF668ED565EBBE1168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/CCA157DFD3275024A33266CCD395B183580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex) [28]
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/76629E0E4F1DA83ADD9747E67FA87EC31D0A1B86B4D2A4C28753BFB971395912
+.pygtex) [28]
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/2F2CE2E1B4E31A71DFA4D4FE4217709B580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-<"1.7.a NFS Automount".jpg, id=111, 1028.34187pt x 578.16pt>
-File: "1.7.a NFS Automount".jpg Graphic file (type jpg)
+(_minted-RHCSA/9E1DB11EEB501C56DDFA6A774D6A73841D0A1B86B4D2A4C28753BFB971395912
+.pygtex) <"chapters/1.7.a NFS Automount".jpg, id=111, 1028.34187pt x 578.16pt>
+File: "chapters/1.7.a NFS Automount".jpg Graphic file (type jpg)
 
-<use "1.7.a NFS Automount".jpg>
-Package pdftex.def Info: "1.7.a NFS Automount".jpg used on input line 1129.
+<use "chapters/1.7.a NFS Automount".jpg>
+Package pdftex.def Info: "chapters/1.7.a NFS Automount".jpg used on input line 
+143.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/178FCF63B89F2230B61C0B6690E3CA60580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/DD2FEBFAEB3CFFD1A32E0715A1A7F35A1D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/C958B4765E22CE3BC1BCE2E451D71E0F580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [29 <./1.7.a NFS Automount.jpg>])
-Overfull \hbox (2.99486pt too wide) in paragraph at lines 1153--1155
+(_minted-RHCSA/6478AC494D1E02B65D68A78B208BD7001D0A1B86B4D2A4C28753BFB971395912
+.pygtex [29 <./chapters/1.7.a NFS Automount.jpg>])
+Overfull \hbox (2.99486pt too wide) in paragraph at lines 167--169
 \T1/phv/m/n/10 So, if any-one goes to [][]\T1/cmtt/m/n/10 * []\T1/phv/m/n/10 (i
 .e., any di-rec-tory in [][]\T1/cmtt/m/n/10 /data/guests[]\T1/phv/m/n/10 ), lik
 e [][]\T1/cmtt/m/n/10 /home/guests/ldapuser1
  []
 
-<"1.7.b Samba Automount".jpg, id=115, 1028.34187pt x 578.16pt>
-File: "1.7.b Samba Automount".jpg Graphic file (type jpg)
+<"chapters/1.7.b Samba Automount".jpg, id=115, 1028.34187pt x 578.16pt>
+File: "chapters/1.7.b Samba Automount".jpg Graphic file (type jpg)
 
-<use "1.7.b Samba Automount".jpg>
-Package pdftex.def Info: "1.7.b Samba Automount".jpg used on input line 1160.
+<use "chapters/1.7.b Samba Automount".jpg>
+Package pdftex.def Info: "chapters/1.7.b Samba Automount".jpg used on input lin
+e 174.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
-\openout3 = `1._Using_Essential_Tools.pyg'.
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/178FCF63B89F2230B61C0B6690E3CA60580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/DD2FEBFAEB3CFFD1A32E0715A1A7F35A1D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/91AB60BC2E5B3325B6EDC8A64D990B3B580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [30 <./1.7.b Samba Automount.jpg>])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/296C64CDFDEA08BA6B9C942F5E366F631D0A1B86B4D2A4C28753BFB971395912
+.pygtex [30 <./chapters/1.7.b Samba Automount.jpg>])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/29288F307571354DFADFAD6ADE3A9F14580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/3D676A73EED219B243F9ABAB03D6C1D81D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/B5E9B44687AE3B6AFF1E87FAEE1F446079C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/B5E9B44687AE3B6AFF1E87FAEE1F4460168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/8282C266351A25384715611B25097A93580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [31])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/EE56CD60385ABED5E3521C277D4FFBD01D0A1B86B4D2A4C28753BFB971395912
+.pygtex [31])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/D72A70F9922280E2691BBB0F62A3F02C79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/223F375550A12EE11A5C005D15D0D2B8168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/5E6993B953D306FE7E26F3318181E86679C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/5E6993B953D306FE7E26F3318181E866168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/2AC70EF024343068C948878ECB298DA379C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/6884887132721BF471D5519D6DF31B19168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/648A40F20FBFA6A9BB1EDAF37463AA37580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex [32])
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/56C0AB7CA3122749327118B3F328CC4F1D0A1B86B4D2A4C28753BFB971395912
+.pygtex [32])
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/42BE86D35DB76DB255D1CFE415AA2C5E580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/6113C5BBD64B671BB3EDB53182D2DE711D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/A94DD73F70D40FEEF8D35454B3A1386879C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/1ECB87C92A55CCAEA3A18E6491221526168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/E2A7DA85A57769E7318A526C4B0FC40F79C4853155B3C
-02823489DB60DF01FD3.pygtex)
-\openout3 = `1._Using_Essential_Tools.pyg'.
+(_minted-RHCSA/65C9BE71A25F2F6D29DB736287F617C6168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
 
 
-(_minted-1._Using_Essential_Tools/BF225A2C8D5948E03E1257AEDBAC6968580A8D835B04E
-C80D93F2A6D6E63D4E3.pygtex) [33]
-Overfull \hbox (7.97385pt too wide) in paragraph at lines 1343--1359
+(_minted-RHCSA/EF58212EFFD7AF2E376D6D5D8D1D43541D0A1B86B4D2A4C28753BFB971395912
+.pygtex) [33]
+Overfull \hbox (7.97385pt too wide) in paragraph at lines 357--373
 [] 
  []
 
-[34]
+) ("chapters/1.8 Managing Permissions.tex" [34]
 Chapter 7.
-[35
+)) [35
 
-] ("1. Using Essential Tools.aux")
+] (RHCSA.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
-runsystem(del 1._Using_Essential_Tools.pyg)...executed.
+runsystem(del RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7042 strings out of 493323
- 136824 string characters out of 3139068
- 244318 words of memory out of 3000000
+ 7078 strings out of 493323
+ 135094 string characters out of 3139068
+ 243092 words of memory out of 3000000
  10223 multiletter control sequences out of 15000+200000
  42500 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,10n,38p,863b,533s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,10n,38p,857b,531s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
 cit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
 \dpi600\tctt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
@@ -1522,7 +1520,7 @@ MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.
 9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/u
 hvro8a.pfb>
-Output written on "1. Using Essential Tools.pdf" (36 pages, 1516723 bytes).
+Output written on RHCSA.pdf (36 pages, 1516243 bytes).
 PDF statistics:
  356 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

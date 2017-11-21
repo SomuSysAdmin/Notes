@@ -1,0 +1,53 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+
+%	Changing document font to Helvetica.
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+%	Changing Margins and other formatting
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=1.5in,
+	top=1in,
+	right=1.5in,
+	bottom=1in
+}
+\setlength{\parskip}{1em}
+
+%	Source Code Highlighting
+\usepackage{minted}
+%	For Console
+\setminted[console]{
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos,
+breaklines
+}
+%	For Shell Scripts
+\setminted[bash]{
+	frame=lines,
+	framesep=2mm,
+	baselinestretch=1.2,
+	fontsize=\footnotesize,
+	linenos,
+	breaklines
+}
+
+%	Pretty Tables
+\usepackage{booktabs}
+
+%	Images Support
+\usepackage{graphicx}
+
+%	Support for spaces in file names
+\usepackage[space]{grffile}
+
+\title{SysAdmin Notes for RHCSA}
+\author{Somenath Sinha}
+\date{August 2017}

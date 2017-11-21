@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{[}data\PYG{o}{]}
+\PYG{n+nv}{comment} \PYG{o}{=} LDAP Users\PYG{err}{\PYGZsq{}} home directories
+\PYG{n+nv}{path} \PYG{o}{=} /home/guests
+\PYG{n+nv}{public} \PYG{o}{=} yes
+\PYG{n+nv}{writable} \PYG{o}{=} no
+\end{Verbatim}

@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{cd} nfs
+\PYG{g+gp}{\PYGZsh{}} ls
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}lha
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root  0 Nov 21 11:59 .}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 3 root root 17 Nov 21 11:59 ..}
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{cd} files
+\PYG{g+gp}{\PYGZsh{}} ls
+\PYG{g+go}{nfs1  nfs2  test1}
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{cd} ..
+\PYG{g+gp}{\PYGZsh{}} ls
+\PYG{g+go}{files}
+\end{Verbatim}

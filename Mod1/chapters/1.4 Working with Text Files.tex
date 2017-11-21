@@ -1,0 +1,266 @@
+\chapter{Working with Text Files}
+\section{Understanding Regular Expressions}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{{{D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installing RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet}}.jpg}
+	\caption{RegEx Cheat Sheet}
+	\label{fig:regex-cheat-sheet}
+\end{figure}
+
+\section{Using common text tools}
+\subsection{cat}
+The \verb|cat| command prints the entire content of a file on to the terminal. 
+
+\subsection{less}
+Sometimes the \verb|cat| command is unsuitable, like in the case of extremely large files. In such cases, like the \verb|/var/log/messages|, the default system log file, using \verb|cat| won't work as the majority of the messages would scroll past fast. For such cases, \verb|less| is a better utility. Search functionality is exactly the same as in the case of vim. 
+
+\subsection{Head and Tail}
+\subsubsection{Head}
+The \verb|head| command by default shows us the first 10 lines of a text file. To see more or less lines, the \verb|-n| option can be used.
+
+\begin{minted}{console}
+$ head -n 20 file.txt
+\end{minted}
+
+\subsubsection{Tail}
+The \verb|tail| command by default shows us the last 10 lines of a text file. To see more or less lines, the \verb|-n| option can be used.
+
+\begin{minted}{console}
+$ tail -n 5 file.txt
+\end{minted}
+
+\subsubsection{Combination of head and tail}
+The combination of these two commands can enable the viewing of text in between specific line numbers. The command below shows lines 16-20 of \texttt{file.txt}
+
+\begin{minted}{console}
+$ head -n 20 file.txt | tail -n 5
+\end{minted}
+
+\subsection{cut}
+With the \verb|cut| utility, we can print out a specific column form a text file. It assumes the columns are separated by Tabs. Which specific column is to be printed is set by using the \verb|-f| option. For example, to only print the first column of a text file, we say:
+
+\begin{minted}{console}
+$ cut -f 1 cities
+\end{minted}
+
+\noindent
+To provide a different delimter, such as ":" we use the \verb|-d| option followed by the delimiter of our choice. 
+
+\begin{minted}{console}
+$ cut -f 1 -d : /etc/passwd
+\end{minted}
+
+\subsection{sort}
+This command sorts the input provided in the order of the ASCII table. That means numbers first, captial letters next and finally the lower case letters. 
+
+\begin{minted}{console}
+$ cut -f 1 -d : /etc/passwd | sort
+\end{minted}
+
+\noindent
+To sort on the basis of a specific criteria:
+
+\begin{tabular}{lcp{0.85\textwidth}}
+	\textbf{-n} &- &Sort on the basis of actual numberical value, instead of treating a number as a string. \\
+	\textbf{-f} &- &Sort in a case insensitive manner. \\
+\end{tabular}
+
+\subsection{tr}
+The \verb|tr| command replaces certain characters with certain other characters. Thus, it's frequently used in conjunction with pipes to modify the output of a command. 
+
+\begin{minted}{console}
+$ echo hello | tr a-z A-Z
+HELLO
+$ echo hello | tr [:lower:] [:upper:]
+HELLO
+\end{minted}
+
+\section{grep}
+\verb|grep| is a filtering utility that only prints those lines that contain a certain expression matching the pattern provided by a \textit{RegEx}.
+
+\begin{minted}{console}
+$ ps aux | grep tracker
+somu      10450  0.0  0.4 469796  9000 ?        SNl  10:06   0:00 /usr/libexec/tracker-miner-user-guides
+somu      10465  0.0  0.6 536856 12012 ?        Sl   10:06   0:00 /usr/libexec/tracker-store
+somu      10611  0.0  0.7 779816 13108 ?        SNl  10:06   0:00 /usr/libexec/tracker-extract
+somu      10614  0.0  0.5 469800  9632 ?        SNl  10:06   0:00 /usr/libexec/tracker-miner-apps
+somu      10615  0.0  0.7 710160 13204 ?        SNl  10:06   0:00 /usr/libexec/tracker-miner-fs
+root      17396  0.0  0.0 112644   968 pts/0    R+   13:49   0:00 grep --color=auto tracker
+\end{minted}
+
+\noindent
+Another use for \verb|grep| is searching files. The syntax is \verb|grep <filename-pattern> <search-directory>|.
+
+To avoid errors notifying "is a directory", simply redirect errors to \verb|/dev/null|.
+
+\begin{minted}{console}
+$ grep lisa * 2> /dev/null
+group:lisa:x:1001:
+gshadow:lisa:!::
+passwd:lisa:x:1001:1001::/home/lisa:/bin/bash
+passwd-:lisa:x:1001:1001::/home/lisa:/bin/bash
+services:na-localise     5062/tcp                # Localisation access
+services:na-localise     5062/udp                # Localisation access
+shadow:lisa:$6$0l/zSJkh$xjJNYNnj1rPs7Fq0hDWt8VucS0nLL82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT/:17414:0:99999:7:::
+shadow-:lisa:password:17414:0:99999:7:::
+\end{minted}
+
+\subsection{wc}
+Counts the number of words, lines and characters. 
+
+\begin{tabular}{lcl}
+	\textbf{-l} &- &Counts the number of lines \\
+	\textbf{-w} &- &Counts the number of words \\
+	\textbf{-m} &- &Counts the number of characters \\
+	\textbf{-c} &- &Counts the number of bytes \\
+	\textbf{-L} &- &Counts the length of the longest line \\
+\end{tabular}
+
+To see the number of matched lines using \verb|grep|, simply use:
+
+\begin{minted}{console}
+$ ps aux | wc
+188    2344   19581
+\end{minted}
+
+\subsection{grep -l}
+Grep by default returns the name of the matching file followed by the matching lines. This output can be made more readable by \verb|grep -l| which lists all the files in the directory that matches the criteria.
+
+\begin{minted}{console}
+$ grep lisa * 2> /dev/null
+group:lisa:x:1001:
+passwd:lisa:x:1001:1001::/home/lisa:/bin/bash
+services:na-localise     5062/tcp                # Localisation access
+services:na-localise     5062/udp                # Localisation access
+$ grep -l lisa * 2> /dev/null
+group
+passwd
+services
+\end{minted}
+
+\subsection{grep -i}
+The \textbf{-i} flag turns the grep command case-insensitive!
+
+\begin{minted}{console}
+$ grep lisa * 2> /dev/null
+group:lisa:x:1001:
+passwd:lisa:x:1001:1001::/home/lisa:/bin/bash
+services:na-localise     5062/tcp                # Localisation access
+services:na-localise     5062/udp                # Localisation access
+$ grep -i lisa * 2> /dev/null
+group:lisa:x:1001:
+passwd:lisa:x:1001:1001::/home/lisa:/bin/bash
+services:ltctcp          3487/tcp                # LISA TCP Transfer Channel
+services:ltcudp          3487/udp                # LISA UDP Transfer Channel
+services:na-localise     5062/tcp                # Localisation access
+services:na-localise     5062/udp                # Localisation access
+\end{minted}
+
+\subsection{grep -R}
+The usage of the \verb|-R| flag puts grep in recursive mode, where the utility searches for the file in each subfolder as well. 
+
+\begin{minted}{console}
+$ grep -iR lisa * 2> /dev/null
+group:lisa:x:1001:
+lvm/lvm.conf:	# If using external locking (type 2) and initialisation fails, with
+passwd:lisa:x:1001:1001::/home/lisa:/bin/bash
+Binary file pki/ca-trust/extracted/java/cacerts matches
+Binary file pki/java/cacerts matches
+...
+\end{minted}
+
+\subsection{grep -v}
+Grep with a \verb|-v| flag excludes the matching results. Here we can exclude the lines containing "Binary" using:
+
+\begin{minted}{console}
+$ grep -iR lisa * 2> /dev/null | grep -v Binary
+alternatives/jre_openjdk/lib/security/nss.cfg:handleStartupErrors = ignoreMultipleInitialisation
+alternatives/jre_openjdk_exports/lib/security/nss.cfg:handleStartupErrors = ignoreMultipleInitialisation
+brltty/fr-abrege.ctb:word civilisation	14-1236-16
+brltty/fr-abrege.ctb:word civilisations	14-1236-16-234
+brltty/fr-abrege.ctb:word généralisation	1245-1345-16
+brltty/latex-access.ctb:  brailleTranslator.capitalisation = "6dot"
+brltty/latex-access.ctb:      
+passwd:lisa:x:1001:1001::/home/lisa:/bin/bash
+sane.d/canon_pp.conf:# Set a default initialisation mode for each port.  Valid modes are:
+services:ltctcp          3487/tcp                # LISA TCP Transfer Channel
+services:ltcudp          3487/udp                # LISA UDP Transfer Channel
+...
+\end{minted}
+
+\section{sed and awk basics}
+\subsection{sed}
+\verb|sed| is an old utility that's used to process text. Many of it's functionalities can now be done using \verb|grep| itself. 
+
+\subsubsection{sed q}
+To see the first two lines of a file using \verb|sed| we use:
+
+\begin{minted}{console}
+$ sed 2q /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+\end{minted}
+
+\subsubsection{sed -n}
+The \verb|-n| flag makes \verb|sed| print no output unless the \verb|p| flag is also provided. Here, we use a Regular Expression \textit{"\^root"} to match only a certain part of the text and then the \verb|p| flag to print only if that criteria is matched. 
+
+\begin{minted}{console}
+$ sed -n /^root/p /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+\end{minted}
+
+The above result could also be obtained with \verb|grep "^root" /etc/passwd|.
+
+\subsubsection{Substitution with sed}
+Sed can be used to substitute text within a file using the \verb|s| parameter. It's used as :
+
+\begin{minted}{console}
+$ cat names
+Somu
+Arpi
+Neha
+Santy
+Debu
+$ sed -i 's/Santy/Dickwad/g' names
+$ cat names
+Somu
+Arpi
+Neha
+Dickwad
+Debu
+\end{minted}
+
+The \verb|-i| flag asks the modifications to be made in place. Otherwise the output (changed text) would've simply been displayed to the screen and then need to be redirected to a file for storage.
+
+\subsection{awk}
+awk is another utility that is especially useful when working with text files. It excels at operations like cutting out information.
+
+\subsubsection{Cutting out information using awk}
+For certain operations, the \verb|awk| command is a lot more powerful than the \verb|cut| utility. In the example below \verb|cut| has a hard time recognizing the second field, while \verb|awk| has no problem whatsoever!
+
+\begin{minted}{console}
+$ ps aux | grep 'gdm'
+root       1117  0.0  0.1 480248  4688 ?        Ssl  09:20   0:00 /usr/sbin/gdm
+root       1333  0.8  1.2 328524 47220 tty1     Ssl+ 09:20   0:43 /usr/bin/X :0 -background none -noreset -audit 4 -verbose -auth /run/gdm/auth-for-gdm-bgrBZH/database -seat seat0 -nolisten tcp vt1
+root       1718  0.0  0.1 528944  5848 ?        Sl   09:20   0:00 gdm-session-worker [pam/gdm-password]
+gdm        1737  0.0  0.1 458088  4152 ?        Sl   09:20   0:00 ibus-daemon --xim --panel disable
+gdm        1741  0.0  0.1 373560  5424 ?        Sl   09:20   0:00 /usr/libexec/ibus-dconf
+gdm        1745  0.0  0.2 438152  7772 ?        Sl   09:20   0:00 /usr/libexec/ibus-x11 --kill-daemon
+somu      12218  0.0  0.0 112664   972 pts/0    R+   10:47   0:00 grep --color=auto gdm
+$ ps aux | grep 'gdm' | cut -f 2
+root       1117  0.0  0.1 480248  4688 ?        Ssl  09:20   0:00 /usr/sbin/gdm
+root       1333  0.8  1.2 328524 47220 tty1     Ssl+ 09:20   0:43 /usr/bin/X :0 -background none -noreset -audit 4 -verbose -auth /run/gdm/auth-for-gdm-bgrBZH/database -seat seat0 -nolisten tcp vt1
+root       1718  0.0  0.1 528944  5848 ?        Sl   09:20   0:00 gdm-session-worker [pam/gdm-password]
+gdm        1737  0.0  0.1 458088  4152 ?        Sl   09:20   0:00 ibus-daemon --xim --panel disable
+gdm        1741  0.0  0.1 373560  5424 ?        Sl   09:20   0:00 /usr/libexec/ibus-dconf
+gdm        1745  0.0  0.2 438152  7772 ?        Sl   09:20   0:00 /usr/libexec/ibus-x11 --kill-daemon
+somu      12226  0.0  0.0 112664   968 pts/0    R+   10:48   0:00 grep --color=auto gdm
+$ ps aux | grep 'gdm' | awk '{ print $2 }'
+1117
+1333
+1718
+1737
+1741
+1745
+12248
+\end{minted}

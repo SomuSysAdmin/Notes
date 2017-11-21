@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} sudo chage \PYGZhy{}E \PYG{l+m}{2017}\PYGZhy{}12\PYGZhy{}31 laura
+\PYG{g+go}{[sudo] password for somu:}
+\PYG{g+gp}{[somu@cliServer \PYGZti{}]\PYGZdl{}} sudo cat /etc/shadow \PYG{p}{|} grep laura
+\PYG{g+gp}{laura:\PYGZdl{}6\PYGZdl{}0zDhsJet\PYGZdl{}}q2...KRVKv8D2.:17486:0:99999:7::17531:
+\PYG{g+gp}{\PYGZdl{}} sudo chage \PYGZhy{}l laura
+\PYG{g+go}{Last password change                              : Nov 16, 2017}
+\PYG{g+go}{Password expires                                  : never}
+\PYG{g+go}{Password inactive                                 : never}
+\PYG{g+go}{Account expires                                   : Dec 31, 2017}
+\PYG{g+go}{Minimum number of days between password change    : 0}
+\PYG{g+go}{Maximum number of days between password change    : 99999}
+\PYG{g+go}{Number of days of warning before password expires : 7}
+\end{Verbatim}
