@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  21 NOV 2017 13:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  25 NOV 2017 18:25
 entering extended mode
 **./RHCSA.tex
 (RHCSA.tex
@@ -723,6 +723,14 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@lastruleclass=\count125
 \@thisrulewidth=\dimen139
 )
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\array.sty"
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
+\col@sep=\dimen140
+\extrarowheight=\dimen141
+\NC@list=\toks22
+\extratabsurround=\skip48
+\backup@length=\skip49
+)
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
@@ -741,8 +749,8 @@ Package graphics Info: Driver file: pdftex.def on input line 99.
 File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
 \Gread@gobject=\count126
 ))
-\Gin@req@height=\dimen140
-\Gin@req@width=\dimen141
+\Gin@req@height=\dimen142
+\Gin@req@width=\dimen143
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grffile.sty"
 Package: grffile 2016/05/16 v1.17 Extended file name support for graphics (HO)
@@ -852,16 +860,16 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count127
-\scratchdimen=\dimen142
+\scratchdimen=\dimen144
 \scratchbox=\box35
 \nofMPsegments=\count128
 \nofMParguments=\count129
-\everyMPshowfont=\toks22
+\everyMPshowfont=\toks23
 \MPscratchCnt=\count130
-\MPscratchDim=\dimen143
+\MPscratchDim=\dimen145
 \MPnumerator=\count131
 \makeMPintoPDFobject=\count132
-\everyMPtoPDFconversion=\toks23
+\everyMPtoPDFconversion=\toks24
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -948,17 +956,17 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 42.
 
 Underfull \hbox (badness 10000) in paragraph at lines 44--44
-[]\T1/phv/m/n/10 Section
+[]|\T1/phv/m/n/10 Section
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 46--46
-[]\T1/phv/m/n/10 Commands (Pro-
+[]|\T1/phv/m/n/10 Commands (Pro-
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 52--52
-[]\T1/phv/m/n/10 Overview, con-ven-
+[]|\T1/phv/m/n/10 Overview, con-ven-
  []
 
 
@@ -968,7 +976,7 @@ Underfull \hbox (badness 6157) in paragraph at lines 52--52
 
 
 Underfull \hbox (badness 4048) in paragraph at lines 53--53
-[]\T1/phv/m/n/10 System man-age-ment
+[]|\T1/phv/m/n/10 System man-age-ment
  []
 
 
@@ -1488,9 +1496,134 @@ Overfull \hbox (7.97385pt too wide) in paragraph at lines 357--373
 
 ) ("chapters/1.8 Managing Permissions.tex" [34]
 Chapter 7.
-)) [35
+\openout3 = `RHCSA.pyg'.
 
-] (RHCSA.aux)
+
+(_minted-RHCSA/FA0CC69B62032590D6F1D14EFC8E4FB9168FD577FE9E8702C59C4F9251A21699
+.pygtex) [35
+
+]
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/BB655F92FA457EF733F364D5382EB42B168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/C90B99CC4DEF54F42814AEDF5E0FA172168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/8D9E0F3866343B027C752A0B9B276059168FD577FE9E8702C59C4F9251A21699
+.pygtex [36])
+Overfull \hbox (11.34172pt too wide) in paragraph at lines 115--133
+[] 
+ []
+
+[37]
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/ADF05885C1693F3C383057CB8D5E5266168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/42379FA0AD0494DEF85324FD0F0918FF168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+Overfull \hbox (8.82399pt too wide) in paragraph at lines 218--219
+ []|\T1/phv/m/sl/10 Permission| 
+ []
+
+
+Underfull \hbox (badness 2717) in paragraph at lines 234--235
+[]|\T1/phv/m/n/10 Inherit group own-er-ship to all
+ []
+
+[38]
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/EFF17F38E0D998E91D6EEE3CB85715C4168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/EFF17F38E0D998E91D6EEE3CB85715C4168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/3562CB112763B2B4E2D792B7A98B4A9F168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/3562CB112763B2B4E2D792B7A98B4A9F168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/0D0ABB677A8704806FF52E5B783B034D168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/0D0ABB677A8704806FF52E5B783B034D168FD577FE9E8702C59C4F9251A21699
+.pygtex [39])
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/CB09F70D508DF611AB58F7A660FFF477168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/CB09F70D508DF611AB58F7A660FFF477168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/0A346F8F08C0DB80A53B66D7F721BAB9168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/0A346F8F08C0DB80A53B66D7F721BAB9168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/8C23358265585033301658A315DC76A3168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/8C23358265585033301658A315DC76A3168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/DBC80D7F1E8276F0C11F26A4AB660562168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/DBC80D7F1E8276F0C11F26A4AB660562168FD577FE9E8702C59C4F9251A21699
+.pygtex [40])
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/C0F745C12AF23C7FF7BB7555B50EB522168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/C0F745C12AF23C7FF7BB7555B50EB522168FD577FE9E8702C59C4F9251A21699
+.pygtex [41])
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/9EDF9410BBD17B0BEBA17986FB68F5A2168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/9EDF9410BBD17B0BEBA17986FB68F5A2168FD577FE9E8702C59C4F9251A21699
+.pygtex))) [42] (RHCSA.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1498,13 +1631,13 @@ runsystem(del RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7078 strings out of 493323
- 135094 string characters out of 3139068
- 243092 words of memory out of 3000000
- 10223 multiletter control sequences out of 15000+200000
+ 7184 strings out of 493323
+ 140408 string characters out of 3139068
+ 248908 words of memory out of 3000000
+ 10282 multiletter control sequences out of 15000+200000
  42500 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,10n,38p,857b,531s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,10n,38p,857b,532s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
 cit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
 \dpi600\tctt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
@@ -1520,9 +1653,9 @@ MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.
 9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/u
 hvro8a.pfb>
-Output written on RHCSA.pdf (36 pages, 1516243 bytes).
+Output written on RHCSA.pdf (43 pages, 1535966 bytes).
 PDF statistics:
- 356 PDF objects out of 1000 (max. 8388607)
+ 384 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

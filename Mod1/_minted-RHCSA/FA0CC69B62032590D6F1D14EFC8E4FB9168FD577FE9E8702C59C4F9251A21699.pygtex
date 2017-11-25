@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{cd} /home
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}l
+\PYG{g+go}{total 4}
+\PYG{g+go}{drwx\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}.  3 lisa lisa    78 Nov 15 21:32 lisa}
+\PYG{g+go}{drwx\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}.  3 1002 sales   78 Nov 15 21:36 rogue}
+\PYG{g+go}{drwx\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}. 19 somu somu  4096 Nov 20 19:33 somu}
+\PYG{g+go}{drwx\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}.  5 2002   101  128 Nov 19 23:36 testUsr}
+\end{Verbatim}

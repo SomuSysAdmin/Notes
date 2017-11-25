@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} mkdir \PYG{n+nb}{test}
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}T. 2 lori account 19 Nov 25 17:57 account}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}T. 2 lisa sales    6 Nov 25 17:26 sales}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root     6 Nov 25 18:15 test}
+\PYG{g+gp}{\PYGZsh{}} chmod \PYG{l+m}{3770} *
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}T. 2 lori account 19 Nov 25 17:57 account}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}T. 2 lisa sales    6 Nov 25 17:26 sales}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}T. 2 root root     6 Nov 25 18:15 test}
+\PYG{g+gp}{\PYGZsh{}} chmod o+x,g\PYGZhy{}x \PYG{n+nb}{test}
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}T. 2 lori account 19 Nov 25 17:57 account}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}T. 2 lisa sales    6 Nov 25 17:26 sales}
+\PYG{g+go}{drwxrwS\PYGZhy{}\PYGZhy{}t. 2 root root     6 Nov 25 18:15 test}
+\end{Verbatim}

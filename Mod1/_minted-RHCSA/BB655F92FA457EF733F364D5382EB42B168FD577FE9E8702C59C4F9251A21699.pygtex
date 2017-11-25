@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}l
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root 6 Nov 21 14:50 accounts}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root 6 Nov 21 14:50 sales}
+\end{Verbatim}

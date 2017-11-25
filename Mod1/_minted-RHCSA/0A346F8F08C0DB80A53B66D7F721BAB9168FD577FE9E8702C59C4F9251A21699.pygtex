@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}}ls \PYGZhy{}l
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxrwx\PYGZhy{}\PYGZhy{}\PYGZhy{}. 2 lori account 6 Nov 25 17:35 account}
+\PYG{g+go}{drwxrwx\PYGZhy{}\PYGZhy{}\PYGZhy{}. 2 lisa sales   6 Nov 25 17:26 sales}
+\PYG{g+gp}{\PYGZsh{}} su \PYGZhy{} lisa
+\PYG{g+go}{Last login: Sat Nov 25 17:31:57 IST 2017 on pts/0}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{cd} /data/account/
+\PYG{g+gp}{\PYGZdl{}} touch lisa1
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}l
+\PYG{g+go}{total 0}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 lisa lisa 0 Nov 25 17:35 lisa1}
+\end{Verbatim}

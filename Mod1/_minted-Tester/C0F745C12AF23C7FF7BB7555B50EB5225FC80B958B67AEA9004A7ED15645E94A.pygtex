@@ -1,0 +1,31 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}\PYGZhy{}. 2 lori account 32 Nov 25 17:45 account}
+\PYG{g+go}{drwxrwx\PYGZhy{}\PYGZhy{}\PYGZhy{}. 2 lisa sales    6 Nov 25 17:26 sales}
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l account
+\PYG{g+go}{total 4}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 lisa lisa     0 Nov 25 17:35 lisa1}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 lisa account 39 Nov 25 17:46 lisa2}
+\PYG{g+gp}{\PYGZsh{}} chmod +t account
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxrws\PYGZhy{}\PYGZhy{}T. 2 lori account 32 Nov 25 17:45 account}
+\PYG{g+go}{drwxrwx\PYGZhy{}\PYGZhy{}\PYGZhy{}. 2 lisa sales    6 Nov 25 17:26 sales}
+\PYG{g+gp}{\PYGZsh{}} su \PYGZhy{} laura
+\PYG{g+go}{Last login: Sat Nov 25 17:53:25 IST 2017 on pts/0}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{cd} /data/account
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}l
+\PYG{g+go}{total 4}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 lisa lisa     0 Nov 25 17:35 lisa1}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 lisa account 39 Nov 25 17:46 lisa2}
+\PYG{g+gp}{\PYGZdl{}} rm \PYGZhy{}f lisa1
+\PYG{g+go}{rm: cannot remove ‘lisa1’: Operation not permitted}
+\PYG{g+gp}{\PYGZdl{}} su \PYGZhy{} lori
+\PYG{g+go}{Password:}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{cd} /data/account
+\PYG{g+gp}{\PYGZdl{}} rm \PYGZhy{}f lisa1
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}l
+\PYG{g+go}{total 4}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 lisa account 39 Nov 25 17:46 lisa2}
+\end{Verbatim}

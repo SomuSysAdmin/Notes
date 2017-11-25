@@ -41,6 +41,11 @@ breaklines
 
 %	Pretty Tables
 \usepackage{booktabs}
+\usepackage{array}
+
+%	Custom column for tables
+\newcolumntype{P}[1]{ >{\centering\arraybackslash} m{#1\linewidth} }
+\newcolumntype{M}[1]{m{#1\linewidth}}
 
 %	Images Support
 \usepackage{graphicx}

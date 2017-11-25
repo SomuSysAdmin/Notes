@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  21 NOV 2017 13:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  25 NOV 2017 18:24
 entering extended mode
 **./Tester.tex
 (Tester.tex
@@ -723,6 +723,14 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@lastruleclass=\count125
 \@thisrulewidth=\dimen139
 )
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\array.sty"
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
+\col@sep=\dimen140
+\extrarowheight=\dimen141
+\NC@list=\toks22
+\extratabsurround=\skip48
+\backup@length=\skip49
+)
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
@@ -741,8 +749,8 @@ Package graphics Info: Driver file: pdftex.def on input line 99.
 File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
 \Gread@gobject=\count126
 ))
-\Gin@req@height=\dimen140
-\Gin@req@width=\dimen141
+\Gin@req@height=\dimen142
+\Gin@req@width=\dimen143
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grffile.sty"
 Package: grffile 2016/05/16 v1.17 Extended file name support for graphics (HO)
@@ -776,32 +784,32 @@ runsystem(del Tester.aex)...executed.
  (Tester.aux)
 \openout1 = `Tester.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 2.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 2.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 6.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 2.
-LaTeX Font Info:    Try loading font information for T1+phv on input line 2.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 6.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1phv.fd"
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 2.
+(Font)              scaled to size 9.49997pt on input line 6.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -840,16 +848,16 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count127
-\scratchdimen=\dimen142
+\scratchdimen=\dimen144
 \scratchbox=\box35
 \nofMPsegments=\count128
 \nofMParguments=\count129
-\everyMPshowfont=\toks22
+\everyMPshowfont=\toks23
 \MPscratchCnt=\count130
-\MPscratchDim=\dimen143
+\MPscratchDim=\dimen145
 \MPnumerator=\count131
 \makeMPintoPDFobject=\count132
-\everyMPtoPDFconversion=\toks23
+\everyMPtoPDFconversion=\toks24
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -866,36 +874,231 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
+("chapters/1.8 Managing Permissions.tex"
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 19.70294pt on input line 5.
+(Font)              scaled to size 19.70294pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 5.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 19.70294pt on input line 5.
+(Font)              scaled to size 19.70294pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 5.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 23.63593pt on input line 5.
-[1
+(Font)              scaled to size 23.63593pt on input line 1.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 13.67995pt on input line 2.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 2.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 13.67995pt on input line 2.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 3.
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+\openout3 = `Tester.pyg'.
 
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] (Tester.aux) ) 
+(_minted-Tester/default-pyg-prefix.pygstyle) (_minted-Tester/default.pygstyle)
+(_minted-Tester/FA0CC69B62032590D6F1D14EFC8E4FB95FC80B958B67AEA9004A7ED15645E94
+A.pygtex
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 7.59998pt on input line 1.
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
+)
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 11.39996pt on input line 22.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 22.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 11.39996pt on input line 22.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 27.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 27.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 29.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 9.49997pt on input line 29.
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 56.
+LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
+(Font)              scaled to size 9.49997pt on input line 56.
+ [1
+
+
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/BB655F92FA457EF733F364D5382EB42B5FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/C90B99CC4DEF54F42814AEDF5E0FA1725FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/8D9E0F3866343B027C752A0B9B2760595FC80B958B67AEA9004A7ED15645E94
+A.pygtex [2])
+Overfull \hbox (11.34172pt too wide) in paragraph at lines 115--133
+[] 
+ []
+
+[3]
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/ADF05885C1693F3C383057CB8D5E52665FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/42379FA0AD0494DEF85324FD0F0918FF5FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+Overfull \hbox (8.82399pt too wide) in paragraph at lines 218--219
+ []|\T1/phv/m/sl/10 Permission| 
+ []
+
+
+Underfull \hbox (badness 2717) in paragraph at lines 234--235
+[]|\T1/phv/m/n/10 Inherit group own-er-ship to all
+ []
+
+[4]
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/EFF17F38E0D998E91D6EEE3CB85715C45FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/EFF17F38E0D998E91D6EEE3CB85715C45FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/3562CB112763B2B4E2D792B7A98B4A9F5FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/3562CB112763B2B4E2D792B7A98B4A9F5FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/0D0ABB677A8704806FF52E5B783B034D5FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/0D0ABB677A8704806FF52E5B783B034D5FC80B958B67AEA9004A7ED15645E94
+A.pygtex [5])
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/CB09F70D508DF611AB58F7A660FFF4775FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/CB09F70D508DF611AB58F7A660FFF4775FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/0A346F8F08C0DB80A53B66D7F721BAB95FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/0A346F8F08C0DB80A53B66D7F721BAB95FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/8C23358265585033301658A315DC76A35FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/8C23358265585033301658A315DC76A35FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/DBC80D7F1E8276F0C11F26A4AB6605625FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/DBC80D7F1E8276F0C11F26A4AB6605625FC80B958B67AEA9004A7ED15645E94
+A.pygtex [6])
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/C0F745C12AF23C7FF7BB7555B50EB5225FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/C0F745C12AF23C7FF7BB7555B50EB5225FC80B958B67AEA9004A7ED15645E94
+A.pygtex [7])
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/9EDF9410BBD17B0BEBA17986FB68F5A25FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(_minted-Tester/9EDF9410BBD17B0BEBA17986FB68F5A25FC80B958B67AEA9004A7ED15645E94
+A.pygtex))
+runsystem(del _minted-Tester\EB5287808CFD85401912430A8EC750745FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+runsystem(del _minted-Tester\5AA9DF2CBE8D3D40A8B03EFD2ABCCD575FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+runsystem(del _minted-Tester\65A9BE8F215F2CBBA81C3FA059DCC0355FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+runsystem(del _minted-Tester\56E5F2BEEC40394BEADD91F31EE7294F5FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+runsystem(del _minted-Tester\CD53A4EF0AE39122BE5924C18567050D5FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+runsystem(del _minted-Tester\D523CD7A36809C897759D7E7ED833E9A5FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+runsystem(del _minted-Tester\1BF8CFA1CCC76D2A11313C085CF9F2945FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+runsystem(del _minted-Tester\A2CBC0DF551F3DC555848A87212576E45FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+runsystem(del _minted-Tester\4AF547BE19BC56DE1A695D196FE127B35FC80B958B67AEA900
+4A7ED15645E94A.pygtex)...executed.
+
+ [8] (Tester.aux)
+runsystem(del Tester.pyg)...executed.
+
+ ) 
 Here is how much of TeX's memory you used:
- 6426 strings out of 493323
- 104880 string characters out of 3139068
- 217284 words of memory out of 3000000
- 9856 multiletter control sequences out of 15000+200000
- 14489 words of font info for 22 fonts, out of 3000000 for 9000
+ 6798 strings out of 493323
+ 114569 string characters out of 3139068
+ 228163 words of memory out of 3000000
+ 10145 multiletter control sequences out of 15000+200000
+ 33059 words of font info for 37 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,5n,35p,858b,129s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program
- Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX 2.9/font
-s/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/he
-lvetic/uhvr8a.pfb>
-Output written on Tester.pdf (1 page, 11606 bytes).
+ 41i,9n,36p,858b,421s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc} <C:\Users\Somu\AppD
+ata\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk> <C:\Users\
+Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0500.pk> <
+C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1
+000.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Pro
+gram Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on Tester.pdf (8 pages, 81863 bytes).
 PDF statistics:
- 15 PDF objects out of 1000 (max. 8388607)
+ 162 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
