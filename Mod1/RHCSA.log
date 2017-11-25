@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  25 NOV 2017 18:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  25 NOV 2017 21:00
 entering extended mode
 **./RHCSA.tex
 (RHCSA.tex
@@ -1545,85 +1545,84 @@ Underfull \hbox (badness 2717) in paragraph at lines 234--235
 [38]
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/EFF17F38E0D998E91D6EEE3CB85715C4168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/EFF17F38E0D998E91D6EEE3CB85715C4168FD577FE9E8702C59C4F9251A21699
 .pygtex)
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/3562CB112763B2B4E2D792B7A98B4A9F168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (_minted-RHCSA/3562CB112763B2B4E2D792B7A98B4A9F168FD577FE9E8702C59C4F9251A21699
 .pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/0D0ABB677A8704806FF52E5B783B034D168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/0D0ABB677A8704806FF52E5B783B034D168FD577FE9E8702C59C4F9251A21699
 .pygtex [39])
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/CB09F70D508DF611AB58F7A660FFF477168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (_minted-RHCSA/CB09F70D508DF611AB58F7A660FFF477168FD577FE9E8702C59C4F9251A21699
 .pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/0A346F8F08C0DB80A53B66D7F721BAB9168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/0A346F8F08C0DB80A53B66D7F721BAB9168FD577FE9E8702C59C4F9251A21699
 .pygtex)
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/8C23358265585033301658A315DC76A3168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (_minted-RHCSA/8C23358265585033301658A315DC76A3168FD577FE9E8702C59C4F9251A21699
 .pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/DBC80D7F1E8276F0C11F26A4AB660562168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/DBC80D7F1E8276F0C11F26A4AB660562168FD577FE9E8702C59C4F9251A21699
 .pygtex [40])
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/C0F745C12AF23C7FF7BB7555B50EB522168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (_minted-RHCSA/C0F745C12AF23C7FF7BB7555B50EB522168FD577FE9E8702C59C4F9251A21699
 .pygtex [41])
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/9EDF9410BBD17B0BEBA17986FB68F5A2168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/9EDF9410BBD17B0BEBA17986FB68F5A2168FD577FE9E8702C59C4F9251A21699
-.pygtex))) [42] (RHCSA.aux)
+.pygtex) [42]
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/B1E1B4624A26910891C84D6F6076B9D9168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/B8AF4D5B2A775C38A67B7BB35D094687168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/35197FECF3C6C3A10DD385DC7F7077FE168FD577FE9E8702C59C4F9251A21699
+.pygtex) [43]
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/73D4CAF8B03140CFF87EC468E0DBE006168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/BD7099643B9FBF03B607C50B8ADF529D168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/D3E7037110744925F807A77F73F299FE168FD577FE9E8702C59C4F9251A21699
+.pygtex [44])
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/39AE1F1AB19A6C95D82C2B5BB4311520168FD577FE9E8702C59C4F9251A21699
+.pygtex))) [45] (RHCSA.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1631,10 +1630,10 @@ runsystem(del RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7184 strings out of 493323
- 140408 string characters out of 3139068
- 248908 words of memory out of 3000000
- 10282 multiletter control sequences out of 15000+200000
+ 7212 strings out of 493323
+ 142641 string characters out of 3139068
+ 254057 words of memory out of 3000000
+ 10289 multiletter control sequences out of 15000+200000
  42500 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,38p,857b,532s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1653,9 +1652,9 @@ MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.
 9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/u
 hvro8a.pfb>
-Output written on RHCSA.pdf (43 pages, 1535966 bytes).
+Output written on RHCSA.pdf (46 pages, 1543850 bytes).
 PDF statistics:
- 384 PDF objects out of 1000 (max. 8388607)
+ 393 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

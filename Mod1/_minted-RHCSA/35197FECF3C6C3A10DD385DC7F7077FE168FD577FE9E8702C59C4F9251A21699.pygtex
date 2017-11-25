@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} getfacl account
+\PYG{g+go}{file: account}
+\PYG{g+go}{owner: lori}
+\PYG{g+go}{group: account}
+\PYG{g+go}{flags: \PYGZhy{}st}
+\PYG{g+go}{user::rwx}
+\PYG{g+go}{group::rwx}
+\PYG{g+go}{other::\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\end{Verbatim}

@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZdl{}} chmod \PYG{l+m}{750} myFile
-\PYG{g+gp}{\PYGZdl{}} chmod u+x,g\PYGZhy{}r,o\PYGZhy{}wx myFile2
-\PYG{g+gp}{\PYGZdl{}} chmod \PYG{l+m}{0}\PYGZhy{}x myFile3
-\end{Verbatim}

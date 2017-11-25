@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{	\PYGZdl{}} sed 2q /etc/passwd
-\PYG{g+go}{	root:x:0:0:root:/root:/bin/bash}
-\PYG{g+go}{	bin:x:1:1:bin:/bin:/sbin/nologin}
-\end{Verbatim}

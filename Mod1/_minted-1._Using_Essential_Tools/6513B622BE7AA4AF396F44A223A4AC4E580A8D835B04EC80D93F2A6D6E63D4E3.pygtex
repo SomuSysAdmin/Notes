@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-		\PYGZdl{} ps aux \PYG{p}{|} awk \PYG{l+s+s1}{\PYGZsq{}\PYGZob{}print \PYGZdl{}2\PYGZcb{}\PYGZsq{}}
-		\PYGZdl{} ps aux \PYG{p}{|} awk \PYG{l+s+s1}{\PYGZsq{}\PYGZob{}print \PYGZdl{}2\PYGZcb{}\PYGZsq{}} \PYG{p}{|} sort
-		\PYGZdl{} ps aux \PYG{p}{|} awk \PYG{l+s+s1}{\PYGZsq{}\PYGZob{}print \PYGZdl{}2\PYGZcb{}\PYGZsq{}} \PYG{p}{|} sort \PYGZhy{}n
-\end{Verbatim}

@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{cd} account/
+\PYG{g+gp}{\PYGZsh{}} mkdir \PYG{l+m}{2017}
+\PYG{g+gp}{\PYGZsh{}} getfacl \PYG{l+m}{2017}
+\PYG{g+go}{file: 2017}
+\PYG{g+go}{owner: root}
+\PYG{g+go}{group: account}
+\PYG{g+go}{flags: \PYGZhy{}s\PYGZhy{}}
+\PYG{g+go}{user::rwx}
+\PYG{g+go}{group::rwx}
+\PYG{g+go}{group:sales:r\PYGZhy{}\PYGZhy{}}
+\PYG{g+go}{mask::rwx}
+\PYG{g+go}{other::\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{g+go}{default:user::rwx}
+\PYG{g+go}{default:group::rwx}
+\PYG{g+go}{default:group:sales:r\PYGZhy{}\PYGZhy{}}
+\PYG{g+go}{default:mask::rwx}
+\PYG{g+go}{default:other::\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\end{Verbatim}

@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{	\PYGZdl{}} sed \PYGZhy{}n /\PYGZca{}root/p /etc/passwd
-\PYG{g+go}{	root:x:0:0:root:/root:/bin/bash}
-\end{Verbatim}

@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} chmod u+s game
-\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l \PYG{p}{|} grep game
-\PYG{g+go}{\PYGZhy{}rwsr\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 root root 77 Nov 22 19:48 game}
-\end{Verbatim}

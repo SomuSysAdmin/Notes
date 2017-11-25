@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-	auth        sufficient    pam\PYGZus{}unix.so nullok try\PYGZus{}first\PYGZus{}pass
-	...
-	auth        sufficient    pam\PYGZus{}ldap.so use\PYGZus{}first\PYGZus{}pass
-\end{Verbatim}

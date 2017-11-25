@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{	\PYGZdl{}} scp \PYGZhy{}P \PYG{l+m}{22} names \PYG{l+m}{192}.168.152.129:\PYGZti{}
-\PYG{g+go}{	names                  100\PYGZpc{}   28     8.1KB/s   00:00}
-\end{Verbatim}

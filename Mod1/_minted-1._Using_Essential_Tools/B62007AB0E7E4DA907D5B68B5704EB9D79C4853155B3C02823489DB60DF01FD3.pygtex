@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{	\PYGZdl{}} cat /etc/shadow \PYG{p}{|} grep lisa
-\PYG{g+go}{	lisa:!!:17485:0:99999:7:::}
-\end{Verbatim}

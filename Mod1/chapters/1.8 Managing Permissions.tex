@@ -461,3 +461,166 @@ drwxrwS--t. 2 root root     6 Nov 25 18:15 test
 
 \noindent
 An example of a folder with sticky bit set by default is \verb|/tmp| where all users must be allowed to write files, but we don't want users to delete the files of other users.
+
+	\section{Understanding ACLs}
+Access Control Lists are a way to permit allocation of permissions to a file/directory to more than one user or group. Normally, a file has only one user who is owner and only one group with a certain permission set. With ACLs it's possible to set different set of permissions to different groups/users! They can also be used to setup the default permissions for all newly created files/directories for any directory. 
+
+\subsection{Mount options}
+To actually user ACLs, the \textbf{acl mount} options must be set. This can be done using either of \verb|/etc/fstab| or \textbf{systemd}.
+
+\subsubsection{tune2fs for Ext file systems}
+\vspace{-10pt}
+\textbf{tune2fs} is an utility that lets us set adjustable file system parameters for the default Ext file system of RHEL/CentOS 7. This makes it possible to put the mount options \textit{not} in a seperate file, but make it a property of the file system itself. Thus, if the file system is ever migrated to another server, the properties will be moved with it and not need to be set up again!
+\vspace{-10pt}
+
+\subsubsection{XFS}
+In XFS, there is no need for mounting options as it's a default  mount option.
+\vspace{-10pt}
+
+\subsection{Commands} 
+There are two primary commands to use ACLs:	\textbf{setfacl} - (Set File Access Control Lists) and \textbf{getfacl} - (Get File Access Control Lists) are the two commands used to work with ACLs. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ setfacl -m g:sales:rx /data/account
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The critical part of this command is the part \verb|g:sales:rx| which tells us that the group \textit{sales} is getting the read and execute permissions. To allow read \& write permissions for the user \textit{lisa} we can use : \verb|u:lisa:rw|. 
+\vspace{-10pt}
+
+\subsubsection{Default ACL}
+After setting any ACL we also need to set up a default ACL that'll handle all items that we're going to create later in the future in that folder. This is done by specifying a \verb|d| (default) in the \verb|setfacl| command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ setfact -m d:g:account:rx /data/account
+\end{minted}
+\vspace{-10pt}
+
+\section{Managing ACLs}
+Let us consider a case where the account group needs read only access to the sales directory and vice versa. Of course we don't want to grant any access to others. Now, we need to assign a secondary group to the \textit{sales} and \textit{account} directory without removing their respective primary groups. This can be done using ACLs. 
+
+When the ACLs haven't been setup yet, the \verb|getfacl| command shows the same information as the \verb|ls -l| command. 
+\vspace{-15pt}
+\begin{minted}{console}
+# getfacl account
+file: account
+owner: lori
+group: account
+flags: -st
+user::rwx
+group::rwx
+other::---
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The \verb|flags: -st| parameter shows us whether the SetUID, SetGID and Sticky Bit are set, in that order (sst). Since the GID is set, as is the sticky bit, but not the UID, the flags shows up as \verb|-st|. 
+
+Note that the ACLs are copying over the current permission settings to the ACL. Thus, before setting ACLs, we need to ensure our permissions are exactly the way we want them to be. If we try to change the permission settings after creating the ACLs, we will end up in a mess. 
+
+\begin{tabular}{ccl}
+	\toprule
+	\textbf{Option} & &\textbf{Description} \\
+	\midrule
+	\textbf{-m} &- &Modify, followed immediately by what needs to be modified. \\ 
+	\textbf{-R} &- &Recursive, i.e., apply to all files currently in the directory. \\
+	\bottomrule
+\end{tabular}
+
+\noindent
+To set the sales group to have read access on the account folder and to check the permissions, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# setfacl -R -m g:sales:r account
+# getfacl account
+file: account
+owner: lori
+group: account
+flags: -st
+user::rwx
+group::rwx
+group:sales:r--
+mask::rwx
+other::---
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This only takes care of the items already present in the \textit{account} directory, but not the new files that will be created in it. For that, we need to setup a default ACL. NOTE that default ACLs do no need to be applied recursively. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# setfacl -m d:g:sales:r account
+getfacl account
+file: account
+owner: lori
+group: account
+flags: -st
+user::rwx
+group::rwx
+group:sales:r--
+mask::rwx
+other::---
+default:user::rwx
+default:group::rwx
+default:group:sales:r--
+default:mask::rwx
+default:other::---
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The default ACL for the user, groups, etc are created from the current permission settings of the directory. If we make a directory in it, the following will be the ACL for it:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cd account/
+# mkdir 2017
+# getfacl 2017
+file: 2017
+owner: root
+group: account
+flags: -s-
+user::rwx
+group::rwx
+group:sales:r--
+mask::rwx
+other::---
+default:user::rwx
+default:group::rwx
+default:group:sales:r--
+default:mask::rwx
+default:other::---
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now, if we were to make a new file in this directory, we get the following ACL for it: (Note that a file, by definition, can't have any default settings unlike directories, since they are leaf objects that can't have any children to apply the default permissions).
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cd 2017/
+# touch testFile
+# getfacl testFile 
+file: testFile
+owner: root
+group: account
+user::rw-
+group::rwx			#effective:rw-
+group:sales:r--
+mask::rw-
+other::---
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Note that the mask has become active. This is because in case of files, we never want to grant execute permissions by default. So, even though in the POSIX permission, the group is granted \verb|rwx| permission set, the mask of \verb|rw-| is superimposed on it, and the union of the two, (i.e., \verb|rw-|) is the effective permissions on the file for the owner group. 
+
+Thus, we need to remember that whenever we set ACLs on a directory we need two commands: one to set the ACL for the existing files, and the other for the default ACLs for the new files that can be created in the directory. Contrastingly, ACLs need to be set with only one command in case of files (when manually setting them to a file; inheritance of ACLs is automatic). 
+
+\subsection{history}
+The \verb|history| command shows us all the commands that were executed on the terminal (since last boot).

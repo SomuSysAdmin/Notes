@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-	*	\PYGZhy{}fstype\PYG{o}{=}cifs,username\PYG{o}{=}ldapusers,password\PYG{o}{=}password\PYG{l+s+se}{\PYGZbs{}}
-			://server.rhatcertification.com/data/\PYG{p}{\PYGZam{}}
-\end{Verbatim}
