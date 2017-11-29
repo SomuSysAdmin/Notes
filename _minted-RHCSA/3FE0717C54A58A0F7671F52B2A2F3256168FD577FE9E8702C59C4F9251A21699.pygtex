@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ip route add \PYG{l+m}{20}.0.0.0/8 via \PYG{l+m}{192}.168.4.4
+\end{Verbatim}

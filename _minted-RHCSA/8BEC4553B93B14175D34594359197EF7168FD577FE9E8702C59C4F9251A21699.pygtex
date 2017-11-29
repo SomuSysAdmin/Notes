@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} host www.somusysadmin.com
+\PYG{g+go}{www.somusysadmin.com has address 104.27.137.245}
+\PYG{g+go}{www.somusysadmin.com has address 104.27.136.245}
+\PYG{g+go}{www.somusysadmin.com has IPv6 address 2400:cb00:2048:1::681b:89f5}
+\PYG{g+go}{www.somusysadmin.com has IPv6 address 2400:cb00:2048:1::681b:88f5}
+\end{Verbatim}

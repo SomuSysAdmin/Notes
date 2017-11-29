@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} systemctl restart NetworkManager
+\PYG{g+gp}{\PYGZsh{}} systemctl status \PYGZhy{}l NetworkManager
+\end{Verbatim}

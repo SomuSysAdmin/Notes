@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ip \PYGZhy{}s link
+\PYG{g+go}{1: lo: \PYGZlt{}LOOPBACK,UP,LOWER\PYGZus{}UP\PYGZgt{} mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT qlen 1}
+\PYG{g+go}{link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00}
+\PYG{g+go}{RX: bytes  packets  errors  dropped overrun mcast}
+\PYG{g+go}{126271     1008     0       0       0       0}
+\PYG{g+go}{TX: bytes  packets  errors  dropped carrier collsns}
+\PYG{g+go}{126271     1008     0       0       0       0}
+\PYG{g+go}{2: ens33: \PYGZlt{}BROADCAST,MULTICAST,UP,LOWER\PYGZus{}UP\PYGZgt{} mtu 1500 qdisc pfifo\PYGZus{}fast state UP mode DEFAULT qlen 1000}
+\PYG{g+go}{link/ether 00:0c:29:d6:73:d0 brd ff:ff:ff:ff:ff:ff}
+\PYG{g+go}{RX: bytes  packets  errors  dropped overrun mcast}
+\PYG{g+go}{22610122   182819   0       0       0       0}
+\PYG{g+go}{TX: bytes  packets  errors  dropped carrier collsns}
+\PYG{g+go}{1686685    16970    0       0       0       0}
+\PYG{g+go}{3: virbr0: \PYGZlt{}NO\PYGZhy{}CARRIER,BROADCAST,MULTICAST,UP\PYGZgt{} mtu 1500 qdisc noqueue state DOWN mode DEFAULT qlen 1000}
+\PYG{g+go}{link/ether 52:54:00:a5:7f:97 brd ff:ff:ff:ff:ff:ff}
+\PYG{g+go}{RX: bytes  packets  errors  dropped overrun mcast}
+\PYG{g+go}{0          0        0       0       0       0}
+\PYG{g+go}{TX: bytes  packets  errors  dropped carrier collsns}
+\PYG{g+go}{0          0        0       0       0       0}
+\PYG{g+go}{4: virbr0\PYGZhy{}nic: \PYGZlt{}BROADCAST,MULTICAST\PYGZgt{} mtu 1500 qdisc pfifo\PYGZus{}fast master virbr0 state DOWN mode DEFAULT qlen 1000}
+\PYG{g+go}{link/ether 52:54:00:a5:7f:97 brd ff:ff:ff:ff:ff:ff}
+\PYG{g+go}{RX: bytes  packets  errors  dropped overrun mcast}
+\PYG{g+go}{0          0        0       0       0       0}
+\PYG{g+go}{TX: bytes  packets  errors  dropped carrier collsns}
+\PYG{g+go}{0          0        0       0       0       0}
+\end{Verbatim}

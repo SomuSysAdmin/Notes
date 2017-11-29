@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} ip addr show ens33
+\PYG{g+go}{2: ens33: \PYGZlt{}BROADCAST,MULTICAST,UP,LOWER\PYGZus{}UP\PYGZgt{} mtu 1500 qdisc pfifo\PYGZus{}fast state UP qlen 1000}
+\PYG{g+go}{link/ether 00:0c:29:d6:73:d0 brd ff:ff:ff:ff:ff:ff}
+\PYG{g+go}{inet 90.0.16.117/21 brd 90.0.23.255 scope global dynamic ens33}
+\PYG{g+go}{valid\PYGZus{}lft 3037sec preferred\PYGZus{}lft 3037sec}
+\PYG{g+go}{inet6 fe80::2b85:fb69:3b97:ec5f/64 scope link}
+\PYG{g+go}{valid\PYGZus{}lft forever preferred\PYGZus{}lft forever}
+\end{Verbatim}

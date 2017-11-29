@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} traceroute \PYG{l+m}{8}.8.8.8
+\PYG{g+go}{traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets}
+\PYG{g+go}{1  amontpellier\PYGZhy{}653\PYGZhy{}1\PYGZhy{}352\PYGZhy{}1.w90\PYGZhy{}0.abo.wanadoo.fr (90.0.16.1)  4.277 ms  4.078 ms  3.954 ms}
+\PYG{g+go}{2  202.38.180.121 (202.38.180.121)  7.041 ms  6.943 ms  6.890 ms}
+\PYG{g+go}{3  10.10.50.1 (10.10.50.1)  6.796 ms  6.565 ms  6.614 ms}
+\PYG{g+go}{4  202.38.180.50 (202.38.180.50)  12.069 ms  11.962 ms  11.829 ms}
+\PYG{g+go}{5  108.170.253.97 (108.170.253.97)  18.954 ms  18.886 ms 108.170.253.113 (108.170.253.113)  18.768 ms}
+\PYG{g+go}{6  209.85.240.133 (209.85.240.133)  18.232 ms 209.85.240.159 (209.85.240.159)  12.603 ms 72.14.239.7 (72.14.239.7)  12.381 ms}
+\PYG{g+go}{7  google\PYGZhy{}public\PYGZhy{}dns\PYGZhy{}a.google.com (8.8.8.8)  12.223 ms  15.113 ms  14.561 ms}
+\end{Verbatim}

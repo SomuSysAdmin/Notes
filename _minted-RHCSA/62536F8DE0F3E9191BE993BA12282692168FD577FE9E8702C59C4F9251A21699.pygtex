@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ip addr show
+\PYG{g+gp}{\PYGZsh{}} ip route show
+\PYG{g+gp}{\PYGZsh{}} cat /etc/resolv.conf
+\end{Verbatim}
