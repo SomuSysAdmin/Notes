@@ -1,0 +1,178 @@
+\contentsline {part}{I\hspace {1em}Installing RHEL Server}{6}
+\contentsline {chapter}{\numberline {1}Using Essential Tools}{7}
+\contentsline {section}{\numberline {1.1}Man Command}{7}
+\contentsline {section}{\numberline {1.2}Understanding Globbing and Wildcards}{8}
+\contentsline {section}{\numberline {1.3}Understanding Globbing and Wildcards}{8}
+\contentsline {section}{\numberline {1.4}Understanding I/O Redirection and Pipes}{9}
+\contentsline {subsection}{\numberline {1.4.1}I/O Redirection}{9}
+\contentsline {subsection}{\numberline {1.4.2}Piping}{9}
+\contentsline {section}{\numberline {1.5}Using I/O Redireciton and Piping}{9}
+\contentsline {chapter}{\numberline {2}Essential File Management Tools}{11}
+\contentsline {section}{\numberline {2.1}Understanding Linux File System Layout}{11}
+\contentsline {section}{\numberline {2.2}Finding Files}{11}
+\contentsline {section}{\numberline {2.3}Understanding Links}{12}
+\contentsline {section}{\numberline {2.4}Working with Links}{12}
+\contentsline {section}{\numberline {2.5}Working with tar}{13}
+\contentsline {chapter}{\numberline {3}Working with Text Files}{15}
+\contentsline {section}{\numberline {3.1}Understanding Regular Expressions}{15}
+\contentsline {section}{\numberline {3.2}Using common text tools}{15}
+\contentsline {subsection}{\numberline {3.2.1}cat}{15}
+\contentsline {subsection}{\numberline {3.2.2}less}{15}
+\contentsline {subsection}{\numberline {3.2.3}Head and Tail}{16}
+\contentsline {subsubsection}{Head}{16}
+\contentsline {subsubsection}{Tail}{16}
+\contentsline {subsubsection}{Combination of head and tail}{16}
+\contentsline {subsection}{\numberline {3.2.4}cut}{16}
+\contentsline {subsection}{\numberline {3.2.5}sort}{16}
+\contentsline {subsection}{\numberline {3.2.6}tr}{17}
+\contentsline {section}{\numberline {3.3}grep}{17}
+\contentsline {subsection}{\numberline {3.3.1}wc}{18}
+\contentsline {subsection}{\numberline {3.3.2}grep -l}{18}
+\contentsline {subsection}{\numberline {3.3.3}grep -i}{18}
+\contentsline {subsection}{\numberline {3.3.4}grep -R}{19}
+\contentsline {subsection}{\numberline {3.3.5}grep -v}{19}
+\contentsline {section}{\numberline {3.4}sed and awk basics}{19}
+\contentsline {subsection}{\numberline {3.4.1}sed}{19}
+\contentsline {subsubsection}{sed q}{20}
+\contentsline {subsubsection}{sed -n}{20}
+\contentsline {subsubsection}{Substitution with sed}{20}
+\contentsline {subsection}{\numberline {3.4.2}awk}{20}
+\contentsline {subsubsection}{Cutting out information using awk}{21}
+\contentsline {chapter}{\numberline {4}Connecting to a RHEL Server}{22}
+\contentsline {section}{\numberline {4.1}Connecting to a Server with SSH}{22}
+\contentsline {section}{\numberline {4.2}RSA Key fingerprint and known hosts}{22}
+\contentsline {section}{\numberline {4.3}sshd\_config}{22}
+\contentsline {section}{\numberline {4.4}Understanding SSH keys}{23}
+\contentsline {subsection}{\numberline {4.4.1}Client authentication without password}{23}
+\contentsline {section}{\numberline {4.5}Using SSH Keys}{24}
+\contentsline {subsection}{\numberline {4.5.1}Copying SSH keys}{24}
+\contentsline {subsection}{\numberline {4.5.2}Copying files to a server securely using SSH}{25}
+\contentsline {chapter}{\numberline {5}Managing Users and Groups}{26}
+\contentsline {section}{\numberline {5.1}Understanding the need for Users}{26}
+\contentsline {section}{\numberline {5.2}User Properties}{26}
+\contentsline {subsection}{\numberline {5.2.1}Username}{26}
+\contentsline {subsubsection}{/etc/shadow}{26}
+\contentsline {subsection}{\numberline {5.2.2}UID}{27}
+\contentsline {subsection}{\numberline {5.2.3}GID}{27}
+\contentsline {subsection}{\numberline {5.2.4}GECOS or comment field}{27}
+\contentsline {subsection}{\numberline {5.2.5}Home Directory}{27}
+\contentsline {subsection}{\numberline {5.2.6}Default Shell}{27}
+\contentsline {section}{\numberline {5.3}Creating and Managing Users}{27}
+\contentsline {subsection}{\numberline {5.3.1}Adding users}{27}
+\contentsline {subsubsection}{id command}{28}
+\contentsline {section}{\numberline {5.4}Understanding Group Membership}{28}
+\contentsline {section}{\numberline {5.5}Creating and Managing Groups}{28}
+\contentsline {subsection}{\numberline {5.5.1}groupadd}{28}
+\contentsline {subsection}{\numberline {5.5.2}Adding users to a group}{28}
+\contentsline {subsubsection}{usermod}{29}
+\contentsline {section}{\numberline {5.6}User and Group configuration files}{29}
+\contentsline {section}{\numberline {5.7}Managing Password properties}{29}
+\contentsline {subsection}{\numberline {5.7.1}passwd}{29}
+\contentsline {subsubsection}{Locking and Unlocking passwords}{30}
+\contentsline {subsection}{\numberline {5.7.2}chage}{30}
+\contentsline {subsubsection}{Setting the account expiration date}{30}
+\contentsline {chapter}{\numberline {6}Connecting to a LDAP Server}{31}
+\contentsline {section}{\numberline {6.1}Understanding LDAP}{31}
+\contentsline {subsection}{\numberline {6.1.1}/bin/login}{31}
+\contentsline {subsection}{\numberline {6.1.2}ldd}{31}
+\contentsline {subsection}{\numberline {6.1.3}PAM config file syntax}{32}
+\contentsline {subsubsection}{Service Type}{32}
+\contentsline {subsubsection}{PAM Module Controls}{32}
+\contentsline {section}{\numberline {6.2}Telling your server where to find the LDAP Server}{33}
+\contentsline {subsection}{\numberline {6.2.1}nscd}{33}
+\contentsline {subsection}{\numberline {6.2.2}nss-pam-ldapd}{33}
+\contentsline {subsection}{\numberline {6.2.3}pam\_ldap}{33}
+\contentsline {subsection}{\numberline {6.2.4}authconfig-gtk}{34}
+\contentsline {subsubsection}{LDAP Search Base DN}{34}
+\contentsline {subsubsection}{LDAP Server}{34}
+\contentsline {subsubsection}{TLS Certificate}{34}
+\contentsline {subsection}{\numberline {6.2.5}Switching to an LDAP user}{34}
+\contentsline {section}{\numberline {6.3}Understanding Automount}{34}
+\contentsline {subsection}{\numberline {6.3.1}Server selection for auto-mounting}{35}
+\contentsline {subsection}{\numberline {6.3.2}Samba server's CIFS protocol to automount}{35}
+\contentsline {section}{\numberline {6.4}Configuring Automount}{36}
+\contentsline {subsubsection}{Configuration on the Samba Server}{36}
+\contentsline {subsection}{\numberline {6.4.1}NFS Server Automounting}{37}
+\contentsline {section}{\numberline {6.5}Configuring NFS and Automount}{37}
+\contentsline {subsection}{\numberline {6.5.1}yum search}{37}
+\contentsline {subsection}{\numberline {6.5.2}Creating an NFS Server}{37}
+\contentsline {subsection}{\numberline {6.5.3}Starting the NFS server}{38}
+\contentsline {subsection}{\numberline {6.5.4}Automounting NFS}{38}
+\contentsline {section}{\numberline {6.6}Modifying nslcd Configuration}{39}
+\contentsline {subsection}{\numberline {6.6.1}Naming Services LDAP Client Daemon}{39}
+\contentsline {subsubsection}{/etc/nsswitch.conf}{39}
+\contentsline {subsubsection}{PAM using nslcd}{40}
+\contentsline {subsection}{\numberline {6.6.2}/etc/nslcd.conf}{40}
+\contentsline {chapter}{\numberline {7}Managing Permissions}{41}
+\contentsline {section}{\numberline {7.1}Understanding Ownership: Users, Groups and Others}{41}
+\contentsline {subsection}{\numberline {7.1.1}Permissions}{41}
+\contentsline {subsection}{\numberline {7.1.2}Ownership}{42}
+\contentsline {section}{\numberline {7.2}Changing file ownership}{42}
+\contentsline {subsection}{\numberline {7.2.1}chgrp}{42}
+\contentsline {subsection}{\numberline {7.2.2}chown}{42}
+\contentsline {section}{\numberline {7.3}Understanding Basic Permissions}{43}
+\contentsline {section}{\numberline {7.4}Managing Basic Permissions}{43}
+\contentsline {subsection}{\numberline {7.4.1}chmod}{43}
+\contentsline {section}{\numberline {7.5}Understanding Special Permissions}{44}
+\contentsline {section}{\numberline {7.6}Managing Special Permissions}{45}
+\contentsline {subsection}{\numberline {7.6.1}Finding a file with a particular set of permissions}{45}
+\contentsline {subsection}{\numberline {7.6.2}Setting Group ID for a directory}{46}
+\contentsline {subsection}{\numberline {7.6.3}Sticky Bit}{47}
+\contentsline {subsection}{\numberline {7.6.4}Lowercase 's' or 't' vs Uppercase in permissions}{48}
+\contentsline {section}{\numberline {7.7}Understanding ACLs}{48}
+\contentsline {subsection}{\numberline {7.7.1}Mount options}{48}
+\contentsline {subsubsection}{tune2fs for Ext file systems}{49}
+\contentsline {subsubsection}{XFS}{49}
+\contentsline {subsection}{\numberline {7.7.2}Commands}{49}
+\contentsline {subsubsection}{Default ACL}{49}
+\contentsline {section}{\numberline {7.8}Managing ACLs}{49}
+\contentsline {subsection}{\numberline {7.8.1}history}{51}
+\contentsline {chapter}{\numberline {8}Configuring Networking}{52}
+\contentsline {section}{\numberline {8.1}Understanding NIC Naming}{52}
+\contentsline {subsection}{\numberline {8.1.1}Network Device Naming Schemes}{52}
+\contentsline {section}{\numberline {8.2}Managing NIC Configuration with ip Command}{52}
+\contentsline {subsection}{\numberline {8.2.1}show commands}{53}
+\contentsline {subsubsection}{ip link show}{53}
+\contentsline {subsubsection}{ip addr show}{53}
+\contentsline {subsubsection}{ip route show}{53}
+\contentsline {subsection}{\numberline {8.2.2}ip addr add}{53}
+\contentsline {subsection}{\numberline {8.2.3}ip route add}{54}
+\contentsline {section}{\numberline {8.3}Storing Network Configuration persistently}{54}
+\contentsline {subsection}{\numberline {8.3.1}Hostname}{55}
+\contentsline {section}{\numberline {8.4}Understanding Network Manager}{55}
+\contentsline {section}{\numberline {8.5}Using Network Manager utilities (nmcli, nmtui)}{56}
+\contentsline {subsection}{\numberline {8.5.1}nmcli}{56}
+\contentsline {subsubsection}{nmcli connection show}{56}
+\contentsline {subsubsection}{Switching Connections}{57}
+\contentsline {subsection}{\numberline {8.5.2}nmtui}{57}
+\contentsline {section}{\numberline {8.6}Understanding Routing and DNS}{57}
+\contentsline {subsection}{\numberline {8.6.1}Default route}{57}
+\contentsline {subsection}{\numberline {8.6.2}DNS}{58}
+\contentsline {section}{\numberline {8.7}Configuring Routing and DNS}{58}
+\contentsline {section}{\numberline {8.8}Understanding Network Analysis Tools}{59}
+\contentsline {section}{\numberline {8.9}Using Network Analysis Tools}{59}
+\contentsline {subsection}{\numberline {8.9.1}ping}{60}
+\contentsline {subsubsection}{ping flood test}{60}
+\contentsline {subsection}{\numberline {8.9.2}traceroute}{60}
+\contentsline {subsection}{\numberline {8.9.3}host}{60}
+\contentsline {subsection}{\numberline {8.9.4}dig}{61}
+\contentsline {subsection}{\numberline {8.9.5}Physical network problems}{62}
+\contentsline {part}{II\hspace {1em}Operating RHEL Servers}{64}
+\contentsline {chapter}{\numberline {9}Managing Processes}{65}
+\contentsline {section}{\numberline {9.1}Understanding Jobs and Processes}{65}
+\contentsline {subsection}{\numberline {9.1.1}jobs}{65}
+\contentsline {section}{\numberline {9.2}Managing Shell Jobs}{65}
+\contentsline {section}{\numberline {9.3}Getting process information with ps}{67}
+\contentsline {subsection}{\numberline {9.3.1}Getting PID of a process}{68}
+\contentsline {subsubsection}{w command}{68}
+\contentsline {subsection}{\numberline {9.3.2}Seeing Parent and Child process relation}{68}
+\contentsline {section}{\numberline {9.4}Understanding Memory Usage}{68}
+\contentsline {section}{\numberline {9.5}Understanding Performance Load}{69}
+\contentsline {subsection}{\numberline {9.5.1}uptime Command}{69}
+\contentsline {section}{\numberline {9.6}Monitoring System Activity with top}{70}
+\contentsline {section}{\numberline {9.7}Sending Signals to processes}{71}
+\contentsline {subsection}{\numberline {9.7.1}kill command}{71}
+\contentsline {section}{\numberline {9.8}Understanding Priorities and Niceness}{72}
+\contentsline {section}{\numberline {9.9}Changing Process Nice values}{72}
+\contentsline {subsection}{\numberline {9.9.1}Chaning niceness from top}{72}
+\contentsline {subsection}{\numberline {9.9.2}Changing Niceness from command line}{72}

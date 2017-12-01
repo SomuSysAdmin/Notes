@@ -1,0 +1,28 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} sleep \PYG{l+m}{600} \PYG{p}{\PYGZam{}}
+\PYG{g+go}{[1] 41461}
+\PYG{g+gp}{\PYGZdl{}} dd \PYG{k}{if}\PYG{o}{=}/dev/zero \PYG{n+nv}{of}\PYG{o}{=}/dev/null
+\PYG{g+go}{\PYGZca{}Z}
+\PYG{g+go}{[2]+  Stopped                 dd if=/dev/zero of=/dev/null}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{jobs}
+\PYG{g+go}{[1]\PYGZhy{}  Running                 sleep 600 \PYGZam{}}
+\PYG{g+go}{[2]+  Stopped                 dd if=/dev/zero of=/dev/null}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{bg}
+\PYG{g+go}{[2]+ dd if=/dev/zero of=/dev/null \PYGZam{}}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{jobs}
+\PYG{g+go}{[1]\PYGZhy{}  Running                 sleep 600 \PYGZam{}}
+\PYG{g+go}{[2]+  Running                 dd if=/dev/zero of=/dev/null \PYGZam{}}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{fg} \PYG{l+m}{1}
+\PYG{g+go}{sleep 600}
+\PYG{g+go}{\PYGZca{}C}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{fg}
+\PYG{g+go}{dd if=/dev/zero of=/dev/null}
+\PYG{g+go}{\PYGZca{}Z}
+\PYG{g+go}{[2]+  Stopped                 dd if=/dev/zero of=/dev/null}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{jobs}
+\PYG{g+go}{[2]+  Stopped                 dd if=/dev/zero of=/dev/null}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{kill} \PYGZpc{}2
+\PYG{g+go}{[2]+  Terminated              dd if=/dev/zero of=/dev/null}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{jobs}
+\PYG{g+gp}{\PYGZdl{}}
+\end{Verbatim}

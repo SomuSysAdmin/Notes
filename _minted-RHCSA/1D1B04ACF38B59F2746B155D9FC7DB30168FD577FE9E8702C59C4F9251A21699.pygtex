@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} top
+\PYG{g+go}{...}
+\PYG{g+gp}{\PYGZpc{}}Cpu0  : \PYG{l+m}{27}.6 us, \PYG{l+m}{72}.4 sy,  \PYG{l+m}{0}.0 ni,  \PYG{l+m}{0}.0 id,  \PYG{l+m}{0}.0 wa,  \PYG{l+m}{0}.0 hi,  \PYG{l+m}{0}.0 si,  \PYG{l+m}{0}.0 st
+\PYG{g+go}{...}
+\PYG{g+go}{PID USER      PR  NI    VIRT    RES    SHR S \PYGZpc{}CPU \PYGZpc{}MEM     TIME+ COMMAND}
+\PYG{g+go}{48739 root      20   0  107948    612    516 R 32.9  0.0   0:04.59 dd}
+\PYG{g+go}{48737 root      20   0  107948    612    516 R 32.2  0.0   0:06.47 dd}
+\PYG{g+go}{48738 root      20   0  107948    608    516 R 32.2  0.0   0:04.94 dd}
+\end{Verbatim}

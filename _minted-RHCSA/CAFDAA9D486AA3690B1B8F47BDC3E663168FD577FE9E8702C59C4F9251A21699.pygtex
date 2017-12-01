@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} w
+\PYG{g+go}{20:58:00 up 2 days,  1:09,  2 users,  load average: 0.00, 0.01, 0.05}
+\PYG{g+go}{USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT}
+\PYG{g+go}{somu     :0       :0               Mon09   ?xdm?   1:12m  0.84s /usr/libexec/gnome\PYGZhy{}session\PYGZhy{}binary \PYGZhy{}\PYGZhy{}session gnome\PYGZhy{}classic}
+\PYG{g+go}{somu     pts/0    :0               13:41    0.00s  0.67s 10.88s /usr/libexec/gnome\PYGZhy{}terminal\PYGZhy{}server}
+\end{Verbatim}

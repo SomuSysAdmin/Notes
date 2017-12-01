@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} free \PYGZhy{}m
+\PYG{g+go}{total        used        free      shared  buff/cache   available}
+\PYG{g+go}{Mem:           1823         930         198          18         694         656}
+\PYG{g+go}{Swap:          1907           0        1907}
+\end{Verbatim}

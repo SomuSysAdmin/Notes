@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} cat test.sh
+\PYG{g+gp}{\PYGZsh{}}!/bin/bash
+\PYG{g+go}{echo \PYGZdq{}Starting\PYGZdq{}}
+\PYG{g+go}{sleep 10}
+\PYG{g+go}{echo \PYGZdq{}Completed!\PYGZdq{}}
+\PYG{g+gp}{\PYGZdl{}} ./test.sh
+\PYG{g+go}{Starting}
+\PYG{g+go}{\PYGZca{}Z}
+\PYG{g+go}{[1]+  Stopped                 ./test.sh}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{jobs}
+\PYG{g+go}{[1]+  Stopped                 ./test.sh}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{bg}
+\PYG{g+go}{[1]+ ./test.sh \PYGZam{}}
+\PYG{g+gp}{\PYGZdl{}} Completed!
+
+\PYG{g+go}{[1]+  Done                    ./test.sh}
+\PYG{g+gp}{\PYGZdl{}} ./test.sh \PYG{p}{\PYGZam{}}
+\PYG{g+go}{[1] 39773}
+\PYG{g+go}{Starting}
+\PYG{g+gp}{\PYGZdl{}} Completed!
+
+\PYG{g+go}{[1]+  Done                    ./test.sh}
+\end{Verbatim}

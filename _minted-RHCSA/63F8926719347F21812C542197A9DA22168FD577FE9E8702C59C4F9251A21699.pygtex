@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ps aux \PYG{p}{|} grep packagekitd
+\PYG{g+go}{root       1680  0.0  0.3 480016  5752 ?        Ssl  Nov28   0:05 /usr/libexec/packagekitd}
+\PYG{g+go}{root      44081  0.0  0.0 112660   976 pts/0    R+   21:04   0:00 grep \PYGZhy{}\PYGZhy{}color=auto packagekitd}
+\end{Verbatim}
