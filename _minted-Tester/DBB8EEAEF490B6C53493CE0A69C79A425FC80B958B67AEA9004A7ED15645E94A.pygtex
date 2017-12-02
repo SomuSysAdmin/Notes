@@ -1,0 +1,33 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} yum provides */semanage
+\PYG{g+go}{Loaded plugins: fastestmirror, langpacks}
+\PYG{g+go}{Loading mirror speeds from cached hostfile}
+\PYG{g+go}{* base: centos.excellmedia.net}
+\PYG{g+go}{* extras: centos.excellmedia.net}
+\PYG{g+go}{* updates: centos.excellmedia.net}
+\PYG{g+go}{libsemanage\PYGZhy{}devel\PYGZhy{}2.5\PYGZhy{}8.el7.i686 : Header files and libraries used to build}
+\PYG{g+go}{: policy manipulation tools}
+\PYG{g+go}{Repo        : base}
+\PYG{g+go}{Matched from:}
+\PYG{g+go}{Filename    : /usr/include/semanage}
+
+\PYG{g+go}{libsemanage\PYGZhy{}devel\PYGZhy{}2.5\PYGZhy{}8.el7.x86\PYGZus{}64 : Header files and libraries used to build}
+\PYG{g+go}{: policy manipulation tools}
+\PYG{g+go}{Repo        : base}
+\PYG{g+go}{Matched from:}
+\PYG{g+go}{Filename    : /usr/include/semanage}
+
+\PYG{g+go}{policycoreutils\PYGZhy{}python\PYGZhy{}2.5\PYGZhy{}17.1.el7.x86\PYGZus{}64 : SELinux policy core python}
+\PYG{g+go}{: utilities}
+\PYG{g+go}{Repo        : base}
+\PYG{g+go}{Matched from:}
+\PYG{g+go}{Filename    : /usr/sbin/semanage}
+\PYG{g+go}{Filename    : /usr/share/bash\PYGZhy{}completion/completions/semanage}
+
+\PYG{g+go}{policycoreutils\PYGZhy{}python\PYGZhy{}2.5\PYGZhy{}17.1.el7.x86\PYGZus{}64 : SELinux policy core python}
+\PYG{g+go}{: utilities}
+\PYG{g+go}{Repo        : @anaconda}
+\PYG{g+go}{Matched from:}
+\PYG{g+go}{Filename    : /usr/sbin/semanage}
+\PYG{g+go}{Filename    : /usr/share/bash\PYGZhy{}completion/completions/semanage}
+\end{Verbatim}

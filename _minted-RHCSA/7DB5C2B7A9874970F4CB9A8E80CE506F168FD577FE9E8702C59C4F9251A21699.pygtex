@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} which chronyd
+\PYG{g+go}{/usr/sbin/chronyd}
+\end{Verbatim}

@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}qa \PYG{p}{|} grep openjdk
+\PYG{g+go}{java\PYGZhy{}1.8.0\PYGZhy{}openjdk\PYGZhy{}headless\PYGZhy{}1.8.0.151\PYGZhy{}1.b12.el7\PYGZus{}4.x86\PYGZus{}64}
+\PYG{g+go}{java\PYGZhy{}1.8.0\PYGZhy{}openjdk\PYGZhy{}1.8.0.151\PYGZhy{}1.b12.el7\PYGZus{}4.x86\PYGZus{}64}
+\end{Verbatim}

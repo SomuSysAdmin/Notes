@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} yum search semanage
+\PYG{g+go}{Loaded plugins: fastestmirror, langpacks}
+\PYG{g+go}{Loading mirror speeds from cached hostfile}
+\PYG{g+go}{* base: centos.excellmedia.net}
+\PYG{g+go}{* extras: centos.excellmedia.net}
+\PYG{g+go}{* updates: centos.excellmedia.net}
+\PYG{g+go}{============================ N/S matched: semanage =============================}
+\PYG{g+go}{libsemanage\PYGZhy{}python.x86\PYGZus{}64 : semanage python bindings for libsemanage}
+\PYG{g+go}{libsemanage.i686 : SELinux binary policy manipulation library}
+\PYG{g+go}{libsemanage.x86\PYGZus{}64 : SELinux binary policy manipulation library}
+\PYG{g+go}{libsemanage\PYGZhy{}devel.i686 : Header files and libraries used to build policy}
+\PYG{g+go}{: manipulation tools}
+\PYG{g+go}{libsemanage\PYGZhy{}devel.x86\PYGZus{}64 : Header files and libraries used to build policy}
+\PYG{g+go}{: manipulation tools}
+\PYG{g+go}{libsemanage\PYGZhy{}static.i686 : Static library used to build policy manipulation tools}
+\PYG{g+go}{libsemanage\PYGZhy{}static.x86\PYGZus{}64 : Static library used to build policy manipulation}
+\PYG{g+go}{: tools}
+
+\PYG{g+go}{Name and summary matches only, use \PYGZdq{}search all\PYGZdq{} for everything.}
+\end{Verbatim}

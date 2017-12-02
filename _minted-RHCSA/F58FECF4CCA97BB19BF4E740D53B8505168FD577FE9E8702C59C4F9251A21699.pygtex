@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}qd chrony	\PYG{c+c1}{\PYGZsh{} Query documentation}
+\PYG{g+go}{/usr/share/doc/chrony\PYGZhy{}3.1/COPYING}
+\PYG{g+go}{/usr/share/doc/chrony\PYGZhy{}3.1/FAQ}
+\PYG{g+go}{/usr/share/doc/chrony\PYGZhy{}3.1/NEWS}
+\PYG{g+go}{/usr/share/doc/chrony\PYGZhy{}3.1/README}
+\PYG{g+go}{/usr/share/man/man1/chronyc.1.gz}
+\PYG{g+go}{/usr/share/man/man5/chrony.conf.5.gz}
+\PYG{g+go}{/usr/share/man/man8/chronyd.8.gz}
+\end{Verbatim}

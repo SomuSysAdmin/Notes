@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} yum search nmap
+\PYG{g+go}{Loaded plugins: fastestmirror, langpacks}
+\PYG{g+go}{Loading mirror speeds from cached hostfile}
+\PYG{g+go}{* base: centos.excellmedia.net}
+\PYG{g+go}{* extras: centos.excellmedia.net}
+\PYG{g+go}{* updates: centos.excellmedia.net}
+\PYG{g+go}{======================== N/S matched: nmap ========================}
+\PYG{g+go}{nmap\PYGZhy{}frontend.noarch : The GTK+ front end for nmap}
+\PYG{g+go}{nmap\PYGZhy{}ncat.x86\PYGZus{}64 : Nmap\PYGZsq{}s Netcat replacement}
+\PYG{g+go}{nmap.x86\PYGZus{}64 : Network exploration tool and security scanner}
+
+\PYG{g+go}{Name and summary matches only, use \PYGZdq{}search all\PYGZdq{} for everything.}
+\end{Verbatim}

@@ -1,0 +1,41 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l
+\PYG{g+go}{total 4056}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 root root 4152356 Nov 25  2015 nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64.rpm}
+\PYG{g+gp}{\PYGZsh{}} yum localinstall nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64.rpm
+\PYG{g+go}{Loaded plugins: fastestmirror, langpacks}
+\PYG{g+go}{Examining nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64.rpm: 2:nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64}
+\PYG{g+go}{Marking nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64.rpm to be installed}
+\PYG{g+go}{Resolving Dependencies}
+\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZgt{} Running transaction check}
+\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZgt{} Package nmap.x86\PYGZus{}64 2:6.40\PYGZhy{}7.el7 will be installed}
+\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZgt{} Finished Dependency Resolution}
+
+\PYG{g+go}{Dependencies Resolved}
+
+\PYG{g+go}{================================================================================}
+\PYG{g+go}{Package    Arch         Version            Repository                     Size}
+\PYG{g+go}{================================================================================}
+\PYG{g+go}{Installing:}
+\PYG{g+go}{nmap       x86\PYGZus{}64       2:6.40\PYGZhy{}7.el7       /nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64        16 M}
+
+\PYG{g+go}{Transaction Summary}
+\PYG{g+go}{================================================================================}
+\PYG{g+go}{Install  1 Package}
+
+\PYG{g+go}{Total size: 16 M}
+\PYG{g+go}{Installed size: 16 M}
+\PYG{g+go}{Is this ok [y/d/N]: y}
+\PYG{g+go}{Downloading packages:}
+\PYG{g+go}{Running transaction check}
+\PYG{g+go}{Running transaction test}
+\PYG{g+go}{Transaction test succeeded}
+\PYG{g+go}{Running transaction}
+\PYG{g+go}{Installing : 2:nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64                                     1/1}
+\PYG{g+go}{Verifying  : 2:nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64                                     1/1}
+
+\PYG{g+go}{Installed:}
+\PYG{g+go}{nmap.x86\PYGZus{}64 2:6.40\PYGZhy{}7.el7}
+
+\PYG{g+go}{Complete!}
+\end{Verbatim}

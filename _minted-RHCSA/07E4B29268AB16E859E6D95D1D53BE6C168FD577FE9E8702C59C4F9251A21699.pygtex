@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}qpl \PYGZlt{}packageName\PYGZgt{}.rpm
+\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}qp \PYGZhy{}\PYGZhy{}scripts \PYGZlt{}packageName\PYGZgt{}.rpm
+\end{Verbatim}

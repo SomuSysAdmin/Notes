@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}qc chrony	\PYG{c+c1}{\PYGZsh{} Query config}
+\PYG{g+go}{/etc/chrony.conf}
+\PYG{g+go}{/etc/chrony.keys}
+\PYG{g+go}{/etc/logrotate.d/chrony}
+\PYG{g+go}{/etc/sysconfig/chronyd}
+\end{Verbatim}

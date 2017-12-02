@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{[}repoName\PYG{o}{]}
+\PYG{n+nv}{name}\PYG{o}{=}repoName
+\PYG{n+nv}{baseurl}\PYG{o}{=}file:///home/somu/repo
+\PYG{n+nv}{gpgcheck}\PYG{o}{=}\PYG{l+m}{0}
+\end{Verbatim}

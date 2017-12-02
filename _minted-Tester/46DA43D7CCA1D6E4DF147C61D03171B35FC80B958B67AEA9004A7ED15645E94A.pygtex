@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} repoquery \PYGZhy{}qi awesum
+
+\PYG{g+go}{Name        : awesum}
+\PYG{g+go}{Version     : 0.6.0}
+\PYG{g+go}{Release     : 1}
+\PYG{g+go}{Architecture: noarch}
+\PYG{g+go}{Size        : 150637}
+\PYG{g+go}{Packager    : Darren L. LaChausse \PYGZlt{}the\PYGZus{}trapper@users.sourceforge.net\PYGZgt{}}
+\PYG{g+go}{Group       : Applications/Security}
+\PYG{g+go}{URL         : http://awesum.sf.net/}
+\PYG{g+go}{Repository  : Ex11Repo}
+\PYG{g+go}{Summary     : Awesum is an easy to use graphical checksum verifier.}
+\PYG{g+go}{Source      : awesum\PYGZhy{}0.6.0\PYGZhy{}1.src.rpm}
+\PYG{g+go}{Description :}
+\PYG{g+go}{Awesum is a graphical checksum verification utility. It is written in Python}
+\PYG{g+go}{and uses the PyGTK toolkit. Awesum is very easy to use and includes support}
+\PYG{g+go}{for both MD5 and SHA checksum algorithms. Unlike many checksum verification}
+\PYG{g+go}{utilities, Awesum features a progress bar which makes working with large files}
+\PYG{g+go}{(such as CD\PYGZhy{}ROM ISO images) much more bearable.}
+\end{Verbatim}

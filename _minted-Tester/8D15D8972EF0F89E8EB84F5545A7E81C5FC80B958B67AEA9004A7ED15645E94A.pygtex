@@ -1,0 +1,41 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} yum install \PYGZhy{}y nmap
+\PYG{g+go}{Loaded plugins: fastestmirror, langpacks}
+\PYG{g+go}{Loading mirror speeds from cached hostfile}
+\PYG{g+go}{* base: centos.excellmedia.net}
+\PYG{g+go}{* extras: centos.excellmedia.net}
+\PYG{g+go}{* updates: centos.excellmedia.net}
+\PYG{g+go}{Resolving Dependencies}
+\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZgt{} Running transaction check}
+\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZgt{} Package nmap.x86\PYGZus{}64 2:6.40\PYGZhy{}7.el7 will be installed}
+\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZgt{} Finished Dependency Resolution}
+
+\PYG{g+go}{Dependencies Resolved}
+
+\PYG{g+go}{================================================================================}
+\PYG{g+go}{Package        Arch             Version                   Repository      Size}
+\PYG{g+go}{================================================================================}
+\PYG{g+go}{Installing:}
+\PYG{g+go}{nmap           x86\PYGZus{}64           2:6.40\PYGZhy{}7.el7              base           4.0 M}
+
+\PYG{g+go}{Transaction Summary}
+\PYG{g+go}{================================================================================}
+\PYG{g+go}{Install  1 Package}
+
+\PYG{g+go}{Total download size: 4.0 M}
+\PYG{g+go}{Installed size: 16 M}
+\PYG{g+go}{Downloading packages:}
+\PYG{g+go}{No Presto metadata available for base}
+\PYG{g+go}{nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64.rpm                                 | 4.0 MB   06:38}
+\PYG{g+go}{Running transaction check}
+\PYG{g+go}{Running transaction test}
+\PYG{g+go}{Transaction test succeeded}
+\PYG{g+go}{Running transaction}
+\PYG{g+go}{Installing : 2:nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64                                     1/1}
+\PYG{g+go}{Verifying  : 2:nmap\PYGZhy{}6.40\PYGZhy{}7.el7.x86\PYGZus{}64                                     1/1}
+
+\PYG{g+go}{Installed:}
+\PYG{g+go}{nmap.x86\PYGZus{}64 2:6.40\PYGZhy{}7.el7}
+
+\PYG{g+go}{Complete!}
+\end{Verbatim}
