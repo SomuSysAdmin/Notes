@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} at \PYG{l+m}{1}:17
+\PYG{g+go}{at\PYGZgt{} logger Hello @ 02:30PM!}
+\PYG{g+go}{at\PYGZgt{} \PYGZlt{}EOT\PYGZgt{}}
+\PYG{g+go}{job 1 at Mon Dec  4 14:30:00 2017}
+\end{Verbatim}

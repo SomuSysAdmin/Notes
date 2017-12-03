@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} cat man\PYGZhy{}db.cron
+\PYG{c+c1}{\PYGZsh{}!/bin/bash}
+
+\PYG{k}{if} \PYG{o}{[} \PYGZhy{}e /etc/sysconfig/man\PYGZhy{}db \PYG{o}{]}\PYG{p}{;} \PYG{k}{then}
+. /etc/sysconfig/man\PYGZhy{}db
+\PYG{k}{fi}
+
+\PYG{k}{if} \PYG{o}{[} \PYG{l+s+s2}{\PYGZdq{}}\PYG{n+nv}{\PYGZdl{}CRON}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}no\PYGZdq{}} \PYG{o}{]}\PYG{p}{;} \PYG{k}{then}
+\PYG{n+nb}{exit} \PYG{l+m}{0}
+\PYG{k}{fi}
+
+renice +19 \PYGZhy{}p \PYG{n+nv}{\PYGZdl{}\PYGZdl{}} \PYGZgt{}/dev/null \PYG{l+m}{2}\PYGZgt{}\PYG{p}{\PYGZam{}}\PYG{l+m}{1}
+ionice \PYGZhy{}c3 \PYGZhy{}p \PYG{n+nv}{\PYGZdl{}\PYGZdl{}} \PYGZgt{}/dev/null \PYG{l+m}{2}\PYGZgt{}\PYG{p}{\PYGZam{}}\PYG{l+m}{1}
+
+\PYG{n+nv}{LOCKFILE}\PYG{o}{=}/var/lock/man\PYGZhy{}db.lock
+
+\PYG{c+c1}{\PYGZsh{} the lockfile is not meant to be perfect, it\PYGZsq{}s just in case the}
+\PYG{c+c1}{\PYGZsh{} two man\PYGZhy{}db cron scripts get run close to each other to keep}
+\PYG{c+c1}{\PYGZsh{} them from stepping on each other\PYGZsq{}s toes.  The worst that will}
+\PYG{c+c1}{\PYGZsh{} happen is that they will temporarily corrupt the database}
+\PYG{o}{[[} \PYGZhy{}f \PYG{n+nv}{\PYGZdl{}LOCKFILE} \PYG{o}{]]} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n+nb}{exit} \PYG{l+m}{0}
+
+\PYG{n+nb}{trap} \PYG{l+s+s2}{\PYGZdq{}\PYGZob{} rm \PYGZhy{}f }\PYG{n+nv}{\PYGZdl{}LOCKFILE}\PYG{l+s+s2}{ ; exit 0; \PYGZcb{}\PYGZdq{}} EXIT
+touch \PYG{n+nv}{\PYGZdl{}LOCKFILE}
+\PYG{c+c1}{\PYGZsh{} create/update the mandb database}
+mandb \PYG{n+nv}{\PYGZdl{}OPTS}
+
+\PYG{n+nb}{exit} \PYG{l+m}{0}
+\end{Verbatim}

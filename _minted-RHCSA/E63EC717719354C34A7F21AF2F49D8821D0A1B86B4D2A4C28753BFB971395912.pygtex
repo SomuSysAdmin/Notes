@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{SHELL}\PYG{o}{=}/bin/bash
+\PYG{n+nv}{PATH}\PYG{o}{=}/sbin:/bin:/usr/sbin:/usr/bin
+\PYG{n+nv}{MAILTO}\PYG{o}{=}root
+
+\PYG{c+c1}{\PYGZsh{} For details see man 4 crontabs}
+
+\PYG{c+c1}{\PYGZsh{} Example of job definition:}
+\PYG{c+c1}{\PYGZsh{} .\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} minute (0 \PYGZhy{} 59)}
+\PYG{c+c1}{\PYGZsh{} |  .\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} hour (0 \PYGZhy{} 23)}
+\PYG{c+c1}{\PYGZsh{} |  |  .\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} day of month (1 \PYGZhy{} 31)}
+\PYG{c+c1}{\PYGZsh{} |  |  |  .\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} month (1 \PYGZhy{} 12) OR jan,feb,mar,apr ...}
+\PYG{c+c1}{\PYGZsh{} |  |  |  |  .\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} day of week (0 \PYGZhy{} 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat}
+\PYG{c+c1}{\PYGZsh{} |  |  |  |  |}
+\PYG{c+c1}{\PYGZsh{} *  *  *  *  * user\PYGZhy{}name  command to be executed}
+\end{Verbatim}

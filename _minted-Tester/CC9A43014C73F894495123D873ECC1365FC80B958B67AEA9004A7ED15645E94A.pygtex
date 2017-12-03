@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}l /etc/cron.d
+\PYG{g+go}{total 12}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 root root 128 Aug  3 21:03 0hourly}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 root root 108 Jun 13 19:38 raid\PYGZhy{}check}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}. 1 root root 235 Aug  3 15:00 sysstat}
+\end{Verbatim}

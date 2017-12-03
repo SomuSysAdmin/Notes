@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} systemctl status atd \PYGZhy{}l
+\PYG{g+go}{atd.service \PYGZhy{} Job spooling tools}
+\PYG{g+go}{Loaded: loaded (/usr/lib/systemd/system/atd.service; enabled; vendor preset: enabled)}
+\PYG{g+go}{Active: active (running) since Sat 2017\PYGZhy{}12\PYGZhy{}02 15:26:18 IST; 1 day 8h ago}
+\PYG{g+go}{Main PID: 1224 (atd)}
+\PYG{g+go}{CGroup: /system.slice/atd.service}
+\PYG{g+go}{1224 /usr/sbin/atd \PYGZhy{}f}
+
+\PYG{g+go}{Dec 02 15:26:18 vmPrime.somuVMnet.local systemd[1]: Started Job spooling tools.}
+\PYG{g+go}{Dec 02 15:26:18 vmPrime.somuVMnet.local systemd[1]: Starting Job spooling tools.}
+\end{Verbatim}

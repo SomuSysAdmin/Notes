@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  3 DEC 2017 21:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  4 DEC 2017 01:25
 entering extended mode
 **./RHCSA.tex
 (RHCSA.tex
@@ -932,18 +932,18 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 ] [2]
-[3] [4] [5])
+[3] [4] [5] [6])
 \tf@toc=\write6
 \openout6 = `RHCSA.toc'.
 
- ("Mod1/1. Installing RHEL Server.tex" [6]
+ ("Mod1/1. Installing RHEL Server.tex" [7]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
- [7
+ [8
 
 ]
 ("Mod1/chapters/1.2 Using Essential Tools.tex"
@@ -1011,7 +1011,7 @@ Overfull \hbox (16.96973pt too wide) in paragraph at lines 41--56
 [] 
  []
 
-[8
+[9
 
 ]
 \openout3 = `RHCSA.pyg'.
@@ -1023,7 +1023,7 @@ Overfull \hbox (5.26126pt too wide) in paragraph at lines 87--95
 [] 
  []
 
-[9]
+[10]
 Overfull \hbox (17.18716pt too wide) in paragraph at lines 100--106
 [] 
  []
@@ -1046,7 +1046,7 @@ Overfull \hbox (6.7261pt too wide) in paragraph at lines 110--117
 LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 2.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmtt.fd"
 File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [10])
+) [11])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1061,7 +1061,7 @@ File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 
 
 (_minted-RHCSA/A15FCD4F734F0402E512FEB2B791721D168FD577FE9E8702C59C4F9251A21699
-.pygtex)) ("Mod1/chapters/1.3 Essential File Management Tools.tex" [11]
+.pygtex)) ("Mod1/chapters/1.3 Essential File Management Tools.tex" [12]
 Chapter 2.
 \openout3 = `RHCSA.pyg'.
 
@@ -1080,7 +1080,7 @@ Chapter 2.
 .pygtex
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 4.74998pt on input line 3.
- [12
+ [13
 
 ])
 \openout3 = `RHCSA.pyg'.
@@ -1092,7 +1092,7 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 
 
 (_minted-RHCSA/C78145AC5460BA7B5D42425E9632B548168FD577FE9E8702C59C4F9251A21699
-.pygtex [13])
+.pygtex [14])
 Overfull \hbox (56.43706pt too wide) in paragraph at lines 106--115
 [][] 
  []
@@ -1111,7 +1111,7 @@ Overfull \hbox (56.43706pt too wide) in paragraph at lines 106--115
 
 
 (_minted-RHCSA/F08C6A3243CF3F7DE65E6A01FB209398168FD577FE9E8702C59C4F9251A21699
-.pygtex [14])
+.pygtex [15])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1126,9 +1126,9 @@ Overfull \hbox (56.43706pt too wide) in paragraph at lines 106--115
 
 
 (_minted-RHCSA/689D844CB0BAC1417AB6D27F42FAA721168FD577FE9E8702C59C4F9251A21699
-.pygtex)) ("Mod1/chapters/1.4 Working with Text Files.tex" [15]
+.pygtex)) ("Mod1/chapters/1.4 Working with Text Files.tex" [16]
 Chapter 3.
-<"Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg, id=65, 1028.34187pt x 578.16pt>
+<"Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg, id=68, 1028.34187pt x 578.16pt>
 File: "Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg Graphic file (type jpg)
 
 <use "Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg>
@@ -1139,7 +1139,7 @@ put line 5.
 
 
 (_minted-RHCSA/DD281B35C97689622CEBB95CB79839FD168FD577FE9E8702C59C4F9251A21699
-.pygtex [16
+.pygtex [17
 
  <./Mod1/chapters/1.4.a RegEx Cheat Sheet.jpg>])
 \openout3 = `RHCSA.pyg'.
@@ -1166,7 +1166,7 @@ put line 5.
 
 
 (_minted-RHCSA/A7874D942814CBCE3E88F7990035088E168FD577FE9E8702C59C4F9251A21699
-.pygtex [17])
+.pygtex [18])
 Overfull \hbox (6.029pt too wide) in paragraph at lines 64--68
 [][] 
  []
@@ -1198,7 +1198,7 @@ t8VucS0nLL82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT[]/:17414:0:9
 9999:7:::|  
  []
 
-[18])
+[19])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1213,7 +1213,7 @@ t8VucS0nLL82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT[]/:17414:0:9
 
 
 (_minted-RHCSA/5D8C2F4C7C9AA0D296FCF584B18B261F168FD577FE9E8702C59C4F9251A21699
-.pygtex [19])
+.pygtex [20])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1228,7 +1228,7 @@ t8VucS0nLL82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT[]/:17414:0:9
 
 
 (_minted-RHCSA/48CC6A88A48F660371A8EF5C4EC9CCEC168FD577FE9E8702C59C4F9251A21699
-.pygtex [20])
+.pygtex [21])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1238,12 +1238,12 @@ t8VucS0nLL82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT[]/:17414:0:9
 
 
 (_minted-RHCSA/6C2F4A55E4F169179A209DB121A74E41168FD577FE9E8702C59C4F9251A21699
-.pygtex) [21]
+.pygtex) [22]
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/EBDD9E1EC461A9C75243B06B0DC3550A168FD577FE9E8702C59C4F9251A21699
-.pygtex)) ("Mod1/chapters/1.5 Connecting to a RHEL Server.tex" [22]
+.pygtex)) ("Mod1/chapters/1.5 Connecting to a RHEL Server.tex" [23]
 Chapter 4.
 \openout3 = `RHCSA.pyg'.
 
@@ -1254,14 +1254,14 @@ Chapter 4.
 
 
 (_minted-RHCSA/AE3135A64E5EAC56697A6A10DA9B9BFD168FD577FE9E8702C59C4F9251A21699
-.pygtex) [23
+.pygtex) [24
 
 ]
 Overfull \hbox (38.63005pt too wide) in paragraph at lines 27--35
 [][] 
  []
 
-<"Mod1/chapters/1.5.a Server auth".jpg, id=91, 1028.34187pt x 578.16pt>
+<"Mod1/chapters/1.5.a Server auth".jpg, id=95, 1028.34187pt x 578.16pt>
 File: "Mod1/chapters/1.5.a Server auth".jpg Graphic file (type jpg)
 
 <use "Mod1/chapters/1.5.a Server auth".jpg>
@@ -1269,7 +1269,7 @@ Package pdftex.def Info: "Mod1/chapters/1.5.a Server auth".jpg used on input li
 ne 43.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
 
-<"Mod1/chapters/1.5.b Client auth with no password".jpg, id=92, 1028.34187pt x 
+<"Mod1/chapters/1.5.b Client auth with no password".jpg, id=96, 1028.34187pt x 
 578.16pt>
 File: "Mod1/chapters/1.5.b Client auth with no password".jpg Graphic file (type
  jpg)
@@ -1277,7 +1277,7 @@ File: "Mod1/chapters/1.5.b Client auth with no password".jpg Graphic file (type
 Package pdftex.def Info: "Mod1/chapters/1.5.b Client auth with no password".jpg
  used on input line 53.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
- [24 <./Mod1/chapters/1.5.a Server auth.jpg>]
+ [25 <./Mod1/chapters/1.5.a Server auth.jpg>]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1287,7 +1287,7 @@ Package pdftex.def Info: "Mod1/chapters/1.5.b Client auth with no password".jpg
 
 
 (_minted-RHCSA/4F9FB1004C50142F934DABBAE9E85DDC168FD577FE9E8702C59C4F9251A21699
-.pygtex [25 <./Mod1/chapters/1.5.b Client auth with no password.jpg>])
+.pygtex [26 <./Mod1/chapters/1.5.b Client auth with no password.jpg>])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1297,7 +1297,7 @@ Package pdftex.def Info: "Mod1/chapters/1.5.b Client auth with no password".jpg
 
 
 (_minted-RHCSA/05A76AA0D22DA7C2EE7F8C89DC8C5404168FD577FE9E8702C59C4F9251A21699
-.pygtex)) ("Mod1/chapters/1.6 Managing Users and Groups.tex" [26]
+.pygtex)) ("Mod1/chapters/1.6 Managing Users and Groups.tex" [27]
 Chapter 5.
 
 Overfull \hbox (1.09393pt too wide) in paragraph at lines 10--11
@@ -1309,7 +1309,7 @@ Overfull \hbox (1.09393pt too wide) in paragraph at lines 10--11
 
 
 (_minted-RHCSA/FA931C2B7DA9E13832839410B8050DA2168FD577FE9E8702C59C4F9251A21699
-.pygtex) [27
+.pygtex) [28
 
 ]
 Overfull \hbox (7.79176pt too wide) in paragraph at lines 41--50
@@ -1320,7 +1320,7 @@ Overfull \hbox (7.79176pt too wide) in paragraph at lines 41--50
 
 
 (_minted-RHCSA/8A2FAF5C13E2D08EA111ABAE6818D14A168FD577FE9E8702C59C4F9251A21699
-.pygtex [28])
+.pygtex [29])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1330,7 +1330,7 @@ Overfull \hbox (7.79176pt too wide) in paragraph at lines 41--50
 
 
 (_minted-RHCSA/A6F1AA7C427CFA0A72DA651669059435168FD577FE9E8702C59C4F9251A21699
-.pygtex) [29]
+.pygtex) [30]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1349,18 +1349,18 @@ Overfull \hbox (4.30598pt too wide) in paragraph at lines 133--147
 
 
 (_minted-RHCSA/E09B0195AA5C672DF51B7DA0FC340537168FD577FE9E8702C59C4F9251A21699
-.pygtex [30])
+.pygtex [31])
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/FF330399576D7ACF3D83E67D131FFE52168FD577FE9E8702C59C4F9251A21699
-.pygtex)) ("Mod1/chapters/1.7 Connecting to a LDAP Server.tex" [31]
+.pygtex)) ("Mod1/chapters/1.7 Connecting to a LDAP Server.tex" [32]
 Chapter 6.
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/918257B94ECBC87F046B1D360705CBFF168FD577FE9E8702C59C4F9251A21699
-.pygtex [32
+.pygtex [33
 
 ])
 Overfull \hbox (4.44765pt too wide) in paragraph at lines 34--35
@@ -1387,15 +1387,15 @@ Overfull \hbox (22.38416pt too wide) in paragraph at lines 51--64
 
 
 (_minted-RHCSA/CCBDFD86689EE3012A78CA4148785B811D0A1B86B4D2A4C28753BFB971395912
-.pygtex [33])
-<"Mod1/chapters/1.6.a LDAP Authentication".jpg, id=126, 1028.34187pt x 578.16pt
+.pygtex [34])
+<"Mod1/chapters/1.6.a LDAP Authentication".jpg, id=129, 1028.34187pt x 578.16pt
 >
 File: "Mod1/chapters/1.6.a LDAP Authentication".jpg Graphic file (type jpg)
  <use "Mod1/chapters/1.6.a LDAP Authentication".jpg>
 Package pdftex.def Info: "Mod1/chapters/1.6.a LDAP Authentication".jpg used on 
 input line 86.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
- [34 <./Mod1/chapters/1.6.a LDAP Authentication.jpg>]
+ [35 <./Mod1/chapters/1.6.a LDAP Authentication.jpg>]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1405,13 +1405,13 @@ input line 86.
 
 
 (_minted-RHCSA/76629E0E4F1DA83ADD9747E67FA87EC31D0A1B86B4D2A4C28753BFB971395912
-.pygtex) [35]
+.pygtex) [36]
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/9E1DB11EEB501C56DDFA6A774D6A73841D0A1B86B4D2A4C28753BFB971395912
 .pygtex)
-<"Mod1/chapters/1.7.a NFS Automount".jpg, id=133, 1028.34187pt x 578.16pt>
+<"Mod1/chapters/1.7.a NFS Automount".jpg, id=137, 1028.34187pt x 578.16pt>
 File: "Mod1/chapters/1.7.a NFS Automount".jpg Graphic file (type jpg)
 
 <use "Mod1/chapters/1.7.a NFS Automount".jpg>
@@ -1427,14 +1427,14 @@ line 143.
 
 
 (_minted-RHCSA/6478AC494D1E02B65D68A78B208BD7001D0A1B86B4D2A4C28753BFB971395912
-.pygtex [36 <./Mod1/chapters/1.7.a NFS Automount.jpg>])
+.pygtex [37 <./Mod1/chapters/1.7.a NFS Automount.jpg>])
 Overfull \hbox (2.99486pt too wide) in paragraph at lines 167--169
 \T1/phv/m/n/10 So, if any-one goes to [][]\T1/cmtt/m/n/10 * []\T1/phv/m/n/10 (i
 .e., any di-rec-tory in [][]\T1/cmtt/m/n/10 /data/guests[]\T1/phv/m/n/10 ), lik
 e [][]\T1/cmtt/m/n/10 /home/guests/ldapuser1
  []
 
-<"Mod1/chapters/1.7.b Samba Automount".jpg, id=138, 1028.34187pt x 578.16pt>
+<"Mod1/chapters/1.7.b Samba Automount".jpg, id=141, 1028.34187pt x 578.16pt>
 File: "Mod1/chapters/1.7.b Samba Automount".jpg Graphic file (type jpg)
 
 <use "Mod1/chapters/1.7.b Samba Automount".jpg>
@@ -1450,7 +1450,7 @@ t line 174.
 
 
 (_minted-RHCSA/296C64CDFDEA08BA6B9C942F5E366F631D0A1B86B4D2A4C28753BFB971395912
-.pygtex [37 <./Mod1/chapters/1.7.b Samba Automount.jpg>])
+.pygtex [38 <./Mod1/chapters/1.7.b Samba Automount.jpg>])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1465,7 +1465,7 @@ t line 174.
 
 
 (_minted-RHCSA/EE56CD60385ABED5E3521C277D4FFBD01D0A1B86B4D2A4C28753BFB971395912
-.pygtex [38])
+.pygtex [39])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1485,7 +1485,7 @@ t line 174.
 
 
 (_minted-RHCSA/56C0AB7CA3122749327118B3F328CC4F1D0A1B86B4D2A4C28753BFB971395912
-.pygtex [39])
+.pygtex [40])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1505,18 +1505,18 @@ t line 174.
 
 
 (_minted-RHCSA/EF58212EFFD7AF2E376D6D5D8D1D43541D0A1B86B4D2A4C28753BFB971395912
-.pygtex) [40]
+.pygtex) [41]
 Overfull \hbox (7.97385pt too wide) in paragraph at lines 357--373
 [] 
  []
 
-) ("Mod1/chapters/1.8 Managing Permissions.tex" [41]
+) ("Mod1/chapters/1.8 Managing Permissions.tex" [42]
 Chapter 7.
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/FA0CC69B62032590D6F1D14EFC8E4FB9168FD577FE9E8702C59C4F9251A21699
-.pygtex) [42
+.pygtex) [43
 
 ]
 \openout3 = `RHCSA.pyg'.
@@ -1533,12 +1533,12 @@ Chapter 7.
 
 
 (_minted-RHCSA/8D9E0F3866343B027C752A0B9B276059168FD577FE9E8702C59C4F9251A21699
-.pygtex [43])
+.pygtex [44])
 Overfull \hbox (11.34172pt too wide) in paragraph at lines 115--133
 [] 
  []
 
-[44]
+[45]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1558,7 +1558,7 @@ Underfull \hbox (badness 2717) in paragraph at lines 234--235
 []|\T1/phv/m/n/10 Inherit group own-er-ship to all
  []
 
-[45]
+[46]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1573,7 +1573,7 @@ Underfull \hbox (badness 2717) in paragraph at lines 234--235
 
 
 (_minted-RHCSA/0D0ABB677A8704806FF52E5B783B034D168FD577FE9E8702C59C4F9251A21699
-.pygtex [46])
+.pygtex [47])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1593,17 +1593,17 @@ Underfull \hbox (badness 2717) in paragraph at lines 234--235
 
 
 (_minted-RHCSA/DBC80D7F1E8276F0C11F26A4AB660562168FD577FE9E8702C59C4F9251A21699
-.pygtex [47])
-\openout3 = `RHCSA.pyg'.
-
-
-(_minted-RHCSA/C0F745C12AF23C7FF7BB7555B50EB522168FD577FE9E8702C59C4F9251A21699
 .pygtex [48])
 \openout3 = `RHCSA.pyg'.
 
 
+(_minted-RHCSA/C0F745C12AF23C7FF7BB7555B50EB522168FD577FE9E8702C59C4F9251A21699
+.pygtex [49])
+\openout3 = `RHCSA.pyg'.
+
+
 (_minted-RHCSA/9EDF9410BBD17B0BEBA17986FB68F5A2168FD577FE9E8702C59C4F9251A21699
-.pygtex) [49]
+.pygtex) [50]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1618,7 +1618,7 @@ Underfull \hbox (badness 2717) in paragraph at lines 234--235
 
 
 (_minted-RHCSA/35197FECF3C6C3A10DD385DC7F7077FE168FD577FE9E8702C59C4F9251A21699
-.pygtex) [50]
+.pygtex) [51]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1633,12 +1633,12 @@ Underfull \hbox (badness 2717) in paragraph at lines 234--235
 
 
 (_minted-RHCSA/D3E7037110744925F807A77F73F299FE168FD577FE9E8702C59C4F9251A21699
-.pygtex [51])
+.pygtex [52])
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/39AE1F1AB19A6C95D82C2B5BB4311520168FD577FE9E8702C59C4F9251A21699
-.pygtex)) ("Mod1/chapters/1.9 Configuring Networking.tex" [52]
+.pygtex)) ("Mod1/chapters/1.9 Configuring Networking.tex" [53]
 Chapter 8.
 
 Underfull \hbox (badness 10000) in paragraph at lines 10--10
@@ -1665,7 +1665,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--21
 []|\T1/phv/b/n/10 Logical
  []
 
-[53
+[54
 
 ]
 \openout3 = `RHCSA.pyg'.
@@ -1687,7 +1687,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--21
 
 
 (_minted-RHCSA/D07A025E34E919116556921BA0CC3D9A168FD577FE9E8702C59C4F9251A21699
-.pygtex [54])
+.pygtex [55])
 Overfull \hbox (1.80591pt too wide) in paragraph at lines 115--117
 \T1/phv/m/n/10 This is one of the im-prove-ments of [][]\T1/cmtt/m/n/10 ip []\T
 1/phv/m/n/10 over [][]\T1/cmtt/m/n/10 ifconfig []\T1/phv/m/n/10 which was in-ca
@@ -1713,12 +1713,12 @@ Overfull \hbox (1.74889pt too wide) in paragraph at lines 149--150
 
 
 (_minted-RHCSA/53E554660A1C4F12F6E6834B51A219421D0A1B86B4D2A4C28753BFB971395912
-.pygtex [55])
+.pygtex [56])
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/6E14DA434B0A63A3D95FF6B5814CB31C168FD577FE9E8702C59C4F9251A21699
-.pygtex) [56]
+.pygtex) [57]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1733,25 +1733,25 @@ Overfull \hbox (1.74889pt too wide) in paragraph at lines 149--150
 
 
 (_minted-RHCSA/7FAC9FF52A6876203BDB75083F4356B1168FD577FE9E8702C59C4F9251A21699
-.pygtex [57])
+.pygtex [58])
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/B2EFD30A005274AF24B542A8D87E3CBD168FD577FE9E8702C59C4F9251A21699
 .pygtex)
-<"Mod1/chapters/1.9.a Default Route".jpg, id=205, 368.1253pt x 489.32813pt>
+<"Mod1/chapters/1.9.a Default Route".jpg, id=208, 368.1253pt x 489.32813pt>
 File: "Mod1/chapters/1.9.a Default Route".jpg Graphic file (type jpg)
 
 <use "Mod1/chapters/1.9.a Default Route".jpg>
 Package pdftex.def Info: "Mod1/chapters/1.9.a Default Route".jpg used on input 
 line 286.
 (pdftex.def)             Requested size: 257.76459pt x 342.62576pt.
- [58]
+ [59]
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/00CABF539C54FFE9741EE1231E5DDF68168FD577FE9E8702C59C4F9251A21699
-.pygtex [59 <./Mod1/chapters/1.9.a Default Route.jpg>])
+.pygtex [60 <./Mod1/chapters/1.9.a Default Route.jpg>])
 Overfull \hbox (78.4512pt too wide) in paragraph at lines 326--342
 [][] 
  []
@@ -1760,7 +1760,7 @@ Overfull \hbox (78.4512pt too wide) in paragraph at lines 326--342
 
 
 (_minted-RHCSA/62536F8DE0F3E9191BE993BA12282692168FD577FE9E8702C59C4F9251A21699
-.pygtex) [60]
+.pygtex) [61]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1780,12 +1780,12 @@ Overfull \hbox (78.4512pt too wide) in paragraph at lines 326--342
 
 
 (_minted-RHCSA/8BEC4553B93B14175D34594359197EF7168FD577FE9E8702C59C4F9251A21699
-.pygtex [61])
+.pygtex [62])
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/E99FB3523AE85DA5145271350EC0F930168FD577FE9E8702C59C4F9251A21699
-.pygtex [62])
+.pygtex [63])
 Overfull \hbox (11.3154pt too wide) in paragraph at lines 469--471
 \T1/phv/m/n/10 tain-ing [][]\T1/cmtt/m/n/10 www.somusysadmin.com. IN A []\T1/ph
 v/m/n/10 in-di-cates that an ad-dress for [][]\T1/cmtt/m/n/10 www.somusysadmin.
@@ -1806,7 +1806,7 @@ com
 
 
 (_minted-RHCSA/755134C876C74611A15A9AA93C34C9CB168FD577FE9E8702C59C4F9251A21699
-.pygtex [63]))) ("Mod2/2. Operating RHEL Servers.tex" [64] [65
+.pygtex [64]))) ("Mod2/2. Operating RHEL Servers.tex" [65] [66
 
 ]
 ("Mod2/chapters/2.10 Managing Processes.tex"
@@ -1825,7 +1825,7 @@ Chapter 9.
 
 
 (_minted-RHCSA/531C56AD354263A2E97854A0A6CAACF5168FD577FE9E8702C59C4F9251A21699
-.pygtex [66
+.pygtex [67
 
 ])
 \openout3 = `RHCSA.pyg'.
@@ -1837,7 +1837,7 @@ Chapter 9.
 
 
 (_minted-RHCSA/ACF15F68001AACADA55D67657BEC2700168FD577FE9E8702C59C4F9251A21699
-.pygtex [67])
+.pygtex [68])
 LaTeX Font Info:    Try loading font information for TS1+phv on input line 112.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ts1phv.fd"
@@ -1854,7 +1854,7 @@ LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
 
 
 (_minted-RHCSA/63F8926719347F21812C542197A9DA22168FD577FE9E8702C59C4F9251A21699
-.pygtex [68])
+.pygtex [69])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1869,7 +1869,7 @@ LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
 
 
 (_minted-RHCSA/371824BCE3E575F8681CF10BB143A2F7168FD577FE9E8702C59C4F9251A21699
-.pygtex [69]) <Mod2/chapters/2.10.a.jpg, id=244, 1028.34187pt x 578.16pt>
+.pygtex [70]) <Mod2/chapters/2.10.a.jpg, id=247, 1028.34187pt x 578.16pt>
 File: Mod2/chapters/2.10.a.jpg Graphic file (type jpg)
 
 <use Mod2/chapters/2.10.a.jpg>
@@ -1889,7 +1889,7 @@ Package pdftex.def Info: Mod2/chapters/2.10.a.jpg used on input line 226.
 
 
 (_minted-RHCSA/2D39685C9C104D4035D90AB732F767F2168FD577FE9E8702C59C4F9251A21699
-.pygtex [70 <./Mod2/chapters/2.10.a.jpg>])
+.pygtex [71 <./Mod2/chapters/2.10.a.jpg>])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1900,7 +1900,7 @@ Overfull \hbox (33.95087pt too wide) in paragraph at lines 315--317
 hi,  0.0 si,  0.0 st 
  []
 
-[71]
+[72]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1910,12 +1910,12 @@ hi,  0.0 si,  0.0 st
 
 
 (_minted-RHCSA/6D96D0CDBB14BF8BA292FAF507DF48A8168FD577FE9E8702C59C4F9251A21699
-.pygtex [72])
+.pygtex [73])
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/88294C2AD67164E4F855462E138D442E168FD577FE9E8702C59C4F9251A21699
-.pygtex [73])) ("Mod2/chapters/2.11 Managing Software.tex" [74]
+.pygtex [74])) ("Mod2/chapters/2.11 Managing Software.tex" [75]
 Chapter 10.
 \openout3 = `RHCSA.pyg'.
 
@@ -1931,7 +1931,7 @@ to first go to the [][]\T1/cmtt/m/n/10 /etc/yum.repos.d
 
 
 (_minted-RHCSA/38E81DF34DE40935A788A388DC035E3B1D0A1B86B4D2A4C28753BFB971395912
-.pygtex [75
+.pygtex [76
 
 ])
 \openout3 = `RHCSA.pyg'.
@@ -1948,12 +1948,12 @@ to first go to the [][]\T1/cmtt/m/n/10 /etc/yum.repos.d
 
 
 (_minted-RHCSA/9349CE792324227DDE6958C7226226E4168FD577FE9E8702C59C4F9251A21699
-.pygtex [76])
+.pygtex [77])
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/8D15D8972EF0F89E8EB84F5545A7E81C168FD577FE9E8702C59C4F9251A21699
-.pygtex) [77]
+.pygtex) [78]
 Overfull \hbox (19.70222pt too wide) in paragraph at lines 154--155
 \T1/phv/m/n/10 use \T1/phv/m/sl/10 se-m-an-age\T1/phv/m/n/10 , an im-por-tant u
 til-ity to set up SELinux, we have to use the [][]\T1/cmtt/m/n/10 yum search se
@@ -1969,12 +1969,12 @@ manage
 
 
 (_minted-RHCSA/DBB8EEAEF490B6C53493CE0A69C79A42168FD577FE9E8702C59C4F9251A21699
-.pygtex [78])
+.pygtex [79])
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/8F58665C412D1C4113A1FA375E67019E168FD577FE9E8702C59C4F9251A21699
-.pygtex [79])
+.pygtex [80])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1994,7 +1994,7 @@ manage
 
 
 (_minted-RHCSA/2F7AF64B82F5380ED806180688DB6066168FD577FE9E8702C59C4F9251A21699
-.pygtex [80])
+.pygtex [81])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -2014,7 +2014,7 @@ manage
 
 
 (_minted-RHCSA/5B126AB1337FBE8F0A8112DCE938C264168FD577FE9E8702C59C4F9251A21699
-.pygtex) [81]
+.pygtex) [82]
 \openout3 = `RHCSA.pyg'.
 
 
@@ -2024,7 +2024,7 @@ manage
 
 
 (_minted-RHCSA/66F66AC974347EFA12D816EB414E8DC1168FD577FE9E8702C59C4F9251A21699
-.pygtex [82])
+.pygtex [83])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -2034,19 +2034,19 @@ manage
 
 
 (_minted-RHCSA/46DA43D7CCA1D6E4DF147C61D03171B3168FD577FE9E8702C59C4F9251A21699
-.pygtex [83])) ("Mod2/chapters/2.12 Working with Virtual Machines.tex" [84]
+.pygtex [84])) ("Mod2/chapters/2.12 Working with Virtual Machines.tex" [85]
 Chapter 11.
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/8DB6FCE08D3B7FB1E2ACEBADDBE03E48168FD577FE9E8702C59C4F9251A21699
-.pygtex) <Mod2/chapters/2.12.a.png, id=293, 1371.1225pt x 770.88pt>
+.pygtex) <Mod2/chapters/2.12.a.png, id=296, 1371.1225pt x 770.88pt>
 File: Mod2/chapters/2.12.a.png Graphic file (type png)
 
 <use Mod2/chapters/2.12.a.png>
 Package pdftex.def Info: Mod2/chapters/2.12.a.png used on input line 22.
 (pdftex.def)             Requested size: 342.62576pt x 192.62543pt.
- [85
+ [86
 
  <./Mod2/chapters/2.12.a.png>]
 \openout3 = `RHCSA.pyg'.
@@ -2063,7 +2063,7 @@ Package pdftex.def Info: Mod2/chapters/2.12.a.png used on input line 22.
 
 
 (_minted-RHCSA/A51CA1608CE6D5FAF51F73F20B7C68BF168FD577FE9E8702C59C4F9251A21699
-.pygtex [86])
+.pygtex [87])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -2076,16 +2076,80 @@ Package pdftex.def Info: Mod2/chapters/2.12.a.png used on input line 22.
 .pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/7C711E84D1749FB9EB0046E730FC1A96168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/7C711E84D1749FB9EB0046E730FC1A96168FD577FE9E8702C59C4F9251A21699
-.pygtex [87])) ("Mod2/chapters/2.13 Scheduling Tasks.tex")
-("Mod2/chapters/2.14 Configuring Logging.tex")
+.pygtex [88])) ("Mod2/chapters/2.13 Scheduling Tasks.tex" [89]
+Chapter 12.
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/E63EC717719354C34A7F21AF2F49D8821D0A1B86B4D2A4C28753BFB971395912
+.pygtex [90
+
+])
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/C3ADF5BCA4ABFF754937721E80126AD1168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/5DED0ACD61C38D06F1EE3DAF0D0459221D0A1B86B4D2A4C28753BFB971395912
+.pygtex [91])
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/CC9A43014C73F894495123D873ECC136168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/DA586C420208A21ECD4CD2FBBA564DBC1D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/A3BCB1DE664250AB2E7499CDB43F36EB1D0A1B86B4D2A4C28753BFB971395912
+.pygtex [92])
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/EA465DCA9CA02C06E16AB891F894C554168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/C6777AF9E8B742AEA90258E9C26CE4C6168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/EE3AB711FFE35620D814EA7C04640DE0168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/F624E73B84F2F4998AD036790C02B553168FD577FE9E8702C59C4F9251A21699
+.pygtex [93])
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/C9BC8D06213CE80DB432B94C5D420F96168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+Overfull \hbox (20.83916pt too wide) in paragraph at lines 248--249
+[]\T1/phv/m/n/10 The out-put of the [][]\T1/cmtt/m/n/10 logger []\T1/phv/m/n/10
+ com-mand can be checked by us-ing [][]\T1/cmtt/m/n/10 tail -f /var/log/message
+s[]\T1/phv/m/n/10 . 
+ []
+
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/4B1D3748C9E4C847462B1D8425B2CA2C168FD577FE9E8702C59C4F9251A21699
+.pygtex [94])) ("Mod2/chapters/2.14 Configuring Logging.tex")
 ("Mod2/chapters/2.15 Managing Partitions.tex")
-("Mod2/chapters/2.16 Managing LVM Logical Volumes.tex")) [88] (RHCSA.aux)
+("Mod2/chapters/2.16 Managing LVM Logical Volumes.tex")) [95] (RHCSA.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -2093,31 +2157,32 @@ runsystem(del RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7628 strings out of 493323
- 166992 string characters out of 3139068
- 279477 words of memory out of 3000000
- 10453 multiletter control sequences out of 15000+200000
- 44549 words of font info for 55 fonts, out of 3000000 for 9000
+ 7678 strings out of 493323
+ 170843 string characters out of 3139068
+ 284303 words of memory out of 3000000
+ 10466 multiletter control sequences out of 15000+200000
+ 44847 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,26n,38p,858b,576s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
+ <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\t
 cit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
-\dpi600\tctt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
-nappen\ec\dpi600\ectt1000.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\
-ljfour\jknappen\ec\dpi600\ectt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\
-fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0500.pk>{C:/Program Files/MiKTeX 2.9/fon
-ts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-mi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Progra
-m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/u
-hvro8a.pfb>
-Output written on RHCSA.pdf (89 pages, 2210404 bytes).
+\dpi600\ecit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
+nappen\ec\dpi600\tctt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\
+ljfour\jknappen\ec\dpi600\ectt1000.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\
+fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk> <C:\Users\Somu\AppData\Local\Mi
+KTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0500.pk>{C:/Program Files/MiKTe
+X 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+mi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Progr
+am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/h
+elvetic/uhvro8a.pfb>
+Output written on RHCSA.pdf (96 pages, 2232406 bytes).
 PDF statistics:
- 575 PDF objects out of 1000 (max. 8388607)
+ 628 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
 

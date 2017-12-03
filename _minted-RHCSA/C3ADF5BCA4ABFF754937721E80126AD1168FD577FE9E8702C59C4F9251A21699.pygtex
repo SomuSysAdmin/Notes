@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} ls \PYGZhy{}ld cron*
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root  54 Nov 25 08:59 cron.d}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root  57 Nov 25 08:59 cron.daily}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}. 1 root root   0 Aug  3 21:03 cron.deny}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root  41 Nov 25 08:59 cron.hourly}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root   6 Jun 10  2014 cron.monthly}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 root root 451 Jun 10  2014 crontab}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root   6 Jun 10  2014 cron.weekly}
+\end{Verbatim}

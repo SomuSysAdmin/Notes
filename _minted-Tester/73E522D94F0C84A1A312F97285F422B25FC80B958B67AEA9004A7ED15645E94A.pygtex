@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} at \PYG{l+m}{1}:17
+\PYG{g+go}{	at\PYGZgt{} logger Hello @ 12:17AM!}
+\PYG{g+go}{	at\PYGZgt{} \PYGZlt{}EOT\PYGZgt{}}
+\PYG{g+go}{	job 15 at Mon Dec  4 01:17:00 2017}
+\PYG{g+go}{	[root@vmPrime at]\PYGZsh{} atq}
+\PYG{g+go}{	15	Mon Dec  4 01:17:00 2017 a root}
+\PYG{g+gp}{	\PYGZsh{}} tail \PYGZhy{}f /var/log/messages
+\PYG{g+go}{	Dec  4 01:12:03 vmPrime dbus[702]: [system] Successfully activated service \PYGZsq{}org.freedesktop.problems\PYGZsq{}}
+\PYG{g+go}{	Dec  4 01:12:03 vmPrime dbus\PYGZhy{}daemon: dbus[702]: [system] Successfully activated service \PYGZsq{}org.freedesktop.problems\PYGZsq{}}
+\PYG{g+go}{	Dec  4 01:12:28 vmPrime journal: No devices in use, exit}
+\PYG{g+go}{	Dec  4 01:17:00 vmPrime root: Hello @ 12:17AM!}
+\end{Verbatim}
