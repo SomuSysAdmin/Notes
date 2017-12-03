@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  2 DEC 2017 14:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  3 DEC 2017 21:15
 entering extended mode
 **./RHCSA.tex
 (RHCSA.tex
@@ -1128,28 +1128,20 @@ Overfull \hbox (56.43706pt too wide) in paragraph at lines 106--115
 (_minted-RHCSA/689D844CB0BAC1417AB6D27F42FAA721168FD577FE9E8702C59C4F9251A21699
 .pygtex)) ("Mod1/chapters/1.4 Working with Text Files.tex" [15]
 Chapter 3.
+<"Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg, id=65, 1028.34187pt x 578.16pt>
+File: "Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg Graphic file (type jpg)
 
-<D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installing RH
-EL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg, id=65, 
-1028.34187pt x 578.16pt>
-File: D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installi
-ng RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg Gra
-phic file (type jpg)
-
-<use D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installin
-g RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg>
-Package pdftex.def Info: D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video
- Course/1. Installing RHEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx 
-Cheat Sheet.jpg used on input line 5.
-(pdftex.def)             Requested size: 380.69788pt x 214.03935pt.
+<use "Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg used on in
+put line 5.
+(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
 \openout3 = `RHCSA.pyg'.
 
 
 (_minted-RHCSA/DD281B35C97689622CEBB95CB79839FD168FD577FE9E8702C59C4F9251A21699
 .pygtex [16
 
- <D:/SysAdmin & Dev/SysAdmin/RedHat/RHCSA Complete Video Course/1. Installing R
-HEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg>])
+ <./Mod1/chapters/1.4.a RegEx Cheat Sheet.jpg>])
 \openout3 = `RHCSA.pyg'.
 
 
@@ -1175,7 +1167,7 @@ HEL Server/1.4. Working with Text Files/1.4.1 (a) RegEx Cheat Sheet.jpg>])
 
 (_minted-RHCSA/A7874D942814CBCE3E88F7990035088E168FD577FE9E8702C59C4F9251A21699
 .pygtex [17])
-Overfull \hbox (6.029pt too wide) in paragraph at lines 63--67
+Overfull \hbox (6.029pt too wide) in paragraph at lines 64--68
 [][] 
  []
 
@@ -1189,7 +1181,7 @@ Overfull \hbox (6.029pt too wide) in paragraph at lines 63--67
 
 (_minted-RHCSA/3B11BC47CAF5A3C99C6E21B4C49D99BA168FD577FE9E8702C59C4F9251A21699
 .pygtex)
-Overfull \hbox (62.06465pt too wide) in paragraph at lines 91--93
+Overfull \hbox (62.06465pt too wide) in paragraph at lines 92--94
 \T1/phv/m/n/10 Another use for [][]\T1/cmtt/m/n/10 grep []\T1/phv/m/n/10 is sea
 rch-ing files. The syn-tax is [][]\T1/cmtt/m/n/10 grep <filename-pattern> <sear
 ch-directory>[]\T1/phv/m/n/10 . 
@@ -2042,11 +2034,58 @@ manage
 
 
 (_minted-RHCSA/46DA43D7CCA1D6E4DF147C61D03171B3168FD577FE9E8702C59C4F9251A21699
-.pygtex [83])) ("Mod2/chapters/2.12 Working with Virtual Machines.tex")
-("Mod2/chapters/2.13 Scheduling Tasks.tex")
+.pygtex [83])) ("Mod2/chapters/2.12 Working with Virtual Machines.tex" [84]
+Chapter 11.
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/8DB6FCE08D3B7FB1E2ACEBADDBE03E48168FD577FE9E8702C59C4F9251A21699
+.pygtex) <Mod2/chapters/2.12.a.png, id=293, 1371.1225pt x 770.88pt>
+File: Mod2/chapters/2.12.a.png Graphic file (type png)
+
+<use Mod2/chapters/2.12.a.png>
+Package pdftex.def Info: Mod2/chapters/2.12.a.png used on input line 22.
+(pdftex.def)             Requested size: 342.62576pt x 192.62543pt.
+ [85
+
+ <./Mod2/chapters/2.12.a.png>]
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/113AF09DB044299C33CF543FC3066039168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/28E25546A0E5F10B7BAC21C792347E8F168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/A51CA1608CE6D5FAF51F73F20B7C68BF168FD577FE9E8702C59C4F9251A21699
+.pygtex [86])
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/147B1647E67AF72069078BC40FD2EAC4168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/A0A1D045AB5939A55D10821AB1F993D3168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/7C711E84D1749FB9EB0046E730FC1A96168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/7C711E84D1749FB9EB0046E730FC1A96168FD577FE9E8702C59C4F9251A21699
+.pygtex [87])) ("Mod2/chapters/2.13 Scheduling Tasks.tex")
 ("Mod2/chapters/2.14 Configuring Logging.tex")
 ("Mod2/chapters/2.15 Managing Partitions.tex")
-("Mod2/chapters/2.16 Managing LVM Logical Volumes.tex")) [84] (RHCSA.aux)
+("Mod2/chapters/2.16 Managing LVM Logical Volumes.tex")) [88] (RHCSA.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -2054,10 +2093,10 @@ runsystem(del RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7592 strings out of 493323
- 164962 string characters out of 3139068
- 277532 words of memory out of 3000000
- 10438 multiletter control sequences out of 15000+200000
+ 7628 strings out of 493323
+ 166992 string characters out of 3139068
+ 279477 words of memory out of 3000000
+ 10453 multiletter control sequences out of 15000+200000
  44549 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,26n,38p,858b,576s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2076,8 +2115,9 @@ MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.
 9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/u
 hvro8a.pfb>
-Output written on RHCSA.pdf (85 pages, 1945597 bytes).
+Output written on RHCSA.pdf (89 pages, 2210404 bytes).
 PDF statistics:
- 559 PDF objects out of 1000 (max. 8388607)
+ 575 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  2 DEC 2017 16:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  3 DEC 2017 21:49
 entering extended mode
 **./Tester.tex
 (Tester.tex
@@ -881,7 +881,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-("Mod2/chapters/2.12 Working with Virtual Machines.tex"
+("Mod2/chapters/2.13 Scheduling Tasks.tex"
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
@@ -893,54 +893,25 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 23.63593pt on input line 1.
-)
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 13.67995pt on input line 8.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 8.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 13.67995pt on input line 8.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 11.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 11.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 11.
-\openout3 = `Tester.pyg'.
-
- (_minted-Tester/default-pyg-prefix.pygstyle) (_minted-Tester/default.pygstyle)
-
-(_minted-Tester/E92821CE731EA6F1F68024D2EF9BFB945FC80B958B67AEA9004A7ED15645E94
-A.pygtex
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 1.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 1.
- ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)) [1
+) [1
 
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] (Tester.aux)
-runsystem(del Tester.pyg)...executed.
-
- ) 
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] (Tester.aux) ) 
 Here is how much of TeX's memory you used:
- 6772 strings out of 493323
- 110190 string characters out of 3139068
- 219657 words of memory out of 3000000
- 10169 multiletter control sequences out of 15000+200000
- 27313 words of font info for 33 fonts, out of 3000000 for 9000
+ 6530 strings out of 493323
+ 106348 string characters out of 3139068
+ 218535 words of memory out of 3000000
+ 9948 multiletter control sequences out of 15000+200000
+ 14489 words of font info for 22 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,5n,35p,858b,395s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
-ctt1000.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
-\dpi600\ectt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
-nappen\ec\dpi600\ecrm0500.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/
-8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on Tester.pdf (1 page, 26830 bytes).
+ 41i,5n,35p,858b,129s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program
+ Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKTeX 2.9/font
+s/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/he
+lvetic/uhvr8a.pfb>
+Output written on Tester.pdf (1 page, 11488 bytes).
 PDF statistics:
- 50 PDF objects out of 1000 (max. 8388607)
+ 15 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

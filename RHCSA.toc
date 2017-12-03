@@ -193,3 +193,11 @@
 \contentsline {subsection}{\numberline {10.4.1}Installing a local rpm file}{82}
 \contentsline {subsection}{\numberline {10.4.2}repoquery}{83}
 \contentsline {subsection}{\numberline {10.4.3}Displaying information about a package}{83}
+\contentsline {chapter}{\numberline {11}Working with Virtual Machines}{85}
+\contentsline {section}{\numberline {11.1}Introducing KVM Virtualization}{85}
+\contentsline {subsection}{\numberline {11.1.1}CPU Virtualization Support}{85}
+\contentsline {section}{\numberline {11.2}Managing Libvirt and KVM}{86}
+\contentsline {section}{\numberline {11.3}Using virsh}{87}
+\contentsline {subsection}{\numberline {11.3.1}Virsh commands}{87}
+\contentsline {subsubsection}{virsh list}{87}
+\contentsline {section}{\numberline {11.4}Using virt-manager}{88}

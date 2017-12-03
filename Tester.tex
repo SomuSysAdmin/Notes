@@ -4,19 +4,8 @@
 \usepackage{booktabs}
 
 \begin{document}
-	\input{"Mod2/chapters/2.12 Working with Virtual Machines"}
-	\section{Introducing KVM Virtualization}
-	There are some basic requirements for KVM Virtualization on a server: 
+	\input{"Mod2/chapters/2.13 Scheduling Tasks"}
+
 	
-	\subsection{CPU Virtualization Support}
-	The CPU needs to be capable to support virtualization. This can be easily verified using the command:
-	
-	\vspace{-15pt}
-	\begin{minted}{console}
-	grep -e "vmx|svm" /proc/cpuinfo
-	\end{minted}
-	\vspace{-10pt}
-	
-	The presence of the \verb|vmx| flag is the indication that the CPU supports Intel's VT-x virtualization. However, for AMD processors, the equivalent is \verb|svm| indicating the presence of AMD's SVM technology. 
 		
 \end{document}
