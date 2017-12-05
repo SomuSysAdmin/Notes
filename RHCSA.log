@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  4 DEC 2017 01:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  5 DEC 2017 13:07
 entering extended mode
 **./RHCSA.tex
 (RHCSA.tex
@@ -2147,9 +2147,109 @@ s[]\T1/phv/m/n/10 .
 
 
 (_minted-RHCSA/4B1D3748C9E4C847462B1D8425B2CA2C168FD577FE9E8702C59C4F9251A21699
-.pygtex [94])) ("Mod2/chapters/2.14 Configuring Logging.tex")
-("Mod2/chapters/2.15 Managing Partitions.tex")
-("Mod2/chapters/2.16 Managing LVM Logical Volumes.tex")) [95] (RHCSA.aux)
+.pygtex [94])) ("Mod2/chapters/2.14 Configuring Logging.tex" [95]
+Chapter 13.
+<Mod2/chapters/2.14.a.jpg, id=331, 1028.34187pt x 578.16pt>
+File: Mod2/chapters/2.14.a.jpg Graphic file (type jpg)
+
+<use Mod2/chapters/2.14.a.jpg>
+Package pdftex.def Info: Mod2/chapters/2.14.a.jpg used on input line 10.
+(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
+ [96
+
+ <./Mod2/chapters/2.14.a.jpg>]
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-RHCSA/330CB76E26BB37EEB108404D7D7DB5441D0A1B86B4D2A4C28753BFB971395912.pyg
+tex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/330CB76E26BB37EEB108404D7D7DB5441D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-RHCSA/CEB6DAA6D46CFC974544CE6F3C4403571D0A1B86B4D2A4C28753BFB971395912.pyg
+tex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/CEB6DAA6D46CFC974544CE6F3C4403571D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+Overfull \hbox (1.55902pt too wide) in paragraph at lines 24--46
+[] 
+ []
+
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-RHCSA/D8F70424CF1422989E66ABE94D55943E1D0A1B86B4D2A4C28753BFB971395912.pyg
+tex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/D8F70424CF1422989E66ABE94D55943E1D0A1B86B4D2A4C28753BFB971395912
+.pygtex) <Mod2/chapters/2.14.b.jpg, id=336, 1028.34187pt x 578.16pt>
+File: Mod2/chapters/2.14.b.jpg Graphic file (type jpg)
+
+<use Mod2/chapters/2.14.b.jpg>
+Package pdftex.def Info: Mod2/chapters/2.14.b.jpg used on input line 61.
+(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
+ [97 <./Mod2/chapters/2.14.b.jpg>]
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/A96905E885CFA5EE9CBE5468F146D016168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/A96905E885CFA5EE9CBE5468F146D016168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/1B62D5BE579577750BD0632EBCB383C6168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/1B62D5BE579577750BD0632EBCB383C6168FD577FE9E8702C59C4F9251A21699
+.pygtex [98])
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/6073E3327E947E080BF1D4BD1CC5F17E168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/6073E3327E947E080BF1D4BD1CC5F17E168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/CF48D7572BE58A79E0DF2700105E26A7168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/CF48D7572BE58A79E0DF2700105E26A7168FD577FE9E8702C59C4F9251A21699
+.pygtex) [99]
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-RHCSA/06B4ED3530FB6F6BB1FA0CCDF215C6C61D0A1B86B4D2A4C28753BFB971395912.pyg
+tex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/06B4ED3530FB6F6BB1FA0CCDF215C6C61D0A1B86B4D2A4C28753BFB971395912
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/2644194EE16B449545D933D101AA5179168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/2644194EE16B449545D933D101AA5179168FD577FE9E8702C59C4F9251A21699
+.pygtex [100])) ("Mod2/chapters/2.15 Managing Partitions.tex")
+("Mod2/chapters/2.16 Managing LVM Logical Volumes.tex")) [101] (RHCSA.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -2157,13 +2257,13 @@ runsystem(del RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7678 strings out of 493323
- 170843 string characters out of 3139068
- 284303 words of memory out of 3000000
- 10466 multiletter control sequences out of 15000+200000
+ 7729 strings out of 493323
+ 174091 string characters out of 3139068
+ 285871 words of memory out of 3000000
+ 10490 multiletter control sequences out of 15000+200000
  44847 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,26n,38p,858b,576s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,26n,38p,858b,647s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\t
 cit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
 \dpi600\ecit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
@@ -2180,9 +2280,9 @@ am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/
 MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/h
 elvetic/uhvro8a.pfb>
-Output written on RHCSA.pdf (96 pages, 2232406 bytes).
+Output written on RHCSA.pdf (102 pages, 2627432 bytes).
 PDF statistics:
- 628 PDF objects out of 1000 (max. 8388607)
+ 653 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -214,3 +214,18 @@
 \contentsline {subsection}{\numberline {12.4.1}Scheduling using at}{93}
 \contentsline {subsection}{\numberline {12.4.2}atq}{94}
 \contentsline {subsection}{\numberline {12.4.3}Removing jobs from atq}{94}
+\contentsline {chapter}{\numberline {13}Configuring Logging}{96}
+\contentsline {section}{\numberline {13.1}Understanding rsyslogd and journald logging}{96}
+\contentsline {subsection}{\numberline {13.1.1}Sharing logging information}{97}
+\contentsline {section}{\numberline {13.2}Integrating rsyslogd and journald}{97}
+\contentsline {subsection}{\numberline {13.2.1}rsyslog}{97}
+\contentsline {subsection}{\numberline {13.2.2}journald}{98}
+\contentsline {section}{\numberline {13.3}Configuring rsyslog logging}{98}
+\contentsline {section}{\numberline {13.4}Working with journald}{98}
+\contentsline {subsection}{\numberline {13.4.1}journalctl}{98}
+\contentsline {subsubsection}{journalctl -b}{98}
+\contentsline {subsubsection}{journalctl --since=<time>}{98}
+\contentsline {subsubsection}{journald -u}{99}
+\contentsline {section}{\numberline {13.5}Understanding logrotate}{99}
+\contentsline {section}{\numberline {13.6}Configuring logrotate}{100}
+\contentsline {subsection}{\numberline {13.6.1}Checking avialable hard disk space}{101}

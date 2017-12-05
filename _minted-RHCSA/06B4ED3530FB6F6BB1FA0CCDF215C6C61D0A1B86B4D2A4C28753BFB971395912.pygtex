@@ -1,0 +1,35 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} see \PYGZdq{}man logrotate\PYGZdq{} for details}
+\PYG{c+c1}{\PYGZsh{} rotate log files weekly}
+weekly
+
+\PYG{c+c1}{\PYGZsh{} keep 4 weeks worth of backlogs}
+rotate \PYG{l+m}{4}
+
+\PYG{c+c1}{\PYGZsh{} create new (empty) log files after rotating old ones}
+create
+
+\PYG{c+c1}{\PYGZsh{} use date as a suffix of the rotated file}
+dateext
+
+\PYG{c+c1}{\PYGZsh{} uncomment this if you want your log files compressed}
+\PYG{c+c1}{\PYGZsh{}compress}
+
+\PYG{c+c1}{\PYGZsh{} RPM packages drop log rotation information into this directory}
+include /etc/logrotate.d
+
+\PYG{c+c1}{\PYGZsh{} no packages own wtmp and btmp \PYGZhy{}\PYGZhy{} we\PYGZsq{}ll rotate them here}
+/var/log/wtmp \PYG{o}{\PYGZob{}}
+monthly
+create \PYG{l+m}{0664} root utmp
+minsize 1M
+rotate \PYG{l+m}{1}
+\PYG{o}{\PYGZcb{}}
+
+/var/log/btmp \PYG{o}{\PYGZob{}}
+missingok
+monthly
+create \PYG{l+m}{0600} root utmp
+rotate \PYG{l+m}{1}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
