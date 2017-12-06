@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  7 DEC 2017 01:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  7 DEC 2017 02:07
 entering extended mode
 **./RHCSA.tex
 (RHCSA.tex
@@ -970,6 +970,16 @@ Overfull \hbox (1.12079pt too wide) detected at line 238
 
 Overfull \hbox (1.12079pt too wide) detected at line 239
  []\T1/phv/m/n/10 106
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 240
+ []\T1/phv/m/n/10 107
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 241
+ []\T1/phv/m/n/10 107
  []
 
 )
@@ -2320,10 +2330,6 @@ Overfull \hbox (15.88702pt too wide) in paragraph at lines 164--182
 .pygtex [106])
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/E47966EF5680740816F5A0DA6948D3BF168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/E47966EF5680740816F5A0DA6948D3BF168FD577FE9E8702C59C4F9251A21699
 .pygtex
@@ -2334,10 +2340,6 @@ Overfull \hbox (44.19836pt too wide) in paragraph at lines 7--7
 
 )
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/149F6A0248572FDA11B9828A13931FBC168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (_minted-RHCSA/149F6A0248572FDA11B9828A13931FBC168FD577FE9E8702C59C4F9251A21699
@@ -2350,10 +2352,6 @@ Overfull \hbox (44.19836pt too wide) in paragraph at lines 7--7
 )
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/4BBE3AD238436886B48BF876DF372F5C168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/4BBE3AD238436886B48BF876DF372F5C168FD577FE9E8702C59C4F9251A21699
 .pygtex
@@ -2365,18 +2363,10 @@ Overfull \hbox (44.19836pt too wide) in paragraph at lines 8--8
 ) [107]
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/0DCBF59CCB7F3175CD4F5213602CF679168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (_minted-RHCSA/0DCBF59CCB7F3175CD4F5213602CF679168FD577FE9E8702C59C4F9251A21699
 .pygtex)
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/4883CF9EBF9BFED7D9A0B0DC9EC7D578168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (_minted-RHCSA/4883CF9EBF9BFED7D9A0B0DC9EC7D578168FD577FE9E8702C59C4F9251A21699
@@ -2396,7 +2386,7 @@ runsystem(del RHCSA.pyg)...executed.
 Here is how much of TeX's memory you used:
  7795 strings out of 493323
  179028 string characters out of 3139068
- 293579 words of memory out of 3000000
+ 295039 words of memory out of 3000000
  10511 multiletter control sequences out of 15000+200000
  44847 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -2418,7 +2408,7 @@ iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9
 /fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/u
 rw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uh
 vro8a.pfb>
-Output written on RHCSA.pdf (109 pages, 2836483 bytes).
+Output written on RHCSA.pdf (109 pages, 2836490 bytes).
 PDF statistics:
  682 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

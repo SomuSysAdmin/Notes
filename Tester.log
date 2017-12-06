@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  6 DEC 2017 20:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  7 DEC 2017 02:37
 entering extended mode
 **./Tester.tex
 (Tester.tex
@@ -999,11 +999,11 @@ File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 
 
 (_minted-Tester/36962B7C5F97447BF07BE2556B782CFF5FC80B958B67AEA9004A7ED15645E94
-A.pygtex [5]))
+A.pygtex [5])
 \openout3 = `Tester.pyg'.
 
 
-(_minted-Tester/98267CECBB13BCE432D9A927CFAE7D5F5FC80B958B67AEA9004A7ED15645E94
+(_minted-Tester/E47966EF5680740816F5A0DA6948D3BF5FC80B958B67AEA9004A7ED15645E94
 A.pygtex
 Overfull \hbox (44.19836pt too wide) in paragraph at lines 7--7
 \T1/cmtt/m/n/8 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=
@@ -1014,7 +1014,7 @@ Overfull \hbox (44.19836pt too wide) in paragraph at lines 7--7
 \openout3 = `Tester.pyg'.
 
 
-(_minted-Tester/84FDBF75AC1C3F496A13F4E7B02EAF475FC80B958B67AEA9004A7ED15645E94
+(_minted-Tester/149F6A0248572FDA11B9828A13931FBC5FC80B958B67AEA9004A7ED15645E94
 A.pygtex
 Overfull \hbox (44.19836pt too wide) in paragraph at lines 7--7
 \T1/cmtt/m/n/8 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=
@@ -1025,56 +1025,74 @@ Overfull \hbox (44.19836pt too wide) in paragraph at lines 7--7
 \openout3 = `Tester.pyg'.
 
 
-(_minted-Tester/5634EEC3D2F24B66686CEE9D329FFD305FC80B958B67AEA9004A7ED15645E94
-A.pygtex [6]
+(_minted-Tester/4BBE3AD238436886B48BF876DF372F5C5FC80B958B67AEA9004A7ED15645E94
+A.pygtex
 Overfull \hbox (44.19836pt too wide) in paragraph at lines 8--8
 \T1/cmtt/m/n/8 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=
 0400,dmode=0500,uhelper=udisks2)[]|  
  []
 
-)
+) [6]
 \openout3 = `Tester.pyg'.
 
 
-(_minted-Tester/096AC3EE1DDFEF8CB0C6CDE3942AF7D35FC80B958B67AEA9004A7ED15645E94
+(_minted-Tester/0DCBF59CCB7F3175CD4F5213602CF6795FC80B958B67AEA9004A7ED15645E94
 A.pygtex)
 \openout3 = `Tester.pyg'.
 
 
-(_minted-Tester/697F783B157A32EA70E5D21821BE14725FC80B958B67AEA9004A7ED15645E94
+(_minted-Tester/4883CF9EBF9BFED7D9A0B0DC9EC7D5785FC80B958B67AEA9004A7ED15645E94
 A.pygtex
 Overfull \hbox (44.19836pt too wide) in paragraph at lines 5--5
 \T1/cmtt/m/n/8 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=
 0400,dmode=0500,uhelper=udisks2)[]|  
  []
 
-) [7] (Tester.aux)
+)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/3DAE1927119AD71DCC595700AC4DD8DFB2DC55294848DCE6CE6B7F9038926FD
+4.pygtex) [7])
+Overfull \hbox (8.16771pt too wide) in paragraph at lines 10--11
+\T1/phv/m/n/10 To au-to-mount the de-vice [][]\T1/cmtt/m/n/10 /dev/sdb1[]\T1/ph
+v/m/n/10 , all we need to do is add the fol-low-ing line to [][]\T1/cmtt/m/n/10
+ /etc/fstab[]\T1/phv/m/n/10 : 
+ []
+
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/2F4EAF1A90A0FDF3559D5399098C94D7B2DC55294848DCE6CE6B7F9038926FD
+4.pygtex) [8] (Tester.aux)
 runsystem(del Tester.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 6866 strings out of 493323
- 115499 string characters out of 3139068
- 229689 words of memory out of 3000000
- 10214 multiletter control sequences out of 15000+200000
- 35405 words of font info for 40 fonts, out of 3000000 for 9000
+ 6878 strings out of 493323
+ 116186 string characters out of 3139068
+ 228835 words of memory out of 3000000
+ 10218 multiletter control sequences out of 15000+200000
+ 36018 words of font info for 42 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,9n,38p,858b,532s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\t
-ctt0800.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc} <C:\Users\
-Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk> <
-C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0
-500.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi
-600\ectt1000.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmm
-i5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
-:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program 
-Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiK
-TeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helv
-etic/uhvro8a.pfb>
-Output written on Tester.pdf (7 pages, 298438 bytes).
+cit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
+\dpi600\ecit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
+nappen\ec\dpi600\tctt0800.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/
+8r.enc} <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi
+600\ectt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknapp
+en\ec\dpi600\ecrm0500.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
+ur\jknappen\ec\dpi600\ectt1000.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
+7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:
+/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files
+/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on Tester.pdf (8 pages, 314375 bytes).
 PDF statistics:
- 195 PDF objects out of 1000 (max. 8388607)
+ 244 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

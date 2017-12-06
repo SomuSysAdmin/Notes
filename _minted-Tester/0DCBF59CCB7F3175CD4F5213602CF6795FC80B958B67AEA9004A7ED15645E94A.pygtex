@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} blkid
+\PYG{g+go}{/dev/sda2: UUID=\PYGZdq{}1c55e935\PYGZhy{}8099\PYGZhy{}49c4\PYGZhy{}8c72\PYGZhy{}0bc1ff7c396a\PYGZdq{} TYPE=\PYGZdq{}xfs\PYGZdq{}}
+\PYG{g+go}{/dev/sda3: UUID=\PYGZdq{}DfepDW\PYGZhy{}igyh\PYGZhy{}eI6D\PYGZhy{}SgBB\PYGZhy{}3HV5\PYGZhy{}QTQT\PYGZhy{}EI3Pc2\PYGZdq{} TYPE=\PYGZdq{}LVM2\PYGZus{}member\PYGZdq{}}
+\PYG{g+go}{/dev/sdb1: LABEL=\PYGZdq{}myfs\PYGZdq{} UUID=\PYGZdq{}00a8c244\PYGZhy{}8781\PYGZhy{}492c\PYGZhy{}a6ad\PYGZhy{}85624780e1e8\PYGZdq{} TYPE=\PYGZdq{}xfs\PYGZdq{}}
+\PYG{g+go}{/dev/sr0: UUID=\PYGZdq{}2017\PYGZhy{}09\PYGZhy{}06\PYGZhy{}10\PYGZhy{}53\PYGZhy{}42\PYGZhy{}00\PYGZdq{} LABEL=\PYGZdq{}CentOS 7 x86\PYGZus{}64\PYGZdq{} TYPE=\PYGZdq{}iso9660\PYGZdq{} PTTYPE=\PYGZdq{}dos\PYGZdq{}}
+\PYG{g+go}{/dev/mapper/centos\PYGZhy{}root: UUID=\PYGZdq{}d2fe3168\PYGZhy{}4eef\PYGZhy{}431b\PYGZhy{}9a8e\PYGZhy{}eb59dae10bcb\PYGZdq{} TYPE=\PYGZdq{}xfs\PYGZdq{}}
+\PYG{g+go}{/dev/mapper/centos\PYGZhy{}swap: UUID=\PYGZdq{}24b0103c\PYGZhy{}d574\PYGZhy{}4623\PYGZhy{}bc85\PYGZhy{}9255076e3b7d\PYGZdq{} TYPE=\PYGZdq{}swap\PYGZdq{}}
+\PYG{g+go}{/dev/mapper/centos\PYGZhy{}var: UUID=\PYGZdq{}ed13b5f3\PYGZhy{}1b26\PYGZhy{}48f7\PYGZhy{}81cb\PYGZhy{}03a2bad5fc61\PYGZdq{} TYPE=\PYGZdq{}xfs\PYGZdq{}}
+\PYG{g+go}{/dev/mapper/centos\PYGZhy{}home: UUID=\PYGZdq{}710a33e6\PYGZhy{}7e52\PYGZhy{}4c06\PYGZhy{}830d\PYGZhy{}e53ae0d58fed\PYGZdq{} TYPE=\PYGZdq{}xfs\PYGZdq{}}
+\end{Verbatim}
