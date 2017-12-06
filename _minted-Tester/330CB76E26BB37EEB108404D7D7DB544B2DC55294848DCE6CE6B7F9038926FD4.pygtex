@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n+nv}{\PYGZdl{}ModLoad} imuxsock
-\PYG{n+nv}{\PYGZdl{}OmitLocalLogging} off
-\end{Verbatim}

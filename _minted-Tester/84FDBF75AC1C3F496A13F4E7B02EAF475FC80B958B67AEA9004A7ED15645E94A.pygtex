@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} mount \PYG{p}{|} grep \PYGZca{}/dev
+\PYG{g+go}{	/dev/mapper/centos\PYGZhy{}root on / type xfs (rw,relatime,seclabel,attr2,inode64,noquota)}
+\PYG{g+go}{	/dev/mapper/centos\PYGZhy{}home on /home type xfs (rw,relatime,seclabel,attr2,inode64,noquota)}
+\PYG{g+go}{	/dev/sda2 on /boot type xfs (rw,relatime,seclabel,attr2,inode64,noquota)}
+\PYG{g+go}{	/dev/mapper/centos\PYGZhy{}var on /var type xfs (rw,relatime,seclabel,attr2,inode64,noquota)}
+\PYG{g+go}{	/dev/sr0 on /run/media/somu/CentOS 7 x86\PYGZus{}64 type iso9660 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=0400,dmode=0500,uhelper=udisks2)}
+\PYG{g+go}{	/dev/sdb1 on /mnt type xfs (rw,relatime,seclabel,attr2,inode64,noquota)}
+\end{Verbatim}

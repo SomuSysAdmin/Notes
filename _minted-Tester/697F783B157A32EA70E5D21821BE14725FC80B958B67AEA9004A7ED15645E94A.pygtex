@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} mount \PYG{n+nv}{LABEL}\PYG{o}{=}myfs /mnt
+\PYG{g+gp}{	\PYGZsh{}} mount \PYG{p}{|} tail \PYGZhy{}n \PYG{l+m}{3}
+\PYG{g+go}{	gvfsd\PYGZhy{}fuse on /run/user/1000/gvfs type fuse.gvfsd\PYGZhy{}fuse (rw,nosuid,nodev,relatime,user\PYGZus{}id=1000,group\PYGZus{}id=1000)}
+\PYG{g+go}{	/dev/sr0 on /run/media/somu/CentOS 7 x86\PYGZus{}64 type iso9660 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=0400,dmode=0500,uhelper=udisks2)}
+\PYG{g+go}{	/dev/sdb1 on /mnt type xfs (rw,relatime,seclabel,attr2,inode64,noquota)}
+\end{Verbatim}

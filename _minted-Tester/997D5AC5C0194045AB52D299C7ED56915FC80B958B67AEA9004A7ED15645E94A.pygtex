@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} cat /proc/partitions
+\PYG{g+go}{major minor  \PYGZsh{}blocks  name}
+
+\PYG{g+go}{8        0   20971520 sda}
+\PYG{g+go}{8        1       2048 sda1}
+\PYG{g+go}{8        2     499712 sda2}
+\PYG{g+go}{8        3   15634432 sda3}
+\PYG{g+go}{8       16   10485760 sdb}
+\PYG{g+go}{11        0    8491008 sr0}
+\PYG{g+go}{253        0    3903488 dm\PYGZhy{}0}
+\PYG{g+go}{253        1    1953792 dm\PYGZhy{}1}
+\PYG{g+go}{253        2    1953792 dm\PYGZhy{}2}
+\PYG{g+go}{253        3    7815168 dm\PYGZhy{}3}
+\end{Verbatim}

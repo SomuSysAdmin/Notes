@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} journalctl \PYGZhy{}\PYGZhy{}since\PYG{o}{=}yesterday
-\PYG{g+go}{\PYGZhy{}\PYGZhy{} Logs begin at Sat 2017\PYGZhy{}12\PYGZhy{}02 15:25:40 IST, end at Mon 2017\PYGZhy{}12\PYGZhy{}04 13:28:03 IST. \PYGZhy{}\PYGZhy{}}
-\PYG{g+go}{Dec 03 23:04:36 vmPrime.somuVMnet.local systemd[1]: Time has been changed}
-\PYG{g+go}{Dec 03 23:04:36 vmPrime.somuVMnet.local NetworkManager[834]: \PYGZlt{}info\PYGZgt{}  [1512322476.5889] audit: op=\PYGZdq{}sleep\PYGZhy{}control\PYGZdq{} arg=\PYGZdq{}off\PYGZdq{} pid=3311 uid=0 resul}
-\PYG{g+go}{Dec 03 23:04:36 vmPrime.somuVMnet.local systemd[1]: Stopping LSB: Bring up/down networking...}
-\PYG{g+go}{...}
-\end{Verbatim}

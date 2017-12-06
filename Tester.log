@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  5 DEC 2017 13:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  6 DEC 2017 20:55
 entering extended mode
 **./Tester.tex
 (Tester.tex
@@ -881,7 +881,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-("Mod2/chapters/2.14 Configuring Logging.tex"
+("Mod2/chapters/2.15 Managing Partitions.tex"
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
@@ -899,149 +899,182 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 3.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 4.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 4.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 6.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 4.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-<Mod2/chapters/2.14.a.jpg, id=1, 1028.34187pt x 578.16pt>
-File: Mod2/chapters/2.14.a.jpg Graphic file (type jpg)
+<Mod2/chapters/2.15.a.jpg, id=1, 496.10344pt x 408.77719pt>
+File: Mod2/chapters/2.15.a.jpg Graphic file (type jpg)
 
-<use Mod2/chapters/2.14.a.jpg>
-Package pdftex.def Info: Mod2/chapters/2.14.a.jpg used on input line 10.
-(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 21.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 21.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 21.
+<use Mod2/chapters/2.15.a.jpg>
+Package pdftex.def Info: Mod2/chapters/2.15.a.jpg used on input line 8.
+(pdftex.def)             Requested size: 342.62576pt x 282.31853pt.
  [1
 
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <./Mod2/chapters/2.14.a.jp
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <./Mod2/chapters/2.15.a.jp
 g>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 25.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 25.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 17.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 9.49997pt on input line 17.
 \openout3 = `Tester.pyg'.
 
 
 (_minted-Tester/default-pyg-prefix.pygstyle) (_minted-Tester/default.pygstyle)
-(_minted-Tester/330CB76E26BB37EEB108404D7D7DB544B2DC55294848DCE6CE6B7F9038926FD
-4.pygtex
+(_minted-Tester/997D5AC5C0194045AB52D299C7ED56915FC80B958B67AEA9004A7ED15645E94
+A.pygtex
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 1.
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
 )
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 38.
+LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
+(Font)              scaled to size 9.49997pt on input line 38.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 11.39996pt on input line 40.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 11.39996pt on input line 40.
 \openout3 = `Tester.pyg'.
 
 
-(_minted-Tester/CEB6DAA6D46CFC974544CE6F3C440357B2DC55294848DCE6CE6B7F9038926FD
+(_minted-Tester/A86B909A4E9CE7A8D1E5CD3B5B2470EA5FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 62.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 62.
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/D84FE50007A4162C8851D60E077FF1E3B2DC55294848DCE6CE6B7F9038926FD
+4.pygtex [2])
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/B5A2EE1ABCD56499EB1A2541136D22FDB2DC55294848DCE6CE6B7F9038926FD
+4.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/E7FA2333D65FF448E605EA2F9B302124B2DC55294848DCE6CE6B7F9038926FD
+4.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/67ED3433618ABDA669272E926385C736B2DC55294848DCE6CE6B7F9038926FD
+4.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/1B77DDBB14A35CD2D9DFBEE7DEC7D39F5FC80B958B67AEA9004A7ED15645E94
+A.pygtex [3])
+Overfull \hbox (15.88702pt too wide) in paragraph at lines 164--182
+[] 
+ []
+
+[4]
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/AD5C6983FF0CDEAE54DC87279262C39AB2DC55294848DCE6CE6B7F9038926FD
 4.pygtex
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 4.74998pt on input line 2.
 )
-Overfull \hbox (1.55902pt too wide) in paragraph at lines 24--46
-[] 
- []
-
 \openout3 = `Tester.pyg'.
 
 
-(_minted-Tester/D8F70424CF1422989E66ABE94D55943EB2DC55294848DCE6CE6B7F9038926FD
-4.pygtex) <Mod2/chapters/2.14.b.jpg, id=9, 1028.34187pt x 578.16pt>
-File: Mod2/chapters/2.14.b.jpg Graphic file (type jpg)
-
-<use Mod2/chapters/2.14.b.jpg>
-Package pdftex.def Info: Mod2/chapters/2.14.b.jpg used on input line 61.
-(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 70.
-LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 9.49997pt on input line 70.
- [2 <./Mod2/chapters/2.14.b.jpg>]
-\openout3 = `Tester.pyg'.
-
-
-(_minted-Tester/A96905E885CFA5EE9CBE5468F146D0165FC80B958B67AEA9004A7ED15645E94
+(_minted-Tester/39F738C7CE19917D257DD35900AE27B75FC80B958B67AEA9004A7ED15645E94
 A.pygtex
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
-)
-\openout3 = `Tester.pyg'.
-
-
-(_minted-Tester/1B62D5BE579577750BD0632EBCB383C65FC80B958B67AEA9004A7ED15645E94
-A.pygtex [3])
-\openout3 = `Tester.pyg'.
-
-
-(_minted-Tester/6073E3327E947E080BF1D4BD1CC5F17E5FC80B958B67AEA9004A7ED15645E94
-A.pygtex)
-\openout3 = `Tester.pyg'.
-
-
-(_minted-Tester/CF48D7572BE58A79E0DF2700105E26A75FC80B958B67AEA9004A7ED15645E94
-A.pygtex) [4]
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
-nted-Tester/06B4ED3530FB6F6BB1FA0CCDF215C6C6B2DC55294848DCE6CE6B7F9038926FD4.py
-gtex Tester.pyg)...executed.
-
-
-(_minted-Tester/06B4ED3530FB6F6BB1FA0CCDF215C6C6B2DC55294848DCE6CE6B7F9038926FD
-4.pygtex
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 21.
-
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 3.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ts1cmtt.fd"
 File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ))
 \openout3 = `Tester.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/2644194EE16B449545D933D101AA51795FC80B958B67AEA9004A7ED15645E94A
-.pygtex Tester.pyg)...executed.
 
-
-(_minted-Tester/2644194EE16B449545D933D101AA51795FC80B958B67AEA9004A7ED15645E94
+(_minted-Tester/36962B7C5F97447BF07BE2556B782CFF5FC80B958B67AEA9004A7ED15645E94
 A.pygtex [5]))
-runsystem(del _minted-Tester\1220AA848F9F2BE8F9ABBBC724B6DB80B2DC55294848DCE6CE
-6B7F9038926FD4.pygtex)...executed.
+\openout3 = `Tester.pyg'.
 
-runsystem(del _minted-Tester\03EE2763DB59643A9206E4DDC4A9DCD45FC80B958B67AEA900
-4A7ED15645E94A.pygtex)...executed.
 
- [6] (Tester.aux)
+(_minted-Tester/98267CECBB13BCE432D9A927CFAE7D5F5FC80B958B67AEA9004A7ED15645E94
+A.pygtex
+Overfull \hbox (44.19836pt too wide) in paragraph at lines 7--7
+\T1/cmtt/m/n/8 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=
+0400,dmode=0500,uhelper=udisks2)[]|  
+ []
+
+)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/84FDBF75AC1C3F496A13F4E7B02EAF475FC80B958B67AEA9004A7ED15645E94
+A.pygtex
+Overfull \hbox (44.19836pt too wide) in paragraph at lines 7--7
+\T1/cmtt/m/n/8 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=
+0400,dmode=0500,uhelper=udisks2)[]|  
+ []
+
+)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/5634EEC3D2F24B66686CEE9D329FFD305FC80B958B67AEA9004A7ED15645E94
+A.pygtex [6]
+Overfull \hbox (44.19836pt too wide) in paragraph at lines 8--8
+\T1/cmtt/m/n/8 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=
+0400,dmode=0500,uhelper=udisks2)[]|  
+ []
+
+)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/096AC3EE1DDFEF8CB0C6CDE3942AF7D35FC80B958B67AEA9004A7ED15645E94
+A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(_minted-Tester/697F783B157A32EA70E5D21821BE14725FC80B958B67AEA9004A7ED15645E94
+A.pygtex
+Overfull \hbox (44.19836pt too wide) in paragraph at lines 5--5
+\T1/cmtt/m/n/8 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=
+0400,dmode=0500,uhelper=udisks2)[]|  
+ []
+
+) [7] (Tester.aux)
 runsystem(del Tester.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 6854 strings out of 493323
- 113933 string characters out of 3139068
- 226261 words of memory out of 3000000
- 10217 multiletter control sequences out of 15000+200000
- 35721 words of font info for 41 fonts, out of 3000000 for 9000
+ 6866 strings out of 493323
+ 115499 string characters out of 3139068
+ 229689 words of memory out of 3000000
+ 10214 multiletter control sequences out of 15000+200000
+ 35405 words of font info for 40 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,20n,38p,858b,669s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,9n,38p,858b,532s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\t
-cit0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
-\dpi600\ecit0800.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc} <
+ctt0800.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc} <C:\Users\
+Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ectt0800.pk> <
 C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0
 500.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi
-600\ectt0800.pk> <C:\Users\Somu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknapp
-en\ec\dpi600\ectt1000.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cms
-y5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiK
-TeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Tester.pdf (6 pages, 485712 bytes).
+600\ectt1000.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmm
+i5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program 
+Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helv
+etic/uhvro8a.pfb>
+Output written on Tester.pdf (7 pages, 298438 bytes).
 PDF statistics:
- 228 PDF objects out of 1000 (max. 8388607)
+ 195 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

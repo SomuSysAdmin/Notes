@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} fdisk /dev/sdb
+\PYG{g+go}{Welcome to fdisk (util\PYGZhy{}linux 2.23.2).}
+
+\PYG{g+go}{Changes will remain in memory only, until you decide to write them.}
+\PYG{g+go}{Be careful before using the write command.}
+
+\PYG{g+go}{Device does not contain a recognized partition table}
+\PYG{g+go}{Building a new DOS disklabel with disk identifier 0xf11ab429.}
+
+\PYG{g+go}{Command (m for help):}
+\end{Verbatim}

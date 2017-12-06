@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} mount /dev/sdb1 /mnt
+\PYG{g+gp}{	\PYGZsh{}} mount \PYG{p}{|} tail \PYGZhy{}n \PYG{l+m}{5}
+\PYG{g+go}{	tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,seclabel,size=592968k,mode=700,uid=1000,gid=1000)}
+\PYG{g+go}{	fusectl on /sys/fs/fuse/connections type fusectl (rw,relatime)}
+\PYG{g+go}{	gvfsd\PYGZhy{}fuse on /run/user/1000/gvfs type fuse.gvfsd\PYGZhy{}fuse (rw,nosuid,nodev,relatime,user\PYGZus{}id=1000,group\PYGZus{}id=1000)}
+\PYG{g+go}{	/dev/sr0 on /run/media/somu/CentOS 7 x86\PYGZus{}64 type iso9660 (ro,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8,mode=0400,dmode=0500,uhelper=udisks2)}
+\PYG{g+go}{	/dev/sdb1 on /mnt type xfs (rw,relatime,seclabel,attr2,inode64,noquota)}
+\end{Verbatim}
