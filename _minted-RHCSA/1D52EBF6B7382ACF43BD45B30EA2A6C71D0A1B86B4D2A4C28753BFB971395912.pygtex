@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+/dev/sdb1	/data	xfs		defaults	\PYG{l+m}{1}	\PYG{l+m}{2}
+\end{Verbatim}

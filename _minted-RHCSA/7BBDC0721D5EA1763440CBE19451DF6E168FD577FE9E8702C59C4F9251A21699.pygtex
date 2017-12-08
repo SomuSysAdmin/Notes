@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} cryptsetup luksOpen /dev/sdb2 secret
+\PYG{g+go}{Enter passphrase for /dev/sdb2:}
+\PYG{g+gp}{[root@vmPrime /]\PYGZsh{}} \PYG{n+nb}{cd} /dev/mapper
+\PYG{g+gp}{[root@vmPrime mapper]\PYGZsh{}} ls
+\PYG{g+go}{centos\PYGZhy{}home  centos\PYGZhy{}root  centos\PYGZhy{}swap  centos\PYGZhy{}var  control  secret}
+\end{Verbatim}

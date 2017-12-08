@@ -6,15 +6,6 @@
 \begin{document}
 	\input{"Mod2/chapters/2.15 Managing Partitions"}
 	
-	\section{Mounting partitions via /etc/fstab}
-	To automount the device \verb|/dev/sdb1|, all we need to do is add the following line to \verb|/etc/fstab|:
-	
-	\vspace{-15pt}
-	\begin{minted}{bash}
-	/dev/sdb1	/data	xfs		defaults	1	2
-	\end{minted}
-	\vspace{-10pt}
-	
-	Note however that the above won't guarantee that the \textit{proper} file system will always be mounted as it's dependent on the order in which the OS detects the disks! So, it's better to use the UUIDs of the file systems to track them. 
+
 	
 \end{document}

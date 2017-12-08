@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} cryptsetup luksFormat /dev/sdb2
+
+\PYG{g+go}{	WARNING!}
+\PYG{g+go}{	========}
+\PYG{g+go}{	This will overwrite data on /dev/sdb2 irrevocably.}
+
+\PYG{g+go}{	Are you sure? (Type uppercase yes): YES}
+\PYG{g+go}{	Enter passphrase:}
+\PYG{g+go}{	Verify passphrase:}
+\PYG{g+gp}{	\PYGZsh{}}
+\end{Verbatim}

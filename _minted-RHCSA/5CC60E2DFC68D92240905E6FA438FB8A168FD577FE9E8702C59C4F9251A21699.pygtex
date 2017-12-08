@@ -1,0 +1,52 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{Command (m for help): n}
+\PYG{g+go}{Partition type:}
+\PYG{g+go}{p   primary (1 primary, 0 extended, 3 free)}
+\PYG{g+go}{e   extended}
+\PYG{g+go}{Select (default p): p}
+\PYG{g+go}{Partition number (2\PYGZhy{}4, default 2):}
+\PYG{g+go}{First sector (2099200\PYGZhy{}20971519, default 2099200):}
+\PYG{g+go}{Using default value 2099200}
+\PYG{g+go}{Last sector, +sectors or +size\PYGZob{}K,M,G\PYGZcb{} (2099200\PYGZhy{}20971519, default 20971519): +100M}
+\PYG{g+go}{Partition 2 of type Linux and of size 100 MiB is set}
+
+\PYG{g+go}{Command (m for help): p}
+
+\PYG{g+go}{Disk /dev/sdb: 10.7 GB, 10737418240 bytes, 20971520 sectors}
+\PYG{g+go}{Units = sectors of 1 * 512 = 512 bytes}
+\PYG{g+go}{Sector size (logical/physical): 512 bytes / 512 bytes}
+\PYG{g+go}{I/O size (minimum/optimal): 512 bytes / 512 bytes}
+\PYG{g+go}{Disk label type: dos}
+\PYG{g+go}{Disk identifier: 0xf11ab429}
+
+\PYG{g+go}{Device Boot      Start         End      Blocks   Id  System}
+\PYG{g+go}{/dev/sdb1         2048     2099199     1048576   83  Linux}
+\PYG{g+go}{/dev/sdb2      2099200     2303999      102400   83  Linux}
+
+\PYG{g+go}{Command (m for help): w}
+\PYG{g+go}{The partition table has been altered!}
+
+\PYG{g+go}{Calling ioctl() to re\PYGZhy{}read partition table.}
+
+\PYG{g+go}{WARNING: Re\PYGZhy{}reading the partition table failed with error 16: Device or resource busy.}
+\PYG{g+go}{The kernel still uses the old table. The new table will be used at}
+\PYG{g+go}{the next reboot or after you run partprobe(8) or kpartx(8)}
+\PYG{g+go}{Syncing disks.}
+
+\PYG{g+gp}{\PYGZsh{}} partprobe /dev/sdb
+\PYG{g+gp}{\PYGZsh{}} cat /proc/partitions
+\PYG{g+go}{major minor  \PYGZsh{}blocks  name}
+
+\PYG{g+go}{8        0   20971520 sda}
+\PYG{g+go}{8        1       2048 sda1}
+\PYG{g+go}{8        2     499712 sda2}
+\PYG{g+go}{8        3   15634432 sda3}
+\PYG{g+go}{8       16   10485760 sdb}
+\PYG{g+go}{8       17    1048576 sdb1}
+\PYG{g+go}{8       18     102400 sdb2}
+\PYG{g+go}{11       0    8491008 sr0}
+\PYG{g+go}{253      0    3903488 dm\PYGZhy{}0}
+\PYG{g+go}{253      1    1953792 dm\PYGZhy{}1}
+\PYG{g+go}{253      2    1953792 dm\PYGZhy{}2}
+\PYG{g+go}{253      3    7815168 dm\PYGZhy{}3}
+\end{Verbatim}

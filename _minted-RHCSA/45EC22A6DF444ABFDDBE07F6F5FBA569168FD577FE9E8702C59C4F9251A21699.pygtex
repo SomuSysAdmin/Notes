@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} mount \PYGZhy{}a
+\PYG{g+go}{mount: mount point /data does not exist}
+\end{Verbatim}

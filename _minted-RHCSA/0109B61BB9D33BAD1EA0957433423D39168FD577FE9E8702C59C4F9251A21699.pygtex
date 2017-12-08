@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{[root@vmPrime \PYGZti{}]\PYGZsh{}} umount /secret
+\PYG{g+gp}{[root@vmPrime \PYGZti{}]\PYGZsh{}} cryptsetup luksClose /dev/mapper/secret
+\PYG{g+gp}{[root@vmPrime \PYGZti{}]\PYGZsh{}} ls \PYGZhy{}l /dev/mapper
+\PYG{g+go}{total 0}
+\PYG{g+go}{lrwxrwxrwx. 1 root root       7 Dec  8 06:51 centos\PYGZhy{}home \PYGZhy{}\PYGZgt{} ../dm\PYGZhy{}3}
+\PYG{g+go}{lrwxrwxrwx. 1 root root       7 Dec  8 06:51 centos\PYGZhy{}root \PYGZhy{}\PYGZgt{} ../dm\PYGZhy{}0}
+\PYG{g+go}{lrwxrwxrwx. 1 root root       7 Dec  8 06:51 centos\PYGZhy{}swap \PYGZhy{}\PYGZgt{} ../dm\PYGZhy{}1}
+\PYG{g+go}{lrwxrwxrwx. 1 root root       7 Dec  8 06:51 centos\PYGZhy{}var \PYGZhy{}\PYGZgt{} ../dm\PYGZhy{}2}
+\PYG{g+go}{crw\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}. 1 root root 10, 236 Dec  8 06:51 control}
+\end{Verbatim}

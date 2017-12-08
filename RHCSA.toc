@@ -239,3 +239,10 @@
 \contentsline {subsection}{\numberline {14.4.1}mkfs}{106}
 \contentsline {section}{\numberline {14.5}Mounting the Partition Manually}{107}
 \contentsline {subsection}{\numberline {14.5.1}umount}{107}
+\contentsline {section}{\numberline {14.6}Understanding /etc/fstab}{108}
+\contentsline {section}{\numberline {14.7}Mounting partitions via /etc/fstab}{109}
+\contentsline {subsection}{\numberline {14.7.1}Managing xfs file systems using xfs\_ commands}{110}
+\contentsline {section}{\numberline {14.8}Understanding Encrypted Partitions}{111}
+\contentsline {section}{\numberline {14.9}Creating a LUKS Encrypted Partition}{111}
+\contentsline {subsection}{\numberline {14.9.1}Formatting the new partition}{112}
+\contentsline {section}{\numberline {14.10}Dealing with "Enter root password for maintenance mode"}{114}
