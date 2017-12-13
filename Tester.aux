@@ -1,58 +1,46 @@
 \relax 
-\@writefile{toc}{\contentsline {chapter}{\numberline {1}Managing Partitions}{1}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Managing LVM Logical Volumes}{1}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {1.1}Understanding Disk Layout}{1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces Disk Layout}}{1}}
-\newlabel{fig:2 Disk Layout}{{1.1}{1}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Creating Partitions}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.1}fdisk}{2}}
-\@writefile{toc}{\contentsline {subsubsection}{p command}{3}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}Understanding File System Differences}{4}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Making the File System}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.1}mkfs}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.5}Mounting the Partition Manually}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.1}umount}{6}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.6}Understanding /etc/fstab}{7}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.7}Mounting partitions via /etc/fstab}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.7.1}Managing xfs file systems using xfs\_ commands}{9}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.8}Understanding Encrypted Partitions}{10}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.9}Creating a LUKS Encrypted Partition}{10}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.9.1}Formatting the new partition}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Why use LVM}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Understanding LVM Setup}{1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces LVM Setup}}{2}}
+\newlabel{fig:2 LVM Setup}{{1.1}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Creating an LVM Logical Volume}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}Creating a Physical Volume}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.2}Creating a Volume Group}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Creating a Logical Volume}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Creating a File system on the LV}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Understanding Device Mapper and LVM Device Names}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.5}Understanding LVM resize operations}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.1}Extending the File System}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.2}Shrinking the File System}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.6}Growing an LVM Logical Volume}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.1}Creating a new logical volume in an extended partition to add to the VG}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.2}Extending the Volume Group}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.3}Extending the LV and the File System}{10}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.7}Shrinking an LVM logical Volume}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.7.1}Reduce both File system and LV in a single step}{12}}
 \gdef\minted@oldcachelist{,
   default-pyg-prefix.pygstyle,
   default.pygstyle,
-  997D5AC5C0194045AB52D299C7ED56915FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  A86B909A4E9CE7A8D1E5CD3B5B2470EA5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  D84FE50007A4162C8851D60E077FF1E3B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  B5A2EE1ABCD56499EB1A2541136D22FDB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  E7FA2333D65FF448E605EA2F9B302124B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  67ED3433618ABDA669272E926385C736B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  1B77DDBB14A35CD2D9DFBEE7DEC7D39F5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  AD5C6983FF0CDEAE54DC87279262C39AB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  39F738C7CE19917D257DD35900AE27B75FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  36962B7C5F97447BF07BE2556B782CFF5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  E47966EF5680740816F5A0DA6948D3BF5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  149F6A0248572FDA11B9828A13931FBC5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  4BBE3AD238436886B48BF876DF372F5C5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  0DCBF59CCB7F3175CD4F5213602CF6795FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  4883CF9EBF9BFED7D9A0B0DC9EC7D5785FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  3DAE1927119AD71DCC595700AC4DD8DFB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  1D52EBF6B7382ACF43BD45B30EA2A6C7B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  79DD3647227DFC71723F0E50460FC47BB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  45EC22A6DF444ABFDDBE07F6F5FBA5695FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  3F2EECFB4EE7102CA62F705E9A8D02355FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  E6EC2D3A0B2F9F7A8B24CE04E3D59109B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  C2D1FDD87CE093AF10553AD8334E8868B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  8FF0DDA66F091AC6686F66403543A6E45FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  B6D9DD1B51C5050457CDBDE616E4642D5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  82186AA564C0E0BC067312D9C754CFD65FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  A6A3939F4BD65003C97DF54E14A856CF5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  AB46A18AE6397BE1177721B67C7EF8545FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  53AA04693564A716C6DEC22AD4A84F995FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  9CA55E78E223A69332959346A925536C5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  8A715EBAD907873E9F8DB93FECD316B35FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  C73353D443DAFDB847E9BFBF04F4F1B55FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  8ED414F391FE106F29CAE4C2812DA218B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  44234B885B6943B38151A9D9FE6D44CBB2DC55294848DCE6CE6B7F9038926FD4.pygtex}
-\@writefile{toc}{\contentsline {section}{\numberline {1.10}Dealing with "Enter root password for maintenance mode"}{13}}
+  05BC2F3EC4A5FABA8978C94FC55BCEA95FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  77B41242B4EC48CB1A6D186A1FE8D0A75FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  9EECE9746DECD3CBDE2FBCEF4B68137F5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  98D9965559E1303BAE98E17AD918C5AD5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  15C5E7099A5A6D111207B980BB24F5645FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  5E569CA104A650D24BF2C698E0742AC05FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  2EFE6C01B27EC884840B40FAF4F606085FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  46AE43EB9C445087713BFBE46E9E23F95FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  6443E99FA4741814A5157EB99D25E5BE5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  52AE4E66FCA2BFCC853E8D06682E502A5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  2255586B367C2AB8463E26F3C12897875FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  F79C69F5195131BF34B2DF215D963FFF5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  A83FD9D643027BA55B2D30C1CA5F3E935FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  4D7931D8EE819F760A7C7A22EAF0636C5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  B7C4743A90B0D8FAD6A69935067327B05FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  D333969D9D3AC7215FB5E47D1AF8504F5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  C7BF8A56FF0C986F0DF440F8A3BD744D5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  D761E57449F4512CE4A616E0DA3734045FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  C0122118FE7D80647E3DF3A944913B415FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  21F04BC54649F7B5E6D8FFBF39B5AD9D5FC80B958B67AEA9004A7ED15645E94A.pygtex}

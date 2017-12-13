@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} e2fsck \PYGZhy{}f /dev/mapper/vgCLI\PYGZhy{}lvCLI
+\PYG{g+go}{e2fsck 1.42.9 (28\PYGZhy{}Dec\PYGZhy{}2013)}
+\PYG{g+go}{Pass 1: Checking inodes, blocks, and sizes}
+\PYG{g+go}{Pass 2: Checking directory structure}
+\PYG{g+go}{Pass 3: Checking directory connectivity}
+\PYG{g+go}{Pass 4: Checking reference counts}
+\PYG{g+go}{Pass 5: Checking group summary information}
+\PYG{g+go}{lvCLI: 11/25688 files (9.1\PYGZpc{} non\PYGZhy{}contiguous), 8896/102400 blocks}
+\PYG{g+gp}{\PYGZsh{}} resize2fs /dev/mapper/vgCLI\PYGZhy{}lvCLI 50M
+\PYG{g+go}{resize2fs 1.42.9 (28\PYGZhy{}Dec\PYGZhy{}2013)}
+\PYG{g+go}{Resizing the filesystem on /dev/mapper/vgCLI\PYGZhy{}lvCLI to 51200 (1k) blocks.}
+\PYG{g+go}{The filesystem on /dev/mapper/vgCLI\PYGZhy{}lvCLI is now 51200 blocks long.}
+\PYG{g+gp}{\PYGZsh{}} lvreduce \PYGZhy{}L 50M /dev/mapper/vgCLI\PYGZhy{}lvCLI
+\PYG{g+go}{Rounding size to boundary between physical extents: 52.00 MiB.}
+\PYG{g+go}{WARNING: Reducing active logical volume to 52.00 MiB.}
+\PYG{g+go}{THIS MAY DESTROY YOUR DATA (filesystem etc.)}
+\PYG{g+go}{Do you really want to reduce vgCLI/lvCLI? [y/n]: y}
+\PYG{g+go}{Size of logical volume vgCLI/lvCLI changed from 100.00 MiB (25 extents) to 52.00 MiB (13 extents).}
+\PYG{g+go}{Logical volume vgCLI/lvCLI successfully resized.}
+\end{Verbatim}

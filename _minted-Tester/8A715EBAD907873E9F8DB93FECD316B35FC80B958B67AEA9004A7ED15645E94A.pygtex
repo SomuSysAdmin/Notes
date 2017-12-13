@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{	\PYGZsh{}} mkdir /secret
-\PYG{g+gp}{	\PYGZsh{}} mount /dev/mapper/secret /secret
-\PYG{g+gp}{	\PYGZsh{}} \PYG{n+nb}{cd} /secret
-\end{Verbatim}

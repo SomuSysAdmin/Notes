@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} vgs
+\PYG{g+go}{VG               \PYGZsh{}PV \PYGZsh{}LV \PYGZsh{}SN Attr   VSize   VFree}
+\PYG{g+go}{centos\PYGZus{}cliserver   1   2   0 wz\PYGZhy{}\PYGZhy{}n\PYGZhy{} \PYGZlt{}19.00g      0}
+\PYG{g+go}{vgCLI              2   1   0 wz\PYGZhy{}\PYGZhy{}n\PYGZhy{} 292.00m 192.00m}
+\PYG{g+gp}{\PYGZsh{}} pvs
+\PYG{g+go}{PV         VG               Fmt  Attr PSize   PFree}
+\PYG{g+go}{/dev/sda2  centos\PYGZus{}cliserver lvm2 a\PYGZhy{}\PYGZhy{}  \PYGZlt{}19.00g      0}
+\PYG{g+go}{/dev/sdb2                   lvm2 \PYGZhy{}\PYGZhy{}\PYGZhy{}  100.00m 100.00m}
+\PYG{g+go}{/dev/sdb3  vgCLI            lvm2 a\PYGZhy{}\PYGZhy{}  196.00m  96.00m}
+\PYG{g+go}{/dev/sdb5  vgCLI            lvm2 a\PYGZhy{}\PYGZhy{}   96.00m  96.00m}
+\end{Verbatim}

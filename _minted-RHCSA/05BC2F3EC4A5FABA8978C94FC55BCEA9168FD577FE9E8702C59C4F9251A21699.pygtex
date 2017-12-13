@@ -1,0 +1,94 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} fdisk /dev/sdb
+\PYG{g+go}{Welcome to fdisk (util\PYGZhy{}linux 2.23.2).}
+
+\PYG{g+go}{Changes will remain in memory only, until you decide to write them.}
+\PYG{g+go}{Be careful before using the write command.}
+
+
+\PYG{g+go}{Command (m for help): p}
+
+\PYG{g+go}{Disk /dev/sdb: 10.7 GB, 10737418240 bytes, 20971520 sectors}
+\PYG{g+go}{Units = sectors of 1 * 512 = 512 bytes}
+\PYG{g+go}{Sector size (logical/physical): 512 bytes / 512 bytes}
+\PYG{g+go}{I/O size (minimum/optimal): 512 bytes / 512 bytes}
+\PYG{g+go}{Disk label type: dos}
+\PYG{g+go}{Disk identifier: 0xf11ab429}
+
+\PYG{g+go}{Device Boot      Start         End      Blocks   Id  System}
+\PYG{g+go}{/dev/sdb1            2048     4196351     2097152    5  Extended}
+\PYG{g+go}{/dev/sdb5            4096     2101247     1048576   83  Linux}
+\PYG{g+go}{/dev/sdb6         2103296     4196351     1046528   83  Linux}
+
+\PYG{g+go}{Command (m for help): n}
+\PYG{g+go}{Partition type:}
+\PYG{g+go}{p   primary (0 primary, 1 extended, 3 free)}
+\PYG{g+go}{l   logical (numbered from 5)}
+\PYG{g+go}{Select (default p): p}
+\PYG{g+go}{Partition number (2\PYGZhy{}4, default 2):}
+\PYG{g+go}{First sector (4196352\PYGZhy{}20971519, default 4196352):}
+\PYG{g+go}{Using default value 4196352}
+\PYG{g+go}{Last sector, +sectors or +size\PYGZob{}K,M,G\PYGZcb{} (4196352\PYGZhy{}20971519, default 20971519): +100M}
+\PYG{g+go}{Partition 2 of type Linux and of size 100 MiB is set}
+
+\PYG{g+go}{Command (m for help): p}
+
+\PYG{g+go}{Disk /dev/sdb: 10.7 GB, 10737418240 bytes, 20971520 sectors}
+\PYG{g+go}{Units = sectors of 1 * 512 = 512 bytes}
+\PYG{g+go}{Sector size (logical/physical): 512 bytes / 512 bytes}
+\PYG{g+go}{I/O size (minimum/optimal): 512 bytes / 512 bytes}
+\PYG{g+go}{Disk label type: dos}
+\PYG{g+go}{Disk identifier: 0xf11ab429}
+
+\PYG{g+go}{Device Boot      Start         End      Blocks   Id  System}
+\PYG{g+go}{/dev/sdb1            2048     4196351     2097152    5  Extended}
+\PYG{g+go}{/dev/sdb2         4196352     4401151      102400   83  Linux}
+\PYG{g+go}{/dev/sdb5            4096     2101247     1048576   83  Linux}
+\PYG{g+go}{/dev/sdb6         2103296     4196351     1046528   83  Linux}
+\PYG{g+gp}{\PYGZsh{}} fdisk /dev/sdb
+\PYG{g+go}{Welcome to fdisk (util\PYGZhy{}linux 2.23.2).}
+
+\PYG{g+go}{Changes will remain in memory only, until you decide to write them.}
+\PYG{g+go}{Be careful before using the write command.}
+
+
+\PYG{g+go}{Command (m for help): p}
+
+\PYG{g+go}{Disk /dev/sdb: 10.7 GB, 10737418240 bytes, 20971520 sectors}
+\PYG{g+go}{Units = sectors of 1 * 512 = 512 bytes}
+\PYG{g+go}{Sector size (logical/physical): 512 bytes / 512 bytes}
+\PYG{g+go}{I/O size (minimum/optimal): 512 bytes / 512 bytes}
+\PYG{g+go}{Disk label type: dos}
+\PYG{g+go}{Disk identifier: 0xf11ab429}
+
+\PYG{g+go}{Device Boot      Start         End      Blocks   Id  System}
+\PYG{g+go}{/dev/sdb1            2048     4196351     2097152    5  Extended}
+\PYG{g+go}{/dev/sdb5            4096     2101247     1048576   83  Linux}
+\PYG{g+go}{/dev/sdb6         2103296     4196351     1046528   83  Linux}
+
+\PYG{g+go}{Command (m for help): n}
+\PYG{g+go}{Partition type:}
+\PYG{g+go}{p   primary (0 primary, 1 extended, 3 free)}
+\PYG{g+go}{l   logical (numbered from 5)}
+\PYG{g+go}{Select (default p): p}
+\PYG{g+go}{Partition number (2\PYGZhy{}4, default 2):}
+\PYG{g+go}{First sector (4196352\PYGZhy{}20971519, default 4196352):}
+\PYG{g+go}{Using default value 4196352}
+\PYG{g+go}{Last sector, +sectors or +size\PYGZob{}K,M,G\PYGZcb{} (4196352\PYGZhy{}20971519, default 20971519): +100M}
+\PYG{g+go}{Partition 2 of type Linux and of size 100 MiB is set}
+
+\PYG{g+go}{Command (m for help): p}
+
+\PYG{g+go}{Disk /dev/sdb: 10.7 GB, 10737418240 bytes, 20971520 sectors}
+\PYG{g+go}{Units = sectors of 1 * 512 = 512 bytes}
+\PYG{g+go}{Sector size (logical/physical): 512 bytes / 512 bytes}
+\PYG{g+go}{I/O size (minimum/optimal): 512 bytes / 512 bytes}
+\PYG{g+go}{Disk label type: dos}
+\PYG{g+go}{Disk identifier: 0xf11ab429}
+
+\PYG{g+go}{Device Boot      Start         End      Blocks   Id  System}
+\PYG{g+go}{/dev/sdb1            2048     4196351     2097152    5  Extended}
+\PYG{g+go}{/dev/sdb2         4196352     4401151      102400   83  Linux}
+\PYG{g+go}{/dev/sdb5            4096     2101247     1048576   83  Linux}
+\PYG{g+go}{/dev/sdb6         2103296     4196351     1046528   83  Linux}
+\end{Verbatim}

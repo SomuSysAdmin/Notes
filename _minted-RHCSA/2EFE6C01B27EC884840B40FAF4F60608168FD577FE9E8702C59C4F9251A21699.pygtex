@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l /dev/mapper/vgPrime\PYGZhy{}lvPrime /dev/vgPrime/lvPrime
+\PYG{g+go}{lrwxrwxrwx. 1 root root 7 Dec 11 15:13 /dev/mapper/vgPrime\PYGZhy{}lvPrime \PYGZhy{}\PYGZgt{} ../dm\PYGZhy{}5}
+\PYG{g+go}{lrwxrwxrwx. 1 root root 7 Dec 11 15:13 /dev/vgPrime/lvPrime \PYGZhy{}\PYGZgt{} ../dm\PYGZhy{}5}
+\end{Verbatim}

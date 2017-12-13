@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} df \PYGZhy{}h
+\PYG{g+go}{Filesystem                   Size  Used Avail Use\PYGZpc{} Mounted on}
+\PYG{g+go}{/dev/mapper/centos\PYGZhy{}root      3.8G  3.6G  163M  96\PYGZpc{} /}
+\PYG{g+go}{devtmpfs                     2.9G     0  2.9G   0\PYGZpc{} /dev}
+\PYG{g+go}{tmpfs                        2.9G     0  2.9G   0\PYGZpc{} /dev/shm}
+\PYG{g+go}{tmpfs                        2.9G  9.1M  2.9G   1\PYGZpc{} /run}
+\PYG{g+go}{tmpfs                        2.9G     0  2.9G   0\PYGZpc{} /sys/fs/cgroup}
+\PYG{g+go}{/dev/sdb5                    976M  2.6M  907M   1\PYGZpc{} /data}
+\PYG{g+go}{/dev/mapper/centos\PYGZhy{}var       1.9G  365M  1.5G  20\PYGZpc{} /var}
+\PYG{g+go}{/dev/mapper/centos\PYGZhy{}home      7.5G   68M  7.4G   1\PYGZpc{} /home}
+\PYG{g+go}{/dev/sda2                    485M  266M  220M  55\PYGZpc{} /boot}
+\PYG{g+go}{tmpfs                        580M  4.0K  580M   1\PYGZpc{} /run/user/42}
+\PYG{g+go}{tmpfs                        580M   36K  580M   1\PYGZpc{} /run/user/1000}
+\PYG{g+go}{/dev/sr0                     8.1G  8.1G     0 100\PYGZpc{} /run/media/somu/CentOS 7 x86\PYGZus{}64}
+\PYG{g+go}{/dev/mapper/vgPrime\PYGZhy{}lvPrime   93M  1.6M   87M   2\PYGZpc{} /mnt}
+\end{Verbatim}

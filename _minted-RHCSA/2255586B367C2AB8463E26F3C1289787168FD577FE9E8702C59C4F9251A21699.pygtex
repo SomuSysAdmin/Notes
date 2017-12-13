@@ -1,0 +1,29 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{Command (m for help): n}
+\PYG{g+go}{Partition type:}
+\PYG{g+go}{p   primary (3 primary, 0 extended, 1 free)}
+\PYG{g+go}{e   extended}
+\PYG{g+go}{Select (default e):}
+\PYG{g+go}{Using default response e}
+\PYG{g+go}{Selected partition 4}
+\PYG{g+go}{First sector (821248\PYGZhy{}8388607, default 821248):}
+\PYG{g+go}{Using default value 821248}
+\PYG{g+go}{Last sector, +sectors or +size\PYGZob{}K,M,G\PYGZcb{} (821248\PYGZhy{}8388607, default 8388607):}
+\PYG{g+go}{Using default value 8388607}
+\PYG{g+go}{Partition 4 of type Extended and of size 3.6 GiB is set}
+
+\PYG{g+go}{Command (m for help): p}
+
+\PYG{g+go}{Disk /dev/sdb: 4294 MB, 4294967296 bytes, 8388608 sectors}
+\PYG{g+go}{Units = sectors of 1 * 512 = 512 bytes}
+\PYG{g+go}{Sector size (logical/physical): 512 bytes / 512 bytes}
+\PYG{g+go}{I/O size (minimum/optimal): 512 bytes / 512 bytes}
+\PYG{g+go}{Disk label type: dos}
+\PYG{g+go}{Disk identifier: 0x9287c46d}
+
+\PYG{g+go}{Device Boot      Start         End      Blocks   Id  System}
+\PYG{g+go}{/dev/sdb1            2048      206847      102400   83  Linux}
+\PYG{g+go}{/dev/sdb2          206848      411647      102400   83  Linux}
+\PYG{g+go}{/dev/sdb3          411648      821247      204800   83  Linux LVM}
+\PYG{g+go}{/dev/sdb4          821248     8388607     3783680    5  Extended}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} lvs
+\PYG{g+go}{LV    VG               Attr       LSize   Pool Origin Data\PYGZpc{}  Meta\PYGZpc{}  Move Log Cpy\PYGZpc{}Sync Convert}
+\PYG{g+go}{root  centos\PYGZus{}cliserver \PYGZhy{}wi\PYGZhy{}ao\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZlt{}17.00g}
+\PYG{g+go}{swap  centos\PYGZus{}cliserver \PYGZhy{}wi\PYGZhy{}ao\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}   2.00g}
+\PYG{g+go}{lvCLI vgCLI            \PYGZhy{}wi\PYGZhy{}a\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} 100.00m}
+\PYG{g+gp}{\PYGZsh{}} vgs
+\PYG{g+go}{VG               \PYGZsh{}PV \PYGZsh{}LV \PYGZsh{}SN Attr   VSize   VFree}
+\PYG{g+go}{centos\PYGZus{}cliserver   1   2   0 wz\PYGZhy{}\PYGZhy{}n\PYGZhy{} \PYGZlt{}19.00g      0}
+\PYG{g+go}{vgCLI              2   1   0 wz\PYGZhy{}\PYGZhy{}n\PYGZhy{} 192.00m  92.00m}
+\end{Verbatim}

@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} df \PYGZhy{}h /dev/vgCLI/lvCLI
+\PYG{g+go}{Filesystem               Size  Used Avail Use\PYGZpc{} Mounted on}
+\PYG{g+go}{/dev/mapper/vgCLI\PYGZhy{}lvCLI  289M   16M  274M   6\PYGZpc{} /LVM}
+\end{Verbatim}
