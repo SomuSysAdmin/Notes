@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l /root
+\PYG{g+go}{total 8}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}. 1 root root 2183 Nov 25 09:09 anaconda\PYGZhy{}ks.cfg}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. 1 root root 2214 Nov 25 09:47 initial\PYGZhy{}setup\PYGZhy{}ks.cfg}
+\end{Verbatim}

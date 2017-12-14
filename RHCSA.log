@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  14 DEC 2017 15:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.10.12)  14 DEC 2017 22:50
 entering extended mode
 **./RHCSA.tex
 (RHCSA.tex
@@ -1180,6 +1180,21 @@ Overfull \hbox (1.12079pt too wide) detected at line 277
 [8]
 Overfull \hbox (1.12079pt too wide) detected at line 278
  []\T1/phv/m/n/10 137
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 280
+ []\T1/phv/m/n/10 138
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 281
+ []\T1/phv/m/n/10 138
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 282
+ []\T1/phv/m/n/10 139
  []
 
 )
@@ -2982,16 +2997,45 @@ be only one con-fig file: [][]\T1/cmtt/m/n/10 /etc/sysctl.conf[]\T1/phv/m/n/10
 (_minted-RHCSA/89F95CDAF4FC33E5E09E10C50EC260FB168FD577FE9E8702C59C4F9251A21699
 .pygtex)) ("Mod3/chapters/3.18 Using Kickstart.tex" [137]
 Chapter 17.
-) ("Mod3/chapters/3.19 Managing and Understanding the Boot Procedure.tex"
-[138
+\openout3 = `RHCSA.pyg'.
+
+
+(_minted-RHCSA/729C9700FC4E7737BE3181A0499AAE47168FD577FE9E8702C59C4F9251A21699
+.pygtex) [138
 
 ]
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/8F5BB9492557990F4FDB7369D66DF49F168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/8F5BB9492557990F4FDB7369D66DF49F168FD577FE9E8702C59C4F9251A21699
+.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-RHCSA/5EE845DF2B9822343CEA9B9C6CA7A3C11D0A1B86B4D2A4C28753BFB971395912.pyg
+tex RHCSA.pyg)...executed.
+
+
+(_minted-RHCSA/5EE845DF2B9822343CEA9B9C6CA7A3C11D0A1B86B4D2A4C28753BFB971395912
+.pygtex) <Mod3/chapters/3.18.a.jpg, id=474, 1028.34187pt x 578.16pt>
+File: Mod3/chapters/3.18.a.jpg Graphic file (type jpg)
+
+<use Mod3/chapters/3.18.a.jpg>
+Package pdftex.def Info: Mod3/chapters/3.18.a.jpg used on input line 66.
+(pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
+ [139])
+("Mod3/chapters/3.19 Managing and Understanding the Boot Procedure.tex"
+[140 <./Mod3/chapters/3.18.a.jpg>]
 Chapter 18.
-) ("Mod3/chapters/3.20 Applying Essential Troubleshooting Skills.tex" [139
+) ("Mod3/chapters/3.20 Applying Essential Troubleshooting Skills.tex" [141
 
 ]
 Chapter 19.
-)) [140
+)) [142
 
 ] (RHCSA.aux)
 
@@ -3001,10 +3045,10 @@ runsystem(del RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 8066 strings out of 493323
- 199096 string characters out of 3139068
- 314919 words of memory out of 3000000
- 10582 multiletter control sequences out of 15000+200000
+ 8084 strings out of 493323
+ 200221 string characters out of 3139068
+ 315499 words of memory out of 3000000
+ 10591 multiletter control sequences out of 15000+200000
  44847 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,26n,38p,893b,647s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -3025,9 +3069,9 @@ iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9
 /fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/u
 rw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uh
 vro8a.pfb>
-Output written on RHCSA.pdf (141 pages, 3297211 bytes).
+Output written on RHCSA.pdf (143 pages, 3538940 bytes).
 PDF statistics:
- 789 PDF objects out of 1000 (max. 8388607)
+ 796 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 76 words of extra memory for PDF output out of 10000 (max. 10000000)
 

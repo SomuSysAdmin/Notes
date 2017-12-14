@@ -277,5 +277,10 @@
 \contentsline {subsection}{\numberline {16.5.1}sysctl command}{136}
 \contentsline {section}{\numberline {16.6}Updating the kernel}{137}
 \contentsline {chapter}{\numberline {17}Using Kickstart}{138}
-\contentsline {chapter}{\numberline {18}Managing and Understanding the Boot Procedure}{139}
-\contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{140}
+\contentsline {section}{\numberline {17.1}Understanding Kickstart Usage}{138}
+\contentsline {section}{\numberline {17.2}Creating a Kickstart file}{138}
+\contentsline {subsection}{\numberline {17.2.1}Installation Scripts}{139}
+\contentsline {section}{\numberline {17.3}Using the Kickstart file for Automatic installations}{139}
+\contentsline {section}{\numberline {17.4}Using Kickstart files in fully automated data-centers}{139}
+\contentsline {chapter}{\numberline {18}Managing and Understanding the Boot Procedure}{141}
+\contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{142}

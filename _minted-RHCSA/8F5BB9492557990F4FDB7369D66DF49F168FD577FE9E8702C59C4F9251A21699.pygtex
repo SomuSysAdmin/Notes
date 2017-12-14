@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} scp \PYGZhy{}P \PYG{l+m}{22} automate\PYGZhy{}install\PYGZhy{}ks.cfg somu@infraServer.somuVMnet.com:\PYGZti{}
+\PYG{g+gp}{\PYGZsh{}} ssh \PYGZhy{}p \PYG{l+m}{22} root@infraServer.somuVMnet.com
+\PYG{g+gp}{\PYGZsh{}} cp automate\PYGZhy{}install\PYGZhy{}ks.cfg /var/ftp/pub
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{cd} /var/ftp/pub
+\PYG{g+gp}{\PYGZsh{}} chmod \PYG{l+m}{644} automate\PYGZhy{}install\PYGZhy{}ks.cfg \PYG{c+c1}{\PYGZsh{} Others need read access to be able to use the kickstart file.}
+\PYG{g+gp}{\PYGZsh{}} systemctl status vsftpd \PYG{c+c1}{\PYGZsh{} Checking if the FTP server is functioning correctly!}
+\end{Verbatim}
