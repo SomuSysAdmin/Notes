@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{Command (m for help): w}
-\PYG{g+go}{The partition table has been altered!}
-
-\PYG{g+go}{Calling ioctl() to re\PYGZhy{}read partition table.}
-\PYG{g+go}{Syncing disks.}
-\PYG{g+gp}{\PYGZsh{}} partprobe
-\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} modprobe vfat
+\PYG{g+gp}{\PYGZsh{}} lsmod \PYG{p}{|} grep fat
+\PYG{g+go}{vfat                   17461  0}
+\PYG{g+go}{fat                    65950  1 vfat}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} dmesg \PYG{p}{|} grep cdrom
+\PYG{g+go}{[    2.516616] cdrom: Uniform CD\PYGZhy{}ROM driver Revision: 3.20}
+\PYG{g+gp}{\PYGZsh{}} dmesg \PYG{p}{|} grep \PYGZhy{}A5 cdrom
+\PYG{g+go}{[    2.516616] cdrom: Uniform CD\PYGZhy{}ROM driver Revision: 3.20}
+\PYG{g+go}{[    2.516931] sr 2:0:0:0: Attached scsi CD\PYGZhy{}ROM sr0}
+\PYG{g+go}{[    2.818361] e1000 0000:02:01.0 eth0: (PCI:66MHz:32\PYGZhy{}bit) 00:0c:29:d6:73:d0}
+\PYG{g+go}{[    2.818369] e1000 0000:02:01.0 eth0: Intel(R) PRO/1000 Network Connection}
+\PYG{g+go}{[    3.137847] random: crng init done}
+\PYG{g+go}{[    3.666093] SGI XFS with ACLs, security attributes, no debug enabled}
+\end{Verbatim}

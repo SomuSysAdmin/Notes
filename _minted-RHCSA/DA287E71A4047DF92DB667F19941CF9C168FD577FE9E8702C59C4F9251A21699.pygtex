@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls /usr/lib/sysctl.d/
+\PYG{g+go}{00\PYGZhy{}system.conf  10\PYGZhy{}default\PYGZhy{}yama\PYGZhy{}scope.conf  50\PYGZhy{}default.conf  60\PYGZhy{}libvirtd.conf}
+\end{Verbatim}

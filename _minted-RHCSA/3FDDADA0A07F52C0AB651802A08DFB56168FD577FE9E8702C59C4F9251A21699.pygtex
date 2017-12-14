@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} modprobe \PYGZhy{}r cdrom
+\PYG{g+go}{modprobe: FATAL: Module cdrom is in use.}
+\end{Verbatim}

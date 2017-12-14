@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} modinfo cdrom
+\PYG{g+go}{filename:       /lib/modules/3.10.0\PYGZhy{}693.11.1.el7.x86\PYGZus{}64/kernel/drivers/cdrom/cdrom.ko.xz}
+\PYG{g+go}{license:        GPL}
+\PYG{g+go}{rhelversion:    7.4}
+\PYG{g+go}{srcversion:     BE3BD0D17D080229D55B173}
+\PYG{g+go}{depends:}
+\PYG{g+go}{intree:         Y}
+\PYG{g+go}{vermagic:       3.10.0\PYGZhy{}693.11.1.el7.x86\PYGZus{}64 SMP mod\PYGZus{}unload modversions}
+\PYG{g+go}{signer:         CentOS Linux kernel signing key}
+\PYG{g+go}{sig\PYGZus{}key:        61:B8:E8:7B:84:11:84:F6:2F:80:D6:07:79:AB:69:2A:49:D8:3B:AF}
+\PYG{g+go}{sig\PYGZus{}hashalgo:   sha256}
+\PYG{g+go}{parm:           debug:bool}
+\PYG{g+go}{parm:           autoclose:bool}
+\PYG{g+go}{parm:           autoeject:bool}
+\PYG{g+go}{parm:           lockdoor:bool}
+\PYG{g+go}{parm:           check\PYGZus{}media\PYGZus{}type:bool}
+\PYG{g+go}{parm:           mrw\PYGZus{}format\PYGZus{}restart:bool}
+\end{Verbatim}

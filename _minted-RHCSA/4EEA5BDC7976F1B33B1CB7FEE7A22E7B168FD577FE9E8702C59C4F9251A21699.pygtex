@@ -1,0 +1,28 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} modinfo e1000
+\PYG{g+go}{filename:       /lib/modules/3.10.0\PYGZhy{}693.11.1.el7.x86\PYGZus{}64/kernel/drivers/net/ethernet/intel/e1000/e1000.ko.xz}
+\PYG{g+go}{version:        7.3.21\PYGZhy{}k8\PYGZhy{}NAPI}
+\PYG{g+go}{license:        GPL}
+\PYG{g+go}{description:    Intel(R) PRO/1000 Network Driver}
+\PYG{g+go}{author:         Intel Corporation, \PYGZlt{}linux.nics@intel.com\PYGZgt{}}
+\PYG{g+go}{rhelversion:    7.4}
+\PYG{g+go}{srcversion:     9E0A112E5D47C996E7C4A58}
+\PYG{g+go}{alias:          pci:v00008086d00002E6Esv*sd*bc*sc*i*}
+\PYG{g+go}{...}
+\PYG{g+go}{alias:          pci:v00008086d00001001sv*sd*bc*sc*i*}
+\PYG{g+go}{alias:          pci:v00008086d00001000sv*sd*bc*sc*i*}
+\PYG{g+go}{depends:}
+\PYG{g+go}{intree:         Y}
+\PYG{g+go}{vermagic:       3.10.0\PYGZhy{}693.11.1.el7.x86\PYGZus{}64 SMP mod\PYGZus{}unload modversions}
+\PYG{g+go}{signer:         CentOS Linux kernel signing key}
+\PYG{g+go}{sig\PYGZus{}key:        61:B8:E8:7B:84:11:84:F6:2F:80:D6:07:79:AB:69:2A:49:D8:3B:AF}
+\PYG{g+go}{sig\PYGZus{}hashalgo:   sha256}
+\PYG{g+go}{parm:           TxDescriptors:Number of transmit descriptors (array of int)}
+\PYG{g+go}{parm:           RxDescriptors:Number of receive descriptors (array of int)}
+\PYG{g+go}{parm:           Speed:Speed setting (array of int)}
+\PYG{g+go}{parm:           Duplex:Duplex setting (array of int)}
+\PYG{g+go}{parm:           AutoNeg:Advertised auto\PYGZhy{}negotiation setting (array of int)}
+\PYG{g+go}{...}
+\PYG{g+go}{parm:           copybreak:Maximum size of packet that is copied to a new buffer on receive (uint)}
+\PYG{g+go}{parm:           debug:Debug level (0=none,...,16=all) (int)}
+\end{Verbatim}

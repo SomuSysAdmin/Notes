@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} sysctl \PYGZhy{}a \PYG{p}{|} grep ip\PYGZus{}forward
+\PYG{g+go}{sysctl: reading key \PYGZdq{}net.ipv6.conf.all.stable\PYGZus{}secret\PYGZdq{}}
+\PYG{g+go}{sysctl: reading key \PYGZdq{}net.ipv6.conf.default.stable\PYGZus{}secret\PYGZdq{}}
+\PYG{g+go}{sysctl: reading key \PYGZdq{}net.ipv6.conf.ens33.stable\PYGZus{}secret\PYGZdq{}}
+\PYG{g+go}{sysctl: reading key \PYGZdq{}net.ipv6.conf.lo.stable\PYGZus{}secret\PYGZdq{}}
+\PYG{g+go}{sysctl: reading key \PYGZdq{}net.ipv6.conf.virbr0.stable\PYGZus{}secret\PYGZdq{}}
+\PYG{g+go}{sysctl: reading key \PYGZdq{}net.ipv6.conf.virbr0\PYGZhy{}nic.stable\PYGZus{}secret\PYGZdq{}}
+\PYG{g+go}{net.ipv4.ip\PYGZus{}forward = 0}
+\PYG{g+go}{net.ipv4.ip\PYGZus{}forward\PYGZus{}use\PYGZus{}pmtu = 0}
+\end{Verbatim}

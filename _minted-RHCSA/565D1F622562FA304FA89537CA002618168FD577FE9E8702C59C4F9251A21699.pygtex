@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} sysctl \PYGZhy{}a
+\PYG{g+go}{abi.vsyscall32 = 1}
+\PYG{g+go}{crypto.fips\PYGZus{}enabled = 0}
+\PYG{g+go}{debug.exception\PYGZhy{}trace = 1}
+\PYG{g+go}{debug.kprobes\PYGZhy{}optimization = 1}
+\PYG{g+go}{debug.panic\PYGZus{}on\PYGZus{}rcu\PYGZus{}stall = 0}
+\PYG{g+go}{dev.cdrom.autoclose = 1}
+\PYG{g+go}{dev.cdrom.autoeject = 0}
+\PYG{g+go}{...}
+\PYG{g+go}{vm.vfs\PYGZus{}cache\PYGZus{}pressure = 100}
+\PYG{g+go}{vm.zone\PYGZus{}reclaim\PYGZus{}mode = 0}
+\end{Verbatim}

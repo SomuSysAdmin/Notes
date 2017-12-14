@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} yum localinstall \PYGZlt{}kernelName\PYGZgt{}.rpm
+\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}Uvh \PYGZlt{}kernelName\PYGZgt{}.rpm
+\end{Verbatim}

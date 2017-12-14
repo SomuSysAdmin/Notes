@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} pvcreate /dev/sdb2
-\PYG{g+go}{Physical volume \PYGZdq{}/dev/sdb2\PYGZdq{} successfully created.}
-\PYG{g+gp}{\PYGZsh{}} pvs
-\PYG{g+go}{PV         VG     Fmt  Attr PSize   PFree}
-\PYG{g+go}{/dev/sda3  centos lvm2 a\PYGZhy{}\PYGZhy{}  \PYGZlt{}14.91g   4.00m}
-\PYG{g+go}{/dev/sdb2         lvm2 \PYGZhy{}\PYGZhy{}\PYGZhy{}  100.00m 100.00m}
-\end{Verbatim}

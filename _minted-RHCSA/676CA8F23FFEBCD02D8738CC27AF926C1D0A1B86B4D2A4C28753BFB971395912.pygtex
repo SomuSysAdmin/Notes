@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+KERNEL\PYG{o}{[}\PYG{l+m}{15445}.778458\PYG{o}{]} add      /devices/pci0000:00/0000:00:11.0/0000:02:03.0/usb1/1\PYGZhy{}1 \PYG{o}{(}usb\PYG{o}{)}
+KERNEL\PYG{o}{[}\PYG{l+m}{15445}.786957\PYG{o}{]} add      /devices/pci0000:00/0000:00:11.0/0000:02:03.0/usb1/1\PYGZhy{}1/1\PYGZhy{}1:1.0 \PYG{o}{(}usb\PYG{o}{)}
+UDEV  \PYG{o}{[}\PYG{l+m}{15445}.830980\PYG{o}{]} add      /devices/pci0000:00/0000:00:11.0/0000:02:03.0/usb1/1\PYGZhy{}1 \PYG{o}{(}usb\PYG{o}{)}
+KERNEL\PYG{o}{[}\PYG{l+m}{15445}.851667\PYG{o}{]} add      /module/usb\PYGZus{}storage \PYG{o}{(}module\PYG{o}{)}
+UDEV  \PYG{o}{[}\PYG{l+m}{15445}.877116\PYG{o}{]} add      /module/usb\PYGZus{}storage \PYG{o}{(}module\PYG{o}{)}
+...
+
+KERNEL\PYG{o}{[}\PYG{l+m}{15893}.875998\PYG{o}{]} add      /module/fat \PYG{o}{(}module\PYG{o}{)}
+KERNEL\PYG{o}{[}\PYG{l+m}{15893}.876022\PYG{o}{]} add      /kernel/slab/fat\PYGZus{}cache \PYG{o}{(}slab\PYG{o}{)}
+KERNEL\PYG{o}{[}\PYG{l+m}{15893}.876030\PYG{o}{]} add      /kernel/slab/fat\PYGZus{}inode\PYGZus{}cache \PYG{o}{(}slab\PYG{o}{)}
+KERNEL\PYG{o}{[}\PYG{l+m}{15893}.876037\PYG{o}{]} add      /module/vfat \PYG{o}{(}module\PYG{o}{)}
+UDEV  \PYG{o}{[}\PYG{l+m}{15893}.878942\PYG{o}{]} add      /module/fat \PYG{o}{(}module\PYG{o}{)}
+UDEV  \PYG{o}{[}\PYG{l+m}{15893}.878962\PYG{o}{]} add      /kernel/slab/fat\PYGZus{}cache \PYG{o}{(}slab\PYG{o}{)}
+UDEV  \PYG{o}{[}\PYG{l+m}{15893}.878969\PYG{o}{]} add      /kernel/slab/fat\PYGZus{}inode\PYGZus{}cache \PYG{o}{(}slab\PYG{o}{)}
+UDEV  \PYG{o}{[}\PYG{l+m}{15893}.879002\PYG{o}{]} add      /module/vfat \PYG{o}{(}module\PYG{o}{)}
+
+...
+UDEV  \PYG{o}{[}\PYG{l+m}{15462}.218411\PYG{o}{]} remove   /devices/pci0000:00/0000:00:11.0/0000:02:03.0/usb1/1\PYGZhy{}1 \PYG{o}{(}usb\PYG{o}{)}
+KERNEL\PYG{o}{[}\PYG{l+m}{15462}.232117\PYG{o}{]} remove   /host3/target3:0:0 \PYG{o}{(}scsi\PYG{o}{)}
+UDEV  \PYG{o}{[}\PYG{l+m}{15462}.232957\PYG{o}{]} remove   /host3/target3:0:0 \PYG{o}{(}scsi\PYG{o}{)}
+\end{Verbatim}
