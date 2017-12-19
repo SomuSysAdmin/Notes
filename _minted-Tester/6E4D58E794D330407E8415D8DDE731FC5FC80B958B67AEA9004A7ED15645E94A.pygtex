@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} systemctl status httpd \PYGZhy{}l
+\PYG{g+go}{	● httpd.service \PYGZhy{} The Apache HTTP Server}
+\PYG{g+go}{	   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)}
+\PYG{g+go}{	   Active: active (running) since Sat 2017\PYGZhy{}12\PYGZhy{}16 09:31:03 IST; 3s ago}
+\PYG{g+go}{	     Docs: man:httpd(8)}
+\PYG{g+go}{	           man:apachectl(8)}
+\PYG{g+go}{	 Main PID: 5831 (httpd)}
+\PYG{g+go}{	   Status: \PYGZdq{}Processing requests...\PYGZdq{}}
+\PYG{g+go}{	   CGroup: /system.slice/httpd.service}
+\PYG{g+go}{	           ├─5831 /usr/sbin/httpd \PYGZhy{}DFOREGROUND}
+\PYG{g+go}{	           ├─5840 /usr/sbin/httpd \PYGZhy{}DFOREGROUND}
+\PYG{g+go}{	           ├─5842 /usr/sbin/httpd \PYGZhy{}DFOREGROUND}
+\PYG{g+go}{	           ├─5843 /usr/sbin/httpd \PYGZhy{}DFOREGROUND}
+\PYG{g+go}{	           ├─5844 /usr/sbin/httpd \PYGZhy{}DFOREGROUND}
+\PYG{g+go}{	           └─5845 /usr/sbin/httpd \PYGZhy{}DFOREGROUND}
+
+\PYG{g+go}{	Dec 16 09:31:01 vmPrime.somuVMnet.local systemd[1]: Starting The Apache HTTP Server...}
+\PYG{g+go}{	Dec 16 09:31:03 vmPrime.somuVMnet.local systemd[1]: Started The Apache HTTP Server.}
+\end{Verbatim}

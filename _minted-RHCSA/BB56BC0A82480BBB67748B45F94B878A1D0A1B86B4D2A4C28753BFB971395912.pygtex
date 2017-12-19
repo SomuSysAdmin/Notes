@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{GRUB\PYGZus{}TIMEOUT}\PYG{o}{=}\PYG{l+m}{5}
+\PYG{n+nv}{GRUB\PYGZus{}DISTRIBUTOR}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{k}{\PYGZdl{}(}sed \PYG{l+s+s1}{\PYGZsq{}s, release .*\PYGZdl{},,g\PYGZsq{}} /etc/system\PYGZhy{}release\PYG{k}{)}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{n+nv}{GRUB\PYGZus{}DEFAULT}\PYG{o}{=}saved
+\PYG{n+nv}{GRUB\PYGZus{}DISABLE\PYGZus{}SUBMENU}\PYG{o}{=}\PYG{n+nb}{true}
+\PYG{n+nv}{GRUB\PYGZus{}TERMINAL\PYGZus{}OUTPUT}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}console\PYGZdq{}}
+\PYG{n+nv}{GRUB\PYGZus{}CMDLINE\PYGZus{}LINUX}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}crashkernel=auto rd.lvm.lv=centos/root rd.lvm.lv=centos/swap rhgb quiet\PYGZdq{}}
+\PYG{n+nv}{GRUB\PYGZus{}DISABLE\PYGZus{}RECOVERY}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}true\PYGZdq{}}
+\end{Verbatim}
