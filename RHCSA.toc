@@ -283,4 +283,23 @@
 \contentsline {section}{\numberline {17.3}Using the Kickstart file for Automatic installations}{139}
 \contentsline {section}{\numberline {17.4}Using Kickstart files in fully automated data-centers}{139}
 \contentsline {chapter}{\numberline {18}Managing and Understanding the Boot Procedure}{141}
-\contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{142}
+\contentsline {section}{\numberline {18.1}Boot Procedure Generic Overview}{141}
+\contentsline {section}{\numberline {18.2}Understanding Grub2}{141}
+\contentsline {subsection}{\numberline {18.2.1}Booting in emergency mode}{142}
+\contentsline {section}{\numberline {18.3}Modifying Grub2 Parameters}{142}
+\contentsline {section}{\numberline {18.4}Understanding Systemd}{143}
+\contentsline {subsection}{\numberline {18.4.1}Unit file}{143}
+\contentsline {section}{\numberline {18.5}Managing Services in a systemd Environment}{143}
+\contentsline {subsection}{\numberline {18.5.1}Service files}{144}
+\contentsline {subsection}{\numberline {18.5.2}systemctl}{144}
+\contentsline {subsection}{\numberline {18.5.3}Targets}{145}
+\contentsline {subsection}{\numberline {18.5.4}Wants}{145}
+\contentsline {subsection}{\numberline {18.5.5}Viewing Currently Loaded Targets}{147}
+\contentsline {section}{\numberline {18.6}Understanding systemd Targets}{148}
+\contentsline {subsection}{\numberline {18.6.1}Services related to targets}{149}
+\contentsline {subsubsection}{Ordering}{149}
+\contentsline {section}{\numberline {18.7}Switching between systemd Targets}{149}
+\contentsline {subsection}{\numberline {18.7.1}Switching to another target from an operational environment}{150}
+\contentsline {subsection}{\numberline {18.7.2}Selecting target from Grub Boot menu}{150}
+\contentsline {subsection}{\numberline {18.7.3}Emergency mode}{151}
+\contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{152}

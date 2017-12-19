@@ -4,7 +4,21 @@
 \usepackage{booktabs}
 
 \begin{document}
-	\input{"Mod3/chapters/3.18 Using Kickstart"}
+	\input{"Mod3/chapters/3.19 Managing and Understanding the Boot Procedure"}
+	
+	\section{Managing File System mounts in a systemd Environment}
+	Other than using \verb|/etc/fstab|, systemd also provides a way to mount file systems. Further, not all file systems are mounted (or available) using \verb|/etc/fstab|. The file systems that can be mounted using systemd can be obtained by:
+	
+	\vspace{-15pt}
+	\begin{minted}{console}
+	# ls *.mount
+	dev-hugepages.mount            sys-kernel-config.mount
+	dev-mqueue.mount               sys-kernel-debug.mount
+	proc-fs-nfsd.mount             tmp.mount
+	proc-sys-fs-binfmt_misc.mount  var-lib-nfs-rpc_pipefs.mount
+	sys-fs-fuse-connections.mount
+	\end{minted}
+	\vspace{-10pt}
 	
 	
 		 

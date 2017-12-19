@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{[}Unit\PYG{o}{]}
+\PYG{n+nv}{Description}\PYG{o}{=}The Apache HTTP Server
+\PYG{n+nv}{After}\PYG{o}{=}network.target remote\PYGZhy{}fs.target nss\PYGZhy{}lookup.target
+\PYG{n+nv}{Documentation}\PYG{o}{=}man:httpd\PYG{o}{(}\PYG{l+m}{8}\PYG{o}{)}
+\PYG{n+nv}{Documentation}\PYG{o}{=}man:apachectl\PYG{o}{(}\PYG{l+m}{8}\PYG{o}{)}
+
+\PYG{o}{[}Service\PYG{o}{]}
+\PYG{n+nv}{Type}\PYG{o}{=}notify
+\PYG{n+nv}{EnvironmentFile}\PYG{o}{=}/etc/sysconfig/httpd
+\PYG{n+nv}{ExecStart}\PYG{o}{=}/usr/sbin/httpd \PYG{n+nv}{\PYGZdl{}OPTIONS} \PYGZhy{}DFOREGROUND
+\PYG{n+nv}{ExecReload}\PYG{o}{=}/usr/sbin/httpd \PYG{n+nv}{\PYGZdl{}OPTIONS} \PYGZhy{}k graceful
+\PYG{n+nv}{ExecStop}\PYG{o}{=}/bin/kill \PYGZhy{}WINCH \PYG{l+s+si}{\PYGZdl{}\PYGZob{}}\PYG{n+nv}{MAINPID}\PYG{l+s+si}{\PYGZcb{}}
+\PYG{c+c1}{\PYGZsh{} We want systemd to give httpd some time to finish gracefully, but still want}
+\PYG{c+c1}{\PYGZsh{} it to kill httpd after TimeoutStopSec if something went wrong during the}
+\PYG{c+c1}{\PYGZsh{} graceful stop. Normally, Systemd sends SIGTERM signal right after the}
+\PYG{c+c1}{\PYGZsh{} ExecStop, which would kill httpd. We are sending useless SIGCONT here to give}
+\PYG{c+c1}{\PYGZsh{} httpd time to finish.}
+\PYG{n+nv}{KillSignal}\PYG{o}{=}SIGCONT
+\PYG{n+nv}{PrivateTmp}\PYG{o}{=}\PYG{n+nb}{true}
+
+\PYG{o}{[}Install\PYG{o}{]}
+\PYG{n+nv}{WantedBy}\PYG{o}{=}multi\PYGZhy{}user.target
+\end{Verbatim}

@@ -1,17 +1,49 @@
 \relax 
-\@writefile{toc}{\contentsline {chapter}{\numberline {1}Using Kickstart}{1}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Managing and Understanding the Boot Procedure}{1}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {1.1}Understanding Kickstart Usage}{1}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Creating a Kickstart file}{1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.1}Installation Scripts}{2}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}Using the Kickstart file for Automatic installations}{2}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Using Kickstart files in fully automated data-centers}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Boot Procedure Generic Overview}{1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces Boot Procedure}}{1}}
+\newlabel{fig:3 Boot Procedure}{{1.1}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Understanding Grub2}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.1}Booting in emergency mode}{2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces Booting in emergency mode}}{2}}
+\newlabel{fig:3 Booting in emergency mode}{{1.2}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Modifying Grub2 Parameters}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Understanding Systemd}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.1}Unit file}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.5}Managing Services in a systemd Environment}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.1}Service files}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.2}systemctl}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.3}Targets}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.4}Wants}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.5}Viewing Currently Loaded Targets}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.6}Understanding systemd Targets}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.1}Services related to targets}{9}}
+\@writefile{toc}{\contentsline {subsubsection}{Ordering}{9}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.7}Switching between systemd Targets}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.7.1}Switching to another target from an operational environment}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.7.2}Selecting target from Grub Boot menu}{10}}
 \gdef\minted@oldcachelist{,
   default-pyg-prefix.pygstyle,
   default.pygstyle,
-  729C9700FC4E7737BE3181A0499AAE475FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  8F5BB9492557990F4FDB7369D66DF49F5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  5EE845DF2B9822343CEA9B9C6CA7A3C1B2DC55294848DCE6CE6B7F9038926FD4.pygtex}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces PXE (Network) boot with Kickstart}}{3}}
-\newlabel{fig:3 Network boot with Kickstart}{{1.1}{3}}
+  CABBA32D19E5136759BCC979370A06BFB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  C0B3227317D09B789B8F9F7B8C9B8282B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  6F9205D4B106137FBC385F017BB14FF55FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  5CF8ADB6F53C3A4179B45CFCA2AD8BF25FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  50CF493834FBE74A8660A8F41E9B75A55FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  16526300BD8A8428A6DF4DD813B8B8825FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  321C6A8812B0BC4C67A3428F9E063FDF5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  CE7D582D1554191628F01FD2DF408AEE5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  CCBB1A92274D8B02BAE5ED628A40D7085FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  50B26A24AFB7D80CACA2312FE50B3F985FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  1DC2BA2D263FF9FF3CEB8F6DDF0EC7FE5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  53507150B4721CE1A981410013F18415B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  A866D6620AD9FE93B5DAFC2F1A5B7EDBB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  53507150B4721CE1A981410013F18415B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  1DC2BA2D263FF9FF3CEB8F6DDF0EC7FE5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  D512715756F776D6525A7AD560F0F54B5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  003D4188A57D44289CCD859A621304CAB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  EA278632A31FE17917668AC2D1E7A2A65FC80B958B67AEA9004A7ED15645E94A.pygtex}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.7.3}Emergency mode}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.8}Managing File System mounts in a systemd Environment}{11}}

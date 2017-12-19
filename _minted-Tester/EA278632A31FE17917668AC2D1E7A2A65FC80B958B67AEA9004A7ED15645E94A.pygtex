@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} ls *.mount
+\PYG{g+go}{	dev\PYGZhy{}hugepages.mount            sys\PYGZhy{}kernel\PYGZhy{}config.mount}
+\PYG{g+go}{	dev\PYGZhy{}mqueue.mount               sys\PYGZhy{}kernel\PYGZhy{}debug.mount}
+\PYG{g+go}{	proc\PYGZhy{}fs\PYGZhy{}nfsd.mount             tmp.mount}
+\PYG{g+go}{	proc\PYGZhy{}sys\PYGZhy{}fs\PYGZhy{}binfmt\PYGZus{}misc.mount  var\PYGZhy{}lib\PYGZhy{}nfs\PYGZhy{}rpc\PYGZus{}pipefs.mount}
+\PYG{g+go}{	sys\PYGZhy{}fs\PYGZhy{}fuse\PYGZhy{}connections.mount}
+\end{Verbatim}
