@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  20 DEC 2017 14:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  20 DEC 2017 17:30
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -862,7 +862,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-(./Mod3/chapters/3.20 Applying Essential Troubleshooting Skills.tex
+(./Mod4/chapters/4.21 Managing HTTP Services.tex
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
@@ -880,88 +880,95 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 3.
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 4.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 4.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 4.
+(Font)              scaled to size 9.49997pt on input line 4.
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/76F4962E539AFBE8A5EA31B87B2BFA455FC80B958B67AEA9004A7ED15645E
+(./_minted-Tester/726170061BEE63E8C3FB1FE3FB1E01105FC80B958B67AEA9004A7ED15645E
 94A.pygtex
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 1.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
 )
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 32.
+LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
+(Font)              scaled to size 9.49997pt on input line 32.
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/01200913F58A621738B7B7EE5FF46B935FC80B958B67AEA9004A7ED15645E
+(./_minted-Tester/5BC1EF12B1C9B04F2D161E27F82441565FC80B958B67AEA9004A7ED15645E
 94A.pygtex [1
 
 
 {/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}])
-Overfull \hbox (31.01323pt too wide) in paragraph at lines 42--44
-\T1/phv/m/n/10 These com-mands can be used to ac-com-plish tasks with grub such
- as in-stall grub ([]\T1/cmtt/m/n/10 grub2-install\T1/phv/m/n/10 ),
- []
-
-
-Overfull \hbox (23.64848pt too wide) in paragraph at lines 42--44
-\T1/phv/m/n/10 make a new boot im-age ([]\T1/cmtt/m/n/10 grub2-mkimage\T1/phv/m
-/n/10 ), set a grub boot pass-word ([]\T1/cmtt/m/n/10 grub2-mkpasswd-pbkdf2\T1/
-phv/m/n/10 ),
- []
-
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 48.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 48.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 55.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 55.
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/CF7EC2C211552EDDDCBC6683F9EBA6E95FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
+(./_minted-Tester/0D8E1259B55DA7D1B5AE6745468D681D5FC80B958B67AEA9004A7ED15645E
+94A.pygtex))
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/0DB26DD329F59B788CB920C1D8BA3FC85FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
+(./_minted-Tester/1640DE2C9A480518668A488B905996F180855FD6D2556251EEE2634F7F856
+59C.pygtex)
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/5A1CF5F452E5DEC12C6A3955D077B4615FC80B958B67AEA9004A7ED15645E
+(./_minted-Tester/2FF9CF223CC383D080BF05A6D002862B5FC80B958B67AEA9004A7ED15645E
+94A.pygtex [2]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 6.
+)
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-Tester/1E9AE64C4DA9F17D3A826953C87E497A5FC80B958B67AEA9004A7ED15645E94A
+.pygtex Tester.pyg)...executed.
+
+
+(./_minted-Tester/1E9AE64C4DA9F17D3A826953C87E497A5FC80B958B67AEA9004A7ED15645E
 94A.pygtex)
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 80.
-LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 9.49997pt on input line 80.
-) [2] (./Tester.aux)
+runsystem(rm _minted-Tester/876124554FD5BE87A1FD260628F145A65FC80B958B67AEA9004
+A7ED15645E94A.pygtex)...executed.
+
+ [3] (./Tester.aux)
 runsystem(rm Tester.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 6308 strings out of 494946
- 99172 string characters out of 6180980
- 211892 words of memory out of 5000000
- 9455 multiletter control sequences out of 15000+600000
- 33059 words of font info for 37 fonts, out of 8000000 for 9000
+ 6338 strings out of 494946
+ 99915 string characters out of 6180980
+ 214090 words of memory out of 5000000
+ 9475 multiletter control sequences out of 15000+600000
+ 31044 words of font info for 42 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 39i,5n,37p,831b,401s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,10n,38p,831b,487s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texliv
 e/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf
--dist/fonts/type1/public/cm-super/sfrm0500.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/cm-super/sftt0800.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/cm-super/sftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
-/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uh
-vr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Tester.pdf (2 pages, 116942 bytes).
+-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/cm-super/sfit0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-
+super/sfrm0500.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
+ftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1000
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on Tester.pdf (3 pages, 161313 bytes).
 PDF statistics:
- 37 PDF objects out of 1000 (max. 8388607)
- 26 compressed objects within 1 object stream
+ 56 PDF objects out of 1000 (max. 8388607)
+ 40 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

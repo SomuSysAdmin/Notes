@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l /etc/httpd
+\PYG{g+go}{total 0}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root  37 Dec 20 15:36 conf}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root  82 Dec 20 15:36 conf.d}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. 2 root root 146 Dec 20 15:36 conf.modules.d}
+\PYG{g+go}{lrwxrwxrwx. 1 root root  19 Dec 20 15:36 logs \PYGZhy{}\PYGZgt{} ../../var/log/httpd}
+\PYG{g+go}{lrwxrwxrwx. 1 root root  29 Dec 20 15:36 modules \PYGZhy{}\PYGZgt{} ../../usr/lib64/httpd/modules}
+\PYG{g+go}{lrwxrwxrwx. 1 root root  10 Dec 20 15:36 run \PYGZhy{}\PYGZgt{} /run/httpd}
+\end{Verbatim}

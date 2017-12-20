@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} grub2\PYGZhy{}mkconfig \PYGZhy{}o /boot/grub2/grub.cfg
-\PYG{g+go}{Generating grub configuration file ...}
-\PYG{g+go}{Found linux image: /boot/vmlinuz\PYGZhy{}3.10.0\PYGZhy{}693.el7.x86\PYGZus{}64}
-\PYG{g+go}{Found initrd image: /boot/initramfs\PYGZhy{}3.10.0\PYGZhy{}693.el7.x86\PYGZus{}64.img}
-\PYG{g+go}{Found linux image: /boot/vmlinuz\PYGZhy{}0\PYGZhy{}rescue\PYGZhy{}5cbfb880c0aa466ca7e3be91308fde5f}
-\PYG{g+go}{Found initrd image: /boot/initramfs\PYGZhy{}0\PYGZhy{}rescue\PYGZhy{}5cbfb880c0aa466ca7e3be91308fde5f.img}
-\PYG{g+go}{done}
-\end{Verbatim}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  20 DEC 2017 15:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  20 DEC 2017 17:31
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1331,6 +1331,11 @@ Overfull \hbox (1.12079pt too wide) detected at line 312
 
 Overfull \hbox (1.12079pt too wide) detected at line 313
  []\T1/phv/m/n/10 156
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 316
+ []\T1/phv/m/n/10 158
  []
 
 )
@@ -3362,7 +3367,75 @@ phv/m/n/10 ),
 
 
 (./_minted-RHCSA/5A1CF5F452E5DEC12C6A3955D077B461168FD577FE9E8702C59C4F9251A216
-99.pygtex))) [156] (./RHCSA.aux)
+99.pygtex))) (./Mod4/4. Managing Network Services.tex [156] [157
+
+]
+(./Mod4/chapters/4.21 Managing HTTP Services.tex
+Chapter 20.
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/726170061BEE63E8C3FB1FE3FB1E0110168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/5BC1EF12B1C9B04F2D161E27F8244156168FD577FE9E8702C59C4F9251A216
+99.pygtex [158
+
+])
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/0D8E1259B55DA7D1B5AE6745468D681D168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l html -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-RHCSA/CA2FAF627FB861753D09D3F5CC6683E0F4D989542463B256E4E56AC2C8213B78.pyg
+tex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/CA2FAF627FB861753D09D3F5CC6683E0F4D989542463B256E4E56AC2C8213B
+78.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/55117764C59C916F297EF666D9C59ECE168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/55117764C59C916F297EF666D9C59ECE168FD577FE9E8702C59C4F9251A216
+99.pygtex [159])
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/50110DE2228F52F18A3638A2D6C2BF68168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/50110DE2228F52F18A3638A2D6C2BF68168FD577FE9E8702C59C4F9251A216
+99.pygtex)) (./Mod4/chapters/4.22 Managing SELinux.tex [160]
+Chapter 21.
+) (./Mod4/chapters/4.23 Configuring a Firewall.tex [161
+
+]
+Chapter 22.
+) (./Mod4/chapters/4.24 Configuring FTP Services.tex [162
+
+]
+Chapter 23.
+) (./Mod4/chapters/4.25 Configuring Time Services.tex [163
+
+]
+Chapter 24.
+) (./Mod4/chapters/4.26 Configuring VNC Access.tex [164
+
+]
+Chapter 25.
+)) [165
+
+] (./RHCSA.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -3370,13 +3443,13 @@ runsystem(rm RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7694 strings out of 494946
- 197550 string characters out of 6180980
- 315506 words of memory out of 5000000
- 9881 multiletter control sequences out of 15000+600000
+ 7759 strings out of 494946
+ 200798 string characters out of 6180980
+ 314677 words of memory out of 5000000
+ 9897 multiletter control sequences out of 15000+600000
  42203 words of font info for 52 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 39i,26n,38p,891b,606s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,26n,38p,891b,608s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr
 /share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
@@ -3393,10 +3466,10 @@ xmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvet
 ic/uhvro8a.pfb>
-Output written on RHCSA.pdf (157 pages, 3975416 bytes).
+Output written on RHCSA.pdf (166 pages, 3983294 bytes).
 PDF statistics:
- 592 PDF objects out of 1000 (max. 8388607)
- 396 compressed objects within 4 object streams
+ 621 PDF objects out of 1000 (max. 8388607)
+ 415 compressed objects within 5 object streams
  0 named destinations out of 1000 (max. 500000)
  86 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls /etc/httpd/conf.d
+\PYG{g+go}{autoindex.conf  README  userdir.conf  welcome.conf}
+\end{Verbatim}

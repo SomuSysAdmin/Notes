@@ -1,3 +1,3 @@
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} chroot /sysroot
+\PYG{g+gp}{	\PYGZsh{}} elinks http://localhost
 \end{Verbatim}

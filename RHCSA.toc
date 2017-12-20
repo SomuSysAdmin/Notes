@@ -311,3 +311,12 @@
 \contentsline {subsection}{\numberline {19.1.1}Changes made during boot}{155}
 \contentsline {subsection}{\numberline {19.1.2}Changes made in Configuraiton File}{155}
 \contentsline {section}{\numberline {19.2}Using rd.break to Reset the Root Password}{156}
+\contentsline {part}{IV\hspace {1em}Managing Network Services}{157}
+\contentsline {chapter}{\numberline {20}Managing HTTP Services}{158}
+\contentsline {section}{\numberline {20.1}Understanding Apache Configuration}{158}
+\contentsline {section}{\numberline {20.2}Creating a Basic Web Site}{159}
+\contentsline {chapter}{\numberline {21}Managing SELinux}{161}
+\contentsline {chapter}{\numberline {22}Configuring a Firewall}{162}
+\contentsline {chapter}{\numberline {23}Configuring FTP Services}{163}
+\contentsline {chapter}{\numberline {24}Configuring Time Services}{164}
+\contentsline {chapter}{\numberline {25}Configuring VNC Access}{165}

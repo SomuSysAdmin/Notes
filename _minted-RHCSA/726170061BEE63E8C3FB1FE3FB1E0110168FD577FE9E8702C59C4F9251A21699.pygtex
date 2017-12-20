@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} which httpd
+\PYG{g+go}{/usr/sbin/httpd}
+\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}qf /usr/sbin/httpd \PYG{c+c1}{\PYGZsh{} Obtaining the name of the package which installed httpd.}
+\PYG{g+go}{httpd\PYGZhy{}2.4.6\PYGZhy{}67.el7.centos.6.x86\PYGZus{}64}
+\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}qc httpd
+\PYG{g+go}{/etc/httpd/conf.d/autoindex.conf}
+\PYG{g+go}{/etc/httpd/conf.d/userdir.conf}
+\PYG{g+go}{/etc/httpd/conf.d/welcome.conf}
+\PYG{g+go}{/etc/httpd/conf.modules.d/00\PYGZhy{}base.conf}
+\PYG{g+go}{/etc/httpd/conf.modules.d/00\PYGZhy{}dav.conf}
+\PYG{g+go}{/etc/httpd/conf.modules.d/00\PYGZhy{}lua.conf}
+\PYG{g+go}{/etc/httpd/conf.modules.d/00\PYGZhy{}mpm.conf}
+\PYG{g+go}{/etc/httpd/conf.modules.d/00\PYGZhy{}proxy.conf}
+\PYG{g+go}{/etc/httpd/conf.modules.d/00\PYGZhy{}systemd.conf}
+\PYG{g+go}{/etc/httpd/conf.modules.d/01\PYGZhy{}cgi.conf}
+\PYG{g+go}{/etc/httpd/conf/httpd.conf}
+\PYG{g+go}{/etc/httpd/conf/magic}
+\PYG{g+go}{/etc/logrotate.d/httpd}
+\PYG{g+go}{/etc/sysconfig/htcacheclean}
+\PYG{g+go}{/etc/sysconfig/httpd}
+\end{Verbatim}
