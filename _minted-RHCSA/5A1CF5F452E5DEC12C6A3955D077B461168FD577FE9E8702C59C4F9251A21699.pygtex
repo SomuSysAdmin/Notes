@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{echo} secret \PYG{p}{|} passwd \PYGZhy{}\PYGZhy{}stdin root
+\PYG{g+go}{Changing password for the user root.}
+\PYG{g+go}{passwd: all authentication tokens updated successfully.}
+\PYG{g+gp}{\PYGZsh{}} touch /.autorelabel
+\end{Verbatim}

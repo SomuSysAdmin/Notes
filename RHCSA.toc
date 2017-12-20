@@ -307,3 +307,7 @@
 \contentsline {subsection}{\numberline {18.9.1}Automount Unit file}{154}
 \contentsline {subsection}{\numberline {18.9.2}Difference between enabling Mount vs Automount Units}{154}
 \contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{155}
+\contentsline {section}{\numberline {19.1}Making Grub Changes persistent}{155}
+\contentsline {subsection}{\numberline {19.1.1}Changes made during boot}{155}
+\contentsline {subsection}{\numberline {19.1.2}Changes made in Configuraiton File}{155}
+\contentsline {section}{\numberline {19.2}Using rd.break to Reset the Root Password}{156}

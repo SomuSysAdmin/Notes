@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} mount \PYGZhy{}o remount,rw /sysroot
+\end{Verbatim}

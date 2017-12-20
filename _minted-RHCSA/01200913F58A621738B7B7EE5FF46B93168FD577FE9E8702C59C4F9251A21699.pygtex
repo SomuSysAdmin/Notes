@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} grub2\PYGZhy{}
+\PYG{g+go}{grub2\PYGZhy{}bios\PYGZhy{}setup           grub2\PYGZhy{}mkpasswd\PYGZhy{}pbkdf2}
+\PYG{g+go}{grub2\PYGZhy{}editenv              grub2\PYGZhy{}mkrelpath}
+\PYG{g+go}{grub2\PYGZhy{}file                 grub2\PYGZhy{}mkrescue}
+\PYG{g+go}{grub2\PYGZhy{}fstest               grub2\PYGZhy{}mkstandalone}
+\PYG{g+go}{grub2\PYGZhy{}get\PYGZhy{}kernel\PYGZhy{}settings  grub2\PYGZhy{}ofpathname}
+\PYG{g+go}{grub2\PYGZhy{}glue\PYGZhy{}efi             grub2\PYGZhy{}probe}
+\PYG{g+go}{grub2\PYGZhy{}install              grub2\PYGZhy{}reboot}
+\PYG{g+go}{grub2\PYGZhy{}kbdcomp              grub2\PYGZhy{}rpm\PYGZhy{}sort}
+\PYG{g+go}{grub2\PYGZhy{}menulst2cfg          grub2\PYGZhy{}script\PYGZhy{}check}
+\PYG{g+go}{grub2\PYGZhy{}mkconfig             grub2\PYGZhy{}set\PYGZhy{}default}
+\PYG{g+go}{grub2\PYGZhy{}mkfont               grub2\PYGZhy{}setpassword}
+\PYG{g+go}{grub2\PYGZhy{}mkimage              grub2\PYGZhy{}sparc64\PYGZhy{}setup}
+\PYG{g+go}{grub2\PYGZhy{}mklayout             grub2\PYGZhy{}syslinux2cfg}
+\PYG{g+go}{grub2\PYGZhy{}mknetdir}
+\end{Verbatim}
