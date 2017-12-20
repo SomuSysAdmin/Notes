@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-net.ipv4.ip\PYGZus{}forward \PYG{o}{=} \PYG{l+m}{1}
-\end{Verbatim}

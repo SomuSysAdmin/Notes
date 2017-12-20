@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZdl{}} find / \PYGZhy{}name \PYG{l+s+s2}{\PYGZdq{}*.rpm\PYGZdq{}}
-\PYG{g+gp}{\PYGZdl{}} find / \PYGZhy{}name \PYG{l+s+s2}{\PYGZdq{}*.rpm\PYGZdq{}} \PYG{l+m}{2}\PYGZgt{} /dev/null
-\end{Verbatim}

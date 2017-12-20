@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{monitor will print the received events for:}
-\PYG{g+go}{UDEV \PYGZhy{} the event which udev sends out after rule processing}
-\PYG{g+go}{KERNEL \PYGZhy{} the kernel uevent}
-\end{Verbatim}

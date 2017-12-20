@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} cat /proc/sys/kernel/osrelease
-\PYG{g+go}{3.10.0\PYGZhy{}693.11.1.el7.x86\PYGZus{}64}
-\PYG{g+gp}{\PYGZsh{}} cat /proc/sys/kernel/hostname
-\PYG{g+go}{vmPrime.somuVMnet.local}
-\end{Verbatim}

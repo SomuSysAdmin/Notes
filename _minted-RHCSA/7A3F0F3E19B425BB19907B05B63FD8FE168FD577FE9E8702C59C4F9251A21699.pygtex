@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} modprobe cdrom \PYG{n+nv}{lockdoor}\PYG{o}{=}\PYG{l+m}{0}
-\end{Verbatim}

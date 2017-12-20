@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Mount unit for /dev/vgPrime/lvPrime}
+
+\PYG{o}{[}Unit\PYG{o}{]}
+\PYG{n+nv}{Description}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}My test mount\PYGZdq{}}
+
+\PYG{o}{[}Mount\PYG{o}{]}
+\PYG{n+nv}{what}\PYG{o}{=}/dev/vgPrime/lvPrime
+\PYG{n+nv}{Where}\PYG{o}{=}/myLv
+\PYG{n+nv}{Type}\PYG{o}{=}xfs
+
+\PYG{o}{[}Install\PYG{o}{]}
+\PYG{n+nv}{WantedBy}\PYG{o}{=}multi\PYGZhy{}user.target
+\end{Verbatim}

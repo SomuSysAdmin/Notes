@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} modprobe \PYGZhy{}r vfat
-\PYG{g+gp}{\PYGZsh{}} lsmod \PYG{p}{|} grep fat
-\PYG{g+gp}{\PYGZsh{}}
-\end{Verbatim}

@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} systemctl start myLv.mount
+\PYG{g+gp}{\PYGZsh{}} systemctl status myLv.mount \PYGZhy{}l
+\PYG{g+go}{● myLv.mount \PYGZhy{} \PYGZdq{}My test mount\PYGZdq{}}
+\PYG{g+go}{Loaded: loaded (/etc/systemd/system/myLv.mount; disabled; vendor preset: disabled)}
+\PYG{g+go}{Active: active (mounted) since Wed 2017\PYGZhy{}12\PYGZhy{}20 10:51:59 IST; 3s ago}
+\PYG{g+go}{Where: /myLv}
+\PYG{g+go}{What: /dev/mapper/vgPrime\PYGZhy{}lvPrime}
+\PYG{g+go}{Process: 3510 ExecMount=/bin/mount /dev/vgPrime/lvPrime /myLv \PYGZhy{}t xfs (code=exited, status=0/SUCCESS)}
+
+\PYG{g+go}{Dec 20 10:51:59 vmPrime.somuVMnet.com systemd[1]: Mounting \PYGZdq{}My test mount\PYGZdq{}...}
+\PYG{g+go}{Dec 20 10:51:59 vmPrime.somuVMnet.com systemd[1]: Mounted \PYGZdq{}My test mount\PYGZdq{}.}
+\end{Verbatim}

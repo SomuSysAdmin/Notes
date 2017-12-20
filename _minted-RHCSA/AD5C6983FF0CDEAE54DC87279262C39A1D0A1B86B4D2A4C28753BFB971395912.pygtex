@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-mkfs         mkfs.btrfs   mkfs.cramfs  mkfs.ext2    mkfs.ext3    mkfs.ext4    mkfs.fat     mkfs.minix   mkfs.msdos   mkfs.vfat    mkfs.xfs
-\end{Verbatim}

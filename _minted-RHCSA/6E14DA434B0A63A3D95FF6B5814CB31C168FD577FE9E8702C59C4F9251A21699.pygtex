@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} ip addr add dev ens33 \PYG{l+m}{10}.0.0.10/24
-\PYG{g+gp}{\PYGZsh{}} nmcli con add con\PYGZhy{}name ens33 ifname ens33 \PYG{n+nb}{type} ethernet ip4 \PYG{l+m}{10}.0.0.13/24
-\end{Verbatim}

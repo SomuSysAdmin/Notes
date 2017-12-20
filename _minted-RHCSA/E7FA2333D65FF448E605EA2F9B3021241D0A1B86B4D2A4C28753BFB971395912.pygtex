@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-Device Boot         Start         End      Blocks   Id  System
-/dev/sdb1            \PYG{l+m}{2048}      \PYG{l+m}{206847}      \PYG{l+m}{102400}   \PYG{l+m}{83}  Linux
-\end{Verbatim}

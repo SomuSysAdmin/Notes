@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} systemctl \PYG{n+nb}{enable} httpd
-\PYG{g+go}{Created symlink from /etc/systemd/system/multi\PYGZhy{}user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.}
-\end{Verbatim}

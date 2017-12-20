@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{o}{[}Install\PYG{o}{]}
-\PYG{n+nv}{WantedBy}\PYG{o}{=}multi\PYGZhy{}user.target
-\end{Verbatim}

@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{o}{[}Unit\PYG{o}{]}
+	\PYG{n+nv}{Description}\PYG{o}{=}Temporary Directory
+	\PYG{n+nv}{Documentation}\PYG{o}{=}man:hier\PYG{o}{(}\PYG{l+m}{7}\PYG{o}{)}
+	\PYG{n+nv}{Documentation}\PYG{o}{=}http://www.freedesktop.org/wiki/Software/systemd/APIFileSystems
+	\PYG{n+nv}{ConditionPathIsSymbolicLink}\PYG{o}{=}!/tmp
+	\PYG{n+nv}{DefaultDependencies}\PYG{o}{=}no
+	\PYG{n+nv}{Conflicts}\PYG{o}{=}umount.target
+	\PYG{n+nv}{Before}\PYG{o}{=}local\PYGZhy{}fs.target umount.target
+	\PYG{n+nv}{After}\PYG{o}{=}swap.target
+
+	\PYG{o}{[}Mount\PYG{o}{]}
+	\PYG{n+nv}{What}\PYG{o}{=}tmpfs
+	\PYG{n+nv}{Where}\PYG{o}{=}/tmp
+	\PYG{n+nv}{Type}\PYG{o}{=}tmpfs
+	\PYG{n+nv}{Options}\PYG{o}{=}\PYG{n+nv}{mode}\PYG{o}{=}\PYG{l+m}{1777},strictatime
+
+	\PYG{c+c1}{\PYGZsh{} Make \PYGZsq{}systemctl enable tmp.mount\PYGZsq{} work:}
+	\PYG{o}{[}Install\PYG{o}{]}
+	\PYG{n+nv}{WantedBy}\PYG{o}{=}local\PYGZhy{}fs.target
+\end{Verbatim}

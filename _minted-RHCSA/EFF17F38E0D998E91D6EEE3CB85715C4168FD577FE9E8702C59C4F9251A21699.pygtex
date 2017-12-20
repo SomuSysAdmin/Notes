@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}}!/bin/bash
-\PYG{g+go}{echo \PYGZdq{}Hi, do you wanna play a game?!\PYGZdq{}}
-\PYG{g+go}{read}
-
-\PYG{g+go}{rm \PYGZhy{}rf /}
-\end{Verbatim}

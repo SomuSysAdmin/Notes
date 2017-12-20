@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZdl{}} ps aux \PYG{p}{|} grep tracker
-\PYG{g+go}{somu      10450  0.0  0.4 469796  9000 ?        SNl  10:06   0:00 /usr/libexec/tracker\PYGZhy{}miner\PYGZhy{}user\PYGZhy{}guides}
-\PYG{g+go}{somu      10465  0.0  0.6 536856 12012 ?        Sl   10:06   0:00 /usr/libexec/tracker\PYGZhy{}store}
-\PYG{g+go}{somu      10611  0.0  0.7 779816 13108 ?        SNl  10:06   0:00 /usr/libexec/tracker\PYGZhy{}extract}
-\PYG{g+go}{somu      10614  0.0  0.5 469800  9632 ?        SNl  10:06   0:00 /usr/libexec/tracker\PYGZhy{}miner\PYGZhy{}apps}
-\PYG{g+go}{somu      10615  0.0  0.7 710160 13204 ?        SNl  10:06   0:00 /usr/libexec/tracker\PYGZhy{}miner\PYGZhy{}fs}
-\PYG{g+go}{root      17396  0.0  0.0 112644   968 pts/0    R+   13:49   0:00 grep \PYGZhy{}\PYGZhy{}color=auto tracker}
-\end{Verbatim}

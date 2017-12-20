@@ -302,4 +302,5 @@
 \contentsline {subsection}{\numberline {18.7.1}Switching to another target from an operational environment}{150}
 \contentsline {subsection}{\numberline {18.7.2}Selecting target from Grub Boot menu}{150}
 \contentsline {subsection}{\numberline {18.7.3}Emergency mode}{151}
-\contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{152}
+\contentsline {section}{\numberline {18.8}Managing File System mounts in a systemd Environment}{151}
+\contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{153}

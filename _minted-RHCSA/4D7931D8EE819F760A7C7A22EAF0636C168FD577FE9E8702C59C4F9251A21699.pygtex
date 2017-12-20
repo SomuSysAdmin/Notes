@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} vgextend vgCLI /dev/sdb5
-\PYG{g+go}{Physical volume \PYGZdq{}/dev/sdb5\PYGZdq{} successfully created.}
-\PYG{g+go}{Volume group \PYGZdq{}vgCLI\PYGZdq{} successfully extended}
-\end{Verbatim}
