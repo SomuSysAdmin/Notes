@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{o}{[}Unit\PYG{o}{]}
-\PYG{n+nv}{Description}\PYG{o}{=}Multi\PYGZhy{}User System
-\PYG{n+nv}{Documentation}\PYG{o}{=}man:systemd.special\PYG{o}{(}\PYG{l+m}{7}\PYG{o}{)}
-\PYG{n+nv}{Requires}\PYG{o}{=}basic.target
-\PYG{n+nv}{Conflicts}\PYG{o}{=}rescue.service rescue.target
-\PYG{n+nv}{After}\PYG{o}{=}basic.target rescue.service rescue.target
-\PYG{n+nv}{AllowIsolate}\PYG{o}{=}yes
-\end{Verbatim}

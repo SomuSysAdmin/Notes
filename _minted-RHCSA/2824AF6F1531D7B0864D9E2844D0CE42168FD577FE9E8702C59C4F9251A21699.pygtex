@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} mount \PYG{p}{|} grep myLv
+\PYG{g+go}{systemd\PYGZhy{}1 on /myLv type autofs (rw,relatime,fd=33,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe\PYGZus{}ino=13344)}
+\PYG{g+go}{/dev/mapper/vgPrime\PYGZhy{}lvPrime on /myLv type xfs (rw,relatime,seclabel,attr2,inode64,noquota)}
+\end{Verbatim}

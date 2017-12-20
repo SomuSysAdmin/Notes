@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{[}Unit\PYG{o}{]}
+\PYG{n+nv}{Description} \PYG{o}{=} myLv Automount
+
+\PYG{o}{[}Automount\PYG{o}{]}
+\PYG{n+nv}{Where} \PYG{o}{=} /myLv
+
+\PYG{o}{[}Install\PYG{o}{]}
+\PYG{n+nv}{WantedBy} \PYG{o}{=} multi\PYGZhy{}user.target
+\end{Verbatim}

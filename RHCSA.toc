@@ -1,306 +1,309 @@
-\contentsline {part}{I\hspace {1em}Installing RHEL Server}{10}
-\contentsline {chapter}{\numberline {1}Using Essential Tools}{11}
-\contentsline {section}{\numberline {1.1}Man Command}{11}
-\contentsline {section}{\numberline {1.2}Understanding Globbing and Wildcards}{12}
-\contentsline {section}{\numberline {1.3}Understanding Globbing and Wildcards}{12}
-\contentsline {section}{\numberline {1.4}Understanding I/O Redirection and Pipes}{13}
-\contentsline {subsection}{\numberline {1.4.1}I/O Redirection}{13}
-\contentsline {subsection}{\numberline {1.4.2}Piping}{13}
-\contentsline {section}{\numberline {1.5}Using I/O Redireciton and Piping}{13}
-\contentsline {chapter}{\numberline {2}Essential File Management Tools}{15}
-\contentsline {section}{\numberline {2.1}Understanding Linux File System Layout}{15}
-\contentsline {section}{\numberline {2.2}Finding Files}{15}
-\contentsline {section}{\numberline {2.3}Understanding Links}{16}
-\contentsline {section}{\numberline {2.4}Working with Links}{16}
-\contentsline {section}{\numberline {2.5}Working with tar}{17}
-\contentsline {chapter}{\numberline {3}Working with Text Files}{19}
-\contentsline {section}{\numberline {3.1}Understanding Regular Expressions}{19}
-\contentsline {section}{\numberline {3.2}Using common text tools}{19}
-\contentsline {subsection}{\numberline {3.2.1}cat}{19}
-\contentsline {subsection}{\numberline {3.2.2}less}{19}
-\contentsline {subsection}{\numberline {3.2.3}Head and Tail}{20}
-\contentsline {subsubsection}{Head}{20}
-\contentsline {subsubsection}{Tail}{20}
-\contentsline {subsubsection}{Combination of head and tail}{20}
-\contentsline {subsection}{\numberline {3.2.4}cut}{20}
-\contentsline {subsection}{\numberline {3.2.5}sort}{20}
-\contentsline {subsection}{\numberline {3.2.6}tr}{21}
-\contentsline {section}{\numberline {3.3}grep}{21}
-\contentsline {subsection}{\numberline {3.3.1}wc}{22}
-\contentsline {subsection}{\numberline {3.3.2}grep -l}{22}
-\contentsline {subsection}{\numberline {3.3.3}grep -i}{22}
-\contentsline {subsection}{\numberline {3.3.4}grep -R}{23}
-\contentsline {subsection}{\numberline {3.3.5}grep -v}{23}
-\contentsline {section}{\numberline {3.4}sed and awk basics}{23}
-\contentsline {subsection}{\numberline {3.4.1}sed}{23}
-\contentsline {subsubsection}{sed q}{24}
-\contentsline {subsubsection}{sed -n}{24}
-\contentsline {subsubsection}{Substitution with sed}{24}
-\contentsline {subsection}{\numberline {3.4.2}awk}{24}
-\contentsline {subsubsection}{Cutting out information using awk}{25}
-\contentsline {chapter}{\numberline {4}Connecting to a RHEL Server}{26}
-\contentsline {section}{\numberline {4.1}Connecting to a Server with SSH}{26}
-\contentsline {section}{\numberline {4.2}RSA Key fingerprint and known hosts}{26}
-\contentsline {section}{\numberline {4.3}sshd\_config}{26}
-\contentsline {section}{\numberline {4.4}Understanding SSH keys}{27}
-\contentsline {subsection}{\numberline {4.4.1}Client authentication without password}{27}
-\contentsline {section}{\numberline {4.5}Using SSH Keys}{28}
-\contentsline {subsection}{\numberline {4.5.1}Copying SSH keys}{28}
-\contentsline {subsection}{\numberline {4.5.2}Copying files to a server securely using SSH}{29}
-\contentsline {chapter}{\numberline {5}Managing Users and Groups}{30}
-\contentsline {section}{\numberline {5.1}Understanding the need for Users}{30}
-\contentsline {section}{\numberline {5.2}User Properties}{30}
-\contentsline {subsection}{\numberline {5.2.1}Username}{30}
-\contentsline {subsubsection}{/etc/shadow}{30}
-\contentsline {subsection}{\numberline {5.2.2}UID}{31}
-\contentsline {subsection}{\numberline {5.2.3}GID}{31}
-\contentsline {subsection}{\numberline {5.2.4}GECOS or comment field}{31}
-\contentsline {subsection}{\numberline {5.2.5}Home Directory}{31}
-\contentsline {subsection}{\numberline {5.2.6}Default Shell}{31}
-\contentsline {section}{\numberline {5.3}Creating and Managing Users}{31}
-\contentsline {subsection}{\numberline {5.3.1}Adding users}{31}
-\contentsline {subsubsection}{id command}{32}
-\contentsline {section}{\numberline {5.4}Understanding Group Membership}{32}
-\contentsline {section}{\numberline {5.5}Creating and Managing Groups}{32}
-\contentsline {subsection}{\numberline {5.5.1}groupadd}{32}
-\contentsline {subsection}{\numberline {5.5.2}Adding users to a group}{32}
-\contentsline {subsubsection}{usermod}{33}
-\contentsline {section}{\numberline {5.6}User and Group configuration files}{33}
-\contentsline {section}{\numberline {5.7}Managing Password properties}{33}
-\contentsline {subsection}{\numberline {5.7.1}passwd}{33}
-\contentsline {subsubsection}{Locking and Unlocking passwords}{34}
-\contentsline {subsection}{\numberline {5.7.2}chage}{34}
-\contentsline {subsubsection}{Setting the account expiration date}{34}
-\contentsline {chapter}{\numberline {6}Connecting to a LDAP Server}{35}
-\contentsline {section}{\numberline {6.1}Understanding LDAP}{35}
-\contentsline {subsection}{\numberline {6.1.1}/bin/login}{35}
-\contentsline {subsection}{\numberline {6.1.2}ldd}{35}
-\contentsline {subsection}{\numberline {6.1.3}PAM config file syntax}{36}
-\contentsline {subsubsection}{Service Type}{36}
-\contentsline {subsubsection}{PAM Module Controls}{36}
-\contentsline {section}{\numberline {6.2}Telling your server where to find the LDAP Server}{37}
-\contentsline {subsection}{\numberline {6.2.1}nscd}{37}
-\contentsline {subsection}{\numberline {6.2.2}nss-pam-ldapd}{37}
-\contentsline {subsection}{\numberline {6.2.3}pam\_ldap}{37}
-\contentsline {subsection}{\numberline {6.2.4}authconfig-gtk}{38}
-\contentsline {subsubsection}{LDAP Search Base DN}{38}
-\contentsline {subsubsection}{LDAP Server}{38}
-\contentsline {subsubsection}{TLS Certificate}{38}
-\contentsline {subsection}{\numberline {6.2.5}Switching to an LDAP user}{38}
-\contentsline {section}{\numberline {6.3}Understanding Automount}{38}
-\contentsline {subsection}{\numberline {6.3.1}Server selection for auto-mounting}{39}
-\contentsline {subsection}{\numberline {6.3.2}Samba server's CIFS protocol to automount}{39}
-\contentsline {section}{\numberline {6.4}Configuring Automount}{40}
-\contentsline {subsubsection}{Configuration on the Samba Server}{40}
-\contentsline {subsection}{\numberline {6.4.1}NFS Server Automounting}{41}
-\contentsline {section}{\numberline {6.5}Configuring NFS and Automount}{41}
-\contentsline {subsection}{\numberline {6.5.1}yum search}{41}
-\contentsline {subsection}{\numberline {6.5.2}Creating an NFS Server}{41}
-\contentsline {subsection}{\numberline {6.5.3}Starting the NFS server}{42}
-\contentsline {subsection}{\numberline {6.5.4}Automounting NFS}{42}
-\contentsline {section}{\numberline {6.6}Modifying nslcd Configuration}{43}
-\contentsline {subsection}{\numberline {6.6.1}Naming Services LDAP Client Daemon}{43}
-\contentsline {subsubsection}{/etc/nsswitch.conf}{43}
-\contentsline {subsubsection}{PAM using nslcd}{44}
-\contentsline {subsection}{\numberline {6.6.2}/etc/nslcd.conf}{44}
-\contentsline {chapter}{\numberline {7}Managing Permissions}{45}
-\contentsline {section}{\numberline {7.1}Understanding Ownership: Users, Groups and Others}{45}
-\contentsline {subsection}{\numberline {7.1.1}Permissions}{45}
-\contentsline {subsection}{\numberline {7.1.2}Ownership}{46}
-\contentsline {section}{\numberline {7.2}Changing file ownership}{46}
-\contentsline {subsection}{\numberline {7.2.1}chgrp}{46}
-\contentsline {subsection}{\numberline {7.2.2}chown}{46}
-\contentsline {section}{\numberline {7.3}Understanding Basic Permissions}{47}
-\contentsline {section}{\numberline {7.4}Managing Basic Permissions}{47}
-\contentsline {subsection}{\numberline {7.4.1}chmod}{47}
-\contentsline {section}{\numberline {7.5}Understanding Special Permissions}{48}
-\contentsline {section}{\numberline {7.6}Managing Special Permissions}{49}
-\contentsline {subsection}{\numberline {7.6.1}Finding a file with a particular set of permissions}{49}
-\contentsline {subsection}{\numberline {7.6.2}Setting Group ID for a directory}{50}
-\contentsline {subsection}{\numberline {7.6.3}Sticky Bit}{51}
-\contentsline {subsection}{\numberline {7.6.4}Lowercase 's' or 't' vs Uppercase in permissions}{52}
-\contentsline {section}{\numberline {7.7}Understanding ACLs}{52}
-\contentsline {subsection}{\numberline {7.7.1}Mount options}{52}
-\contentsline {subsubsection}{tune2fs for Ext file systems}{53}
-\contentsline {subsubsection}{XFS}{53}
-\contentsline {subsection}{\numberline {7.7.2}Commands}{53}
-\contentsline {subsubsection}{Default ACL}{53}
-\contentsline {section}{\numberline {7.8}Managing ACLs}{53}
-\contentsline {subsection}{\numberline {7.8.1}history}{55}
-\contentsline {chapter}{\numberline {8}Configuring Networking}{56}
-\contentsline {section}{\numberline {8.1}Understanding NIC Naming}{56}
-\contentsline {subsection}{\numberline {8.1.1}Network Device Naming Schemes}{56}
-\contentsline {section}{\numberline {8.2}Managing NIC Configuration with ip Command}{56}
-\contentsline {subsection}{\numberline {8.2.1}show commands}{57}
-\contentsline {subsubsection}{ip link show}{57}
-\contentsline {subsubsection}{ip addr show}{57}
-\contentsline {subsubsection}{ip route show}{57}
-\contentsline {subsection}{\numberline {8.2.2}ip addr add}{57}
-\contentsline {subsection}{\numberline {8.2.3}ip route add}{58}
-\contentsline {section}{\numberline {8.3}Storing Network Configuration persistently}{58}
-\contentsline {subsection}{\numberline {8.3.1}Hostname}{59}
-\contentsline {section}{\numberline {8.4}Understanding Network Manager}{59}
-\contentsline {section}{\numberline {8.5}Using Network Manager utilities (nmcli, nmtui)}{60}
-\contentsline {subsection}{\numberline {8.5.1}nmcli}{60}
-\contentsline {subsubsection}{nmcli connection show}{60}
-\contentsline {subsubsection}{Switching Connections}{61}
-\contentsline {subsection}{\numberline {8.5.2}nmtui}{61}
-\contentsline {section}{\numberline {8.6}Understanding Routing and DNS}{61}
-\contentsline {subsection}{\numberline {8.6.1}Default route}{61}
-\contentsline {subsection}{\numberline {8.6.2}DNS}{62}
-\contentsline {section}{\numberline {8.7}Configuring Routing and DNS}{62}
-\contentsline {section}{\numberline {8.8}Understanding Network Analysis Tools}{63}
-\contentsline {section}{\numberline {8.9}Using Network Analysis Tools}{63}
-\contentsline {subsection}{\numberline {8.9.1}ping}{64}
-\contentsline {subsubsection}{ping flood test}{64}
-\contentsline {subsection}{\numberline {8.9.2}traceroute}{64}
-\contentsline {subsection}{\numberline {8.9.3}host}{64}
-\contentsline {subsection}{\numberline {8.9.4}dig}{65}
-\contentsline {subsection}{\numberline {8.9.5}Physical network problems}{66}
-\contentsline {part}{II\hspace {1em}Operating RHEL Servers}{68}
-\contentsline {chapter}{\numberline {9}Managing Processes}{69}
-\contentsline {section}{\numberline {9.1}Understanding Jobs and Processes}{69}
-\contentsline {subsection}{\numberline {9.1.1}jobs}{69}
-\contentsline {section}{\numberline {9.2}Managing Shell Jobs}{69}
-\contentsline {section}{\numberline {9.3}Getting process information with ps}{71}
-\contentsline {subsection}{\numberline {9.3.1}Getting PID of a process}{72}
-\contentsline {subsubsection}{w command}{72}
-\contentsline {subsection}{\numberline {9.3.2}Seeing Parent and Child process relation}{72}
-\contentsline {section}{\numberline {9.4}Understanding Memory Usage}{72}
-\contentsline {section}{\numberline {9.5}Understanding Performance Load}{73}
-\contentsline {subsection}{\numberline {9.5.1}uptime Command}{73}
-\contentsline {section}{\numberline {9.6}Monitoring System Activity with top}{74}
-\contentsline {section}{\numberline {9.7}Sending Signals to processes}{75}
-\contentsline {subsection}{\numberline {9.7.1}kill command}{75}
-\contentsline {section}{\numberline {9.8}Understanding Priorities and Niceness}{76}
-\contentsline {section}{\numberline {9.9}Changing Process Nice values}{76}
-\contentsline {subsection}{\numberline {9.9.1}Chaning niceness from top}{76}
-\contentsline {subsection}{\numberline {9.9.2}Changing Niceness from command line}{76}
-\contentsline {chapter}{\numberline {10}Managing Software}{78}
-\contentsline {section}{\numberline {10.1}Understanding Meta Package Handlers}{78}
-\contentsline {section}{\numberline {10.2}Setting up Yum repositories}{78}
-\contentsline {subsection}{\numberline {10.2.1}yum repolist}{78}
-\contentsline {subsection}{\numberline {10.2.2}Custom Repository}{78}
-\contentsline {subsubsection}{createrepo}{79}
-\contentsline {section}{\numberline {10.3}Using the yum command}{79}
-\contentsline {subsection}{\numberline {10.3.1}yum search}{79}
-\contentsline {subsection}{\numberline {10.3.2}yum install}{80}
-\contentsline {subsection}{\numberline {10.3.3}yum list}{81}
-\contentsline {subsection}{\numberline {10.3.4}yum provides}{81}
-\contentsline {subsection}{\numberline {10.3.5}yum remove}{82}
-\contentsline {section}{\numberline {10.4}Using rpm queries}{83}
-\contentsline {subsubsection}{Pre and Post install Scripts}{84}
-\contentsline {subsection}{\numberline {10.4.1}Installing a local rpm file}{85}
-\contentsline {subsection}{\numberline {10.4.2}repoquery}{86}
-\contentsline {subsection}{\numberline {10.4.3}Displaying information about a package}{86}
-\contentsline {chapter}{\numberline {11}Working with Virtual Machines}{88}
-\contentsline {section}{\numberline {11.1}Introducing KVM Virtualization}{88}
-\contentsline {subsection}{\numberline {11.1.1}CPU Virtualization Support}{88}
-\contentsline {section}{\numberline {11.2}Managing Libvirt and KVM}{89}
-\contentsline {section}{\numberline {11.3}Using virsh}{90}
-\contentsline {subsection}{\numberline {11.3.1}Virsh commands}{90}
-\contentsline {subsubsection}{virsh list}{90}
-\contentsline {section}{\numberline {11.4}Using virt-manager}{91}
-\contentsline {chapter}{\numberline {12}Scheduling Tasks}{92}
-\contentsline {section}{\numberline {12.1}Cron vs at}{92}
-\contentsline {subsection}{\numberline {12.1.1}Cron}{92}
-\contentsline {subsection}{\numberline {12.1.2}at}{92}
-\contentsline {section}{\numberline {12.2}Understanding Cron Configuration files and Execution times}{92}
-\contentsline {subsection}{\numberline {12.2.1}crontab -e}{93}
-\contentsline {subsection}{\numberline {12.2.2}Other cron config files}{93}
-\contentsline {subsection}{\numberline {12.2.3}cron.d}{94}
-\contentsline {section}{\numberline {12.3}Scheduling with cron}{94}
-\contentsline {section}{\numberline {12.4}Using at}{95}
-\contentsline {subsection}{\numberline {12.4.1}Scheduling using at}{95}
-\contentsline {subsection}{\numberline {12.4.2}atq}{96}
-\contentsline {subsection}{\numberline {12.4.3}Removing jobs from atq}{96}
-\contentsline {chapter}{\numberline {13}Configuring Logging}{98}
-\contentsline {section}{\numberline {13.1}Understanding rsyslogd and journald logging}{98}
-\contentsline {subsection}{\numberline {13.1.1}Sharing logging information}{99}
-\contentsline {section}{\numberline {13.2}Integrating rsyslogd and journald}{99}
-\contentsline {subsection}{\numberline {13.2.1}rsyslog}{99}
-\contentsline {subsection}{\numberline {13.2.2}journald}{100}
-\contentsline {section}{\numberline {13.3}Configuring rsyslog logging}{100}
-\contentsline {section}{\numberline {13.4}Working with journald}{100}
-\contentsline {subsection}{\numberline {13.4.1}journalctl}{100}
-\contentsline {subsubsection}{journalctl -b}{100}
-\contentsline {subsubsection}{journalctl --since=<time>}{100}
-\contentsline {subsubsection}{journald -u}{101}
-\contentsline {section}{\numberline {13.5}Understanding logrotate}{101}
-\contentsline {section}{\numberline {13.6}Configuring logrotate}{102}
-\contentsline {subsection}{\numberline {13.6.1}Checking avialable hard disk space}{103}
-\contentsline {chapter}{\numberline {14}Managing Partitions}{104}
-\contentsline {section}{\numberline {14.1}Understanding Disk Layout}{104}
-\contentsline {section}{\numberline {14.2}Creating Partitions}{105}
-\contentsline {subsection}{\numberline {14.2.1}fdisk}{105}
-\contentsline {subsubsection}{p command}{106}
-\contentsline {section}{\numberline {14.3}Understanding File System Differences}{107}
-\contentsline {section}{\numberline {14.4}Making the File System}{108}
-\contentsline {subsection}{\numberline {14.4.1}mkfs}{108}
-\contentsline {section}{\numberline {14.5}Mounting the Partition Manually}{109}
-\contentsline {subsection}{\numberline {14.5.1}umount}{109}
-\contentsline {section}{\numberline {14.6}Understanding /etc/fstab}{110}
-\contentsline {section}{\numberline {14.7}Mounting partitions via /etc/fstab}{111}
-\contentsline {subsection}{\numberline {14.7.1}Managing xfs file systems using xfs\_ commands}{112}
-\contentsline {section}{\numberline {14.8}Understanding Encrypted Partitions}{113}
-\contentsline {section}{\numberline {14.9}Creating a LUKS Encrypted Partition}{113}
-\contentsline {subsection}{\numberline {14.9.1}Formatting the new partition}{114}
-\contentsline {section}{\numberline {14.10}Dealing with "Enter root password for maintenance mode"}{116}
-\contentsline {chapter}{\numberline {15}Managing LVM Logical Volumes}{117}
-\contentsline {section}{\numberline {15.1}Why use LVM}{117}
-\contentsline {section}{\numberline {15.2}Understanding LVM Setup}{117}
-\contentsline {section}{\numberline {15.3}Creating an LVM Logical Volume}{118}
-\contentsline {subsection}{\numberline {15.3.1}Creating a Physical Volume}{121}
-\contentsline {subsection}{\numberline {15.3.2}Creating a Volume Group}{121}
-\contentsline {subsection}{\numberline {15.3.3}Creating a Logical Volume}{121}
-\contentsline {subsection}{\numberline {15.3.4}Creating a File system on the LV}{122}
-\contentsline {section}{\numberline {15.4}Understanding Device Mapper and LVM Device Names}{123}
-\contentsline {section}{\numberline {15.5}Understanding LVM resize operations}{123}
-\contentsline {subsection}{\numberline {15.5.1}Extending the File System}{123}
-\contentsline {subsection}{\numberline {15.5.2}Shrinking the File System}{123}
-\contentsline {section}{\numberline {15.6}Growing an LVM Logical Volume}{123}
-\contentsline {subsection}{\numberline {15.6.1}Creating a new logical volume in an extended partition to add to the VG}{124}
-\contentsline {subsection}{\numberline {15.6.2}Extending the Volume Group}{126}
-\contentsline {subsection}{\numberline {15.6.3}Extending the LV and the File System}{126}
-\contentsline {section}{\numberline {15.7}Shrinking an LVM logical Volume}{128}
-\contentsline {subsection}{\numberline {15.7.1}Reduce both File system and LV in a single step}{128}
-\contentsline {part}{III\hspace {1em}Performing Advanced System Administration Tasks}{130}
-\contentsline {chapter}{\numberline {16}Managing the Kernel}{131}
-\contentsline {section}{\numberline {16.1}Understanding the Modular Structure of the Kernel}{131}
-\contentsline {section}{\numberline {16.2}Working with Kernel Modules}{131}
-\contentsline {subsection}{\numberline {16.2.1}Viewling loaded Kernel Modules}{132}
-\contentsline {subsection}{\numberline {16.2.2}Modprobe}{133}
-\contentsline {section}{\numberline {16.3}Modifying the Kernel module behavior through modprobe}{133}
-\contentsline {subsection}{\numberline {16.3.1}Setting kernel module parameters on older Linux versions}{134}
-\contentsline {section}{\numberline {16.4}Tuning kernel behavior through proc}{135}
-\contentsline {section}{\numberline {16.5}Using sysctl}{136}
-\contentsline {subsection}{\numberline {16.5.1}sysctl command}{136}
-\contentsline {section}{\numberline {16.6}Updating the kernel}{137}
-\contentsline {chapter}{\numberline {17}Using Kickstart}{138}
-\contentsline {section}{\numberline {17.1}Understanding Kickstart Usage}{138}
-\contentsline {section}{\numberline {17.2}Creating a Kickstart file}{138}
-\contentsline {subsection}{\numberline {17.2.1}Installation Scripts}{139}
-\contentsline {section}{\numberline {17.3}Using the Kickstart file for Automatic installations}{139}
-\contentsline {section}{\numberline {17.4}Using Kickstart files in fully automated data-centers}{139}
-\contentsline {chapter}{\numberline {18}Managing and Understanding the Boot Procedure}{141}
-\contentsline {section}{\numberline {18.1}Boot Procedure Generic Overview}{141}
-\contentsline {section}{\numberline {18.2}Understanding Grub2}{141}
-\contentsline {subsection}{\numberline {18.2.1}Booting in emergency mode}{142}
-\contentsline {section}{\numberline {18.3}Modifying Grub2 Parameters}{142}
-\contentsline {section}{\numberline {18.4}Understanding Systemd}{143}
-\contentsline {subsection}{\numberline {18.4.1}Unit file}{143}
-\contentsline {section}{\numberline {18.5}Managing Services in a systemd Environment}{143}
-\contentsline {subsection}{\numberline {18.5.1}Service files}{144}
-\contentsline {subsection}{\numberline {18.5.2}systemctl}{144}
-\contentsline {subsection}{\numberline {18.5.3}Targets}{145}
-\contentsline {subsection}{\numberline {18.5.4}Wants}{145}
-\contentsline {subsection}{\numberline {18.5.5}Viewing Currently Loaded Targets}{147}
-\contentsline {section}{\numberline {18.6}Understanding systemd Targets}{148}
-\contentsline {subsection}{\numberline {18.6.1}Services related to targets}{149}
-\contentsline {subsubsection}{Ordering}{149}
-\contentsline {section}{\numberline {18.7}Switching between systemd Targets}{149}
-\contentsline {subsection}{\numberline {18.7.1}Switching to another target from an operational environment}{150}
-\contentsline {subsection}{\numberline {18.7.2}Selecting target from Grub Boot menu}{150}
-\contentsline {subsection}{\numberline {18.7.3}Emergency mode}{151}
-\contentsline {section}{\numberline {18.8}Managing File System mounts in a systemd Environment}{151}
-\contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{153}
+\contentsline {part}{I\hspace {1em}Installing RHEL Server}{11}
+\contentsline {chapter}{\numberline {1}Using Essential Tools}{12}
+\contentsline {section}{\numberline {1.1}Man Command}{12}
+\contentsline {section}{\numberline {1.2}Understanding Globbing and Wildcards}{13}
+\contentsline {section}{\numberline {1.3}Understanding Globbing and Wildcards}{13}
+\contentsline {section}{\numberline {1.4}Understanding I/O Redirection and Pipes}{14}
+\contentsline {subsection}{\numberline {1.4.1}I/O Redirection}{14}
+\contentsline {subsection}{\numberline {1.4.2}Piping}{14}
+\contentsline {section}{\numberline {1.5}Using I/O Redireciton and Piping}{14}
+\contentsline {chapter}{\numberline {2}Essential File Management Tools}{16}
+\contentsline {section}{\numberline {2.1}Understanding Linux File System Layout}{16}
+\contentsline {section}{\numberline {2.2}Finding Files}{16}
+\contentsline {section}{\numberline {2.3}Understanding Links}{17}
+\contentsline {section}{\numberline {2.4}Working with Links}{17}
+\contentsline {section}{\numberline {2.5}Working with tar}{18}
+\contentsline {chapter}{\numberline {3}Working with Text Files}{20}
+\contentsline {section}{\numberline {3.1}Understanding Regular Expressions}{20}
+\contentsline {section}{\numberline {3.2}Using common text tools}{20}
+\contentsline {subsection}{\numberline {3.2.1}cat}{20}
+\contentsline {subsection}{\numberline {3.2.2}less}{20}
+\contentsline {subsection}{\numberline {3.2.3}Head and Tail}{21}
+\contentsline {subsubsection}{Head}{21}
+\contentsline {subsubsection}{Tail}{21}
+\contentsline {subsubsection}{Combination of head and tail}{21}
+\contentsline {subsection}{\numberline {3.2.4}cut}{21}
+\contentsline {subsection}{\numberline {3.2.5}sort}{21}
+\contentsline {subsection}{\numberline {3.2.6}tr}{22}
+\contentsline {section}{\numberline {3.3}grep}{22}
+\contentsline {subsection}{\numberline {3.3.1}wc}{23}
+\contentsline {subsection}{\numberline {3.3.2}grep -l}{23}
+\contentsline {subsection}{\numberline {3.3.3}grep -i}{23}
+\contentsline {subsection}{\numberline {3.3.4}grep -R}{24}
+\contentsline {subsection}{\numberline {3.3.5}grep -v}{24}
+\contentsline {section}{\numberline {3.4}sed and awk basics}{24}
+\contentsline {subsection}{\numberline {3.4.1}sed}{24}
+\contentsline {subsubsection}{sed q}{25}
+\contentsline {subsubsection}{sed -n}{25}
+\contentsline {subsubsection}{Substitution with sed}{25}
+\contentsline {subsection}{\numberline {3.4.2}awk}{25}
+\contentsline {subsubsection}{Cutting out information using awk}{26}
+\contentsline {chapter}{\numberline {4}Connecting to a RHEL Server}{27}
+\contentsline {section}{\numberline {4.1}Connecting to a Server with SSH}{27}
+\contentsline {section}{\numberline {4.2}RSA Key fingerprint and known hosts}{27}
+\contentsline {section}{\numberline {4.3}sshd\_config}{27}
+\contentsline {section}{\numberline {4.4}Understanding SSH keys}{28}
+\contentsline {subsection}{\numberline {4.4.1}Client authentication without password}{28}
+\contentsline {section}{\numberline {4.5}Using SSH Keys}{29}
+\contentsline {subsection}{\numberline {4.5.1}Copying SSH keys}{29}
+\contentsline {subsection}{\numberline {4.5.2}Copying files to a server securely using SSH}{30}
+\contentsline {chapter}{\numberline {5}Managing Users and Groups}{31}
+\contentsline {section}{\numberline {5.1}Understanding the need for Users}{31}
+\contentsline {section}{\numberline {5.2}User Properties}{31}
+\contentsline {subsection}{\numberline {5.2.1}Username}{31}
+\contentsline {subsubsection}{/etc/shadow}{31}
+\contentsline {subsection}{\numberline {5.2.2}UID}{32}
+\contentsline {subsection}{\numberline {5.2.3}GID}{32}
+\contentsline {subsection}{\numberline {5.2.4}GECOS or comment field}{32}
+\contentsline {subsection}{\numberline {5.2.5}Home Directory}{32}
+\contentsline {subsection}{\numberline {5.2.6}Default Shell}{32}
+\contentsline {section}{\numberline {5.3}Creating and Managing Users}{32}
+\contentsline {subsection}{\numberline {5.3.1}Adding users}{32}
+\contentsline {subsubsection}{id command}{33}
+\contentsline {section}{\numberline {5.4}Understanding Group Membership}{33}
+\contentsline {section}{\numberline {5.5}Creating and Managing Groups}{33}
+\contentsline {subsection}{\numberline {5.5.1}groupadd}{33}
+\contentsline {subsection}{\numberline {5.5.2}Adding users to a group}{33}
+\contentsline {subsubsection}{usermod}{34}
+\contentsline {section}{\numberline {5.6}User and Group configuration files}{34}
+\contentsline {section}{\numberline {5.7}Managing Password properties}{34}
+\contentsline {subsection}{\numberline {5.7.1}passwd}{34}
+\contentsline {subsubsection}{Locking and Unlocking passwords}{35}
+\contentsline {subsection}{\numberline {5.7.2}chage}{35}
+\contentsline {subsubsection}{Setting the account expiration date}{35}
+\contentsline {chapter}{\numberline {6}Connecting to a LDAP Server}{36}
+\contentsline {section}{\numberline {6.1}Understanding LDAP}{36}
+\contentsline {subsection}{\numberline {6.1.1}/bin/login}{36}
+\contentsline {subsection}{\numberline {6.1.2}ldd}{36}
+\contentsline {subsection}{\numberline {6.1.3}PAM config file syntax}{37}
+\contentsline {subsubsection}{Service Type}{37}
+\contentsline {subsubsection}{PAM Module Controls}{37}
+\contentsline {section}{\numberline {6.2}Telling your server where to find the LDAP Server}{38}
+\contentsline {subsection}{\numberline {6.2.1}nscd}{38}
+\contentsline {subsection}{\numberline {6.2.2}nss-pam-ldapd}{38}
+\contentsline {subsection}{\numberline {6.2.3}pam\_ldap}{38}
+\contentsline {subsection}{\numberline {6.2.4}authconfig-gtk}{39}
+\contentsline {subsubsection}{LDAP Search Base DN}{39}
+\contentsline {subsubsection}{LDAP Server}{39}
+\contentsline {subsubsection}{TLS Certificate}{39}
+\contentsline {subsection}{\numberline {6.2.5}Switching to an LDAP user}{39}
+\contentsline {section}{\numberline {6.3}Understanding Automount}{39}
+\contentsline {subsection}{\numberline {6.3.1}Server selection for auto-mounting}{40}
+\contentsline {subsection}{\numberline {6.3.2}Samba server's CIFS protocol to automount}{40}
+\contentsline {section}{\numberline {6.4}Configuring Automount}{41}
+\contentsline {subsubsection}{Configuration on the Samba Server}{41}
+\contentsline {subsection}{\numberline {6.4.1}NFS Server Automounting}{42}
+\contentsline {section}{\numberline {6.5}Configuring NFS and Automount}{42}
+\contentsline {subsection}{\numberline {6.5.1}yum search}{42}
+\contentsline {subsection}{\numberline {6.5.2}Creating an NFS Server}{42}
+\contentsline {subsection}{\numberline {6.5.3}Starting the NFS server}{43}
+\contentsline {subsection}{\numberline {6.5.4}Automounting NFS}{43}
+\contentsline {section}{\numberline {6.6}Modifying nslcd Configuration}{44}
+\contentsline {subsection}{\numberline {6.6.1}Naming Services LDAP Client Daemon}{44}
+\contentsline {subsubsection}{/etc/nsswitch.conf}{44}
+\contentsline {subsubsection}{PAM using nslcd}{45}
+\contentsline {subsection}{\numberline {6.6.2}/etc/nslcd.conf}{45}
+\contentsline {chapter}{\numberline {7}Managing Permissions}{46}
+\contentsline {section}{\numberline {7.1}Understanding Ownership: Users, Groups and Others}{46}
+\contentsline {subsection}{\numberline {7.1.1}Permissions}{46}
+\contentsline {subsection}{\numberline {7.1.2}Ownership}{47}
+\contentsline {section}{\numberline {7.2}Changing file ownership}{47}
+\contentsline {subsection}{\numberline {7.2.1}chgrp}{47}
+\contentsline {subsection}{\numberline {7.2.2}chown}{47}
+\contentsline {section}{\numberline {7.3}Understanding Basic Permissions}{48}
+\contentsline {section}{\numberline {7.4}Managing Basic Permissions}{48}
+\contentsline {subsection}{\numberline {7.4.1}chmod}{48}
+\contentsline {section}{\numberline {7.5}Understanding Special Permissions}{49}
+\contentsline {section}{\numberline {7.6}Managing Special Permissions}{50}
+\contentsline {subsection}{\numberline {7.6.1}Finding a file with a particular set of permissions}{50}
+\contentsline {subsection}{\numberline {7.6.2}Setting Group ID for a directory}{51}
+\contentsline {subsection}{\numberline {7.6.3}Sticky Bit}{52}
+\contentsline {subsection}{\numberline {7.6.4}Lowercase 's' or 't' vs Uppercase in permissions}{53}
+\contentsline {section}{\numberline {7.7}Understanding ACLs}{53}
+\contentsline {subsection}{\numberline {7.7.1}Mount options}{53}
+\contentsline {subsubsection}{tune2fs for Ext file systems}{54}
+\contentsline {subsubsection}{XFS}{54}
+\contentsline {subsection}{\numberline {7.7.2}Commands}{54}
+\contentsline {subsubsection}{Default ACL}{54}
+\contentsline {section}{\numberline {7.8}Managing ACLs}{54}
+\contentsline {subsection}{\numberline {7.8.1}history}{56}
+\contentsline {chapter}{\numberline {8}Configuring Networking}{57}
+\contentsline {section}{\numberline {8.1}Understanding NIC Naming}{57}
+\contentsline {subsection}{\numberline {8.1.1}Network Device Naming Schemes}{57}
+\contentsline {section}{\numberline {8.2}Managing NIC Configuration with ip Command}{57}
+\contentsline {subsection}{\numberline {8.2.1}show commands}{58}
+\contentsline {subsubsection}{ip link show}{58}
+\contentsline {subsubsection}{ip addr show}{58}
+\contentsline {subsubsection}{ip route show}{58}
+\contentsline {subsection}{\numberline {8.2.2}ip addr add}{58}
+\contentsline {subsection}{\numberline {8.2.3}ip route add}{59}
+\contentsline {section}{\numberline {8.3}Storing Network Configuration persistently}{59}
+\contentsline {subsection}{\numberline {8.3.1}Hostname}{60}
+\contentsline {section}{\numberline {8.4}Understanding Network Manager}{60}
+\contentsline {section}{\numberline {8.5}Using Network Manager utilities (nmcli, nmtui)}{61}
+\contentsline {subsection}{\numberline {8.5.1}nmcli}{61}
+\contentsline {subsubsection}{nmcli connection show}{61}
+\contentsline {subsubsection}{Switching Connections}{62}
+\contentsline {subsection}{\numberline {8.5.2}nmtui}{62}
+\contentsline {section}{\numberline {8.6}Understanding Routing and DNS}{62}
+\contentsline {subsection}{\numberline {8.6.1}Default route}{62}
+\contentsline {subsection}{\numberline {8.6.2}DNS}{63}
+\contentsline {section}{\numberline {8.7}Configuring Routing and DNS}{63}
+\contentsline {section}{\numberline {8.8}Understanding Network Analysis Tools}{64}
+\contentsline {section}{\numberline {8.9}Using Network Analysis Tools}{64}
+\contentsline {subsection}{\numberline {8.9.1}ping}{65}
+\contentsline {subsubsection}{ping flood test}{65}
+\contentsline {subsection}{\numberline {8.9.2}traceroute}{65}
+\contentsline {subsection}{\numberline {8.9.3}host}{65}
+\contentsline {subsection}{\numberline {8.9.4}dig}{66}
+\contentsline {subsection}{\numberline {8.9.5}Physical network problems}{67}
+\contentsline {part}{II\hspace {1em}Operating RHEL Servers}{69}
+\contentsline {chapter}{\numberline {9}Managing Processes}{70}
+\contentsline {section}{\numberline {9.1}Understanding Jobs and Processes}{70}
+\contentsline {subsection}{\numberline {9.1.1}jobs}{70}
+\contentsline {section}{\numberline {9.2}Managing Shell Jobs}{70}
+\contentsline {section}{\numberline {9.3}Getting process information with ps}{72}
+\contentsline {subsection}{\numberline {9.3.1}Getting PID of a process}{73}
+\contentsline {subsubsection}{w command}{73}
+\contentsline {subsection}{\numberline {9.3.2}Seeing Parent and Child process relation}{73}
+\contentsline {section}{\numberline {9.4}Understanding Memory Usage}{73}
+\contentsline {section}{\numberline {9.5}Understanding Performance Load}{74}
+\contentsline {subsection}{\numberline {9.5.1}uptime Command}{74}
+\contentsline {section}{\numberline {9.6}Monitoring System Activity with top}{75}
+\contentsline {section}{\numberline {9.7}Sending Signals to processes}{76}
+\contentsline {subsection}{\numberline {9.7.1}kill command}{76}
+\contentsline {section}{\numberline {9.8}Understanding Priorities and Niceness}{77}
+\contentsline {section}{\numberline {9.9}Changing Process Nice values}{77}
+\contentsline {subsection}{\numberline {9.9.1}Chaning niceness from top}{77}
+\contentsline {subsection}{\numberline {9.9.2}Changing Niceness from command line}{77}
+\contentsline {chapter}{\numberline {10}Managing Software}{79}
+\contentsline {section}{\numberline {10.1}Understanding Meta Package Handlers}{79}
+\contentsline {section}{\numberline {10.2}Setting up Yum repositories}{79}
+\contentsline {subsection}{\numberline {10.2.1}yum repolist}{79}
+\contentsline {subsection}{\numberline {10.2.2}Custom Repository}{79}
+\contentsline {subsubsection}{createrepo}{80}
+\contentsline {section}{\numberline {10.3}Using the yum command}{80}
+\contentsline {subsection}{\numberline {10.3.1}yum search}{80}
+\contentsline {subsection}{\numberline {10.3.2}yum install}{81}
+\contentsline {subsection}{\numberline {10.3.3}yum list}{82}
+\contentsline {subsection}{\numberline {10.3.4}yum provides}{82}
+\contentsline {subsection}{\numberline {10.3.5}yum remove}{83}
+\contentsline {section}{\numberline {10.4}Using rpm queries}{84}
+\contentsline {subsubsection}{Pre and Post install Scripts}{85}
+\contentsline {subsection}{\numberline {10.4.1}Installing a local rpm file}{86}
+\contentsline {subsection}{\numberline {10.4.2}repoquery}{87}
+\contentsline {subsection}{\numberline {10.4.3}Displaying information about a package}{87}
+\contentsline {chapter}{\numberline {11}Working with Virtual Machines}{89}
+\contentsline {section}{\numberline {11.1}Introducing KVM Virtualization}{89}
+\contentsline {subsection}{\numberline {11.1.1}CPU Virtualization Support}{89}
+\contentsline {section}{\numberline {11.2}Managing Libvirt and KVM}{90}
+\contentsline {section}{\numberline {11.3}Using virsh}{91}
+\contentsline {subsection}{\numberline {11.3.1}Virsh commands}{91}
+\contentsline {subsubsection}{virsh list}{91}
+\contentsline {section}{\numberline {11.4}Using virt-manager}{92}
+\contentsline {chapter}{\numberline {12}Scheduling Tasks}{93}
+\contentsline {section}{\numberline {12.1}Cron vs at}{93}
+\contentsline {subsection}{\numberline {12.1.1}Cron}{93}
+\contentsline {subsection}{\numberline {12.1.2}at}{93}
+\contentsline {section}{\numberline {12.2}Understanding Cron Configuration files and Execution times}{93}
+\contentsline {subsection}{\numberline {12.2.1}crontab -e}{94}
+\contentsline {subsection}{\numberline {12.2.2}Other cron config files}{94}
+\contentsline {subsection}{\numberline {12.2.3}cron.d}{95}
+\contentsline {section}{\numberline {12.3}Scheduling with cron}{95}
+\contentsline {section}{\numberline {12.4}Using at}{96}
+\contentsline {subsection}{\numberline {12.4.1}Scheduling using at}{96}
+\contentsline {subsection}{\numberline {12.4.2}atq}{97}
+\contentsline {subsection}{\numberline {12.4.3}Removing jobs from atq}{97}
+\contentsline {chapter}{\numberline {13}Configuring Logging}{99}
+\contentsline {section}{\numberline {13.1}Understanding rsyslogd and journald logging}{99}
+\contentsline {subsection}{\numberline {13.1.1}Sharing logging information}{100}
+\contentsline {section}{\numberline {13.2}Integrating rsyslogd and journald}{100}
+\contentsline {subsection}{\numberline {13.2.1}rsyslog}{100}
+\contentsline {subsection}{\numberline {13.2.2}journald}{101}
+\contentsline {section}{\numberline {13.3}Configuring rsyslog logging}{101}
+\contentsline {section}{\numberline {13.4}Working with journald}{101}
+\contentsline {subsection}{\numberline {13.4.1}journalctl}{101}
+\contentsline {subsubsection}{journalctl -b}{101}
+\contentsline {subsubsection}{journalctl --since=<time>}{101}
+\contentsline {subsubsection}{journald -u}{102}
+\contentsline {section}{\numberline {13.5}Understanding logrotate}{102}
+\contentsline {section}{\numberline {13.6}Configuring logrotate}{103}
+\contentsline {subsection}{\numberline {13.6.1}Checking avialable hard disk space}{104}
+\contentsline {chapter}{\numberline {14}Managing Partitions}{105}
+\contentsline {section}{\numberline {14.1}Understanding Disk Layout}{105}
+\contentsline {section}{\numberline {14.2}Creating Partitions}{106}
+\contentsline {subsection}{\numberline {14.2.1}fdisk}{106}
+\contentsline {subsubsection}{p command}{107}
+\contentsline {section}{\numberline {14.3}Understanding File System Differences}{108}
+\contentsline {section}{\numberline {14.4}Making the File System}{109}
+\contentsline {subsection}{\numberline {14.4.1}mkfs}{109}
+\contentsline {section}{\numberline {14.5}Mounting the Partition Manually}{110}
+\contentsline {subsection}{\numberline {14.5.1}umount}{110}
+\contentsline {section}{\numberline {14.6}Understanding /etc/fstab}{111}
+\contentsline {section}{\numberline {14.7}Mounting partitions via /etc/fstab}{112}
+\contentsline {subsection}{\numberline {14.7.1}Managing xfs file systems using xfs\_ commands}{113}
+\contentsline {section}{\numberline {14.8}Understanding Encrypted Partitions}{114}
+\contentsline {section}{\numberline {14.9}Creating a LUKS Encrypted Partition}{114}
+\contentsline {subsection}{\numberline {14.9.1}Formatting the new partition}{115}
+\contentsline {section}{\numberline {14.10}Dealing with "Enter root password for maintenance mode"}{117}
+\contentsline {chapter}{\numberline {15}Managing LVM Logical Volumes}{118}
+\contentsline {section}{\numberline {15.1}Why use LVM}{118}
+\contentsline {section}{\numberline {15.2}Understanding LVM Setup}{118}
+\contentsline {section}{\numberline {15.3}Creating an LVM Logical Volume}{119}
+\contentsline {subsection}{\numberline {15.3.1}Creating a Physical Volume}{122}
+\contentsline {subsection}{\numberline {15.3.2}Creating a Volume Group}{122}
+\contentsline {subsection}{\numberline {15.3.3}Creating a Logical Volume}{122}
+\contentsline {subsection}{\numberline {15.3.4}Creating a File system on the LV}{123}
+\contentsline {section}{\numberline {15.4}Understanding Device Mapper and LVM Device Names}{124}
+\contentsline {section}{\numberline {15.5}Understanding LVM resize operations}{124}
+\contentsline {subsection}{\numberline {15.5.1}Extending the File System}{124}
+\contentsline {subsection}{\numberline {15.5.2}Shrinking the File System}{124}
+\contentsline {section}{\numberline {15.6}Growing an LVM Logical Volume}{124}
+\contentsline {subsection}{\numberline {15.6.1}Creating a new logical volume in an extended partition to add to the VG}{125}
+\contentsline {subsection}{\numberline {15.6.2}Extending the Volume Group}{127}
+\contentsline {subsection}{\numberline {15.6.3}Extending the LV and the File System}{127}
+\contentsline {section}{\numberline {15.7}Shrinking an LVM logical Volume}{129}
+\contentsline {subsection}{\numberline {15.7.1}Reduce both File system and LV in a single step}{129}
+\contentsline {part}{III\hspace {1em}Performing Advanced System Administration Tasks}{131}
+\contentsline {chapter}{\numberline {16}Managing the Kernel}{132}
+\contentsline {section}{\numberline {16.1}Understanding the Modular Structure of the Kernel}{132}
+\contentsline {section}{\numberline {16.2}Working with Kernel Modules}{132}
+\contentsline {subsection}{\numberline {16.2.1}Viewling loaded Kernel Modules}{133}
+\contentsline {subsection}{\numberline {16.2.2}Modprobe}{134}
+\contentsline {section}{\numberline {16.3}Modifying the Kernel module behavior through modprobe}{134}
+\contentsline {subsection}{\numberline {16.3.1}Setting kernel module parameters on older Linux versions}{135}
+\contentsline {section}{\numberline {16.4}Tuning kernel behavior through proc}{136}
+\contentsline {section}{\numberline {16.5}Using sysctl}{137}
+\contentsline {subsection}{\numberline {16.5.1}sysctl command}{137}
+\contentsline {section}{\numberline {16.6}Updating the kernel}{138}
+\contentsline {chapter}{\numberline {17}Using Kickstart}{139}
+\contentsline {section}{\numberline {17.1}Understanding Kickstart Usage}{139}
+\contentsline {section}{\numberline {17.2}Creating a Kickstart file}{139}
+\contentsline {subsection}{\numberline {17.2.1}Installation Scripts}{140}
+\contentsline {section}{\numberline {17.3}Using the Kickstart file for Automatic installations}{140}
+\contentsline {section}{\numberline {17.4}Using Kickstart files in fully automated data-centers}{140}
+\contentsline {chapter}{\numberline {18}Managing and Understanding the Boot Procedure}{142}
+\contentsline {section}{\numberline {18.1}Boot Procedure Generic Overview}{142}
+\contentsline {section}{\numberline {18.2}Understanding Grub2}{142}
+\contentsline {subsection}{\numberline {18.2.1}Booting in emergency mode}{143}
+\contentsline {section}{\numberline {18.3}Modifying Grub2 Parameters}{143}
+\contentsline {section}{\numberline {18.4}Understanding Systemd}{144}
+\contentsline {subsection}{\numberline {18.4.1}Unit file}{144}
+\contentsline {section}{\numberline {18.5}Managing Services in a systemd Environment}{144}
+\contentsline {subsection}{\numberline {18.5.1}Service files}{145}
+\contentsline {subsection}{\numberline {18.5.2}systemctl}{145}
+\contentsline {subsection}{\numberline {18.5.3}Targets}{146}
+\contentsline {subsection}{\numberline {18.5.4}Wants}{146}
+\contentsline {subsection}{\numberline {18.5.5}Viewing Currently Loaded Targets}{148}
+\contentsline {section}{\numberline {18.6}Understanding systemd Targets}{149}
+\contentsline {subsection}{\numberline {18.6.1}Services related to targets}{150}
+\contentsline {subsubsection}{Ordering}{150}
+\contentsline {section}{\numberline {18.7}Switching between systemd Targets}{150}
+\contentsline {subsection}{\numberline {18.7.1}Switching to another target from an operational environment}{151}
+\contentsline {subsection}{\numberline {18.7.2}Selecting target from Grub Boot menu}{151}
+\contentsline {subsection}{\numberline {18.7.3}Emergency mode}{152}
+\contentsline {section}{\numberline {18.8}Managing File System mounts in a systemd Environment}{152}
+\contentsline {section}{\numberline {18.9}Managing Automount in a systemd Environment}{153}
+\contentsline {subsection}{\numberline {18.9.1}Automount Unit file}{154}
+\contentsline {subsection}{\numberline {18.9.2}Difference between enabling Mount vs Automount Units}{154}
+\contentsline {chapter}{\numberline {19}Applying Essential Troubleshooting Skills}{155}

@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}l /etc/systemd/system/default.target
-\PYG{g+go}{lrwxrwxrwx. 1 root root 36 Nov 25 09:08 /etc/systemd/system/default.target \PYGZhy{}\PYGZgt{} /lib/systemd/system/graphical.target}
-\end{Verbatim}

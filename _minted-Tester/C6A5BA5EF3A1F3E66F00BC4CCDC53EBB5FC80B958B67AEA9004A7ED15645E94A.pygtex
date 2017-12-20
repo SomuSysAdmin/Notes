@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{	\PYGZsh{}} systemctl \PYG{n+nb}{enable} myLv.mount
-\PYG{g+go}{	Created symlink from /etc/systemd/system/multi\PYGZhy{}user.target.wants/myLv.mount to /etc/systemd/system/myLv.mount.}
-\end{Verbatim}
