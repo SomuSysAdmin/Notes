@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}Z
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. root root system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}script\PYGZus{}exec\PYGZus{}t:s0 cgi\PYGZhy{}bin}
+\PYG{g+go}{drwxr\PYGZhy{}xr\PYGZhy{}x. root root system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}content\PYGZus{}t:s0 html}
+\end{Verbatim}

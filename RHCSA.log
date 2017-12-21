@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  20 DEC 2017 17:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  21 DEC 2017 14:39
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1336,6 +1336,66 @@ Overfull \hbox (1.12079pt too wide) detected at line 313
 
 Overfull \hbox (1.12079pt too wide) detected at line 316
  []\T1/phv/m/n/10 158
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 317
+ []\T1/phv/m/n/10 159
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 319
+ []\T1/phv/m/n/10 161
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 320
+ []\T1/phv/m/n/10 161
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 321
+ []\T1/phv/m/n/10 162
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 322
+ []\T1/phv/m/n/10 162
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 323
+ []\T1/phv/m/n/10 162
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 324
+ []\T1/phv/m/n/10 163
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 325
+ []\T1/phv/m/n/10 164
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 326
+ []\T1/phv/m/n/10 164
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 327
+ []\T1/phv/m/n/10 165
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 328
+ []\T1/phv/m/n/10 166
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 329
+ []\T1/phv/m/n/10 168
  []
 
 )
@@ -3391,49 +3451,153 @@ Chapter 20.
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l html -f latex -P commandprefix=PYG -F tokenmerge -o _mi
-nted-RHCSA/CA2FAF627FB861753D09D3F5CC6683E0F4D989542463B256E4E56AC2C8213B78.pyg
-tex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/CA2FAF627FB861753D09D3F5CC6683E0F4D989542463B256E4E56AC2C8213B
 78.pygtex)
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/55117764C59C916F297EF666D9C59ECE168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (./_minted-RHCSA/55117764C59C916F297EF666D9C59ECE168FD577FE9E8702C59C4F9251A216
 99.pygtex [159])
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/50110DE2228F52F18A3638A2D6C2BF68168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/50110DE2228F52F18A3638A2D6C2BF68168FD577FE9E8702C59C4F9251A216
 99.pygtex)) (./Mod4/chapters/4.22 Managing SELinux.tex [160]
 Chapter 21.
-) (./Mod4/chapters/4.23 Configuring a Firewall.tex [161
+[161
 
 ]
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/4D14BCCF4617F7E684CD7D59C906F417168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/3B2565F31A1DBFFB5E4D4F347D01BB62168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/7B8E356196A481F9B89EDEEF4697A489168FD577FE9E8702C59C4F9251A216
+99.pygtex) [162]
+Overfull \hbox (5.25163pt too wide) in paragraph at lines 67--68
+\T1/phv/m/n/10 be viewed us-ing []\T1/cmtt/m/n/10 ps Zau\T1/phv/m/n/10 . Even p
+orts have con-text la-bels, viewed by us-ing []\T1/cmtt/m/n/10 netstat Ztulpen\
+T1/phv/m/n/10 .
+ []
+
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/3FE10A2F7494ECB9E405024B6B038994168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/82B73E1EC7EAFA2BC35079A5D689CE1E168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/E794F4C9B94C2E272A8465822A7FB97D168FD577FE9E8702C59C4F9251A216
+99.pygtex [163])
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/0CE9145FC1E8526F468229DBB969A351168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/061CC49AEF9EC4044C60B65381F4DE69168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/F533A84A9FB0A74D99EEECC0428A16D0168FD577FE9E8702C59C4F9251A216
+99.pygtex) [164]
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/1354B1391874AEC6E3148373AC7C3068168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+Overfull \hbox (11.88228pt too wide) in paragraph at lines 206--208
+\T1/phv/m/n/10 page ex-ists for each of the ar-gu-ments. Thus, there's a man pa
+ge for []\T1/cmtt/m/n/10 man semanage-fcontext\T1/phv/m/n/10 ,
+ []
+
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/AEDF3164A8927208C1A4A95151F6EDB4168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/A743B0B58DFAFDCC7600BF152A6C437A168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/34682E17725CC73E2EC75E0410402874168FD577FE9E8702C59C4F9251A216
+99.pygtex [165])
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/5CA76CB55A503CEFBEAF15D865B889C3168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/FB9ACA73BF86D981AC7E99958AE0C298168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/365A395D43AA4CC564249657A8C5BAD7168FD577FE9E8702C59C4F9251A216
+99.pygtex [166])
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/22C9E6862A2381037E870267B158787A168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/3815A0FFCC44F5E4D706FD77C140B5B5168FD577FE9E8702C59C4F9251A216
+99.pygtex) [167]
+Overfull \hbox (18.6106pt too wide) in paragraph at lines 348--349
+[]\T1/phv/m/n/10 Let us con-sider a sce-nario where we need to change the con-t
+ext of a file []\T1/cmtt/m/n/10 /blah/index.html\T1/phv/m/n/10 .
+ []
+
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/513966A023F0DBA4D3C242C020E25F9B168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+
+(./_minted-RHCSA/05250C2E106F04C8FF0C4E793B9635DE168FD577FE9E8702C59C4F9251A216
+99.pygtex)) (./Mod4/chapters/4.23 Configuring a Firewall.tex [168]
 Chapter 22.
-) (./Mod4/chapters/4.24 Configuring FTP Services.tex [162
+) (./Mod4/chapters/4.24 Configuring FTP Services.tex [169
 
 ]
 Chapter 23.
-) (./Mod4/chapters/4.25 Configuring Time Services.tex [163
+) (./Mod4/chapters/4.25 Configuring Time Services.tex [170
 
 ]
 Chapter 24.
-) (./Mod4/chapters/4.26 Configuring VNC Access.tex [164
+) (./Mod4/chapters/4.26 Configuring VNC Access.tex [171
 
 ]
 Chapter 25.
-)) [165
+)) [172
 
 ] (./RHCSA.aux)
 
@@ -3443,13 +3607,13 @@ runsystem(rm RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7759 strings out of 494946
- 200798 string characters out of 6180980
- 314677 words of memory out of 5000000
- 9897 multiletter control sequences out of 15000+600000
+ 7839 strings out of 494946
+ 207218 string characters out of 6180980
+ 322933 words of memory out of 5000000
+ 9917 multiletter control sequences out of 15000+600000
  42203 words of font info for 52 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 39i,26n,38p,891b,608s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,26n,38p,893b,608s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr
 /share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
@@ -3466,10 +3630,10 @@ xmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvet
 ic/uhvro8a.pfb>
-Output written on RHCSA.pdf (166 pages, 3983294 bytes).
+Output written on RHCSA.pdf (173 pages, 4001664 bytes).
 PDF statistics:
- 621 PDF objects out of 1000 (max. 8388607)
- 415 compressed objects within 5 object streams
+ 643 PDF objects out of 1000 (max. 8388607)
+ 430 compressed objects within 5 object streams
  0 named destinations out of 1000 (max. 500000)
  86 words of extra memory for PDF output out of 10000 (max. 10000000)
 

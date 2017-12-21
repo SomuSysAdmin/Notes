@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} setsebool \PYGZhy{}P ftpd\PYGZus{}use\PYGZus{}nfs on
+\PYG{g+gp}{\PYGZsh{}} getsebool ftpd\PYGZus{}use\PYGZus{}nfs
+\PYG{g+go}{ftpd\PYGZus{}use\PYGZus{}nfs \PYGZhy{}\PYGZhy{}\PYGZgt{} on}
+\end{Verbatim}

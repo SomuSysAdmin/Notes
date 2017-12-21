@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} getsebool \PYGZhy{}a
+\PYG{g+go}{abrt\PYGZus{}anon\PYGZus{}write \PYGZhy{}\PYGZhy{}\PYGZgt{} off}
+\PYG{g+go}{abrt\PYGZus{}handle\PYGZus{}event \PYGZhy{}\PYGZhy{}\PYGZgt{} off}
+\PYG{g+go}{abrt\PYGZus{}upload\PYGZus{}watch\PYGZus{}anon\PYGZus{}write \PYGZhy{}\PYGZhy{}\PYGZgt{} on}
+\PYG{g+go}{antivirus\PYGZus{}can\PYGZus{}scan\PYGZus{}system \PYGZhy{}\PYGZhy{}\PYGZgt{} off}
+\PYG{g+go}{...}
+\PYG{g+go}{zebra\PYGZus{}write\PYGZus{}config \PYGZhy{}\PYGZhy{}\PYGZgt{} off}
+\PYG{g+go}{zoneminder\PYGZus{}anon\PYGZus{}write \PYGZhy{}\PYGZhy{}\PYGZgt{} off}
+\PYG{g+go}{zoneminder\PYGZus{}run\PYGZus{}sudo \PYGZhy{}\PYGZhy{}\PYGZgt{} off}
+\end{Verbatim}

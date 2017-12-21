@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} getenforce
+\PYG{g+go}{Enforcing}
+\end{Verbatim}

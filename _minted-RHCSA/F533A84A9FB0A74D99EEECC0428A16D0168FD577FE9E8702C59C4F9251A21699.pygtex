@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} touch myFile
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}Z
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}. root root system\PYGZus{}u:object\PYGZus{}r:admin\PYGZus{}home\PYGZus{}t:s0 anaconda\PYGZhy{}ks.cfg}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. root root system\PYGZus{}u:object\PYGZus{}r:admin\PYGZus{}home\PYGZus{}t:s0 initial\PYGZhy{}setup\PYGZhy{}ks.cfg}
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. root root unconfined\PYGZus{}u:object\PYGZus{}r:admin\PYGZus{}home\PYGZus{}t:s0 myFile}
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}dZ
+\PYG{g+go}{dr\PYGZhy{}xr\PYGZhy{}x\PYGZhy{}\PYGZhy{}\PYGZhy{}. root root system\PYGZus{}u:object\PYGZus{}r:admin\PYGZus{}home\PYGZus{}t:s0 .}
+\end{Verbatim}

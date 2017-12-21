@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} restorecon \PYGZhy{}R \PYGZhy{}v /web
+\end{Verbatim}

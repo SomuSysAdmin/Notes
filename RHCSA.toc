@@ -316,7 +316,18 @@
 \contentsline {section}{\numberline {20.1}Understanding Apache Configuration}{158}
 \contentsline {section}{\numberline {20.2}Creating a Basic Web Site}{159}
 \contentsline {chapter}{\numberline {21}Managing SELinux}{161}
-\contentsline {chapter}{\numberline {22}Configuring a Firewall}{162}
-\contentsline {chapter}{\numberline {23}Configuring FTP Services}{163}
-\contentsline {chapter}{\numberline {24}Configuring Time Services}{164}
-\contentsline {chapter}{\numberline {25}Configuring VNC Access}{165}
+\contentsline {section}{\numberline {21.1}Understanding the Need for SELinux}{161}
+\contentsline {subsection}{\numberline {21.1.1}SELinux and Syscalls}{161}
+\contentsline {section}{\numberline {21.2}Understanding SELinux Modes and Policy}{162}
+\contentsline {subsection}{\numberline {21.2.1}SELinux Mode}{162}
+\contentsline {subsection}{\numberline {21.2.2}Context and Policies}{162}
+\contentsline {subsection}{\numberline {21.2.3}Booleans}{163}
+\contentsline {section}{\numberline {21.3}Understanding SELinux Lables and Booleans}{164}
+\contentsline {subsection}{\numberline {21.3.1}File being moved instead of copied}{164}
+\contentsline {subsection}{\numberline {21.3.2}semanage}{165}
+\contentsline {section}{\numberline {21.4}Understanding File System Labels}{166}
+\contentsline {section}{\numberline {21.5}Understanding semanage fcontext and chcon differences}{168}
+\contentsline {chapter}{\numberline {22}Configuring a Firewall}{169}
+\contentsline {chapter}{\numberline {23}Configuring FTP Services}{170}
+\contentsline {chapter}{\numberline {24}Configuring Time Services}{171}
+\contentsline {chapter}{\numberline {25}Configuring VNC Access}{172}

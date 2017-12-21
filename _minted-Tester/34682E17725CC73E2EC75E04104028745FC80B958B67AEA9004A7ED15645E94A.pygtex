@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} restorecon \PYGZhy{}v hosts2
+\PYG{g+go}{restorecon reset /root/hosts2 context unconfined\PYGZus{}u:object\PYGZus{}r:etc\PYGZus{}t:s0\PYGZhy{}\PYGZgt{}unconfined\PYGZus{}u:object\PYGZus{}r:admin\PYGZus{}home\PYGZus{}t:s0}
+\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}Z hosts2
+\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. root root unconfined\PYGZus{}u:object\PYGZus{}r:admin\PYGZus{}home\PYGZus{}t:s0 hosts2}
+\end{Verbatim}

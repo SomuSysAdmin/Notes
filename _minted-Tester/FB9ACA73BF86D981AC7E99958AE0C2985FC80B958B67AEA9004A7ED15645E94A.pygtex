@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} semanage fcontext \PYGZhy{}l \PYG{p}{|} grep http
+\PYG{g+go}{/usr/.*\PYGZbs{}.cgi                                       regular file       system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}script\PYGZus{}exec\PYGZus{}t:s0}
+\PYG{g+go}{/opt/.*\PYGZbs{}.cgi                                       regular file       system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}script\PYGZus{}exec\PYGZus{}t:s0}
+\PYG{g+go}{/srv/([\PYGZca{}/]*/)?www(/.*)?                            all files          system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}content\PYGZus{}t:s0}
+\PYG{g+go}{/srv/([\PYGZca{}/]*/)?www/logs(/.*)?                       all files          system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}log\PYGZus{}t:s0}
+\PYG{g+go}{/var/www(/.*)?                                     all files          system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}content\PYGZus{}t:s0}
+\PYG{g+go}{/var/www(/.*)?/logs(/.*)?                          all files          system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}log\PYGZus{}t:s0}
+\PYG{g+go}{...}
+\PYG{g+go}{/usr/share/wordpress\PYGZhy{}mu/wp\PYGZhy{}config\PYGZbs{}.php             regular file       system\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}script\PYGZus{}exec\PYGZus{}t:s0}
+\PYG{g+go}{/usr/share/munin/plugins/http\PYGZus{}loadtime             regular file       system\PYGZus{}u:object\PYGZus{}r:services\PYGZus{}munin\PYGZus{}plugin\PYGZus{}exec\PYGZus{}t:s0}
+\PYG{g+go}{/usr/share/system\PYGZhy{}config\PYGZhy{}httpd/system\PYGZhy{}config\PYGZhy{}httpd regular file       system\PYGZus{}u:object\PYGZus{}r:bin\PYGZus{}t:s0}
+\end{Verbatim}
