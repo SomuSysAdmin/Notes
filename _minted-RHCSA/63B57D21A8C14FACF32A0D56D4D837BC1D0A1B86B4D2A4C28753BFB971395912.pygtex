@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} In /var/log/audit/audit.log: [grep AVC /var/log/audit/audit.log]}
+\PYG{n+nv}{type}\PYG{o}{=}AVC \PYG{n+nv}{msg}\PYG{o}{=}audit\PYG{o}{(}\PYG{l+m}{1513869456}.604:322\PYG{o}{)}: avc:  denied  \PYG{o}{\PYGZob{}} getattr \PYG{o}{\PYGZcb{}} \PYG{k}{for}  \PYG{n+nv}{pid}\PYG{o}{=}\PYG{l+m}{3683} \PYG{n+nv}{comm}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}httpd\PYGZdq{}} \PYG{n+nv}{path}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}/web/index.html\PYGZdq{}} \PYG{n+nv}{dev}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}dm\PYGZhy{}0\PYGZdq{}} \PYG{n+nv}{ino}\PYG{o}{=}\PYG{l+m}{2556901} \PYG{n+nv}{scontext}\PYG{o}{=}system\PYGZus{}u:system\PYGZus{}r:httpd\PYGZus{}t:s0 \PYG{n+nv}{tcontext}\PYG{o}{=}unconfined\PYGZus{}u:object\PYGZus{}r:default\PYGZus{}t:s0 \PYG{n+nv}{tclass}\PYG{o}{=}file
+
+\PYG{c+c1}{\PYGZsh{} In /var/log/messages: [less /var/log/messages ?sealert]}
+Dec \PYG{l+m}{21} \PYG{l+m}{20}:49:37 vmPrime setroubleshoot: SELinux is preventing httpd from getattr access on the file /web/index.html. For \PYG{n+nb}{complete} SELinux messages run: sealert \PYGZhy{}l 001da822\PYGZhy{}04b5\PYGZhy{}498d\PYGZhy{}8344\PYGZhy{}d78de9014597
+\end{Verbatim}

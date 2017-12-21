@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} semanage fcontext \PYGZhy{}a \PYGZhy{}t httpd\PYGZus{}sys\PYGZus{}content\PYGZus{}t \PYG{l+s+s1}{\PYGZsq{}/web(/.*)?\PYGZsq{}}
+\PYG{g+gp}{\PYGZsh{}} restorecon \PYGZhy{}R \PYGZhy{}v /web
+\PYG{g+go}{restorecon reset /web context unconfined\PYGZus{}u:object\PYGZus{}r:default\PYGZus{}t:s0\PYGZhy{}\PYGZgt{}unconfined\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}content\PYGZus{}t:s0}
+\PYG{g+go}{restorecon reset /web/index.html context unconfined\PYGZus{}u:object\PYGZus{}r:default\PYGZus{}t:s0\PYGZhy{}\PYGZgt{}unconfined\PYGZus{}u:object\PYGZus{}r:httpd\PYGZus{}sys\PYGZus{}content\PYGZus{}t:s0}
+\end{Verbatim}

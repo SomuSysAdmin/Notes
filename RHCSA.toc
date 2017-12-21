@@ -327,7 +327,10 @@
 \contentsline {subsection}{\numberline {21.3.2}semanage}{165}
 \contentsline {section}{\numberline {21.4}Understanding File System Labels}{166}
 \contentsline {section}{\numberline {21.5}Understanding semanage fcontext and chcon differences}{168}
-\contentsline {chapter}{\numberline {22}Configuring a Firewall}{169}
-\contentsline {chapter}{\numberline {23}Configuring FTP Services}{170}
-\contentsline {chapter}{\numberline {24}Configuring Time Services}{171}
-\contentsline {chapter}{\numberline {25}Configuring VNC Access}{172}
+\contentsline {section}{\numberline {21.6}Using Booleans}{168}
+\contentsline {section}{\numberline {21.7}Analyzing SELinux Log Files}{169}
+\contentsline {section}{\numberline {21.8}Configuring SELinux for Apache}{170}
+\contentsline {chapter}{\numberline {22}Configuring a Firewall}{172}
+\contentsline {chapter}{\numberline {23}Configuring FTP Services}{173}
+\contentsline {chapter}{\numberline {24}Configuring Time Services}{174}
+\contentsline {chapter}{\numberline {25}Configuring VNC Access}{175}

@@ -509,3 +509,54 @@ Local ID                      e277d205-f3b0-4ef7-a6c2-178a813da2e0
 \noindent
 The confidence score suggests how likely a suggestion is to work. Note that these are automated attempts to solve whatever is wrong, and might not always be correct, and the SysAdmin must consider if it's a valid option and if the solution meets his/her requirements. 
 
+\section{Configuring SELinux for Apache}
+This is how we deal with SELinux during real-life scenarios such as while configuring the apache web server. Let us consider we want to use a new document root at \verb|/web|. We put an index.html file in the directory, and configure the \verb|/etc/http/conf/httpd.conf| file with the new document root at \verb|/web|, by adding the lines below:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+DocumentRoot "/web"
+
+<Directory "/web">
+AllowOverride None
+# Allow open access:
+Require all granted
+</Directory>
+
+#<Directory "/var/www/html"> --> Manually commenting out the old tag start, and copying the original config with our own. 
+<Directory "/web">
+...
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The lines 3-7 help provide access to the new document root. Note that this is modelled on the original \verb|<Directory>| tag for the document root \verb|/var/www|, which itself must not be edited or commented out (to stop other functionality from being disabled). 
+
+Once the \textit{httpd.conf} file has been edited, we need to restart the apache service, with \verb|systemctl restart httpd|. Now, the index.html should be available on the address \\ \verb|http://localhost|. Instead of the index.html page, we see an error page from the apache web server that reads \textit{"The website you just visited is either experiencing problems or undergoing routine maintenance"}.
+
+This generates the following SELinux notifications in the logs:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# In /var/log/audit/audit.log: [grep AVC /var/log/audit/audit.log]
+type=AVC msg=audit(1513869456.604:322): avc:  denied  { getattr } for  pid=3683 comm="httpd" path="/web/index.html" dev="dm-0" ino=2556901 scontext=system_u:system_r:httpd_t:s0 tcontext=unconfined_u:object_r:default_t:s0 tclass=file
+
+# In /var/log/messages: [less /var/log/messages ?sealert]
+Dec 21 20:49:37 vmPrime setroubleshoot: SELinux is preventing httpd from getattr access on the file /web/index.html. For complete SELinux messages run: sealert -l 001da822-04b5-498d-8344-d78de9014597
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+It is clear from the message in the audit log that this is a case of context type mismatch. The source has a context label of \textit{httpd\_t} while the target directory and file (\verb|/web/index.html|) have the context label of \textit{default\_t}. We can fix this using the command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# semanage fcontext -a -t httpd_sys_content_t '/web(/.*)?'
+# restorecon -R -v /web
+restorecon reset /web context unconfined_u:object_r:default_t:s0->unconfined_u:object_r:httpd_sys_content_t:s0
+restorecon reset /web/index.html context unconfined_u:object_r:default_t:s0->unconfined_u:object_r:httpd_sys_content_t:s0
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now when we visit the webpage at \verb|http://localhost/index.html|, SELinux won't block us anymore. 
+

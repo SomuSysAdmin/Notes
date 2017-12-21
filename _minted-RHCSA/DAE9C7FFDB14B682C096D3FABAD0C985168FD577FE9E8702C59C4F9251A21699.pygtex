@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} grep \PYG{l+s+s1}{\PYGZsq{}type=AVC\PYGZsq{}} /var/log/audit/audit.log
+\PYG{g+go}{type=AVC msg=audit(1513680230.189:22): avc:  denied  \PYGZob{} write \PYGZcb{} for  pid=709 comm=\PYGZdq{}accounts\PYGZhy{}daemon\PYGZdq{} name=\PYGZdq{}root\PYGZdq{} dev=\PYGZdq{}dm\PYGZhy{}0\PYGZdq{} ino=33574977 scontext=system\PYGZus{}u:system\PYGZus{}r:accountsd\PYGZus{}t:s0 tcontext=system\PYGZus{}u:object\PYGZus{}r:admin\PYGZus{}home\PYGZus{}t:s0 tclass=dir}
+\end{Verbatim}

@@ -47,6 +47,15 @@ breaklines
 	linenos,
 	breaklines
 }
+%	For HTTP Config Files
+\setminted[lighttpd]{
+	frame=lines,
+	framesep=2mm,
+	baselinestretch=1.2,
+	fontsize=\footnotesize,
+	linenos,
+	breaklines
+}
 
 %	Pretty Tables
 \usepackage{booktabs}
@@ -65,6 +74,10 @@ breaklines
 %	SUPPORT FOR WEIRD CHARACTERS
 \DeclareUnicodeCharacter{25CF}{$\bullet$}
 \usepackage{pmboxdraw}
+
+%	Ignore Pygments Bugs & Errors
+\AtBeginEnvironment{minted}{%
+	\renewcommand{\fcolorbox}[4][]{#4}}
 
 \title{SysAdmin Notes for RHCSA}
 \author{Somenath Sinha}

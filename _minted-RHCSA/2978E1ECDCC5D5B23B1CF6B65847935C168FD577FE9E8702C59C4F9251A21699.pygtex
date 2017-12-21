@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} less /var/log/messages
+\PYG{g+go}{Dec 19 16:13:56 vmPrime setroubleshoot: SELinux is preventing /usr/libexec/accounts\PYGZhy{}daemon from write access on the directory root. For complete SELinux messages run: sealert \PYGZhy{}l e277d205\PYGZhy{}f3b0\PYGZhy{}4ef7\PYGZhy{}a6c2\PYGZhy{}178a813da2e0}
+\end{Verbatim}
