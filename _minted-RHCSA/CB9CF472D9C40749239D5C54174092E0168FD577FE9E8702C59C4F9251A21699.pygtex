@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} yum install \PYGZhy{}y vsftpd
+\PYG{g+gp}{\PYGZsh{}} systemctl \PYG{n+nb}{enable} vsftpd
+\end{Verbatim}

@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} systemctl restart vsftpd
+\PYG{g+gp}{\PYGZsh{}} systemctl status vsftpd
+\PYG{g+go}{● vsftpd.service \PYGZhy{} Vsftpd ftp daemon}
+\PYG{g+go}{Loaded: loaded (/usr/lib/systemd/system/vsftpd.service; enabled; vendor preset: disabled)}
+\PYG{g+go}{Active: active (running) since Fri 2017\PYGZhy{}12\PYGZhy{}22 15:09:30 IST; 6s ago}
+\PYG{g+go}{Process: 11516 ExecStart=/usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf (code=exited, status=0/SUCCESS)}
+\PYG{g+go}{Main PID: 11517 (vsftpd)}
+\PYG{g+go}{CGroup: /system.slice/vsftpd.service}
+\PYG{g+go}{└─11517 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf}
+
+\PYG{g+go}{Dec 22 15:09:30 vmPrime.somuVMnet.com systemd[1]: Starting Vsftpd ftp daemon...}
+\PYG{g+go}{Dec 22 15:09:30 vmPrime.somuVMnet.com systemd[1]: Started Vsftpd ftp daemon.}
+\end{Verbatim}

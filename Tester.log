@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  22 DEC 2017 11:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  22 DEC 2017 17:48
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -862,7 +862,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-(./Mod4/chapters/4.23 Configuring a Firewall.tex
+(./Mod4/chapters/4.25 Configuring Time Services.tex
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
@@ -880,181 +880,112 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 3.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 4.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 4.
 \openout3 = `Tester.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/F303CB39438C6A8301F70D7B86565E8C5FC80B958B67AEA9004A7ED15645E94A
-.pygtex Tester.pyg)...executed.
 
-
-(./_minted-Tester/F303CB39438C6A8301F70D7B86565E8C5FC80B958B67AEA9004A7ED15645E
+(./_minted-Tester/AE23D563660BFF2E5BABEAEEAD528B875FC80B958B67AEA9004A7ED15645E
 94A.pygtex
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 1.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
+)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/8C6CC9A833E8C114E636A7C19863E51D5FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 22.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 9.49997pt on input line 22.
+
+Overfull \hbox (38.3332pt too wide) in paragraph at lines 21--23
+\T1/phv/m/n/10 This will en-able the \T1/phv/b/n/10 chronyd \T1/phv/m/n/10 ser-
+vice. The chronyd ser-vice stores its con-fig file in []\T1/cmtt/m/n/10 /etc/ch
+rony.conf\T1/phv/m/n/10 ,
+ []
+
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/013DED30D215F74C305127C269A52A485FC80B958B67AEA9004A7ED15645E
+94A.pygtex))
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/8AA4A69DE6846B81C6DB791E9CBAD1CE5FC80B958B67AEA9004A7ED15645E
+94A.pygtex [1
+
+
+{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}])
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/6B65D6DA59EE0AB2BAC306D7AF9EE88A5FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/6635F0EC087467607ED18E3DAC7985115FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 11.39996pt on input line 64.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 64.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 11.39996pt on input line 64.
+
+Overfull \hbox (38.41321pt too wide) in paragraph at lines 65--66
+\T1/phv/m/n/10 The sys-tem can be con-fig-ured to use a NTP server by set-ting 
+the op-tion []\T1/cmtt/m/n/10 timedatectl set-ntp yes\T1/phv/m/n/10 .
+ []
+
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/EC81F9C2F62BF2896ADE42EFF8239FA85FC80B958B67AEA9004A7ED15645E
+94A.pygtex
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 3.
-) [1
-
-
-{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}]
+) [2]
 \openout3 = `Tester.pyg'.
 
 runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/80331696D2F9861FB2D1849A1BB063D45FC80B958B67AEA9004A7ED15645E94A
+_minted-Tester/EF1ABDBECEB5E8C6036E8D5AE1DBBC1F5FC80B958B67AEA9004A7ED15645E94A
 .pygtex Tester.pyg)...executed.
 
 
-(./_minted-Tester/80331696D2F9861FB2D1849A1BB063D45FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 43.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 43.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 43.
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/0FBBAB05E5414988E9D86C47798BFDB55FC80B958B67AEA9004A7ED15645E94A
-.pygtex Tester.pyg)...executed.
-
-
-(./_minted-Tester/0FBBAB05E5414988E9D86C47798BFDB55FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/C8DD068A35D01C1A3E05CE680B6883525FC80B958B67AEA9004A7ED15645E94A
-.pygtex Tester.pyg)...executed.
-
-
-(./_minted-Tester/C8DD068A35D01C1A3E05CE680B6883525FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 66.
-LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 9.49997pt on input line 66.
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l xml -f latex -P commandprefix=PYG -F tokenmerge -o _min
-ted-Tester/71C6E263DA802C07FE983EA24BE37A09CEEF2FEA8F1191CD460D17F5E89062FD.pyg
-tex Tester.pyg)...executed.
-
-
-(./_minted-Tester/71C6E263DA802C07FE983EA24BE37A09CEEF2FEA8F1191CD460D17F5E8906
-2FD.pygtex [2])
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l xml -f latex -P commandprefix=PYG -F tokenmerge -o _min
-ted-Tester/FD5F8A911CD2183122E7186818416BB7CEEF2FEA8F1191CD460D17F5E89062FD.pyg
-tex Tester.pyg)...executed.
-
-
-(./_minted-Tester/FD5F8A911CD2183122E7186818416BB7CEEF2FEA8F1191CD460D17F5E8906
-2FD.pygtex)
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/0391E3616FFB2688E0E558C00BBB755B5FC80B958B67AEA9004A7ED15645E94A
-.pygtex Tester.pyg)...executed.
-
-
-(./_minted-Tester/0391E3616FFB2688E0E558C00BBB755B5FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/A01128FAA8319FA439CC6D374E03BCCC5FC80B958B67AEA9004A7ED15645E94A
-.pygtex Tester.pyg)...executed.
-
-
-(./_minted-Tester/A01128FAA8319FA439CC6D374E03BCCC5FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/83D3F29FE7B29043C9B0D1C56EA0DD755FC80B958B67AEA9004A7ED15645E94A
-.pygtex Tester.pyg)...executed.
-
-
-(./_minted-Tester/83D3F29FE7B29043C9B0D1C56EA0DD755FC80B958B67AEA9004A7ED15645E
-94A.pygtex [3])
-\openout3 = `Tester.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-Tester/61976AC44E30EC11E453511CF2C231B25FC80B958B67AEA9004A7ED15645E94A
-.pygtex Tester.pyg)...executed.
-
-
-(./_minted-Tester/61976AC44E30EC11E453511CF2C231B25FC80B958B67AEA9004A7ED15645E
-94A.pygtex))
-runsystem(rm _minted-Tester/EE8BCEC1AE839C7B169A54AAB0BF92305FC80B958B67AEA9004
-A7ED15645E94A.pygtex)...executed.
-
-runsystem(rm _minted-Tester/AA13E666823FB79ED515428895D819555FC80B958B67AEA9004
-A7ED15645E94A.pygtex)...executed.
-
-runsystem(rm _minted-Tester/ED15942638DCB0A394B397BC8867E86F5FC80B958B67AEA9004
-A7ED15645E94A.pygtex)...executed.
-
-runsystem(rm _minted-Tester/BF2B16461B88F3A32FCA6B25474598BA5FC80B958B67AEA9004
-A7ED15645E94A.pygtex)...executed.
-
-runsystem(rm _minted-Tester/3216FE2110424246B55C031708985C6DCEEF2FEA8F1191CD460
-D17F5E89062FD.pygtex)...executed.
-
-runsystem(rm _minted-Tester/7984BDAD657C0D9CA6C0C35085FB95A0CEEF2FEA8F1191CD460
-D17F5E89062FD.pygtex)...executed.
-
-runsystem(rm _minted-Tester/98F8BCD684F9B6674F1AE5235B319EE45FC80B958B67AEA9004
-A7ED15645E94A.pygtex)...executed.
-
-runsystem(rm _minted-Tester/C536C89D51B4505B348EE523D0B384835FC80B958B67AEA9004
-A7ED15645E94A.pygtex)...executed.
-
-runsystem(rm _minted-Tester/6FEE28A01A38346A4C87487D0B5B53425FC80B958B67AEA9004
-A7ED15645E94A.pygtex)...executed.
-
-runsystem(rm _minted-Tester/BB1BAD09CE178BA67CDBF15ED19C36AF5FC80B958B67AEA9004
-A7ED15645E94A.pygtex)...executed.
-
- [4] (./Tester.aux)
+(./_minted-Tester/EF1ABDBECEB5E8C6036E8D5AE1DBBC1F5FC80B958B67AEA9004A7ED15645E
+94A.pygtex) [3] (./Tester.aux)
 runsystem(rm Tester.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 6388 strings out of 494946
- 102427 string characters out of 6180980
- 214646 words of memory out of 5000000
- 9503 multiletter control sequences out of 15000+600000
- 35510 words of font info for 45 fonts, out of 8000000 for 9000
+ 6362 strings out of 494946
+ 101057 string characters out of 6180980
+ 215427 words of memory out of 5000000
+ 9496 multiletter control sequences out of 15000+600000
+ 32179 words of font info for 42 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 39i,8n,38p,1485b,500s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,8n,38p,831b,498s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr
 /share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/cm-super/sfit0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-
-super/sfrm0500.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
-ftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1000
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Tester.pdf (4 pages, 166128 bytes).
+lic/cm-super/sfrm0500.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-
+super/sftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
+ftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on Tester.pdf (3 pages, 139501 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
+ 48 PDF objects out of 1000 (max. 8388607)
+ 34 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} timedatectl list\PYGZhy{}timezones
+\PYG{g+go}{	Africa/Abidjan}
+\PYG{g+go}{	Africa/Accra}
+\PYG{g+go}{	...}
+\PYG{g+go}{	Pacific/Wallis}
+\PYG{g+go}{	UTC}
+\end{Verbatim}

@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} systemctl status chronyd
+\PYG{g+go}{	● chronyd.service \PYGZhy{} NTP client/server}
+\PYG{g+go}{	Loaded: loaded (/usr/lib/systemd/system/chronyd.service; enabled; vendor preset: enabled)}
+\PYG{g+go}{	Active: active (running) since Fri 2017\PYGZhy{}12\PYGZhy{}22 10:29:48 IST; 7h ago}
+\PYG{g+go}{	Docs: man:chronyd(8)}
+\PYG{g+go}{	man:chrony.conf(5)}
+\PYG{g+go}{	Main PID: 774 (chronyd)}
+\PYG{g+go}{	CGroup: /system.slice/chronyd.service}
+\PYG{g+go}{		└─774 /usr/sbin/chronyd}
+
+\PYG{g+go}{	Dec 22 13:06:47 vmPrime.somuVMnet.com chronyd[774]: Source 139.59.43.68 online}
+\PYG{g+go}{	Dec 22 13:06:47 vmPrime.somuVMnet.com chronyd[774]: Source 13.126.27.131 online}
+\PYG{g+go}{	Dec 22 13:06:47 vmPrime.somuVMnet.com chronyd[774]: Source 139.59.21.22 online}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} timedatectl status
+\PYG{g+go}{	Local time: Fri 2017\PYGZhy{}12\PYGZhy{}22 17:27:31 IST}
+\PYG{g+go}{	Universal time: Fri 2017\PYGZhy{}12\PYGZhy{}22 11:57:31 UTC}
+\PYG{g+go}{	RTC time: Fri 2017\PYGZhy{}12\PYGZhy{}22 11:57:31}
+\PYG{g+go}{	Time zone: Asia/Kolkata (IST, +0530)}
+\PYG{g+go}{	NTP enabled: yes}
+\PYG{g+go}{	NTP synchronized: yes}
+\PYG{g+go}{	RTC in local TZ: no}
+\PYG{g+go}{	DST active: n/a}
+\end{Verbatim}
