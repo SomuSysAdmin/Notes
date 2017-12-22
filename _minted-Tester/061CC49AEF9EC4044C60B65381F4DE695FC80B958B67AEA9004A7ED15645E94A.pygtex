@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}dZ /tmp
-\PYG{g+go}{drwxrwxrwt. root root system\PYGZus{}u:object\PYGZus{}r:tmp\PYGZus{}t:s0       /tmp}
-\end{Verbatim}

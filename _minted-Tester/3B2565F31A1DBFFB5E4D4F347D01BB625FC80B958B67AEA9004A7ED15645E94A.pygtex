@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} setenforce Permissive
-\PYG{g+gp}{\PYGZsh{}} getenforce
-\PYG{g+go}{Permissive}
-\end{Verbatim}

@@ -331,6 +331,12 @@
 \contentsline {section}{\numberline {21.7}Analyzing SELinux Log Files}{169}
 \contentsline {section}{\numberline {21.8}Configuring SELinux for Apache}{170}
 \contentsline {chapter}{\numberline {22}Configuring a Firewall}{172}
-\contentsline {chapter}{\numberline {23}Configuring FTP Services}{173}
-\contentsline {chapter}{\numberline {24}Configuring Time Services}{174}
-\contentsline {chapter}{\numberline {25}Configuring VNC Access}{175}
+\contentsline {section}{\numberline {22.1}Understanding Firewall Configuration}{172}
+\contentsline {section}{\numberline {22.2}Using Firewalld}{172}
+\contentsline {subsection}{\numberline {22.2.1}Default Zone}{173}
+\contentsline {subsection}{\numberline {22.2.2}Services}{173}
+\contentsline {subsection}{\numberline {22.2.3}Adding services to zones}{174}
+\contentsline {subsection}{\numberline {22.2.4}firewall-config}{175}
+\contentsline {chapter}{\numberline {23}Configuring FTP Services}{176}
+\contentsline {chapter}{\numberline {24}Configuring Time Services}{177}
+\contentsline {chapter}{\numberline {25}Configuring VNC Access}{178}

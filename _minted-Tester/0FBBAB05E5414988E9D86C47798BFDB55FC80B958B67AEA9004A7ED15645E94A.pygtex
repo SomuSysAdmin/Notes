@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} firewall\PYGZhy{}cmd \PYGZhy{}\PYGZhy{}get\PYGZhy{}default\PYGZhy{}zone
+\PYG{g+go}{public}
+\end{Verbatim}

@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZlt{}?xml version=\PYGZdq{}1.0\PYGZdq{} encoding=\PYGZdq{}utf\PYGZhy{}8\PYGZdq{}?\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}service\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}short\PYGZgt{}}Red Hat High Availability\PYG{n+nt}{\PYGZlt{}/short\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}description\PYGZgt{}}This allows you to use the Red Hat High Availability (previously named Red Hat Cluster Suite). Ports are opened for corosync, pcsd, pacemaker\PYGZus{}remote, dlm and corosync\PYGZhy{}qnetd.\PYG{n+nt}{\PYGZlt{}/description\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}tcp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}2224\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}tcp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}3121\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}tcp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}5403\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}udp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}5404\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}udp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}5405\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}tcp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}21064\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}/service\PYGZgt{}}
+\end{Verbatim}

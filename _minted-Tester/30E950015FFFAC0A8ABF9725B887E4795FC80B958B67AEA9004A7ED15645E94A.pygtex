@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} semanage fcontext \PYGZhy{}a \PYGZhy{}t httpd\PYGZus{}sys\PYGZus{}content\PYGZus{}t \PYG{l+s+s2}{\PYGZdq{}/blah(/.*)?\PYGZdq{}}
-\end{Verbatim}

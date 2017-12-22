@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZlt{}?xml version=\PYGZdq{}1.0\PYGZdq{} encoding=\PYGZdq{}utf\PYGZhy{}8\PYGZdq{}?\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}service\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}short\PYGZgt{}}Samba\PYG{n+nt}{\PYGZlt{}/short\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}description\PYGZgt{}}This option allows you to access and participate in Windows file and printer sharing networks. You need the samba package installed for this option to be useful.\PYG{n+nt}{\PYGZlt{}/description\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}udp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}137\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}udp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}138\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}tcp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}139\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}port} \PYG{n+na}{protocol=}\PYG{l+s}{\PYGZdq{}tcp\PYGZdq{}} \PYG{n+na}{port=}\PYG{l+s}{\PYGZdq{}445\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}module} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}nf\PYGZus{}conntrack\PYGZus{}netbios\PYGZus{}ns\PYGZdq{}}\PYG{n+nt}{/\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}/service\PYGZgt{}}
+\end{Verbatim}

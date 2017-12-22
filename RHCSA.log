@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  21 DEC 2017 21:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  22 DEC 2017 11:07
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1396,6 +1396,21 @@ Overfull \hbox (1.12079pt too wide) detected at line 328
 
 Overfull \hbox (1.12079pt too wide) detected at line 329
  []\T1/phv/m/n/10 168
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 330
+ []\T1/phv/m/n/10 168
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 331
+ []\T1/phv/m/n/10 169
+ []
+
+
+Overfull \hbox (1.12079pt too wide) detected at line 332
+ []\T1/phv/m/n/10 170
  []
 
 )
@@ -3581,18 +3596,10 @@ ext of a file []\T1/cmtt/m/n/10 /blah/index.html\T1/phv/m/n/10 .
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/30E950015FFFAC0A8ABF9725B887E479168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/30E950015FFFAC0A8ABF9725B887E479168FD577FE9E8702C59C4F9251A216
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/FF91D1A7D9A23411F11851FB20E668D8168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (./_minted-RHCSA/FF91D1A7D9A23411F11851FB20E668D8168FD577FE9E8702C59C4F9251A216
@@ -3604,112 +3611,157 @@ pygtex RHCSA.pyg)...executed.
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/A61EA9E972747F526B29959BAC65F5FA168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/A61EA9E972747F526B29959BAC65F5FA168FD577FE9E8702C59C4F9251A216
 99.pygtex [168])
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/44ADFBB3AFBF0C5BA49A3C3CD8AE5835168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (./_minted-RHCSA/44ADFBB3AFBF0C5BA49A3C3CD8AE5835168FD577FE9E8702C59C4F9251A216
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/CE98024C5E580BFABF6BE42338BD9796168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/CE98024C5E580BFABF6BE42338BD9796168FD577FE9E8702C59C4F9251A216
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/74F110CC8D52F88F42FC7705F6F14149168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (./_minted-RHCSA/74F110CC8D52F88F42FC7705F6F14149168FD577FE9E8702C59C4F9251A216
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/DAE9C7FFDB14B682C096D3FABAD0C985168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/DAE9C7FFDB14B682C096D3FABAD0C985168FD577FE9E8702C59C4F9251A216
 99.pygtex) [169]
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/2978E1ECDCC5D5B23B1CF6B65847935C168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
 
 
 (./_minted-RHCSA/2978E1ECDCC5D5B23B1CF6B65847935C168FD577FE9E8702C59C4F9251A216
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/69CCC7676B1D799671EFEF8E0D522373168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/69CCC7676B1D799671EFEF8E0D522373168FD577FE9E8702C59C4F9251A216
 99.pygtex)
 \openout3 = `RHCSA.pyg'.
-
-runsystem(pygmentize -l lighttpd -f latex -P commandprefix=PYG -F tokenmerge -o
- _minted-RHCSA/017BC76C4B5CA4B69450A36AFC18A78AFAB3A4B5C06B3017CF9F124872D888E2
-.pygtex RHCSA.pyg)...executed.
 
 
 (./_minted-RHCSA/017BC76C4B5CA4B69450A36AFC18A78AFAB3A4B5C06B3017CF9F124872D888
 E2.pygtex [170])
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
-nted-RHCSA/63B57D21A8C14FACF32A0D56D4D837BC1D0A1B86B4D2A4C28753BFB971395912.pyg
-tex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/63B57D21A8C14FACF32A0D56D4D837BC1D0A1B86B4D2A4C28753BFB9713959
 12.pygtex)
 \openout3 = `RHCSA.pyg'.
 
-runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
-_minted-RHCSA/3414DA64EB6CDDE52CB77B1CA905BADE168FD577FE9E8702C59C4F9251A21699.
-pygtex RHCSA.pyg)...executed.
-
 
 (./_minted-RHCSA/3414DA64EB6CDDE52CB77B1CA905BADE168FD577FE9E8702C59C4F9251A216
 99.pygtex)) (./Mod4/chapters/4.23 Configuring a Firewall.tex [171]
 Chapter 22.
-) (./Mod4/chapters/4.24 Configuring FTP Services.tex [172
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/F303CB39438C6A8301F70D7B86565E8C168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/F303CB39438C6A8301F70D7B86565E8C168FD577FE9E8702C59C4F9251A216
+99.pygtex) [172
 
 ]
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/80331696D2F9861FB2D1849A1BB063D4168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/80331696D2F9861FB2D1849A1BB063D4168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/0FBBAB05E5414988E9D86C47798BFDB5168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/0FBBAB05E5414988E9D86C47798BFDB5168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/C8DD068A35D01C1A3E05CE680B688352168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/C8DD068A35D01C1A3E05CE680B688352168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l xml -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-RHCSA/71C6E263DA802C07FE983EA24BE37A09CA36BE788B044B57661A195BF2EB90F1.pygt
+ex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/71C6E263DA802C07FE983EA24BE37A09CA36BE788B044B57661A195BF2EB90
+F1.pygtex [173])
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l xml -f latex -P commandprefix=PYG -F tokenmerge -o _min
+ted-RHCSA/FD5F8A911CD2183122E7186818416BB7CA36BE788B044B57661A195BF2EB90F1.pygt
+ex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/FD5F8A911CD2183122E7186818416BB7CA36BE788B044B57661A195BF2EB90
+F1.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/0391E3616FFB2688E0E558C00BBB755B168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/0391E3616FFB2688E0E558C00BBB755B168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/A01128FAA8319FA439CC6D374E03BCCC168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/A01128FAA8319FA439CC6D374E03BCCC168FD577FE9E8702C59C4F9251A216
+99.pygtex)
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/83D3F29FE7B29043C9B0D1C56EA0DD75168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/83D3F29FE7B29043C9B0D1C56EA0DD75168FD577FE9E8702C59C4F9251A216
+99.pygtex [174])
+\openout3 = `RHCSA.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-RHCSA/61976AC44E30EC11E453511CF2C231B2168FD577FE9E8702C59C4F9251A21699.
+pygtex RHCSA.pyg)...executed.
+
+
+(./_minted-RHCSA/61976AC44E30EC11E453511CF2C231B2168FD577FE9E8702C59C4F9251A216
+99.pygtex)) (./Mod4/chapters/4.24 Configuring FTP Services.tex [175]
 Chapter 23.
-) (./Mod4/chapters/4.25 Configuring Time Services.tex [173
+) (./Mod4/chapters/4.25 Configuring Time Services.tex [176
 
 ]
 Chapter 24.
-) (./Mod4/chapters/4.26 Configuring VNC Access.tex [174
+) (./Mod4/chapters/4.26 Configuring VNC Access.tex [177
 
 ]
 Chapter 25.
-))
-runsystem(rm _minted-RHCSA/05250C2E106F04C8FF0C4E793B9635DE168FD577FE9E8702C59C
-4F9251A21699.pygtex)...executed.
-
- [175
+)) [178
 
 ] (./RHCSA.aux)
 
@@ -3719,13 +3771,13 @@ runsystem(rm RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7898 strings out of 494946
- 211330 string characters out of 6180980
- 323999 words of memory out of 5000000
- 9940 multiletter control sequences out of 15000+600000
+ 7947 strings out of 494946
+ 214743 string characters out of 6180980
+ 328395 words of memory out of 5000000
+ 9960 multiletter control sequences out of 15000+600000
  42203 words of font info for 52 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 39i,26n,38p,893b,615s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,26n,38p,1528b,615s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr
 /share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
@@ -3742,10 +3794,10 @@ xmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvet
 ic/uhvro8a.pfb>
-Output written on RHCSA.pdf (176 pages, 4010589 bytes).
+Output written on RHCSA.pdf (179 pages, 4018491 bytes).
 PDF statistics:
- 653 PDF objects out of 1000 (max. 8388607)
- 437 compressed objects within 5 object streams
+ 662 PDF objects out of 1000 (max. 8388607)
+ 443 compressed objects within 5 object streams
  0 named destinations out of 1000 (max. 500000)
  86 words of extra memory for PDF output out of 10000 (max. 10000000)
 
