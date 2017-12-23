@@ -351,3 +351,4 @@
 \contentsline {section}{\numberline {25.2}Configuring a VNC Server}{183}{section.25.2}
 \contentsline {subsection}{\numberline {25.2.1}Creating the VNC Server Configuration File}{183}{subsection.25.2.1}
 \contentsline {section}{\numberline {25.3}Connecting to a VNC Server}{185}{section.25.3}
+\contentsline {chapter}{\numberline {26}Keyboard Shortcuts}{186}{chapter.26}

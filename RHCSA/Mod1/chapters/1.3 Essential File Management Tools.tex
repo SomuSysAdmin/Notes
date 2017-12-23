@@ -1,0 +1,157 @@
+\chapter{Essential File Management Tools}
+\section{Understanding Linux File System Layout}
+\begin{tabular}{lcl}
+	\toprule
+	\textbf{root (/)} &- &Contains all other directories. \\
+	\midrule
+	\hspace{10pt}
+	\textbf{/boot} &- &Contains everything the system needs to start up\\
+	\hspace{10pt}
+	\textbf{/usr} &- &Contains program files\\
+	\hspace{10pt}
+	\textbf{/etc} &- &Contains configuration files\\
+	\hspace{10pt}
+	\textbf{/home} &- &Contains a user's files\\
+	\hspace{10pt}
+	\textbf{/mnt} &- &Used to manually mount devices \\
+	\hspace{10pt}
+	\textbf{/media} &- &Devices like optical discs get auto-mounted on the media directory \\
+	\bottomrule
+\end{tabular}
+
+\noindent
+Unlike other OSs, the linux files system is designed as such that multiple devices can be mounted on the same file system hierarchy. Thus, it's possible to mount devices remotely as well!
+
+\section{Finding Files}
+The \textbf{find} command is used to find a file within a folder and its subdirectories. When the starting point of the search is the root directory (/) then find will search the entire file system. While the utility is extremely thorough, this may cause delays due to remote devices on the network mounted on the file system. 
+
+\begin{minted}{console}
+$ find / -name "passwd"
+\end{minted}
+
+\noindent
+If you're trying to find the location of a binary file, a better command would be \textbf{which} command, as it directly shows the location of the binary, but be careful as it only works with binaries.
+
+\begin{minted}{console}
+$ which passwd
+/usr/bin/passwd
+\end{minted}
+
+\noindent
+Contrastingly, the command \textbf{whereis} not only gives us the locaiton of the binary, but the location of the complete environment of the binary!
+
+\begin{minted}{console}
+$ whereis passwd
+passwd: /usr/bin/passwd /etc/passwd /usr/share/man/man1/passwd.1.gz /usr/share/man/man5/passwd.5.gz
+\end{minted}
+
+\noindent
+Another similar utility is called \textbf{locate} which shows all files that have the string provided to it in its name. Note, however, that locate operates on a database, that must be updated (especially after the creation of a new file) to show relevant results. 
+
+\begin{minted}{console}
+# touch sinha
+# ls
+sinha
+# locate sinha
+/usr/share/vim/vim74/keymap/sinhala-phonetic_utf-8.vim
+/usr/share/vim/vim74/keymap/sinhala.vim
+# updatedb
+# locate sinha
+/home/somu/Documents/sinha
+/usr/share/vim/vim74/keymap/sinhala-phonetic_utf-8.vim
+/usr/share/vim/vim74/keymap/sinhala.vim
+\end{minted}
+
+\section{Understanding Links}
+\textbf{inode} - An inode is a datastructure that describes a file system object such as a file or a directory, containing both the disc block locations as well as the attributes of the file system object. The inodes are identified by their inode number.
+
+\noindent
+Consequently, for us to access the files/directories, we need to be able to provide a name to the inodes, which are called hardlinks. A file may have more than one hardlink. Note that each hardlink is simply a different name provided tot he same inode. Ths, all hardlinks to the same file/directory have the same inode number. Hardlinks are one-directional only, i.e., the hardlink itself knows which inode it points to, but the inodes only know the total number of hardlinks that are associated with it, and not which exact ones are pointing to it. Since hardlinks point to some inode, they always need to stay on the same partition as the inode.
+
+\noindent
+A symbolic link on the other hand, points to a hardlink instead of an inode. As such, it has a different inode number than the one that the hardlink points to. Thus, the hardlink and symbolic link can be on different partitions as well. It can even exist across servers. Whenever a hardlink is deleted, however, all the symbolic links pointing to it are rendered invalid.
+
+\section{Working with Links}
+The \verb|ln| command is used to create both hardlinks and symbolic links. To create a symbolic link, we need only add the \verb|-s| option. The \verb|-i| option of the \verb|ls| command shows us the inode number.
+
+\begin{minted}{console}
+# ln /etc/hosts computers
+# ls -il /etc/hosts computers
+8388733 -rw-r--r--. 2 root root 158 Jun  7  2013 computers
+8388733 -rw-r--r--. 2 root root 158 Jun  7  2013 /etc/hosts
+# ln -s computers newcomputers
+# ls -il /etc/hosts computers newcomputers
+8388733 -rw-r--r--. 2 root root 158 Jun  7  2013 computers
+8388733 -rw-r--r--. 2 root root 158 Jun  7  2013 /etc/hosts
+27604468 lrwxrwxrwx. 1 root root   9 Sep  7 19:26 newcomputers -> computers
+# rm -f computers
+# ls -il /etc/hosts newcomputers
+8388733 -rw-r--r--. 1 root root 158 Jun  7  2013 /etc/hosts
+27604468 lrwxrwxrwx. 1 root root   9 Sep  7 19:26 newcomputers -> computers
+# exit
+exit
+$ ln /etc/shadow mydata
+ln: failed to create hard link ‘mydata’ => ‘/etc/shadow’: Operation not permitted
+$ ls -l /etc/shadow
+----------. 1 root root 1375 Sep  5 21:04 /etc/shadow
+\end{minted}
+When the hardlink \textit{computers} to the inode associated with \texttt{/etc/hosts} is deleted, the associated symbolic link of \textit{newcomputers} becomes invalid.
+
+\noindent
+Finally, RHEL 7 onwards, a user may only create a link to a file/directory that it at least has a read permission to. Thus, any user won't be able to create a link to \texttt{/etc/shadow} as it has no permissions for anybody.
+
+\section{Working with tar}
+\textbf{tar} stands for Tape Archive. The command is most commonly used to make backups of files by storing them in archives. Some of the options of \verb|tar| are:
+
+\begin{tabular}{lclcl}
+	\textbf{-c} &- &create &- &typically has an extension of .tar \\
+	\textbf{-t} &- &show contents &- &show contents of the archive. \\
+	\textbf{-x} &- &extract & & \\
+	\textbf{-z} &- &file &- &compress the archive using gzip. Typically has an extension of \verb|.tgz| \\
+	\textbf{-v} &- &verbose &- &tell us what the utility is doing. \\
+	\textbf{-f} &- &file &- &option to indicate the name of the archive file. \\
+	\textbf{-C} &- &location &- &indicates where the archive is to be extracted. \\		
+\end{tabular}
+
+\begin{minted}{console}
+$ tar -cvf /root/etc.tar /etc
+\end{minted}
+
+\noindent
+The above command creates the \verb|etc.tar| archive in the \verb|/root| directory and puts the contents of \verb|/etc| in that archive. Note that the file \verb|etc.tar| has a \verb|.tar| extension only because we provided it, and not because Linux mandates it (unlike windows). Thus, sometimes we may run across tar archives that don't have an extension and are hard to detect. So, in that case we use the file command, which tells us the type of a particular file.
+
+\begin{minted}{console}
+$ file /root/etc.tar
+/root/etc.tar: POSIX tar archive (GNU)
+\end{minted}
+
+\noindent
+Note that the .tar archive only puts all the files of teh \verb|/etc| directory in the file \verb|tar.etc|, but doesn't actually compress anything. To enable compression the \verb|-z| option of the \verb|tar| command must be used. 
+
+\begin{minted}{console}
+$ tar -czf /root/etc2.tgz /etc
+\end{minted}
+
+\noindent
+Before extracting the contents of a tar file, we might want to see its contents, which can be done using the \verb|-t| option of the \verb|tar| command. \textit{NOTE: Some older versions of} \verb|tar| \textit{may require the -z option to enable working with gzip archives, even when simply using the archive and not creating it.}
+
+\begin{minted}{console}
+$ tar -tvf /root/etc2.tgz
+\end{minted}
+
+\noindent
+To actually extract the archive, we use \verb|-x| option. To indicate the location where we want the extracted files to reside, we include the \verb|-C| option. If this option is not present then the files will be extracted in the present directory. 
+
+\begin{minted}{console}
+$ tar -xvf /root/etc2.tgz -C /tmp
+\end{minted}
+
+\noindent
+To extract only one file from the archive, we can simply provide the name of the file at the very end. 
+
+\begin{minted}{console}
+$ tar -xvf /root/etc2.tgz -C / etc/wgetrc
+\end{minted}
+
+\noindent
+\textit{NOTE that in the above command, we use the relative path} \verb|etc/wgetrc| \textit{because of the fact that the archive stores a relative file path for easy extraction in any folder.}

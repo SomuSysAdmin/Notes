@@ -1,0 +1,123 @@
+\chapter{Connecting to a RHEL Server}
+\section{Connecting to a Server with SSH}
+To connect to a server we use the \verb|ssh| command. The Syntax is: \verb|ssh <server-ip>|.
+
+\begin{minted}{console}
+$ ssh 192.168.152.129
+somu@192.168.152.129's password: 
+Last login: Mon Nov 13 12:37:26 2017 from 192.168.152.128
+\end{minted}
+
+The default SSH port is \textbf{22}. To connect to SSH on a different port (common when server is exposed to the internet), is \verb|ssh -p <port-number> <server-ip>|. Note that \textit{if root login is disabled on the server,} we must also provide the username to login as. The syntax then becomes : \verb|ssh -p <port-number> <username>@<server-ip>|.
+
+\begin{minted}{console} 
+$ ssh -p 2022 sander@ldap.rhatcertification.com
+\end{minted}
+
+\section{RSA Key fingerprint and known hosts}
+Upon each new connection the ssh daemon shows us the RSA key fingerprint of the host to verify if we're connecting to the right computer. If so, the host is added to a list of known hosts permanently, in \verb|~/.ssh/known_hosts|. 
+
+When the key fingerprint of the server doesn't match the Key fingerprint on record, the system warns us from connecting! This may occur when the server has been reinstalled on the same IP address. Thus, the new key fingerprint won't match the old one. To fix this, simply remove the old entry from \verb|~/.ssh/known_hosts|.
+
+\section{sshd\_config}
+The details of the method of connection to a server is stored in the \textbf{sshd\_config} file, located in \verb|/etc/ssh/sshd_config|. 
+
+Some of the options are:
+
+\begin{tabular}{clc}
+	\toprule
+	\textbf{Option} &\textbf{Description} &\textbf{Default Value} \\
+	\midrule
+	Port	&The port number which is used for SSH on that server &22\\
+	PermitRootLogin &Whether an user is allowed to login as \textit{root} user via SSH &yes \\
+	\bottomrule
+\end{tabular}
+
+If the root login on the server via SSH is disabled, it generally makes the server a little bit more secure!
+
+\section{Understanding SSH keys}
+To initiate the ssh connection, the \textbf{SSHD} service on the server is contacted by the client. In order to confirm it's identity, the server responds with it's own \verb|/etc/ssh/ssh_host.pub| public key to the client. When the client's user has verified the key of the server, the public key fingerprint gets stored in the clients \verb|~/.ssh/known_hosts| file. Finally, the user is asked for the password to log on to the server.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{"RHCSA/Mod1/chapters/1.5.a Server auth"}
+	\caption{Server Authentication procedure}
+	\label{fig:1}
+\end{figure}
+
+\subsection{Client authentication without password}
+The client can also prove it's identity without a password by the use of a public key that it provides to the server. The private key of the user is stored in the home directory of the user \verb|~/.ssh/id_rsa|. A packet encrypted with the private key is sent to the server which knows the user's public key. Some complex calculations based on this is performed on the authentication token sent from the client and if the identity is confirmed, then the user is logged in without needing a password.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{"RHCSA/Mod1/chapters/1.5.b Client auth with no password"}
+	\caption{Public Key Client Authentication without password.}
+	\label{fig:1}
+\end{figure}
+
+\section{Using SSH Keys}
+SSH keys can be used to authenticate an user instead of a password. The private-public key pair can be generated using the \verb|ssh-keygen| utility.
+
+\begin{minted}{console}
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/somu/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/somu/.ssh/id_rsa.
+Your public key has been saved in /home/somu/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:0C5uEHnAgJvzFEc0ulfL1YSygT/YF5UtL9lweTfPDAc somu@vmPrime.somusysadmin.com
+The key's randomart image is:
++---[RSA 2048]----+
+| ..==.   ooo .E. |
+|. ..++o.oo+ + o.o|
+| o.oo+++o..B . *o|
+|+ ...===. o o   +|
+| +. o +oS  .     |
+|  .. o .         |
+|      o          |
+|     .           |
+|                 |
++----[SHA256]-----+
+\end{minted}
+
+\subsection{Copying SSH keys}
+
+The SSH keys generated on the client now have to be copied to the server which requires authentication. This can be done using \verb|ssh-copy-id|.
+
+\begin{minted}{console}
+$ ssh-copy-id 192.168.152.129
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+somu@192.168.152.129's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh '192.168.152.129'"
+and check to make sure that only the key(s) you wanted were added.
+
+$ ssh 192.168.152.129
+Last login: Wed Nov 15 11:59:03 2017 from 192.168.152.128
+\end{minted}
+
+While previous versions of \verb|ssh-copy-id| didn't support specifying a port number, RHEL 7 onwards this feature is supported. 
+
+\begin{minted}{console}
+$ ssh-copy-id -p 2022 sander@ldap.rhatcertification.com
+\end{minted}
+
+In case the public key is not recognized, it is possible to specify the public key using the \verb|ssh-copy-id -i <publicKeyFile.pub>| flag.
+
+\subsection{Copying files to a server securely using SSH}
+Files can be copied to a server using SSH connection using the \verb|scp| (secure copy) utility. 
+
+\begin{minted}{console}
+$ scp -P 22 names 192.168.152.129:~
+names                  100%   28     8.1KB/s   00:00    
+\end{minted}
+
+\noindent
+\textbf{NOTE} that the directory on which the file has to be copied to on the server, (in this case the ~ directory) has to be specified for the copy to be successful. Otherwise, \verb|scp| just creates a local copy of the file with the name of the server as the filename. 
+
+Also, if the port has to be specified, the flag is \verb|-P| which is in capital unlike \verb|ssh| and \verb|ssh-copy-id|.

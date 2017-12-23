@@ -1,0 +1,264 @@
+\chapter{Scheduling Tasks}
+
+\section{Cron vs at}
+Both \verb|cron| and \verb|at| enable us to perform a task in the future. However, cron lets us perform a job on a regular basis, while if we only need to perform a task once in the future, we use at. 
+
+\subsection{Cron}
+Cron uses the \verb|crond| service which is started by default and in turn used by many services. The configuration files for cron reside in various locations, and this allows RPMs to drop shell scripts in cron without any interruption or change of config. It also allows users to create their own cron jobs. 
+
+\subsection{at}
+at which uses the \verb|atd| daemon runs tasks only once in the future at a pre-scheduled time. The at command is used to add jobs.
+
+	\section{Understanding Cron Configuration files and Execution times} 
+The main configuration file for cron is located at \verb|/etc/crontab|. The default contents of the file is:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+# For details see man 4 crontabs
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
+\end{minted}
+\vspace{-10pt}
+
+This config file lists the meaning of the time specifications for setting up a cronjob. We shouldn't modify this file as it'll be over-written every time the software is updated. 
+
+\subsection{crontab -e}
+One of the recommended ways to create a new cronjob is to use the command \verb|crontab -e|. Each user has his own \textit{crontab} that contains instructions to the cron daemon to execute certain tasks at a certain time. The \verb|crontab -e| command opens the user's crontab in editor mode and creates a cron config file for the present user. 
+
+\subsection{Other cron config files}
+Many other cron config files are located in the \verb|/etc| directory. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ ls -ld cron*
+drwxr-xr-x. 2 root root  54 Nov 25 08:59 cron.d
+drwxr-xr-x. 2 root root  57 Nov 25 08:59 cron.daily
+-rw-------. 1 root root   0 Aug  3 21:03 cron.deny
+drwxr-xr-x. 2 root root  41 Nov 25 08:59 cron.hourly
+drwxr-xr-x. 2 root root   6 Jun 10  2014 cron.monthly
+-rw-r--r--. 1 root root 451 Jun 10  2014 crontab
+drwxr-xr-x. 2 root root   6 Jun 10  2014 cron.weekly
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Each of the folders named \textit{cron.hourly}, \textit{cron.daily}, \textit{cron.weekly} and \textit{cron.monthly} are used by RPMs to drop shell scripts that the cron daemon automatically executes on an appropriate schedule. 
+
+For example, the \verb|/etc/cron.daily| has a file called \textit{man-db.cron}. The \verb|mandb| command (executed appropriately by this file) has to be executed periodically to rebuild the index that the man pages that we search using \verb|man -k|. The file contains:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+$ cat man-db.cron 
+#!/bin/bash
+
+if [ -e /etc/sysconfig/man-db ]; then
+. /etc/sysconfig/man-db
+fi
+
+if [ "$CRON" = "no" ]; then
+exit 0
+fi
+
+renice +19 -p $$ >/dev/null 2>&1
+ionice -c3 -p $$ >/dev/null 2>&1
+
+LOCKFILE=/var/lock/man-db.lock
+
+# the lockfile is not meant to be perfect, it's just in case the
+# two man-db cron scripts get run close to each other to keep
+# them from stepping on each other's toes.  The worst that will
+# happen is that they will temporarily corrupt the database
+[[ -f $LOCKFILE ]] && exit 0
+
+trap "{ rm -f $LOCKFILE ; exit 0; }" EXIT
+touch $LOCKFILE
+# create/update the mandb database
+mandb $OPTS
+
+exit 0
+\end{minted}
+\vspace{-10pt}
+
+The file is \textit{not} a typical cronjob since we don't need to tell the cron daemon when to execute it. It knows that the given shell script has to be executed once daily. There is no fixed time for the cron job to run, and thus, even if the system goes down during a certain period of time, the cron daemon will execute the job at a later time. 
+
+\subsection{cron.d}
+The files in this directory look a lot more like the crontab files. Some of the contents of this directory are:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ ls -l /etc/cron.d
+total 12
+-rw-r--r--. 1 root root 128 Aug  3 21:03 0hourly
+-rw-r--r--. 1 root root 108 Jun 13 19:38 raid-check
+-rw-------. 1 root root 235 Aug  3 15:00 sysstat
+\end{minted}
+\vspace{-10pt}
+
+\noindent	
+The contents of the \textit{sysstat} file is:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+$ sudo cat sysstat
+# Run system activity accounting tool every 10 minutes
+*/10 * * * * root /usr/lib64/sa/sa1 1 1
+# 0 * * * * root /usr/lib64/sa/sa1 600 6 &
+# Generate a daily summary of process accounting at 23:53
+53 23 * * * root /usr/lib64/sa/sa2 -A
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The format followed is : time specification, name of the user under which the command has to be executed, followed by the command to be executed. 
+
+Thus, if a cronjob has to be run as an administrator, we should put it in a cron file in the \verb|/etc/cron.d| directory. If however, a user-specific cron file has to be executed, then it's better to use the \verb|crontab -e| command to generate and store the cronjobs for that user. 
+
+	\section{Scheduling with cron}
+One of the best ways to run cronjobs is to become the user that we want to run the cronjob as and then open their crontab, using the \verb|crontab -e| command. 
+
+Let us consider a hypothetical scenario where we want to run a specific set of commands at 2.30PM everyday. Now, we first write the minutes(30) followed by the hour in 24-hour format [military time](2PM=14). Next, we want the script to run everyday, so we mark the day of the month, the month and the day of the week with \verb|*|s (everyday of the month, every month and everyday of the week). Let us consider we want the cronjob to write something to the syslog using the \verb|logger| command. Then the entry in the crontab will look like:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+30 14 * * *	logger Hello
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Typically, the \verb|anacron| utility takes care of executing the shell scripts in the  \textit{cron.hourly, cron.daily, cron.weekly and cron.monthly} directories. It ensures that the commands will be executed at appropriate times (that cannot be controlled by the user) if the machine is down on the originally scheduled time. 
+
+	\section{Using at}
+Before using \verb|at|, we need to ensure that the \verb|atd| daemon is running:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ systemctl status atd -l
+atd.service - Job spooling tools
+Loaded: loaded (/usr/lib/systemd/system/atd.service; enabled; vendor preset: enabled)
+Active: active (running) since Sat 2017-12-02 15:26:18 IST; 1 day 8h ago
+Main PID: 1224 (atd)
+CGroup: /system.slice/atd.service
+1224 /usr/sbin/atd -f
+
+Dec 02 15:26:18 vmPrime.somuVMnet.local systemd[1]: Started Job spooling tools.
+Dec 02 15:26:18 vmPrime.somuVMnet.local systemd[1]: Starting Job spooling tools.
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Scheduling using at}
+The syntax for using \verb|at| is simple: \verb|at <time>|. This will open up the \verb|at| prompt which takes as input the commands to be performed. We can escape the \verb|at| prompt by sending an EOF signal using \textit{CTRL+D}. We can schedule a message to be logged at 2:30PM using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# at 1:17
+at> logger Hello @ 02:30PM!
+at> <EOT>
+job 1 at Mon Dec  4 14:30:00 2017
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Alternatively, the output of another command (or a shell script) can be piped to \verb|at|. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ at 00:38
+at> echo "Hello from at @12:38AM" >> test.log
+at> <EOT>
+job 2 at Mon Dec  4 00:38:00 2017
+$ date
+Mon Dec  4 00:37:55 IST 2017	
+$ ls -l
+total 0
+$ date
+Mon Dec  4 00:38:17 IST 2017
+$ ls -l
+total 4
+-rw-rw-r--. 1 somu somu 23 Dec  4 00:38 test.log
+$ cat test.log
+Hello from at @12:38AM
+\end{minted}
+\vspace{-10pt}
+
+\subsection{atq}
+The \verb|atq| command is used to see how many \verb|at| jobs are waiting to be run. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ echo 'echo "2mins after 1AM" >> time.log' | at 01:02
+job 9 at Mon Dec  4 01:02:00 2017
+$ echo 'echo "3mins after 1AM" >> time.log' | at 01:03
+job 10 at Mon Dec  4 01:03:00 2017
+$ ls -l
+total 0
+$ atq
+9	Mon Dec  4 01:02:00 2017 a somu
+10	Mon Dec  4 01:03:00 2017 a somu
+$ date
+Mon Dec  4 01:01:54 IST 2017
+$ ls -l
+total 0
+$ date
+Mon Dec  4 01:02:04 IST 2017
+$ ls -l
+total 4
+-rw-rw-r--. 1 somu somu 16 Dec  4 01:02 time.log
+$ cat time.log
+2mins after 1AM
+$ date
+Mon Dec  4 01:03:01 IST 2017
+$ cat time.log
+2mins after 1AM
+3mins after 1AM
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Removing jobs from atq}
+The jobs scheduled by \verb|at| can be removed by passing their job number to \verb|atrm| command. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ echo 'echo "Test" > file' | at 1:10
+job 11 at Mon Dec  4 01:10:00 2017
+$ echo 'echo "Test2" >> file' | at 01:11
+job 12 at Mon Dec  4 01:11:00 2017
+$ atq
+11	Mon Dec  4 01:10:00 2017 a somu
+12	Mon Dec  4 01:11:00 2017 a somu
+$ atrm 11
+$ atq
+12	Mon Dec  4 01:11:00 2017 a somu
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The \verb|at| jobs are stored in a file in the \verb|/var/spool/at| directory in a file with a system generated name. 
+
+The output of the \verb|logger| command can be checked by using \verb|tail -f /var/log/messages|.
+
+\vspace{-15pt}
+\begin{minted}{console}
+# at 1:17
+at> logger Hello @ 12:17AM!
+at> <EOT>
+job 15 at Mon Dec  4 01:17:00 2017
+[root@vmPrime at]# atq
+15	Mon Dec  4 01:17:00 2017 a root
+# tail -f /var/log/messages
+Dec  4 01:12:03 vmPrime dbus[702]: [system] Successfully activated service 'org.freedesktop.problems'
+Dec  4 01:12:03 vmPrime dbus-daemon: dbus[702]: [system] Successfully activated service 'org.freedesktop.problems'
+Dec  4 01:12:28 vmPrime journal: No devices in use, exit
+Dec  4 01:17:00 vmPrime root: Hello @ 12:17AM!
+\end{minted}
+\vspace{-10pt}

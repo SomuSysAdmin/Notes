@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} firewall\PYGZhy{}cmd \PYGZhy{}\PYGZhy{}permanent \PYGZhy{}\PYGZhy{}zone\PYG{o}{=}home \PYGZhy{}\PYGZhy{}add\PYGZhy{}service\PYG{o}{=}high\PYGZhy{}availability
-\PYG{g+go}{success}
-\end{Verbatim}

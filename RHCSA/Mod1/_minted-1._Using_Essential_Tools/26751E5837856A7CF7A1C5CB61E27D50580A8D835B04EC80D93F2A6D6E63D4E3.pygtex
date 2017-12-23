@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYG{o}{[}somu@testBed \PYGZti{}\PYG{o}{]}\PYGZdl{} man \PYGZhy{}k day \PYG{p}{|} grep \PYG{l+m}{3}
+		daylight \PYG{o}{(}\PYG{l+m}{3}\PYG{o}{)}         \PYGZhy{} initialize \PYG{n+nb}{time} conversion information
+		dysize \PYG{o}{(}\PYG{l+m}{3}\PYG{o}{)}           \PYGZhy{} get number of days \PYG{k}{for} a given year
+		daylight \PYG{o}{(}3p\PYG{o}{)}        \PYGZhy{} \PYG{n+nb}{set} timezone conversion information
+		gettimeofday \PYG{o}{(}3p\PYG{o}{)}    \PYGZhy{} get the date and \PYG{n+nb}{time}
+		Net::Time \PYG{o}{(}3pm\PYG{o}{)}      \PYGZhy{} \PYG{n+nb}{time} and daytime network client interface
+		Time::HiRes \PYG{o}{(}3pm\PYG{o}{)}    \PYGZhy{} High resolution alarm, sleep, gettimeofday, interval timers
+\end{Verbatim}

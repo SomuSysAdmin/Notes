@@ -1,0 +1,133 @@
+\chapter{Managing HTTP Services}
+
+\section{Understanding Apache Configuration}
+The \textbf{HTTP Daemon (httpd)} is the apache web server process. To find out more about the process, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# which httpd
+/usr/sbin/httpd
+# rpm -qf /usr/sbin/httpd # Obtaining the name of the package which installed httpd.
+httpd-2.4.6-67.el7.centos.6.x86_64
+# rpm -qc httpd
+/etc/httpd/conf.d/autoindex.conf
+/etc/httpd/conf.d/userdir.conf
+/etc/httpd/conf.d/welcome.conf
+/etc/httpd/conf.modules.d/00-base.conf
+/etc/httpd/conf.modules.d/00-dav.conf
+/etc/httpd/conf.modules.d/00-lua.conf
+/etc/httpd/conf.modules.d/00-mpm.conf
+/etc/httpd/conf.modules.d/00-proxy.conf
+/etc/httpd/conf.modules.d/00-systemd.conf
+/etc/httpd/conf.modules.d/01-cgi.conf
+/etc/httpd/conf/httpd.conf
+/etc/httpd/conf/magic
+/etc/logrotate.d/httpd
+/etc/sysconfig/htcacheclean
+/etc/sysconfig/httpd
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The last command, \verb|rpm -qc httpd| shows us the configuration files for the \textit{httpd} process. There are some config files for httpd in \verb|/etc/sysconfig| directory and some in \verb|/etc/httpd| directory. 
+
+The \verb|/etc/sysconfig| directory has a file called \textit{httpd} which has some basic configuration for the web server, and this can be used to manage start-up parameters for apache. Thus, whenever there needs to be anything different whie starting the apache web server, this file should be edited. 
+
+The important part of the \verb|httpd| configuration is stored in \verb|/etc/httpd|. It's contents are:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls -l /etc/httpd
+total 0
+drwxr-xr-x. 2 root root  37 Dec 20 15:36 conf
+drwxr-xr-x. 2 root root  82 Dec 20 15:36 conf.d
+drwxr-xr-x. 2 root root 146 Dec 20 15:36 conf.modules.d
+lrwxrwxrwx. 1 root root  19 Dec 20 15:36 logs -> ../../var/log/httpd
+lrwxrwxrwx. 1 root root  29 Dec 20 15:36 modules -> ../../usr/lib64/httpd/modules
+lrwxrwxrwx. 1 root root  10 Dec 20 15:36 run -> /run/httpd
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The most important of the configuration files is stored in \verb|/etc/httpd/conf/httpd.conf|. It contains all the parameters that might need to be changed to customize the configuration of our apache environment. Some of the important parameter passed to the web server from this file are:
+
+\noindent
+\begin{tabular}{lM{0.58}}
+	\toprule
+	\textbf{Options} &\textbf{Description}\\
+	\midrule
+	\textbf{Listen 80}	&Tells the HTTP server which port to \textit{listen on} (i.e., wait for incoming TPC connections) for HTTP Services. \\
+	\textbf{include conf.modules.d/*.conf}	&Loads the contents of the \verb|conf.modules.d| directory.\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+The inclusion of the \verb|/etc/httpd/conf.modules.d| directory is due to the fact that apache has a modular configuration. Both files in the \textit{conf.modules.d} and \textit{conf.d} are included in this configuration. The contents of the \verb|conf.d| are:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls /etc/httpd/conf.d
+autoindex.conf  README  userdir.conf  welcome.conf
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Some RPMs that deal with the apache web server sometimes drop configuration files in this directory that add another branch of functionality to our web server. This particular folder, \textit{conf.d} is used to house generic configurations. The folder \textit{conf.modules.d} however, contains the configuration for several modules. These include things like the proxy module.
+
+Sometimes, the apache update may cause a new version of the \textit{httpd.conf} to appear, in which case the user config will still be available at \textit{httpd.conf.rpmsave} in the same directory. This is not something specific to apache - yum does this to any config file that has to be overwritten in the process of an upgrade. 
+
+\section{Creating a Basic Web Site}
+One of the most important configuration settings in the \verb|httpd.conf| file is the \textbf{DocumentRoot}, which sets the directory under which all the requests for documents are served. If the DocumentRoot is changed, certain settings in SELinux need to be changed as well! The default value of this is set to \verb|/var/www/html|. 
+
+Let us put a basic html file inside this directory:
+
+\vspace{-15pt}
+\begin{minted}{html}
+<html>
+<head>
+<title>Homepage!</title>
+<head>
+<body>
+<h1>Hello, World!</h1>
+<body>
+</html>
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To view this, (even during an SSH session) we can use \textit{elinks}, which is a text based browser. First, we have to start the HTTP daemon (and enable it so that it auto-starts after each reboot):
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl start httpd
+# systemctl enable httpd
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+# systemctl status -l httpd
+● httpd.service - The Apache HTTP Server
+Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+Active: active (running) since Wed 2017-12-20 17:26:08 IST; 11s ago
+Docs: man:httpd(8)
+man:apachectl(8)
+Main PID: 5802 (httpd)
+Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+CGroup: /system.slice/httpd.service
+├─5802 /usr/sbin/httpd -DFOREGROUND
+├─5806 /usr/sbin/httpd -DFOREGROUND
+├─5807 /usr/sbin/httpd -DFOREGROUND
+├─5808 /usr/sbin/httpd -DFOREGROUND
+├─5809 /usr/sbin/httpd -DFOREGROUND
+└─5810 /usr/sbin/httpd -DFOREGROUND
+
+Dec 20 17:26:08 vmPrime.somuVMnet.com systemd[1]: Starting The Apache HTTP Server...
+Dec 20 17:26:08 vmPrime.somuVMnet.com systemd[1]: Started The Apache HTTP Server.
+\end{minted}
+\vspace{-10pt}
+
+The contents of the \verb|/var/www/html| directory are now available on localhost. To view the webpages, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# elinks http://localhost
+\end{minted}
+\vspace{-10pt}
+

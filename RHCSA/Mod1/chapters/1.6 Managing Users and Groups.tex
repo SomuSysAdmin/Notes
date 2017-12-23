@@ -1,0 +1,203 @@
+\chapter{Managing Users and Groups}
+\section{Understanding the need for Users}
+User accounts are not just to ensure that different people use resources with accountability and resource management. Several processes also have to execute with permissions given to them by their respective user accounts. 
+
+For example, the \verb|apache| web server's processes and services execute under the permissions given to the \verb|apache| account. This account doesn't have root privileges, which ensures that in case of security breaches of the apache user account, the culprit doesn't gain access to any critical resources that only an administrator or the root account should have access to. 
+
+\section{User Properties}
+\subsection{Username}
+
+A typical user info in the \verb|/etc/passwd| file consists of the login information of several users, each with the following details :- \verb|somu:x:1000:1000:Somu:/home/somu:/bin/bash|. Here, Somu is the username, the \textit{x} in the second field references that a password has been stored for that username in the \verb|/etc/shadow| file. The file contains the (one-way) encrypted password as well as several password related information such as password expiration dates, etc. Since the \verb|/etc/shadow| file is only readable by the root user, it minimizes the security risk. Generally, only real user accounts need a password and system users (accounts used by processes to execute) don't. 
+
+\subsubsection{/etc/shadow}
+While the \verb|/etc/shadow| file contains the password of an user in an encrypted format, if the user account is new and doesn't yet have any password assigned to it, then the entry for it in /etc/shadow looks like: 
+
+\begin{minted}{console}
+$ cat /etc/shadow | grep lisa
+lisa:!!:17485:0:99999:7:::
+\end{minted} 
+
+The second entry (!!) is where the encrypted password is usually stored. The double exclamation indicates that the \textit{lisa} account hasn't set up a password yet. 
+
+\subsection{UID}
+Each user on the system is setup with a unique UserID (UID). The root has a UID of 0, and normal users start with an UID of 1000 onwards. There are a total of 64,000 UIDs available for 2.4 kernels, and 4 billion for 2.6 kernels. 
+
+\subsection{GID}
+On Linux, every user must be the member of at least one group, which is known as the \textbf{primary group} of the user, stored in the \verb|/etc/passwd| file. On RHEL, that primary group has the same name as the username and the user is the only member of that group by default (i.e., private group). The list of Groups is stored in a file called \verb|/etc/group|.
+
+\subsection{GECOS or comment field}
+This is a comment field that can contain anything the admin deems necessary. It generally contains information that makes the identification of each user easier. 
+
+\subsection{Home Directory}
+The home directory refers to the location where the user is allowed to store files. For services, this folder is important because it defines the directory where the service can read and write files. While for regular users the home directory is typically inside \verb|/home|, for services, they can be anywhere.
+
+\subsection{Default Shell}
+This is the shell (or command) that is executed on login of the user. The default value is \verb|/bin/bash|.
+
+\section{Creating and Managing Users}
+\subsection{Adding users}
+The default command for adding users on RHEL is \verb|useradd|. 
+
+\begin{tabular}{cl}
+	\toprule 
+	\textbf{Option} &\textbf{Description} \\
+	\midrule
+	\textbf{-e} &Expiration date in the format YYYY-MM-DD. Sets the date on which the user \\&account will be disabled. \\
+	\textbf{-c} &Comment that sets the contents of the GECOS field. \\
+	\textbf{-s} &Sets the default shell of the user. For example, a C programmer can use a \\&shell such as TCSH. \\		
+	\bottomrule		
+\end{tabular}
+
+\begin{minted}{console}
+$ sudo useradd -c "New Test User" -s /bin/tcsh -e 2017-12-31 laura
+[sudo] password for somu: 
+$ # To verify the addition of the new user
+$ tail -n 1 /etc/passwd
+laura:x:1001:1001:New Test User:/home/laura:/bin/tcsh
+\end{minted}
+
+\subsubsection{id command}
+The \verb|id| command prints the real and effective user information. 
+
+\begin{minted}{console}
+$ id
+uid=1000(somu) gid=1000(somu) groups=1000(somu) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+\end{minted}
+
+\section{Understanding Group Membership}
+Groups are especially useful to enable users to share files with one another. These groups may be additional groups known as secondary groups. 
+
+The \verb|/etc/passwd| file doesn't contain any reference to the secondary groups that the user is a part of, even though the \verb|/etc/group| file lists that user as a member. Thus, the best way to obtain the groups the user is a part of is by using the \verb|id| command.|
+
+\begin{minted}{console}
+$ id lisa
+uid=1002(lisa) gid=1002(lisa) groups=1002(lisa), 5009(sales)
+\end{minted}
+
+\section{Creating and Managing Groups}
+\subsection{groupadd}
+The \verb|groupadd| command is used to add a new group. 
+
+\begin{tabular}{cl}
+	\toprule
+	\textbf{Option} &\textbf{Description} \\
+	\midrule
+	\textbf{-g} &Specify the GID of the group. \\
+	\bottomrule
+\end{tabular}
+
+\subsection{Adding users to a group}
+A user can be added to a group by directly editing the \verb|/etc/group| file, or by| using the \verb|moduser| command.
+
+\subsubsection{usermod}
+\begin{tabular}{cl}
+	\toprule
+	\textbf{Option} &\textbf{Description} \\
+	\midrule
+	\textbf{-g} &Force assign the GID as the new default group of the user.  \\
+	\textbf{-G} &Erase older list of supplementary groups and assign the given groups as the \\&supplementary group of he user. \\
+	\textbf{-a} &Add the given group to the list of groups for the user. \\
+	\bottomrule
+\end{tabular}
+
+Adding a user to a group using the \verb|usermod| command is shown below. 
+
+\begin{minted}{console}
+$ sudo usermod -aG account laura
+$ sudo usermod -aG 5010 lisa
+$ tail -n 1 /etc/group
+account:x:5010:laura,lisa
+\end{minted}
+
+\section{User and Group configuration files}
+Some of the important configuration files are:
+
+\noindent
+\begin{tabular}{ll}
+	\toprule
+	\textbf{Option} &\textbf{Description} \\
+	\midrule
+	\textbf{/etc/passwd} &Contains several details of the user, other than the password.  \\
+	\textbf{/etc/shadow} &Contains the password hash and password properties for the user. \\
+	\textbf{/etc/group} &Contains the names of all the groups along with a list of all users \\&in them. \\
+	\textbf{/etc/login.defs} &Contains the values (definitions) of several parameters used to \\&create the user, such as password max days, min days, etc.\\
+	\textbf{/etc/default/useradd} &Contains the default values for several useradd parameters. \\
+	\textbf{/etc/skel} &When a user's home directory is created, the contents of \\&\verb|/etc/skel| is copied there, with the appropriate group of the user.\\
+	\bottomrule
+\end{tabular}
+
+\section{Managing Password properties}
+The user \textit{root} can manage the password properties using two commands:
+
+\subsection{passwd}
+\begin{tabular}{cl}
+	\toprule
+	\textbf{Option} &\textbf{Description} \\
+	\midrule
+	\textbf{-d} &Delete the current password. \\
+	\textbf{-l} &Lock the current password. \\
+	\textbf{-u} &Unlock the current password. \\
+	\textbf{-e} &Expire the current password - force user to change password during next login. \\
+	\textbf{-x} &Set the maximum lifetime of the password. \\
+	\textbf{-n} &Set the maximum lifetime of the password. \\
+	\textbf{-w} &Set days before expiration the user is warned. \\ 
+	\textbf{-i} &Set days after expiration the user account becomes inactive. \\
+	\bottomrule
+\end{tabular}
+
+\subsubsection{Locking and Unlocking passwords}
+\vspace{-10pt}
+\begin{minted}{console}
+$ sudo passwd -l laura
+Locking password for user laura.
+passwd: Success
+$ su - laura
+Password: 
+su: Authentication failure
+$ sudo cat /etc/shadow | grep laura
+laura:!!$6$0zDhsJet$q2...KRVKv8D2.:17486:0:99999:7::17531:
+$ sudo passwd -u laura
+Unlocking password for user laura.
+passwd: Success
+$ sudo cat /etc/shadow | grep laura
+laura:$6$0zDhsJet$q2...KRVKv8D2.:17486:0:99999:7::17531:
+$ su - laura
+Password: 
+Last login: Thu Nov 16 13:40:45 IST 2017 on pts/0
+$ whoami
+laura
+\end{minted}
+
+\noindent
+When an account is locked, the password hash for that user in the \verb|/etc/shadow| file is prefixed with a \verb|!!| to render it invalid and prevent authentication from succeeding (unless the root logs in as that user, which requires no password prompt).	
+
+\subsection{chage}
+\begin{tabular}{cl}
+	\toprule
+	\textbf{Option} &\textbf{Description} \\
+	\midrule
+	\textbf{-l} &List all password aging information. \\	
+	\textbf{-E} &Set the account expiration date. \\	\textbf{-m} &Set the maximum lifetime of the password. \\
+	\textbf{-M} &Set the maximum lifetime of the password. \\
+	\textbf{-W} &Set days before expiration the user is warned. \\ 
+	\textbf{-I} &Set days after expiration the user account becomes inactive. \\
+	\bottomrule
+\end{tabular}
+
+\subsubsection{Setting the account expiration date}
+\vspace{-10pt}
+\begin{minted}{console}
+$ sudo chage -E 2017-12-31 laura
+[sudo] password for somu: 
+[somu@cliServer ~]$ sudo cat /etc/shadow | grep laura
+laura:$6$0zDhsJet$q2...KRVKv8D2.:17486:0:99999:7::17531:
+$ sudo chage -l laura
+Last password change                              : Nov 16, 2017
+Password expires                                  : never
+Password inactive                                 : never
+Account expires                                   : Dec 31, 2017
+Minimum number of days between password change    : 0
+Maximum number of days between password change    : 99999
+Number of days of warning before password expires : 7
+\end{minted}
+The string \textit{17531} represents the account expiration date in epoch time (seconds since Jan 1 1970).

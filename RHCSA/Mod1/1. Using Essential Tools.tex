@@ -1,0 +1,501 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+
+%	Changing document font to Helvetica.
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+%	Changing Margins and other formatting
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=1.5in,
+	top=1in,
+	right=1.5in,
+	bottom=1in
+}
+\setlength{\parskip}{1em}
+
+%	Source Code Highlighting
+\usepackage{minted}
+\setminted[bash]{
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos,
+breaklines
+}
+
+%	Pretty Tables
+\usepackage{booktabs}
+
+%	Images Support
+\usepackage{graphicx}
+
+\title{SysAdmin Notes for RHCSA}
+\author{Somenath Sinha}
+\date{August 2017}
+
+\begin{document}
+	\maketitle
+	\newpage
+	
+	\chapter{Using Essential Tools}
+	\section{Man Command}
+	
+	\textbf{man} followed by \textit{keyword} yields the manual page of that command. 
+	\vspace{-20pt}
+	\begin{minted}{bash}
+		$ man ls
+	\end{minted}
+	
+	\vspace{-15pt}
+	\noindent
+	\textbf{man} followed by option \textbf{-k} (for keyword) and then followed by a \textit{keyword} yields a list of all the commands containing that keywork and a brief descripiton of that command.
+	\vspace{-20pt} 
+	\begin{minted}{bash}
+		[somu@testBed ~]$ man -k day
+		daylight (3)         - initialize time conversion information
+		dysize (3)           - get number of days for a given year
+		daylight (3p)        - set timezone conversion information
+		gettimeofday (2)     - get / set time
+		gettimeofday (3p)    - get the date and time
+		motd (5)             - message of the day
+		Net::Time (3pm)      - time and daytime network client interface
+		settimeofday (2)     - get / set time
+		Time::HiRes (3pm)    - High resolution alarm, sleep, gettimeofday, interval timers
+	\end{minted}
+	
+	\vspace{-15pt}
+	\noindent
+	The numbers next to the commands indicate which seciton of the man pages the command belongs to (based on their functionality). The actual section that the commands belong to can be determined by the use of 
+	
+	\vspace{-20pt}
+	\begin{minted}{bash}
+		$ man man-pages
+	\end{minted}
+	
+	\vspace{-15pt}
+	\noindent
+	The relevant sections for SysAdmins are Section 1, 5 \& 8. The sections are:
+	
+	\vspace{-5pt}
+	\noindent
+	\begin{tabular}{p{0.1\textwidth}p{0.25\textwidth}p{0.6\textwidth}}
+		\toprule
+		Section Number & Deals with & Description \\
+		\midrule
+		1 & Commands (Programs) & Those  commands  that  can  be executed  by the user from within a	shell. \\
+		2 & System calls & Those functions which must be performed by the kernel. \\		
+		3 & Library calls & Most of the libc functions. \\		
+		4 & Special files (devices) & Files found in /dev. \\		
+		5 & File formats and conventions & The format for /etc/passwd and other human-readable files. \\		
+		6 & Games & \\		
+		7 & Overview, conventions, and miscellaneous & Overviews of various topics, conventions and  protocols,  character set standards, and miscellaneous other things. \\		
+		8 & System management commands & Commands like mount(8), many of which only root can execute.	\\
+		\bottomrule
+	\end{tabular}
+	
+	\noindent
+	To filter down the output of the \textbf{man -k} command, we can use \textbf{grep} to obtain only the relevant parts of the result on the basis of the appropriate section number in the man-pages. 
+	
+	\noindent
+	This can be achieved using the pipe which feeds the output of the first command to the input of the second command. 
+	
+	\vspace{-20pt}
+	\begin{minted}{bash}
+		[somu@testBed ~]$ man -k day | grep 3
+		daylight (3)         - initialize time conversion information
+		dysize (3)           - get number of days for a given year
+		daylight (3p)        - set timezone conversion information
+		gettimeofday (3p)    - get the date and time
+		Net::Time (3pm)      - time and daytime network client interface
+		Time::HiRes (3pm)    - High resolution alarm, sleep, gettimeofday, interval timers
+	\end{minted}
+	
+	\vspace{-20pt}
+	\noindent
+	
+	\section{Understanding Globbing and Wildcards}
+	\begin{tabular}{rcl}
+		\textbf{*} &- &Indicates any string. \\
+		\textbf{?} &- &Indicates any single character. \\
+		\textbf{[$\cdots$]} &- &Indicates any character provided within brackets. \\
+		\textbf{[!$\cdots$]} &- &Indicates any character \textit{NOT} provided within brackets. \\
+		\textbf{[a-f]} &- &Indicates any character provided within the range of a to f. \\
+	\end{tabular}
+	
+	\section{Understanding Globbing and Wildcards}
+	\noindent
+	\begin{tabular}{lcp{0.8\textwidth}}
+		\textbf{\$ ls a*} &- &Lists all files and folders (including contents of each folder) that start with "a" \\
+		\textbf{\$ ls *a*} &- &Lists all files and folders that contain the string "a". \\
+		\textbf{\$ ls -d a*} &- &Shows all files and folders that start with "a" but excludes the contents of each individual folder. \\
+		\textbf{\$ ls ??st*} &- &Lists all files and folders that have "st" as the $3^{rd}$ and the $4^{th}$ character in their name. \\
+		\textbf{\$ [a-f]} &- &Indicates any character provided within the range of a to f. \\
+	\end{tabular}
+
+	\section{Understanding I/O Redirection and Pipes}
+	\subsection{I/O Redirection}
+	File Descriptors: 
+
+	\noindent
+	\begin{tabular}{rccclcp{0.5\textwidth}}
+		\textbf{STDIN} &- &0 &- &Standard Input &- &Represents the "file" for the Standard Input Device (generally Keyboard). \\
+		\textbf{STDOUT} &- &1 &- &Standard Output &- &Represents the "file" for the Standard Output Device (generally the Monitor). \\
+		\textbf{STDERR} &- &2 &- &Standard Error &- &Represents the "file" for the Standard Output Device (also, generally the Monitor). \\
+	\end{tabular}
+
+	\noindent
+	Redirection:
+	
+	\noindent
+	\begin{tabular}{rclcp{0.7\textwidth}}
+		\textbf{STDIN} &- &$<$ &- &Feeds the file to the right of the "<" as input to the command on the left. \\
+		\textbf{STDOUT} &- &$>$ &- &Stores the output of the command to the left of the ">" to the file indicated on the right. \textit{OVERWRITES} the mentioned file.\\
+		\textbf{STDOUT} &- &$>>$ &- &Stores the output of the command to the left of the "$>>$" to the file indicated on the right. \textit{APPENDS} the mentioned file.\\
+		\textbf{STDERR} &- &$2>$ &- &Redirects the errors from the command mentioned on the left to the file on the right. \textit{OVERWRITES} the mentioned file.\\
+	\end{tabular}
+		
+	\noindent
+	\begin{minted}{bash}	
+		$ mail -s hi root < .
+		$ ls > myFile
+		$ ls -lh >> myFile
+		$ grep hi * 2> /dev/tty6
+	\end{minted}
+	
+	\noindent
+	1 - \textit{mail} is a simple command used to send messages. The command expects the message to terminate with a ".", so we feed it directly to the command, instead of providing any input.
+	
+	\noindent
+	4 - The STDERR is redirected to tty6 (a virtual terminal connected to the host). Can also be diverted to a file if needed, such as an errorLog.
+	
+	\subsection{Piping}
+	The command \verb|$ ps aux| shows us the overview of all the running processes on the host. However, it's too long to view all at once. In such situations, or wherever we need to feed the output of the first command to the input of the second command, we use the pipe operator. The command would then be \verb=$ ps aux | less=.
+	
+	The difference in the usage of the piping and redirection operators is that Pipe is used to pass output to another program or utility, while Redirect is used to pass output to either a file or stream.
+	
+	\section{Using I/O Redireciton and Piping}
+	
+	\noindent
+	\begin{minted}{bash}	
+		$ ps aux | awk '{print $2}'
+		$ ps aux | awk '{print $2}' | sort
+		$ ps aux | awk '{print $2}' | sort -n
+	\end{minted}
+	
+	\noindent
+	The second column (\$2) of the \verb|$ ps aux| command contains the Process ID (PID), and if we only want to filter the output such that only the PID is shown, we simply use the \textbf{awk} filtering utility. 
+	
+	If we want to sort the output of the command, we use the \textbf{sort} utility, but it generally sorts as a string. To sort the output as a number, we use the option \textbf{sort -n}.
+	
+	\noindent
+	If you expect lots of errors for a particular command, but want to discard all errors and only see the output when successful, then simply redirect the STDERR to \verb|/dev/null|, which is a special device that discards all data written to it, i.e., a dustbin for data. 
+	
+	\begin{minted}{bash}	
+		$ find / -name "*.rpm"
+		$ find / -name "*.rpm" 2> /dev/null
+	\end{minted}
+	
+	\noindent
+	The first command shows all output including errors, but the second command discards all errors and shows the rest. 	
+	
+	\begin{minted}{bash}
+		$ some_command > /dev/null 2> &1
+	\end{minted}
+	
+	\noindent
+	The above code redirects STDOUT to \verb|/dev/null| thus destroying the output, and also redirects the STDERR (2>) to STDOUT (\&1). Essentially, it discards all output - useful when we don't need the output but only need the command to execute.
+	
+	\begin{minted}{bash}
+		$ ls / > file_list.txt
+		$ sort < file_list.txt > file_list_sorted.txt
+	\end{minted}
+	
+	\noindent
+	The above command stores the contents of the root directory in \textit{file\_list.txt}. Then, the second command uses both input and output redirection! The input of the sort command is fed from \textit{file\_list.txt} and the corresponding output sent to \textit{file\_list\_sorted.txt}.
+	
+	\chapter{Essential File Management Tools}
+	\section{Understanding Linux File System Layout}
+	\begin{tabular}{lcl}
+		\toprule
+		\textbf{root (/)} &- &Contains all other directories. \\
+		\midrule
+		\hspace{10pt}
+		\textbf{/boot} &- &Contains everything the system needs to start up\\
+		\hspace{10pt}
+		\textbf{/usr} &- &Contains program files\\
+		\hspace{10pt}
+		\textbf{/etc} &- &Contains configuration files\\
+		\hspace{10pt}
+		\textbf{/home} &- &Contains a user's files\\
+		\hspace{10pt}
+		\textbf{/mnt} &- &Used to manually mount devices \\
+		\hspace{10pt}
+		\textbf{/media} &- &Devices like optical discs get auto-mounted on the media directory \\
+		\bottomrule
+	\end{tabular}
+
+	\noindent
+	Unlike other OSs, the linux files system is designed as such that multiple devices can be mounted on the same file system hierarchy. Thus, it's possible to mount devices remotely as well!
+	
+	\section{Finding Files}
+	The \textbf{find} command is used to find a file within a folder and its subdirectories. When the starting point of the search is the root directory (/) then find will search the entire file system. While the utility is extremely thorough, this may cause delays due to remote devices on the network mounted on the file system. 
+	
+	\begin{minted}{bash}
+		$ find / -name "passwd"
+	\end{minted}
+	
+	\noindent
+	If you're trying to find the location of a binary file, a better command would be \textbf{which} command, as it directly shows the location of the binary, but be careful as it only works with binaries.
+	
+	\begin{minted}{bash}
+		$ which passwd
+		/usr/bin/passwd
+	\end{minted}
+	
+	\noindent
+	Contrastingly, the command \textbf{whereis} not only gives us the locaiton of the binary, but the location of the complete environment of the binary!
+	
+	\begin{minted}{bash}
+		$ whereis passwd
+		passwd: /usr/bin/passwd /etc/passwd /usr/share/man/man1/passwd.1.gz /usr/share/man/man5/passwd.5.gz
+	\end{minted}
+
+	\noindent
+	Another similar utility is called \textbf{locate} which shows all files that have the string provided to it in its name. Note, however, that locate operates on a database, that must be updated (especially after the creation of a new file) to show relevant results. 
+	
+	\begin{minted}{bash}
+		[root@testBed Documents]# touch sinha
+		[root@testBed Documents]# ls
+		sinha
+		[root@testBed Documents]# locate sinha
+		/usr/share/vim/vim74/keymap/sinhala-phonetic_utf-8.vim
+		/usr/share/vim/vim74/keymap/sinhala.vim
+		[root@testBed Documents]# updatedb
+		[root@testBed Documents]# locate sinha
+		/home/somu/Documents/sinha
+		/usr/share/vim/vim74/keymap/sinhala-phonetic_utf-8.vim
+		/usr/share/vim/vim74/keymap/sinhala.vim
+	\end{minted}
+	
+	\section{Understanding Links}
+	\textbf{inode} - An inode is a datastructure that describes a file system object such as a file or a directory, containing both the disc block locations as well as the attributes of the file system object. The inodes are identified by their inode number.
+	
+	\noindent
+	Consequently, for us to access the files/directories, we need to be able to provide a name to the inodes, which are called hardlinks. A file may have more than one hardlink. Note that each hardlink is simply a different name provided tot he same inode. Ths, all hardlinks to the same file/directory have the same inode number. Hardlinks are one-directional only, i.e., the hardlink itself knows which inode it points to, but the inodes only know the total number of hardlinks that are associated with it, and not which exact ones are pointing to it. Since hardlinks point to some inode, they always need to stay on the same partition as the inode.
+	
+	\noindent
+	A symbolic link on the other hand, points to a hardlink instead of an inode. As such, it has a different inode number than the one that the hardlink points to. Thus, the hardlink and symbolic link can be on different partitions as well. It can even exist across servers. Whenever a hardlink is deleted, however, all the symbolic links pointing to it are rendered invalid.
+	
+	\section{Working with Links}
+	The \verb|ln| command is used to create both hardlinks and symbolic links. To create a symbolic link, we need only add the \verb|-s| option. The \verb|-i| option of the \verb|ls| command shows us the inode number.
+	
+	\begin{minted}{bash}
+		[root@testBed somu]# ln /etc/hosts computers
+		[root@testBed somu]# ls -il /etc/hosts computers
+		8388733 -rw-r--r--. 2 root root 158 Jun  7  2013 computers
+		8388733 -rw-r--r--. 2 root root 158 Jun  7  2013 /etc/hosts
+		[root@testBed somu]# ln -s computers newcomputers
+		[root@testBed somu]# ls -il /etc/hosts computers newcomputers
+		8388733 -rw-r--r--. 2 root root 158 Jun  7  2013 computers
+		8388733 -rw-r--r--. 2 root root 158 Jun  7  2013 /etc/hosts
+		27604468 lrwxrwxrwx. 1 root root   9 Sep  7 19:26 newcomputers -> computers
+		[root@testBed somu]# rm -f computers
+		[root@testBed somu]# ls -il /etc/hosts newcomputers
+		8388733 -rw-r--r--. 1 root root 158 Jun  7  2013 /etc/hosts
+		27604468 lrwxrwxrwx. 1 root root   9 Sep  7 19:26 newcomputers -> computers
+		[root@testBed somu]# exit
+		exit
+		[somu@testBed ~]$ ln /etc/shadow mydata
+		ln: failed to create hard link ‘mydata’ => ‘/etc/shadow’: Operation not permitted
+		[somu@testBed ~]$ ls -l /etc/shadow
+		----------. 1 root root 1375 Sep  5 21:04 /etc/shadow
+	\end{minted}
+	When the hardlink \textit{computers} to the inode associated with \texttt{/etc/hosts} is deleted, the associated symbolic link of \textit{newcomputers} becomes invalid.
+	
+	\noindent
+	Finally, RHEL 7 onwards, a user may only create a link to a file/directory that it at least has a read permission to. Thus, any user won't be able to create a link to \texttt{/etc/shadow} as it has no permissions for anybody.
+	
+	\section{Working with tar}
+	\textbf{tar} stands for Tape Archive. The command is most commonly used to make backups of files by storing them in archives. Some of the options of \verb|tar| are:
+	
+	\begin{tabular}{lclcl}
+		\textbf{-c} &- &create &- &typically has an extension of .tar \\
+		\textbf{-t} &- &show contents &- &show contents of the archive. \\
+		\textbf{-x} &- &extract & & \\
+		\textbf{-z} &- &file &- &compress the archive using gzip. Typically has an extension of \verb|.tgz| \\
+		\textbf{-v} &- &verbose &- &tell us what the utility is doing. \\
+		\textbf{-f} &- &file &- &option to indicate the name of the archive file. \\
+		\textbf{-C} &- &location &- &indicates where the archive is to be extracted. \\		
+	\end{tabular}
+
+	\begin{minted}{bash}
+		$ tar -cvf /root/etc.tar /etc
+	\end{minted}
+	
+	\noindent
+	The above command creates the \verb|etc.tar| archive in the \verb|/root| directory and puts the contents of \verb|/etc| in that archive. Note that the file \verb|etc.tar| has a \verb|.tar| extension only because we provided it, and not because Linux mandates it (unlike windows). Thus, sometimes we may run across tar archives that don't have an extension and are hard to detect. So, in that case we use the file command, which tells us the type of a particular file.
+	
+	\begin{minted}{bash}
+		$ file /root/etc.tar
+		/root/etc.tar: POSIX tar archive (GNU)
+	\end{minted}
+	
+	\noindent
+	Note that the .tar archive only puts all the files of teh \verb|/etc| directory in the file \verb|tar.etc|, but doesn't actually compress anything. To enable compression the \verb|-z| option of the \verb|tar| command must be used. 
+	
+	\begin{minted}{bash}
+		$ tar -czf /root/etc2.tgz /etc
+	\end{minted}
+	
+	\noindent
+	Before extracting the contents of a tar file, we might want to see its contents, which can be done using the \verb|-t| option of the \verb|tar| command. \textit{NOTE: Some older versions of} \verb|tar| \textit{may require the -z option to enable working with gzip archives, even when simply using the archive and not creating it.}
+	
+	\begin{minted}{bash}
+		$ tar -tvf /root/etc2.tgz
+	\end{minted}
+	
+	\noindent
+	To actually extract the archive, we use \verb|-x| option. To indicate the location where we want the extracted files to reside, we include the \verb|-C| option. If this option is not present then the files will be extracted in the present directory. 
+	
+	\begin{minted}{bash}
+		$ tar -xvf /root/etc2.tgz -C /tmp
+	\end{minted}
+	
+	\noindent
+	To extract only one file from the archive, we can simply provide the name of the file at the very end. 
+	
+	\begin{minted}{bash}
+		$ tar -xvf /root/etc2.tgz -C / etc/wgetrc
+	\end{minted}
+	
+	\noindent
+	\textit{NOTE that in the above command, we use the relative path} \verb|etc/wgetrc| \textit{because of the fact that the archive stores a relative file path for easy extraction in any folder.}
+	
+	\chapter{Working with Text Files}
+	\section{Understanding Regular Expressions}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\linewidth]{"../../../RedHat/RHCE-RHCSA/RHCSALiveLessons/1. Performing Basic System Management Tasks/4. Working with Text Files/RegEx Cheat Sheet"}
+		\caption{RegEx Cheat Sheet}
+		\label{fig:regex-cheat-sheet}
+	\end{figure}
+
+	\section{Using common text tools}
+	\subsection{cat}
+	The \verb|cat| command prints the entire content of a file on to the terminal. 
+	
+	\subsection{less}
+	Sometimes the \verb|cat| command is unsuitable, like in the case of extremely large files. In such cases, like the \verb|/var/log/messages|, the default system log file, using \verb|cat| won't work as the majority of the messages would scroll past fast. For such cases, \verb|less| is a better utility. Search functionality is exactly the same as in the case of vim. 
+	
+	\subsection{Head and Tail}
+	\subsubsection{Head}
+	The \verb|head| command by default shows us the first 10 lines of a text file. To see more or less lines, the \verb|-n| option can be used.
+	
+	\begin{minted}{bash}
+		$ head -n 20 file.txt
+	\end{minted}
+	
+	\subsubsection{Tail}
+	The \verb|tail| command by default shows us the last 10 lines of a text file. To see more or less lines, the \verb|-n| option can be used.
+	
+	\begin{minted}{bash}
+		$ tail -n 5 file.txt
+	\end{minted}
+	
+	\subsubsection{Combination of head and tail}
+	The combination of these two commands can enable the viewing of text in between specific line numbers. The command below shows lines 16-20 of \texttt{file.txt}
+	
+	\begin{minted}{bash}
+	$ head -n 20 file.txt | tail -n 5
+	\end{minted}
+	
+	\subsection{cut}
+	With the \verb|cut| utility, we can print out a specific column form a text file. It assumes the columns are separated by Tabs. Which specific column is to be printed is set by using the \verb|-f| option. For example, to only print the first column of a text file, we say:
+	
+	\begin{minted}{bash}
+		$ cut -f 1 cities
+	\end{minted}
+	
+	\noindent
+	To provide a different delimter, such as ":" we use the \verb|-d| option followed by the delimiter of our choice. 
+	
+	\begin{minted}{bash}
+		$ cut -f 1 -d : /etc/passwd
+	\end{minted}
+	
+	\subsection{sort}
+	This command sorts the input provided in the order of the ASCII table. That means numbers first, captial letters next and finally the lower case letters. 
+	
+	\begin{minted}{bash}
+		$ cut -f 1 -d : /etc/passwd | sort
+	\end{minted}
+	
+	\noindent
+	To sort on the basis of a specific criteria:
+	
+	\begin{tabular}{lcp{0.85\textwidth}}
+		\textbf{-n} &- &Sort on the basis of actual numberical value, instead of treating a number as a string. \\
+		\textbf{-f} &- &Sort in a case insensitive manner. \\
+	\end{tabular}
+
+	\subsection{tr}
+	The \verb|tr| command replaces certain characters with certain other characters. Thus, it's frequently used in conjunction with pipes to modify the output of a command. 
+	
+	\begin{minted}{bash}
+		$ echo hello | tr a-z A-Z
+		HELLO
+		$ echo hello | tr [:lower:] [:upper:]
+		HELLO
+	\end{minted}
+	
+	\section{grep}
+	\verb|grep| is a filtering utility that only prints those lines that contain a certain expression matching the pattern provided by a \textit{RegEx}.
+	
+	\begin{minted}{bash}
+		$ ps aux | grep tracker
+		somu      10450  0.0  0.4 469796  9000 ?        SNl  10:06   0:00 /usr/libexec/tracker-miner-user-guides
+		somu      10465  0.0  0.6 536856 12012 ?        Sl   10:06   0:00 /usr/libexec/tracker-store
+		somu      10611  0.0  0.7 779816 13108 ?        SNl  10:06   0:00 /usr/libexec/tracker-extract
+		somu      10614  0.0  0.5 469800  9632 ?        SNl  10:06   0:00 /usr/libexec/tracker-miner-apps
+		somu      10615  0.0  0.7 710160 13204 ?        SNl  10:06   0:00 /usr/libexec/tracker-miner-fs
+		root      17396  0.0  0.0 112644   968 pts/0    R+   13:49   0:00 grep --color=auto tracker
+	\end{minted}
+	
+	\noindent
+	Another use for \verb|grep| is searching files. To avoid errors notifying "is a directory", simply redirect errors to \verb|/dev/null|.
+	
+	\begin{minted}{bash}
+		$ grep lisa * 2> /dev/null
+		group:lisa:x:1001:
+		gshadow:lisa:!::
+		passwd:lisa:x:1001:1001::/home/lisa:/bin/bash
+		passwd-:lisa:x:1001:1001::/home/lisa:/bin/bash
+		services:na-localise     5062/tcp                # Localisation access
+		services:na-localise     5062/udp                # Localisation access
+		shadow:lisa:$6$0l/zSJkh$xjJNYNnj1rPs7Fq0hDWt8VucS0nLL82XrMYpmBnLF2DrzB2npFvCwxM9MJEHgCHCwvabCgEA17LK2aU0h9FIT/:17414:0:99999:7:::
+		shadow-:lisa:password:17414:0:99999:7:::
+	\end{minted}
+	
+	\subsection{wc}
+	Counts the number of words, lines and characters. 
+	
+	\begin{tabular}{lcl}
+		\textbf{-l} &- &Counts the number of lines \\
+		\textbf{-w} &- &Counts the number of words \\
+		\textbf{-m} &- &Counts the number of characters \\
+		\textbf{-c} &- &Counts the number of bytes \\
+		\textbf{-L} &- &Counts the length of the longest line \\
+	\end{tabular}
+	
+	\chapter{Keyboard Shortcuts}
+	\begin{tabular}{lcl}
+		\textbf{CTRL+U} &- &Clear Command Line. \\
+		\textbf{CTRL+L} &- &Clear Screen, same as clear command. \\
+	\end{tabular}
+\end{document}

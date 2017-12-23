@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYGZdl{} \PYG{n+nb}{echo} hello \PYG{p}{|} tr a\PYGZhy{}z A\PYGZhy{}Z
+		HELLO
+		\PYGZdl{} \PYG{n+nb}{echo} hello \PYG{p}{|} tr \PYG{o}{[}:lower:\PYG{o}{]} \PYG{o}{[}:upper:\PYG{o}{]}
+		HELLO
+\end{Verbatim}

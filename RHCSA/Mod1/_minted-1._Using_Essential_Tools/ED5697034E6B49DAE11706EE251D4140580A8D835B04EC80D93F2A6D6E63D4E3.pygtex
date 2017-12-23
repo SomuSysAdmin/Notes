@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYGZdl{} ps aux \PYG{p}{|} grep tracker
+		somu      \PYG{l+m}{10450}  \PYG{l+m}{0}.0  \PYG{l+m}{0}.4 \PYG{l+m}{469796}  \PYG{l+m}{9000} ?        SNl  \PYG{l+m}{10}:06   \PYG{l+m}{0}:00 /usr/libexec/tracker\PYGZhy{}miner\PYGZhy{}user\PYGZhy{}guides
+		somu      \PYG{l+m}{10465}  \PYG{l+m}{0}.0  \PYG{l+m}{0}.6 \PYG{l+m}{536856} \PYG{l+m}{12012} ?        Sl   \PYG{l+m}{10}:06   \PYG{l+m}{0}:00 /usr/libexec/tracker\PYGZhy{}store
+		somu      \PYG{l+m}{10611}  \PYG{l+m}{0}.0  \PYG{l+m}{0}.7 \PYG{l+m}{779816} \PYG{l+m}{13108} ?        SNl  \PYG{l+m}{10}:06   \PYG{l+m}{0}:00 /usr/libexec/tracker\PYGZhy{}extract
+		somu      \PYG{l+m}{10614}  \PYG{l+m}{0}.0  \PYG{l+m}{0}.5 \PYG{l+m}{469800}  \PYG{l+m}{9632} ?        SNl  \PYG{l+m}{10}:06   \PYG{l+m}{0}:00 /usr/libexec/tracker\PYGZhy{}miner\PYGZhy{}apps
+		somu      \PYG{l+m}{10615}  \PYG{l+m}{0}.0  \PYG{l+m}{0}.7 \PYG{l+m}{710160} \PYG{l+m}{13204} ?        SNl  \PYG{l+m}{10}:06   \PYG{l+m}{0}:00 /usr/libexec/tracker\PYGZhy{}miner\PYGZhy{}fs
+		root      \PYG{l+m}{17396}  \PYG{l+m}{0}.0  \PYG{l+m}{0}.0 \PYG{l+m}{112644}   \PYG{l+m}{968} pts/0    R+   \PYG{l+m}{13}:49   \PYG{l+m}{0}:00 grep \PYGZhy{}\PYGZhy{}color\PYG{o}{=}auto tracker
+\end{Verbatim}
