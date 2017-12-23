@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} su \PYGZhy{} vncuser
+\PYG{g+gp}{\PYGZdl{}} vncpasswd
+\PYG{g+go}{Password:}
+\PYG{g+go}{Verify:}
+\PYG{g+go}{Would you like to enter a view\PYGZhy{}only password (y/n)? n}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{exit}
+\PYG{g+go}{logout}
+\end{Verbatim}

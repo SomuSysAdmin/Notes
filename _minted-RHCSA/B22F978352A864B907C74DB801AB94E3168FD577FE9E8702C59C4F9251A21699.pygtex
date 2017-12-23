@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} useradd vncuser
+\PYG{g+gp}{[root@vmPrime \PYGZti{}]\PYGZsh{}} passwd vncuser
+\PYG{g+go}{Changing password for user vncuser.}
+\PYG{g+go}{New password:}
+\PYG{g+go}{BAD PASSWORD: The password fails the dictionary check \PYGZhy{} it is based on a dictionary word}
+\PYG{g+go}{Retype new password:}
+\PYG{g+go}{passwd: all authentication tokens updated successfully.}
+\end{Verbatim}

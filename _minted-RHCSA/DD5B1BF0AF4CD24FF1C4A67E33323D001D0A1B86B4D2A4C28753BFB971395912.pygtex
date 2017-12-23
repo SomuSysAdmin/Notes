@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{[}Unit\PYG{o}{]}
+\PYG{n+nv}{Description}\PYG{o}{=}Remote desktop service \PYG{o}{(}VNC\PYG{o}{)}
+\PYG{n+nv}{After}\PYG{o}{=}syslog.target network.target
+
+\PYG{o}{[}Service\PYG{o}{]}
+\PYG{n+nv}{Type}\PYG{o}{=}forking
+\PYG{n+nv}{User}\PYG{o}{=}vncuser	\PYG{c+c1}{\PYGZsh{} There was a placeholder \PYGZlt{}USER\PYGZgt{} here}
+
+\PYG{c+c1}{\PYGZsh{} Clean any existing files in /tmp/.X11\PYGZhy{}unix environment}
+\PYG{n+nv}{ExecStartPre}\PYG{o}{=}\PYGZhy{}/usr/bin/vncserver \PYGZhy{}kill \PYGZpc{}i
+\PYG{n+nv}{ExecStart}\PYG{o}{=}/usr/bin/vncserver \PYGZpc{}i
+\PYG{n+nv}{PIDFile}\PYG{o}{=}/home/vncuser/.vnc/\PYGZpc{}H\PYGZpc{}i.pid	\PYG{c+c1}{\PYGZsh{} There was a placeholder \PYGZlt{}USER\PYGZgt{} here}
+\PYG{n+nv}{ExecStop}\PYG{o}{=}\PYGZhy{}/usr/bin/vncserver \PYGZhy{}kill \PYGZpc{}i
+
+\PYG{o}{[}Install\PYG{o}{]}
+\PYG{n+nv}{WantedBy}\PYG{o}{=}multi\PYGZhy{}user.target
+\end{Verbatim}

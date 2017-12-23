@@ -1,0 +1,5 @@
+\BOOKMARK [0][-]{chapter.1}{Configuring VNC Access}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Understanding VNC}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Configuring a VNC Server}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.2.1}{Creating the VNC Server Configuration File}{section.1.2}% 4
+\BOOKMARK [1][-]{section.1.3}{Connecting to a VNC Server}{chapter.1}% 5

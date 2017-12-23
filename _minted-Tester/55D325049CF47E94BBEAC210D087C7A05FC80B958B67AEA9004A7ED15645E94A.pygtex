@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{	\PYGZsh{}} vncviewer \PYGZhy{}via vncuser@localhost localhost:1
+
+\PYG{g+go}{	TigerVNC Viewer 64\PYGZhy{}bit v1.8.0}
+\PYG{g+go}{	Built on: 2017\PYGZhy{}12\PYGZhy{}01 23:20}
+\PYG{g+go}{	Copyright (C) 1999\PYGZhy{}2017 TigerVNC Team and many others (see README.txt)}
+\PYG{g+go}{	See http://www.tigervnc.org for information on TigerVNC.}
+\PYG{g+go}{	vncuser@localhost\PYGZsq{}s password:}
+
+\PYG{g+go}{	Sat Dec 23 19:13:38 2017}
+\PYG{g+go}{	DecodeManager: Detected 1 CPU core(s)}
+\PYG{g+go}{	DecodeManager: Decoding data on main thread}
+\PYG{g+go}{	CConn:       connected to host localhost port 33955}
+\PYG{g+go}{	t CConnection: Server supports RFB protocol version 3.8}
+\PYG{g+go}{	CConnection: Using RFB protocol version 3.8}
+\PYG{g+go}{	CConnection: Choosing security type VeNCrypt(19)}
+\PYG{g+go}{	CVeNCrypt:   Choosing security type TLSVnc (258)}
+\PYG{g+go}{	e}
+\PYG{g+go}{	Sat Dec 23 19:13:41 2017}
+\PYG{g+go}{	CConn:       Using pixel format depth 24 (32bpp) little\PYGZhy{}endian rgb888}
+\PYG{g+go}{	CConn:       Using Tight encoding}
+\PYG{g+go}{	CConn:       Enabling continuous updates}
+\end{Verbatim}
