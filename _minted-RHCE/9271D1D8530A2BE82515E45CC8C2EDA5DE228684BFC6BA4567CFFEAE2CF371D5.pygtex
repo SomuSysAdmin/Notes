@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} su \PYGZhy{} lisa
+\PYG{g+go}{Last login: Tue Dec 26 18:52:05 IST 2017 on pts/0}
+\PYG{g+go}{su: warning: cannot change directory to /home/lisa: No such file or directory}
+\PYG{g+go}{\PYGZhy{}sh\PYGZhy{}4.2\PYGZdl{}}
+\end{Verbatim}

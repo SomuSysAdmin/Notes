@@ -1,0 +1,56 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{[}sssd\PYG{o}{]}
+\PYG{n+nv}{config\PYGZus{}file\PYGZus{}version} \PYG{o}{=} \PYG{l+m}{2}
+\PYG{n+nv}{services} \PYG{o}{=} nss, pam
+\PYG{c+c1}{\PYGZsh{} SSSD will not start if you do not configure any domains.}
+\PYG{c+c1}{\PYGZsh{} Add new domain configurations as [domain/\PYGZlt{}NAME\PYGZgt{}] sections, and}
+\PYG{c+c1}{\PYGZsh{} then add the list of domains (in the order you want them to be}
+\PYG{c+c1}{\PYGZsh{} queried) to the \PYGZdq{}domains\PYGZdq{} attribute below and uncomment it.}
+\PYG{p}{;} \PYG{n+nv}{domains} \PYG{o}{=} LDAP
+
+\PYG{o}{[}nss\PYG{o}{]}
+
+\PYG{o}{[}pam\PYG{o}{]}
+
+\PYG{c+c1}{\PYGZsh{} Example LDAP domain}
+\PYG{p}{;} \PYG{o}{[}domain/LDAP\PYG{o}{]}
+\PYG{p}{;} \PYG{n+nv}{id\PYGZus{}provider} \PYG{o}{=} ldap
+\PYG{p}{;} \PYG{n+nv}{auth\PYGZus{}provider} \PYG{o}{=} ldap
+\PYG{c+c1}{\PYGZsh{} ldap\PYGZus{}schema can be set to \PYGZdq{}rfc2307\PYGZdq{}, which stores group member names in the}
+\PYG{c+c1}{\PYGZsh{} \PYGZdq{}memberuid\PYGZdq{} attribute, or to \PYGZdq{}rfc2307bis\PYGZdq{}, which stores group member DNs in}
+\PYG{c+c1}{\PYGZsh{} the \PYGZdq{}member\PYGZdq{} attribute. If you do not know this value, ask your LDAP}
+\PYG{c+c1}{\PYGZsh{} administrator.}
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}schema} \PYG{o}{=} rfc2307
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}uri} \PYG{o}{=} ldap://ldap.mydomain.org
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}search\PYGZus{}base} \PYG{o}{=} \PYG{n+nv}{dc}\PYG{o}{=}mydomain,dc\PYG{o}{=}org
+\PYG{c+c1}{\PYGZsh{} Note that enabling enumeration will have a moderate performance impact.}
+\PYG{c+c1}{\PYGZsh{} Consequently, the default value for enumeration is FALSE.}
+\PYG{c+c1}{\PYGZsh{} Refer to the sssd.conf man page for full details.}
+\PYG{p}{;} \PYG{n+nv}{enumerate} \PYG{o}{=} \PYG{n+nb}{false}
+\PYG{c+c1}{\PYGZsh{} Allow offline logins by locally storing password hashes (default: false).}
+\PYG{p}{;} \PYG{n+nv}{cache\PYGZus{}credentials} \PYG{o}{=} \PYG{n+nb}{true}
+
+\PYG{c+c1}{\PYGZsh{} An example Active Directory domain. Please note that this configuration}
+\PYG{c+c1}{\PYGZsh{} works for AD 2003R2 and AD 2008, because they use pretty much RFC2307bis}
+\PYG{c+c1}{\PYGZsh{} compliant attribute names. To support UNIX clients with AD 2003 or older,}
+\PYG{c+c1}{\PYGZsh{} you must install Microsoft Services For Unix and map LDAP attributes onto}
+\PYG{c+c1}{\PYGZsh{} msSFU30* attribute names.}
+\PYG{p}{;} \PYG{o}{[}domain/AD\PYG{o}{]}
+\PYG{p}{;} \PYG{n+nv}{id\PYGZus{}provider} \PYG{o}{=} ldap
+\PYG{p}{;} \PYG{n+nv}{auth\PYGZus{}provider} \PYG{o}{=} krb5
+\PYG{p}{;} \PYG{n+nv}{chpass\PYGZus{}provider} \PYG{o}{=} krb5
+\PYG{p}{;}
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}uri} \PYG{o}{=} ldap://your.ad.example.com
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}search\PYGZus{}base} \PYG{o}{=} \PYG{n+nv}{dc}\PYG{o}{=}example,dc\PYG{o}{=}com
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}schema} \PYG{o}{=} rfc2307bis
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}sasl\PYGZus{}mech} \PYG{o}{=} GSSAPI
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}user\PYGZus{}object\PYGZus{}class} \PYG{o}{=} user
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}group\PYGZus{}object\PYGZus{}class} \PYG{o}{=} group
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}user\PYGZus{}home\PYGZus{}directory} \PYG{o}{=} unixHomeDirectory
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}user\PYGZus{}principal} \PYG{o}{=} userPrincipalName
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}account\PYGZus{}expire\PYGZus{}policy} \PYG{o}{=} ad
+\PYG{p}{;} \PYG{n+nv}{ldap\PYGZus{}force\PYGZus{}upper\PYGZus{}case\PYGZus{}realm} \PYG{o}{=} \PYG{n+nb}{true}
+\PYG{p}{;}
+\PYG{p}{;} \PYG{n+nv}{krb5\PYGZus{}server} \PYG{o}{=} your.ad.example.com
+\PYG{p}{;} \PYG{n+nv}{krb5\PYGZus{}realm} \PYG{o}{=} EXAMPLE.COM
+\end{Verbatim}

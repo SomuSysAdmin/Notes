@@ -1,0 +1,416 @@
+\chapter{Configuring Authentication}
+
+\section{Understanding RedHat Identity Management}
+RedHat Identity Management is based on the FreeIPA (Identity, Policy, Audit) Project. The project bundles together several services in one solution. Some of the services are:
+
+\noindent
+\begin{tabular}{lM{0.59}}
+	\toprule
+	\textbf{Options} &\textbf{Description} \\
+	\midrule
+	\textbf{389 Directory Server}	&This is an \textbf{LDAPv3} Directory Server -- a replacement for \textit{OpenLDAP}.\\
+	\textbf{Single Sign-on}	&Provided by MIT \textbf{Kerberos} KDC.\\
+	\textbf{Integrated Certificate System}	&Based on the \textit{Dogtag} project.\\
+	\textbf{Integrated NTP Server}	&\textit{Chrony} must be disabled to use this!\\
+	\textbf{Integrated DNS Server}	&Based on \textit{ISC Bind} Service.\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+Thus, the Identity Management provided by IPA bundles up some pretty complicated projects together and provides an easy interface to manage them all. However, IPA conflicts with other products, such as other \textit{LDAP, Kerberos, Certificate System, NTP or DNS} servers shouldn't be running on the same system. Thus, ideally Identity Management should be set up on a dedicated server. 
+
+Kerberos is a Network Authentication Protocol that makes clients prove their identity to the server, and vice versa. Other than the authentication tools, it also supports strong cryptography over the network to keep the data safe in-transit. 
+
+\subsection{IdM Server Components and Requirements}
+An IdM server needs some from of \textit{Host Name Resolution}, which can be either through a DNS server or via the \verb|/etc/hosts| file. Note that the hostname of the Identity Management server itself must also be specified. 
+
+Next we need both the \textbf{ipa-server} package, which installs the server components, and the \textbf{ipa-client} package which installs the client components. While the client package isn't required to be installed on the server, while configuring a client that talks to an IPA server, then this is one of the solutions available. Another method would be to use \textbf{authconfig}. 
+
+After the required RPM packages have been installed, we will run \textbf{ipa-server-install} which provides an easy, scripted way to install an IPA server, and all we have to do is answer a few questions, at the end of which we get a fully-functional IPA server. 
+
+The \textbf{ipa} tool is a generic client interface, that's also the administration interface. Thus, it can perform several tasks such as adding users (\verb|ipa user-add <username>|), set the password for an user (\verb|ipa passwd <username>|), see the IPA properties for a user account (\verb|ipa user-find <username>|), etc. \textit{ipa-xxx} can be used instead as well, where \textit{xxx} represents the different tasks. Authentication can also be configured using \textbf{authconfig}. 
+
+\subsection{Preparing IdM Installation}
+First and foremost, the \textit{host name resolution} must be set up, since the installation will fail if the host can't find its own name. Additionally, the DNS name must also be known since the Kerberos domain that we'll configure will be based on the DNS name. 
+
+Next, the \textbf{nscd} service must be disabled, along with any existing LDAP and Kerberos services. If NTP and ISC Bind must also be disabled if installed (due to possible conflicts).	The LDAP, Kerberos, NTP, DNS and certificate system ports must be opened in the firewall. 
+
+\subsection{Installing IdM}
+The \textbf{ipa-server}, \textbf{bind} and \textbf{nds-ldap} packages must be installed using, following which, we have to run the command \textbf{ipa-server-install}, which will perform a wizard-like scripted installation. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# yum -y install ipa-server bind nds-ldap
+# ipa-server-install
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+If we don't want to enter the information interactively, we can also provide them as options. The hostname, the domain name, a realm name (domain name in upper-case). 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ipa-server-install --hostname=vmPrime.somuVMnet.local -n somuVMnet.local -r SOMUVMNET.COM -p password -a password -U --no-ntp
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The appropriate flags needed are:
+
+\noindent
+\begin{tabular}{rM{0.85}}
+	\toprule
+	\textbf{Options} &\textbf{Description} \\
+	\midrule
+	\textbf{--hostname}	&The hostname of the server\\
+	\textbf{-n}	&The Domain name of the server\\
+	\textbf{-r}	&Realm Name (Domain name in All-Caps)\\
+	\textbf{-p}	&Password for Directory Manager\\
+	\textbf{-a}	&Password for admin user\\
+	\textbf{-U}	&Unattended Install; Doesn't prompt for anything\\
+	\textbf{--no-dns}	&Do not install the DNS Server\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+Now, the SSH Daemon must be restarted to ensure that SSH obtains Kerberos credentials:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl restart sshd
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Then, we generate a new Kerberos ticket and then verify Kerberos authentication for the default admin user by using: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# kinit admin
+Password for admin@SOMUVMNET.LOCAL: 
+# klist
+Ticket cache: KEYRING:persistent:0:0
+Default principal: admin@SOMUVMNET.LOCAL
+
+Valid starting       Expires              Service principal
+2017-12-26T15:44:09  2017-12-27T15:44:05  krbtgt/SOMUVMNET.LOCAL@SOMUVMNET.LOCAL
+\end{minted}
+\vspace{-10pt}
+
+\noindent	
+This will show us if we have a valid Kerberos ticket. For any administrative tasks on the IPA server, having a valid Kerberos ticket is mandatory. Finally, we need to verify IPA access using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ipa user-find admin
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This will show us the details of the admin user as created in the LDAP directory, along with all of its properties. 
+
+\subsection{Understanding Kerberos Tickets}
+Kerberos tickets are the keys to the proper functioning of Identity Management. To be able to manage the IdM server, we need to log in to the IdM Domain and generate a Kerberos ticket for the admin user, using the command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# kinit admin
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We can check the validity of the ticket at any time using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# klist
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Managing the IdM Server}
+After generating a Kerberos ticket with \verb|kinit admin|, we use the \textbf{ipa} command to manage the IdM server. \verb|ipa help commands| shows us a short overview of all the available commands and their usage. For any specific command, we have \verb|ipa help <command>| (such as \verb|ipa help user-add|).
+
+Another method to manage the IdM server is to navigate, using our web browser, to \verb|https://vmPrime.somuVMnet.local| (if our server is named \textit{vmPrime.somuVMnet.local}). This will load the IPA management web interface. Through this interface, after we've authenticated as admin, we will be guided through the various aspects of setting up the IdM environment. 
+
+\subsection{Creating User Accounts}
+The required commands to create an user called \textit{lisa} and verify the account creation are:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# kinit admin
+# ipa user-add lisa
+# ipa passwd lisa
+# ipa user-find lisa
+\end{minted}
+\vspace{-10pt}	
+
+\section{Using authconfig to Setup External Authentication}
+There are the \textbf{authconfig} utilities to setup external authentication (via LDAP), which consist of: \textit{authconfig, authconfig-tui} and \textit{authconfig-gtk}. The GUI utility can be installed using \verb|yum -y install authconfig-gtk|. The utility is started with \verb|authconfig-gtk|. 
+
+In the \textbf{authconfig-gtk} utility, we have to choose LDAP as the User Account Database in the Identity and Authentication tab. This might prompt for the installation of two packages: \textit{nss-pam-ldapd} (the package that integrates the three) and \textit{pam\_krb5} (the package that integrates PAM with Kerberos). Now, we can enter the details for the LDAP server to setup authentication. 
+
+In cases of servers which don't have a GUI (or there is some inconvienience with the GUI, such as the apply button hidden by the status bar, etc.), the \textbf{authconfig-tui} is a very good alternative. In case of automated scripts, however, the \textbf{authconfig} command line utility is the best option. 
+
+\section{Configuring a System to Authenticate using Kerberos}
+To connect a system for authentication to an LDAP server using Kerberos credentials, a part of the configuration has to be done with authconfig. But even before that, certain things must be ensured. \textit{First}, we need to make sure that the IP address of the server we're trying to connect to can be resolved from the hostname, using \verb|/etc/hosts|:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+90.0.16.100	vmDeux.somuVMnet.com	vmDeux
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This is important so that we can use the FQDN of the server later while using the \verb|authconfig-tui| utility. Next, the system must be configured to use the DNS component hosted within the IPA server. For this, all we need to do is add the IP address of the IPA server as the first nameserver entry in \verb|/etc/resolv.conf|:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# Generated by NetworkManager
+search somuvmnet.local
+nameserver 90.0.16.100 # IP Address of DNS Server @ vmDeux.somuVMnet.local
+nameserver 8.8.8.8
+nameserver 202.38.180.7
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+It is important to place the IP address of the DNS server for a nameserver as the first entry because that's the only one configured to \textit{know} the custom FQDNs of the machines on our network. So, this connectivity is essential since the Kerberos client needs to be connected to the Kerberos server. 
+
+Finally, we can start the \verb|authconfig-tui| utility, and enter the following details:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# In Authentication Configuration:
+[*] Use LDAP
+[*] User Kerberos Authentication
+
+# LDAP Settings
+[*] Use TLS
+Server:	ldap://vmdeux.somuvmnet.local
+Base DN:	dc=somuvmnet, dc=local
+
+# Kerberos Settings
+Realm:	SOMUVMNET.LOCAL	
+[*] Use DNS to resolve hosts to realms
+[*] Use DNS to resolve KDCs for realms
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+First, we've just setup the system to use LDAP using Kerberos authentication. Next, we've made it necessary to use a TLS certificate to ensure the security of the connection. Then, the details of the LDAP server have to be entered.
+
+In the Kerberos authentication step, the \textit{Realm} refers to the Kerberos realm that the server is a part of. If we've setup the DNS component of the IPA server properly, then the system is able to detect the KDCs properly for each realm, as well as assign hosts to their realm appropriately. Now, the TLS Certificate for the IPA Server have to be downloaded and put in the \verb|/etc/openldap/cacerts| directory (from whichever location the IPA Server stored them in, typically \verb|/root/cacert.p12| for the root user):
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cd /etc/openldap/cacerts/
+# scp vmdeux.somuvmnet.local:/root/cacert.p12 .
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+At this point, we should be good to go. We can verify the LDAP connectivity by trying to login as an LDAP user. For this we use (for an LDAP user lisa):
+
+\vspace{-15pt}
+\begin{minted}{console}
+# su - lisa
+Last login: Tue Dec 26 18:52:05 IST 2017 on pts/0
+su: warning: cannot change directory to /home/lisa: No such file or directory
+-sh-4.2$ 
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The warning is natural if no home directory has been configured yet. 
+
+\subsection{Troubleshooting Authentication}
+When authentication doesn't work, for some reason related to the certificates, then there is an easy fix as well. Depending on whether our LDAP and Kerberos credentials are being cached by \textbf{nslcd} or \textbf{sssd}, we can edit their configuration file to ignore the validity of the certificate. This is because the \textit{self-signed cacert} may not meet the standards dictated and required by the program. For this, we can add to \verb|/etc/nslcd.conf|:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+tls_reqcert never
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+If SSSD is used instead, then we can edit \verb|/etc/sssd/sssd.conf| and add the following line:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+ldap_tls_reqcert = never
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+When using Certificates that are well signed from an External Certificate Authority, this of course becomes unnecessary. 
+
+\section{Understanding authconfig Configuration Files}
+\subsection{Authconfig Configuration}
+The primary configuration of the authconfig utitlity is located at \verb|/etc/sysconfig/authconfig|. The contents of this file is used by other config files, such as \verb|USELDAP=yes|. 
+
+\vspace{-15pt}
+\begin{minted}{bash}
+CACHECREDENTIALS=yes
+FAILLOCKARGS="deny=4 unlock_time=1200"
+FORCELEGACY=no
+FORCESMARTCARD=no
+IPADOMAINJOINED=no
+IPAV2NONTP=no
+PASSWDALGORITHM=sha512
+USEDB=no
+USEECRYPTFS=no
+USEFAILLOCK=no
+USEFPRINTD=no
+USEHESIOD=no
+USEIPAV2=no
+USEKERBEROS=yes
+USELDAP=yes
+USELDAPAUTH=no
+USELOCAUTHORIZE=yes
+USEMKHOMEDIR=no
+USENIS=no
+USEPAMACCESS=no
+USEPASSWDQC=no
+USEPWQUALITY=yes
+USESHADOW=yes
+USESMARTCARD=no
+USESSSD=yes
+USESSSDAUTH=no
+USESYSNETAUTH=no
+USEWINBIND=no
+USEWINBINDAUTH=no
+WINBINDKRB5=no
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+These are the settings we provided to the \textbf{authconfig} utility.
+
+\subsection{SSSD Configuration}
+Things like the Kerberos password, the LDAP search base, etc. and other IPA specific settings are stored in the \verb|/etc/sssd/sssd.conf| file, to ensure that the connection to the IPA Server is successfully initiated and it's possible to login and use the services provided by it. Typical contents of this file look like:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+[sssd]
+config_file_version = 2
+services = nss, pam
+# SSSD will not start if you do not configure any domains.
+# Add new domain configurations as [domain/<NAME>] sections, and
+# then add the list of domains (in the order you want them to be
+# queried) to the "domains" attribute below and uncomment it.
+; domains = LDAP
+
+[nss]
+
+[pam]
+
+# Example LDAP domain
+; [domain/LDAP]
+; id_provider = ldap
+; auth_provider = ldap
+# ldap_schema can be set to "rfc2307", which stores group member names in the
+# "memberuid" attribute, or to "rfc2307bis", which stores group member DNs in
+# the "member" attribute. If you do not know this value, ask your LDAP
+# administrator.
+; ldap_schema = rfc2307
+; ldap_uri = ldap://ldap.mydomain.org
+; ldap_search_base = dc=mydomain,dc=org
+# Note that enabling enumeration will have a moderate performance impact.
+# Consequently, the default value for enumeration is FALSE.
+# Refer to the sssd.conf man page for full details.
+; enumerate = false
+# Allow offline logins by locally storing password hashes (default: false).
+; cache_credentials = true
+
+# An example Active Directory domain. Please note that this configuration
+# works for AD 2003R2 and AD 2008, because they use pretty much RFC2307bis
+# compliant attribute names. To support UNIX clients with AD 2003 or older,
+# you must install Microsoft Services For Unix and map LDAP attributes onto
+# msSFU30* attribute names.
+; [domain/AD]
+; id_provider = ldap
+; auth_provider = krb5
+; chpass_provider = krb5
+;
+; ldap_uri = ldap://your.ad.example.com
+; ldap_search_base = dc=example,dc=com
+; ldap_schema = rfc2307bis
+; ldap_sasl_mech = GSSAPI
+; ldap_user_object_class = user
+; ldap_group_object_class = group
+; ldap_user_home_directory = unixHomeDirectory
+; ldap_user_principal = userPrincipalName
+; ldap_account_expire_policy = ad
+; ldap_force_upper_case_realm = true
+;
+; krb5_server = your.ad.example.com
+; krb5_realm = EXAMPLE.COM
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This is probably one of the most important configuration files when \textbf{SSSD} is being used. If \textbf{nslcd} is being used instead, then the config file of interest is \verb|/etc/nslcd.conf|.
+
+\subsection{Kerberos Configuration File}
+The Kerberos configuration file (for connecting to a Kerberos Server) is stored in \verb|/etc/krb5.conf| and typically has contents like:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# Configuration snippets may be placed in this directory as well
+includedir /etc/krb5.conf.d/
+
+includedir /var/lib/sss/pubconf/krb5.include.d/
+[logging]
+default = FILE:/var/log/krb5libs.log
+kdc = FILE:/var/log/krb5kdc.log
+admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+dns_lookup_realm = true
+ticket_lifetime = 24h
+renew_lifetime = 7d
+forwardable = true
+rdns = false
+# default_realm = EXAMPLE.COM
+default_ccache_name = KEYRING:persistent:%{uid}
+
+dns_lookup_kdc = true
+default_realm = SOMUVMNET.LOCAL
+[realms]
+# EXAMPLE.COM = {
+#  kdc = kerberos.example.com
+#  admin_server = kerberos.example.com
+# }
+
+SOMUVMNET.LOCAL = {
+}
+
+[domain_realm]
+# .example.com = EXAMPLE.COM
+# example.com = EXAMPLE.COM
+somuvmnet.local = SOMUVMNET.LOCAL
+.somuvmnet.local = SOMUVMNET.LOCAL
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Here, the DNS domain to realm mapping is specified, to tell us which domain on the DNS belongs to which Kerberos realm. 
+
+\subsection{NSSwtich Configuration}
+This file specifies the locations and the order in which passwords are searched for authentication. This includes the order in which passwords, shadow and groups are searched. The order is typically like:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+passwd:     files sss ldap
+shadow:     files sss ldap
+group:      files sss ldap
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This instructs the system to look for passwd files in the local file system first, then SSS and finally LDAP. The same is true for the two following categories of shadow and group.
+
+\subsection{NSLCD Configuration}
+While this file may be missing from newer versions of RHEL, this is an older version of LDAP configuration file. This file is supposed to be replaced by the \verb|/etc/sssd/sssd.conf| file, and thus, all relevant settings should be provided in that file. 

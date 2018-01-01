@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  23 DEC 2017 21:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  1 JAN 2018 10:50
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -748,7 +748,7 @@ File: pmboxdrawenc.dfu 2016/05/16 v1.2 UTF-8 support for box drawing characters
 \pmbd@Thin=\dimen148
 \pmbd@Thick=\dimen149
 \pmbd@Sep=\dimen150
-)
+))
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2016/05/21 v6.83p Hypertext links for LaTeX
 
@@ -846,7 +846,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
 \Hy@SectionHShift=\skip49
-))
+)
 runsystem(which pygmentize && touch RHCSA.aex)...executed.
 
 runsystem(rm RHCSA.aex)...executed.
@@ -871,29 +871,29 @@ LaTeX Warning: Label `fig:1' multiply defined.
 )
 \openout1 = `RHCSA.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for pmboxdraw/pmboxdraw/m/n on input line
- 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 3.
-LaTeX Font Info:    ... okay on input line 3.
-LaTeX Font Info:    Try loading font information for T1+phv on input line 3.
+ 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 7.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 3.
+(Font)              scaled to size 9.49997pt on input line 7.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -978,7 +978,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box34
-Package hyperref Info: Link coloring OFF on input line 3.
+Package hyperref Info: Link coloring OFF on input line 7.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -988,33 +988,33 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count133
 )
-LaTeX Info: Redefining \ref on input line 3.
-LaTeX Info: Redefining \pageref on input line 3.
-LaTeX Info: Redefining \nameref on input line 3.
+LaTeX Info: Redefining \ref on input line 7.
+LaTeX Info: Redefining \pageref on input line 7.
+LaTeX Info: Redefining \nameref on input line 7.
 
 (./RHCSA.out) (./RHCSA.out)
 \@outlinefile=\write6
 \openout6 = `RHCSA.out'.
 
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 16.41594pt on input line 5.
+(Font)              scaled to size 16.41594pt on input line 9.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 5.
+(Font)              scaled to size 11.39996pt on input line 9.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 5.
+(Font)              <12> on input line 9.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 5.
+(Font)              <8> on input line 9.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 5.
+(Font)              <6> on input line 9.
  [1
 
 {/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 23.63593pt on input line 6.
+(Font)              scaled to size 23.63593pt on input line 10.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 6.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 10.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 23.63593pt on input line 6.
+(Font)              scaled to size 23.63593pt on input line 10.
  (./RHCSA.toc
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
@@ -1812,7 +1812,7 @@ Overfull \hbox (56.43706pt too wide) in paragraph at lines 106--115
 99.pygtex)) (./RHCSA/Mod1/chapters/1.4 Working with Text Files.tex [20]
 Chapter 3.
 
-<"RHCSA/Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg, id=1689, 1028.34187pt x 578
+<"RHCSA/Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg, id=1694, 1028.34187pt x 578
 .16pt>
 File: "RHCSA/Mod1/chapters/1.4.a RegEx Cheat Sheet".jpg Graphic file (type jpg)
 
@@ -1947,14 +1947,14 @@ Overfull \hbox (38.63005pt too wide) in paragraph at lines 27--35
  []
 
 
-<"RHCSA/Mod1/chapters/1.5.a Server auth".jpg, id=1731, 1028.34187pt x 578.16pt>
+<"RHCSA/Mod1/chapters/1.5.a Server auth".jpg, id=1736, 1028.34187pt x 578.16pt>
 File: "RHCSA/Mod1/chapters/1.5.a Server auth".jpg Graphic file (type jpg)
 <use "RHCSA/Mod1/chapters/1.5.a Server auth".jpg>
 Package pdftex.def Info: "RHCSA/Mod1/chapters/1.5.a Server auth".jpg used on in
 put line 43.
 (pdftex.def)             Requested size: 342.62576pt x 192.63718pt.
 
-<"RHCSA/Mod1/chapters/1.5.b Client auth with no password".jpg, id=1732, 1028.34
+<"RHCSA/Mod1/chapters/1.5.b Client auth with no password".jpg, id=1737, 1028.34
 187pt x 578.16pt>
 File: "RHCSA/Mod1/chapters/1.5.b Client auth with no password".jpg Graphic file
  (type jpg)
@@ -2074,7 +2074,7 @@ Overfull \hbox (22.38416pt too wide) in paragraph at lines 51--64
 
 (./_minted-RHCSA/FDE7B77D3B3FA7ED8634E5917FF7E9F31D0A1B86B4D2A4C28753BFB9713959
 12.pygtex [38])
-<"RHCSA/Mod1/chapters/1.6.a LDAP Authentication".jpg, id=1786, 1028.34187pt x 5
+<"RHCSA/Mod1/chapters/1.6.a LDAP Authentication".jpg, id=1791, 1028.34187pt x 5
 78.16pt>
 File: "RHCSA/Mod1/chapters/1.6.a LDAP Authentication".jpg Graphic file (type jp
 g)
@@ -2098,7 +2098,7 @@ ed on input line 86.
 
 (./_minted-RHCSA/A81269BCB1050452D70068F5B45D4A941D0A1B86B4D2A4C28753BFB9713959
 12.pygtex)
-<"RHCSA/Mod1/chapters/1.7.a NFS Automount".jpg, id=1799, 1028.34187pt x 578.16p
+<"RHCSA/Mod1/chapters/1.7.a NFS Automount".jpg, id=1804, 1028.34187pt x 578.16p
 t>
 File: "RHCSA/Mod1/chapters/1.7.a NFS Automount".jpg Graphic file (type jpg)
  <use "RHCSA/Mod1/chapters/1.7.a NFS Automount".jpg>
@@ -2122,7 +2122,7 @@ cmtt/m/n/10 /home/guests/ldapuser1
  []
 
 
-<"RHCSA/Mod1/chapters/1.7.b Samba Automount".jpg, id=1805, 1028.34187pt x 578.1
+<"RHCSA/Mod1/chapters/1.7.b Samba Automount".jpg, id=1810, 1028.34187pt x 578.1
 6pt>
 File: "RHCSA/Mod1/chapters/1.7.b Samba Automount".jpg Graphic file (type jpg)
  <use "RHCSA/Mod1/chapters/1.7.b Samba Automount".jpg>
@@ -2427,7 +2427,7 @@ tc/sysconfig/network-scripts \T1/phv/m/n/10 di-rec-tory. There
 
 (./_minted-RHCSA/C9E2C28A824BAE586D0C278D5D5CD279168FD577FE9E8702C59C4F9251A216
 99.pygtex)
-<"RHCSA/Mod1/chapters/1.9.a Default Route".jpg, id=1906, 368.1253pt x 489.32813
+<"RHCSA/Mod1/chapters/1.9.a Default Route".jpg, id=1911, 368.1253pt x 489.32813
 pt>
 File: "RHCSA/Mod1/chapters/1.9.a Default Route".jpg Graphic file (type jpg)
  <use "RHCSA/Mod1/chapters/1.9.a Default Route".jpg>
@@ -2557,7 +2557,7 @@ LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <10> not available
 
 (./_minted-RHCSA/D88FCF499754B835D080CC83A77FBAF0168FD577FE9E8702C59C4F9251A216
 99.pygtex [74])
-<RHCSA/Mod2/chapters/2.10.a.jpg, id=1962, 1028.34187pt x 578.16pt>
+<RHCSA/Mod2/chapters/2.10.a.jpg, id=1967, 1028.34187pt x 578.16pt>
 File: RHCSA/Mod2/chapters/2.10.a.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod2/chapters/2.10.a.jpg>
@@ -2730,7 +2730,7 @@ Chapter 11.
 
 
 (./_minted-RHCSA/E29CFAC35027636AF19550009DFBA29E168FD577FE9E8702C59C4F9251A216
-99.pygtex) <RHCSA/Mod2/chapters/2.12.a.png, id=2029, 1371.1225pt x 770.88pt>
+99.pygtex) <RHCSA/Mod2/chapters/2.12.a.png, id=2034, 1371.1225pt x 770.88pt>
 File: RHCSA/Mod2/chapters/2.12.a.png Graphic file (type png)
 
 <use RHCSA/Mod2/chapters/2.12.a.png>
@@ -2839,7 +2839,7 @@ hv/m/n/10 .
 (./_minted-RHCSA/CFD6F7387D7DD379F730435F14C7C19B168FD577FE9E8702C59C4F9251A216
 99.pygtex [98])) (./RHCSA/Mod2/chapters/2.14 Configuring Logging.tex [99]
 Chapter 13.
-<RHCSA/Mod2/chapters/2.14.a.jpg, id=2076, 1028.34187pt x 578.16pt>
+<RHCSA/Mod2/chapters/2.14.a.jpg, id=2081, 1028.34187pt x 578.16pt>
 File: RHCSA/Mod2/chapters/2.14.a.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod2/chapters/2.14.a.jpg>
@@ -2866,7 +2866,7 @@ Overfull \hbox (1.55902pt too wide) in paragraph at lines 24--46
 
 
 (./_minted-RHCSA/67D1EC28E5167AE077698F34C86C43A21D0A1B86B4D2A4C28753BFB9713959
-12.pygtex) <RHCSA/Mod2/chapters/2.14.b.jpg, id=2082, 1028.34187pt x 578.16pt>
+12.pygtex) <RHCSA/Mod2/chapters/2.14.b.jpg, id=2087, 1028.34187pt x 578.16pt>
 File: RHCSA/Mod2/chapters/2.14.b.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod2/chapters/2.14.b.jpg>
@@ -2904,7 +2904,7 @@ Package pdftex.def Info: RHCSA/Mod2/chapters/2.14.b.jpg used on input line 61.
 (./_minted-RHCSA/B6F5E67B3851B483E67E8009789EED32168FD577FE9E8702C59C4F9251A216
 99.pygtex [104])) (./RHCSA/Mod2/chapters/2.15 Managing Partitions.tex [105]
 Chapter 14.
-<RHCSA/Mod2/chapters/2.15.a.jpg, id=2109, 496.10344pt x 408.77719pt>
+<RHCSA/Mod2/chapters/2.15.a.jpg, id=2114, 496.10344pt x 408.77719pt>
 File: RHCSA/Mod2/chapters/2.15.a.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod2/chapters/2.15.a.jpg>
@@ -3141,7 +3141,7 @@ o the par-ti-tion in the []\T1/cmtt/m/n/10 /dev/mapper/
 
 ) (./RHCSA/Mod2/chapters/2.16 Managing LVM Logical Volumes.tex [118]
 Chapter 15.
-<RHCSA/Mod2/chapters/2.16.a.jpg, id=2167, 1028.34187pt x 578.16pt>
+<RHCSA/Mod2/chapters/2.16.a.jpg, id=2172, 1028.34187pt x 578.16pt>
 File: RHCSA/Mod2/chapters/2.16.a.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod2/chapters/2.16.a.jpg>
@@ -3271,7 +3271,7 @@ Overfull \hbox (2.78818pt too wide) in paragraph at lines 506--517
 
 ] (./RHCSA/Mod3/chapters/3.17 Managing the Kernel.tex
 Chapter 16.
-<RHCSA/Mod3/chapters/3.17.a.jpg, id=2229, 1028.34187pt x 578.16pt>
+<RHCSA/Mod3/chapters/3.17.a.jpg, id=2234, 1028.34187pt x 578.16pt>
 File: RHCSA/Mod3/chapters/3.17.a.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod3/chapters/3.17.a.jpg>
@@ -3436,7 +3436,7 @@ Chapter 17.
 
 
 (./_minted-RHCSA/DADB6AB671206E8CDDBF8C0A7C0DF0C81D0A1B86B4D2A4C28753BFB9713959
-12.pygtex) <RHCSA/Mod3/chapters/3.18.a.jpg, id=2264, 1028.34187pt x 578.16pt>
+12.pygtex) <RHCSA/Mod3/chapters/3.18.a.jpg, id=2269, 1028.34187pt x 578.16pt>
 File: RHCSA/Mod3/chapters/3.18.a.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod3/chapters/3.18.a.jpg>
@@ -3446,7 +3446,7 @@ Package pdftex.def Info: RHCSA/Mod3/chapters/3.18.a.jpg used on input line 66.
 (./RHCSA/Mod3/chapters/3.19 Managing and Understanding the Boot Procedure.tex
 [142 <./RHCSA/Mod3/chapters/3.18.a.jpg>]
 Chapter 18.
-<RHCSA/Mod3/chapters/3.19.a.jpg, id=2274, 1028.34187pt x 578.16pt>
+<RHCSA/Mod3/chapters/3.19.a.jpg, id=2279, 1028.34187pt x 578.16pt>
 File: RHCSA/Mod3/chapters/3.19.a.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod3/chapters/3.19.a.jpg>
@@ -3455,7 +3455,7 @@ Package pdftex.def Info: RHCSA/Mod3/chapters/3.19.a.jpg used on input line 7.
  [143
 
  <./RHCSA/Mod3/chapters/3.19.a.jpg>]
-<RHCSA/Mod3/chapters/3.19.b.jpg, id=2280, 1028.34187pt x 578.16pt>
+<RHCSA/Mod3/chapters/3.19.b.jpg, id=2285, 1028.34187pt x 578.16pt>
 File: RHCSA/Mod3/chapters/3.19.b.jpg Graphic file (type jpg)
 
 <use RHCSA/Mod3/chapters/3.19.b.jpg>
@@ -4020,7 +4020,7 @@ the op-tion []\T1/cmtt/m/n/10 timedatectl set-ntp yes\T1/phv/m/n/10 .
 99.pygtex [180])) (./RHCSA/Mod4/chapters/4.26 Configuring VNC Access.tex
 [181]
 Chapter 25.
-<RHCSA/Mod4/chapters/4.26.a.png, id=2445, 1371.1225pt x 770.88pt>
+<RHCSA/Mod4/chapters/4.26.a.png, id=2450, 1371.1225pt x 770.88pt>
 File: RHCSA/Mod4/chapters/4.26.a.png Graphic file (type png)
 
 <use RHCSA/Mod4/chapters/4.26.a.png>
@@ -4063,7 +4063,7 @@ Package pdftex.def Info: RHCSA/Mod4/chapters/4.26.a.png used on input line 12.
 
 
 (./_minted-RHCSA/101C06AEB9E4469A72133158BB6E9F11168FD577FE9E8702C59C4F9251A216
-99.pygtex) <RHCSA/Mod4/chapters/4.26.b.png, id=2456, 1371.1225pt x 770.88pt>
+99.pygtex) <RHCSA/Mod4/chapters/4.26.b.png, id=2461, 1371.1225pt x 770.88pt>
 File: RHCSA/Mod4/chapters/4.26.b.png Graphic file (type png)
 
 <use RHCSA/Mod4/chapters/4.26.b.png>
@@ -4083,23 +4083,17 @@ ewer -via <vnc-username>@<vnc-host> <vnc-host>:1\T1/phv/m/n/10 .
 99.pygtex))) (./shortcuts.tex [185 <./RHCSA/Mod4/chapters/4.26.b.png>]
 Chapter 26.
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 14.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 18.
  [186
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 14.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 18.
  (./RHCSA.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 14.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 14.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 18.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 18.
+Package rerunfilecheck Info: File `RHCSA.out' has not changed.
+(rerunfilecheck)             Checksum: C23D18F30539B76D9C3BAF8E71B0B880;23558.
 
-
-Package rerunfilecheck Warning: File `RHCSA.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `RHCSA.out':
-(rerunfilecheck)             Before: 258055A86E92B6EC3F79838F96978700;23496
-(rerunfilecheck)             After:  C23D18F30539B76D9C3BAF8E71B0B880;23558.
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -4107,10 +4101,10 @@ runsystem(rm RHCSA.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 12395 strings out of 494946
- 287314 string characters out of 6180980
+ 12396 strings out of 494946
+ 287326 string characters out of 6180980
  416532 words of memory out of 5000000
- 13748 multiletter control sequences out of 15000+600000
+ 13749 multiletter control sequences out of 15000+600000
  42203 words of font info for 52 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  39i,26n,38p,1540b,623s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -4130,10 +4124,10 @@ xmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvet
 ic/uhvro8a.pfb>
-Output written on RHCSA.pdf (187 pages, 4665540 bytes).
+Output written on RHCSA.pdf (187 pages, 4665719 bytes).
 PDF statistics:
- 2650 PDF objects out of 2984 (max. 8388607)
- 2400 compressed objects within 24 object streams
+ 2655 PDF objects out of 2984 (max. 8388607)
+ 2404 compressed objects within 25 object streams
  561 named destinations out of 1000 (max. 500000)
- 2616 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2624 words of extra memory for PDF output out of 10000 (max. 10000000)
 

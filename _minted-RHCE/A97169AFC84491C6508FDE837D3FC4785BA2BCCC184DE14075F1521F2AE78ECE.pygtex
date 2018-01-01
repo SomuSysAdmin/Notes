@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+passwd:     files sss ldap
+shadow:     files sss ldap
+group:      files sss ldap
+\end{Verbatim}

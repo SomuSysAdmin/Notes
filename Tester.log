@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  23 DEC 2017 21:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  1 JAN 2018 10:48
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -982,7 +982,7 @@ LaTeX Info: Redefining \nameref on input line 6.
 \openout6 = `Tester.out'.
 
 
-(./RHCSA/Mod4/chapters/4.26 Configuring VNC Access.tex
+(./RHCE/Mod1/chapters/1.1 Configuring Authentication.tex
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
@@ -1000,133 +1000,214 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 7.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 4.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 9.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 4.
-<RHCSA/Mod4/chapters/4.26.a.png, id=24, 1371.1225pt x 770.88pt>
-File: RHCSA/Mod4/chapters/4.26.a.png Graphic file (type png)
-
-<use RHCSA/Mod4/chapters/4.26.a.png>
-Package pdftex.def Info: RHCSA/Mod4/chapters/4.26.a.png used on input line 12.
-(pdftex.def)             Requested size: 342.62576pt x 192.62543pt.
- [1
-
-
-{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map} <./RHCSA/Mod
-4/chapters/4.26.a.png>]
+(Font)              scaled to size 9.49997pt on input line 9.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 23.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 11.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 9.49997pt on input line 23.
+(Font)              scaled to size 9.49997pt on input line 11.
+
+Overfull \hbox (1.3599pt too wide) in paragraph at lines 19--21
+\T1/phv/m/n/10 Thus, the Iden-tity Man-age-ment pro-vided by IPA bun-dles up so
+me pretty com-pli-cated projects
+ []
+
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 11.39996pt on input line 24.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 24.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 11.39996pt on input line 24.
+[1
+
+
+{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}]
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/B22F978352A864B907C74DB801AB94E35FC80B958B67AEA9004A7ED15645E
+(./_minted-Tester/209211916FA0DA31B205AEFC3BB2E9745FC80B958B67AEA9004A7ED15645E
 94A.pygtex
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 1.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
 )
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 37.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 37.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 37.
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/B8D3B2B507C0C380116720B47CC9D0F55FC80B958B67AEA9004A7ED15645E
+(./_minted-Tester/3E86B3E9E244DCA52408BBD7753EBE5A5FC80B958B67AEA9004A7ED15645E
 94A.pygtex)
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 49.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 49.
-\openout3 = `Tester.pyg'.
-
-
-(./_minted-Tester/DD5B1BF0AF4CD24FF1C4A67E33323D00B2DC55294848DCE6CE6B7F9038926
-FD4.pygtex) [2]
-\openout3 = `Tester.pyg'.
-
-
-(./_minted-Tester/DC7347FD8F5F19D64F6F1630E3E092B75FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
-\openout3 = `Tester.pyg'.
-
-
-(./_minted-Tester/00DB165423AA403E64464E4DADF9CA765FC80B958B67AEA9004A7ED15645E
-94A.pygtex)
-\openout3 = `Tester.pyg'.
-
-
-(./_minted-Tester/61B448BE85E5DCC1DDE846333834BF925FC80B958B67AEA9004A7ED15645E
-94A.pygtex
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 4.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 4.
-)
-\openout3 = `Tester.pyg'.
-
-
-(./_minted-Tester/101C06AEB9E4469A72133158BB6E9F115FC80B958B67AEA9004A7ED15645E
-94A.pygtex) <RHCSA/Mod4/chapters/4.26.b.png, id=46, 1371.1225pt x 770.88pt>
-File: RHCSA/Mod4/chapters/4.26.b.png Graphic file (type png)
-
-<use RHCSA/Mod4/chapters/4.26.b.png>
-Package pdftex.def Info: RHCSA/Mod4/chapters/4.26.b.png used on input line 134.
-
-(pdftex.def)             Requested size: 342.62576pt x 192.62543pt.
- [3]
-Overfull \hbox (5.5503pt too wide) in paragraph at lines 140--141
-[]\T1/cmtt/m/n/10 vncviewer \T1/phv/m/n/10 com-mand is: []\T1/cmtt/m/n/10 vncvi
-ewer -via <vnc-username>@<vnc-host> <vnc-host>:1\T1/phv/m/n/10 .
+Overfull \hbox (17.04753pt too wide) in paragraph at lines 60--74
+[] 
  []
 
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/62676A61281A3B1B1AB7EAF96965543A5FC80B958B67AEA9004A7ED15645E
-94A.pygtex))
+(./_minted-Tester/57F00FAE11228C0A117EF7104FD04E345FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/4CA830187A7024BED713F1A1C2B27F625FC80B958B67AEA9004A7ED15645E
+94A.pygtex [2])
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/383B80A297A283F8CDA84AA4261D813A5FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/9267AEB13AA9E2F32423468BC5208AD05FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/897A63106228DBF9A364B4A47C95F37D5FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/7E37B3B0FB986ECF27DC14597C62B6485FC80B958B67AEA9004A7ED15645E
+94A.pygtex) [3]
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/E09FF46347953960ECA32AB81FED18CDB2DC55294848DCE6CE6B7F9038926
+FD4.pygtex)
+Overfull \hbox (24.06303pt too wide) in paragraph at lines 165--167
+\T1/phv/m/n/10 This is im-por-tant so that we can use the FQDN of the server la
+ter while us-ing the []\T1/cmtt/m/n/10 authconfig-tui
+ []
+
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/8EAFC74EB24F492BE42A49DEC816790DB2DC55294848DCE6CE6B7F9038926
+FD4.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/218CE1C9FF2A013D199AA0038A3CC54FB2DC55294848DCE6CE6B7F9038926
+FD4.pygtex [4])
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/C4A36EC77BC98DCB05D4E5A112908FE75FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/9271D1D8530A2BE82515E45CC8C2EDA55FC80B958B67AEA9004A7ED15645E
+94A.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/0E299E0A45D6459FEE2636C9DF333593B2DC55294848DCE6CE6B7F9038926
+FD4.pygtex)
+\openout3 = `Tester.pyg'.
+
+
+(./_minted-Tester/C206AEB531429A1F12F5E70521F77A37B2DC55294848DCE6CE6B7F9038926
+FD4.pygtex)
+Overfull \hbox (10.70216pt too wide) in paragraph at lines 251--252
+\T1/phv/m/n/10 The pri-mary con-fig-u-ra-tion of the au-th-con-fig uti-tl-ity i
+s lo-cated at []\T1/cmtt/m/n/10 /etc/sysconfig/authconfig\T1/phv/m/n/10 .
+ []
+
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-Tester/A7635D90EBA9718F5DC1ED0A32662124B2DC55294848DCE6CE6B7F9038926FD4.py
+gtex Tester.pyg)...executed.
+
+
+(./_minted-Tester/A7635D90EBA9718F5DC1ED0A32662124B2DC55294848DCE6CE6B7F9038926
+FD4.pygtex [5])
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-Tester/420529302EFF4F0EB92413968B819B21B2DC55294848DCE6CE6B7F9038926FD4.py
+gtex Tester.pyg)...executed.
+
+
+(./_minted-Tester/420529302EFF4F0EB92413968B819B21B2DC55294848DCE6CE6B7F9038926
+FD4.pygtex [6])
+Overfull \hbox (23.03793pt too wide) in paragraph at lines 357--358
+\T1/phv/m/n/10 The Ker-beros con-fig-u-ra-tion file (for con-nect-ing to a Ker-
+beros Server) is stored in []\T1/cmtt/m/n/10 /etc/krb5.conf
+ []
+
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-Tester/2987DB98D4EDFD5300D6F916E2B69866B2DC55294848DCE6CE6B7F9038926FD4.py
+gtex Tester.pyg)...executed.
+
+
+(./_minted-Tester/2987DB98D4EDFD5300D6F916E2B69866B2DC55294848DCE6CE6B7F9038926
+FD4.pygtex [7])
+\openout3 = `Tester.pyg'.
+
+runsystem(pygmentize -l bash -f latex -P commandprefix=PYG -F tokenmerge -o _mi
+nted-Tester/A97169AFC84491C6508FDE837D3FC478B2DC55294848DCE6CE6B7F9038926FD4.py
+gtex Tester.pyg)...executed.
+
+
+(./_minted-Tester/A97169AFC84491C6508FDE837D3FC478B2DC55294848DCE6CE6B7F9038926
+FD4.pygtex))
+runsystem(rm _minted-Tester/08C4E948CF3143D72E7F1B85469DBAE5B2DC55294848DCE6CE6
+B7F9038926FD4.pygtex)...executed.
+
+runsystem(rm _minted-Tester/710485F5DAF03F43EBAA6D5953425ED4B2DC55294848DCE6CE6
+B7F9038926FD4.pygtex)...executed.
+
+runsystem(rm _minted-Tester/25449C6F39D4A13A9DFFFE00A9EE5F33B2DC55294848DCE6CE6
+B7F9038926FD4.pygtex)...executed.
+
+runsystem(rm _minted-Tester/3F7DA5CB7B086F8BF67BF8F4126D5F9FB2DC55294848DCE6CE6
+B7F9038926FD4.pygtex)...executed.
+
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 11.
- [4 <./RHCSA/Mod4/chapters/4.26.b.png>]
+ [8]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 11.
  (./Tester.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 11.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 11.
 Package rerunfilecheck Info: File `Tester.out' has not changed.
-(rerunfilecheck)             Checksum: 13DE2BEB8676957C16C45BBC548BB55E;357.
+(rerunfilecheck)             Checksum: B35998459A817C4E1D9F688EED8F1081;1366.
 runsystem(rm Tester.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 9881 strings out of 494946
- 155410 string characters out of 6180980
- 292795 words of memory out of 5000000
- 12964 multiletter control sequences out of 15000+600000
- 35510 words of font info for 45 fonts, out of 8000000 for 9000
+ 9925 strings out of 494946
+ 159079 string characters out of 6180980
+ 295505 words of memory out of 5000000
+ 12963 multiletter control sequences out of 15000+600000
+ 33687 words of font info for 39 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 39i,8n,37p,831b,500s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,9n,38p,831b,583s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr
 /share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
-fit0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm0500
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Tester.pdf (4 pages, 760619 bytes).
+onts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/cm-super/sfit0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/cm-super/sfrm0500.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-
+super/sftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
+ftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on Tester.pdf (8 pages, 191963 bytes).
 PDF statistics:
- 105 PDF objects out of 1000 (max. 8388607)
- 82 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 156 PDF objects out of 1000 (max. 8388607)
+ 135 compressed objects within 2 object streams
+ 26 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 

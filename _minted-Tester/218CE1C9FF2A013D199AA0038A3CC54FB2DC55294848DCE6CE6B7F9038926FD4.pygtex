@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} In Authentication Configuration:}
+\PYG{o}{[}*\PYG{o}{]} Use LDAP
+\PYG{o}{[}*\PYG{o}{]} User Kerberos Authentication
+
+\PYG{c+c1}{\PYGZsh{} LDAP Settings}
+\PYG{o}{[}*\PYG{o}{]} Use TLS
+Server:	ldap://vmdeux.somuvmnet.local
+Base DN:	\PYG{n+nv}{dc}\PYG{o}{=}somuvmnet, \PYG{n+nv}{dc}\PYG{o}{=}\PYG{n+nb}{local}
+
+\PYG{c+c1}{\PYGZsh{} Kerberos Settings}
+Realm:	SOMUVMNET.LOCAL
+\PYG{o}{[}*\PYG{o}{]} Use DNS to resolve hosts to realms
+\PYG{o}{[}*\PYG{o}{]} Use DNS to resolve KDCs \PYG{k}{for} realms
+\end{Verbatim}

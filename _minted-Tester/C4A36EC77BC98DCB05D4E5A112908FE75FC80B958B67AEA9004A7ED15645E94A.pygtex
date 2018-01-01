@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{cd} /etc/openldap/cacerts/
+\PYG{g+gp}{\PYGZsh{}} scp vmdeux.somuvmnet.local:/root/cacert.p12 .
+\end{Verbatim}

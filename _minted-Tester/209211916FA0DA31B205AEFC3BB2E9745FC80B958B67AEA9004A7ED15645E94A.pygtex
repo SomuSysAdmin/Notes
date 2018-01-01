@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} yum \PYGZhy{}y install ipa\PYGZhy{}server \PYG{n+nb}{bind} nds\PYGZhy{}ldap
+\PYG{g+gp}{\PYGZsh{}} ipa\PYGZhy{}server\PYGZhy{}install
+\end{Verbatim}

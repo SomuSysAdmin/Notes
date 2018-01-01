@@ -16,25 +16,44 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\@writefile{toc}{\contentsline {chapter}{\numberline {1}Configuring VNC Access}{1}{chapter.1}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Configuring Authentication}{1}{chapter.1}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {1.1}Understanding VNC}{1}{section.1.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces VNC Connection}}{1}{figure.1.1}}
-\newlabel{fig:4 VNC Connection}{{1.1}{1}{VNC Connection}{figure.1.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Configuring a VNC Server}{2}{section.1.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.1}Creating the VNC Server Configuration File}{2}{subsection.1.2.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Understanding RedHat Identity Management}{1}{section.1.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.1}IdM Server Components and Requirements}{1}{subsection.1.1.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.2}Preparing IdM Installation}{2}{subsection.1.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.3}Installing IdM}{2}{subsection.1.1.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.4}Understanding Kerberos Tickets}{3}{subsection.1.1.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.5}Managing the IdM Server}{3}{subsection.1.1.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.6}Creating User Accounts}{3}{subsection.1.1.6}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Using authconfig to Setup External Authentication}{4}{section.1.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Configuring a System to Authenticate using Kerberos}{4}{section.1.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}Troubleshooting Authentication}{5}{subsection.1.3.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Understanding authconfig Configuration Files}{6}{section.1.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.1}Authconfig Configuration}{6}{subsection.1.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.2}SSSD Configuration}{6}{subsection.1.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.3}Kerberos Configuration File}{7}{subsection.1.4.3}}
 \gdef\minted@oldcachelist{,
   default-pyg-prefix.pygstyle,
   default.pygstyle,
-  B22F978352A864B907C74DB801AB94E35FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  B8D3B2B507C0C380116720B47CC9D0F55FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  DD5B1BF0AF4CD24FF1C4A67E33323D00B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  DC7347FD8F5F19D64F6F1630E3E092B75FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  00DB165423AA403E64464E4DADF9CA765FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  61B448BE85E5DCC1DDE846333834BF925FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  101C06AEB9E4469A72133158BB6E9F115FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  62676A61281A3B1B1AB7EAF96965543A5FC80B958B67AEA9004A7ED15645E94A.pygtex}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces Steps for VNC Server config}}{4}{figure.1.2}}
-\newlabel{fig:4 Steps for VNC Server config}{{1.2}{4}{Steps for VNC Server config}{figure.1.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}Connecting to a VNC Server}{4}{section.1.3}}
+  209211916FA0DA31B205AEFC3BB2E9745FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  3E86B3E9E244DCA52408BBD7753EBE5A5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  57F00FAE11228C0A117EF7104FD04E345FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  4CA830187A7024BED713F1A1C2B27F625FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  383B80A297A283F8CDA84AA4261D813A5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  9267AEB13AA9E2F32423468BC5208AD05FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  897A63106228DBF9A364B4A47C95F37D5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  7E37B3B0FB986ECF27DC14597C62B6485FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  E09FF46347953960ECA32AB81FED18CDB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  8EAFC74EB24F492BE42A49DEC816790DB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  218CE1C9FF2A013D199AA0038A3CC54FB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  C4A36EC77BC98DCB05D4E5A112908FE75FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  9271D1D8530A2BE82515E45CC8C2EDA55FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  0E299E0A45D6459FEE2636C9DF333593B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  C206AEB531429A1F12F5E70521F77A37B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  A7635D90EBA9718F5DC1ED0A32662124B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  420529302EFF4F0EB92413968B819B21B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  2987DB98D4EDFD5300D6F916E2B69866B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
+  A97169AFC84491C6508FDE837D3FC478B2DC55294848DCE6CE6B7F9038926FD4.pygtex}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.4}NSSwtich Configuration}{8}{subsection.1.4.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.5}NSLCD Configuration}{8}{subsection.1.4.5}}
