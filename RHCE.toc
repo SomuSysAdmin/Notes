@@ -17,21 +17,26 @@
 \contentsline {subsection}{\numberline {1.4.4}NSSwtich Configuration}{11}{subsection.1.4.4}
 \contentsline {subsection}{\numberline {1.4.5}NSLCD Configuration}{11}{subsection.1.4.5}
 \contentsline {chapter}{\numberline {2}Configuring iSCSI Target and Initiator}{12}{chapter.2}
-\contentsline {chapter}{\numberline {3}System Performance Reporting}{13}{chapter.3}
-\contentsline {chapter}{\numberline {4}System Optimization Basics}{14}{chapter.4}
-\contentsline {chapter}{\numberline {5}Configuring Logging}{15}{chapter.5}
-\contentsline {part}{II\hspace {1em}Networking and Apache}{16}{part.2}
-\contentsline {chapter}{\numberline {6}Configuring Advanced Networking}{17}{chapter.6}
-\contentsline {chapter}{\numberline {7}Managing Linux Based Firewalls}{18}{chapter.7}
-\contentsline {chapter}{\numberline {8}Configuring Apache Virtual Hosts}{19}{chapter.8}
-\contentsline {chapter}{\numberline {9}Managing Advanced Apache Features}{20}{chapter.9}
-\contentsline {part}{III\hspace {1em}DNS and File Sharing}{21}{part.3}
-\contentsline {chapter}{\numberline {10}Configuring a Cache-only DNS Server}{22}{chapter.10}
-\contentsline {chapter}{\numberline {11}Configuring NFS File Sharing}{23}{chapter.11}
-\contentsline {chapter}{\numberline {12}Managing SMB File Sharing}{24}{chapter.12}
-\contentsline {part}{IV\hspace {1em}Essential Back-end Services}{25}{part.4}
-\contentsline {chapter}{\numberline {13}Setting up an SMTP Server}{26}{chapter.13}
-\contentsline {chapter}{\numberline {14}Managing SSH}{27}{chapter.14}
-\contentsline {chapter}{\numberline {15}Managing MariaDB}{28}{chapter.15}
-\contentsline {chapter}{\numberline {16}Managing Time Services}{29}{chapter.16}
-\contentsline {chapter}{\numberline {17}Shell Scripting}{30}{chapter.17}
+\contentsline {section}{\numberline {2.1}Understanding iSCSI Target and Initiator}{12}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}iSCSI Operation}{12}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}iSCSI Components}{13}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Basic iSCSI Terminology}{13}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}After connecting an initiator to an iSCSI Target}{13}{subsection.2.1.4}
+\contentsline {chapter}{\numberline {3}System Performance Reporting}{14}{chapter.3}
+\contentsline {chapter}{\numberline {4}System Optimization Basics}{15}{chapter.4}
+\contentsline {chapter}{\numberline {5}Configuring Logging}{16}{chapter.5}
+\contentsline {part}{II\hspace {1em}Networking and Apache}{17}{part.2}
+\contentsline {chapter}{\numberline {6}Configuring Advanced Networking}{18}{chapter.6}
+\contentsline {chapter}{\numberline {7}Managing Linux Based Firewalls}{19}{chapter.7}
+\contentsline {chapter}{\numberline {8}Configuring Apache Virtual Hosts}{20}{chapter.8}
+\contentsline {chapter}{\numberline {9}Managing Advanced Apache Features}{21}{chapter.9}
+\contentsline {part}{III\hspace {1em}DNS and File Sharing}{22}{part.3}
+\contentsline {chapter}{\numberline {10}Configuring a Cache-only DNS Server}{23}{chapter.10}
+\contentsline {chapter}{\numberline {11}Configuring NFS File Sharing}{24}{chapter.11}
+\contentsline {chapter}{\numberline {12}Managing SMB File Sharing}{25}{chapter.12}
+\contentsline {part}{IV\hspace {1em}Essential Back-end Services}{26}{part.4}
+\contentsline {chapter}{\numberline {13}Setting up an SMTP Server}{27}{chapter.13}
+\contentsline {chapter}{\numberline {14}Managing SSH}{28}{chapter.14}
+\contentsline {chapter}{\numberline {15}Managing MariaDB}{29}{chapter.15}
+\contentsline {chapter}{\numberline {16}Managing Time Services}{30}{chapter.16}
+\contentsline {chapter}{\numberline {17}Shell Scripting}{31}{chapter.17}

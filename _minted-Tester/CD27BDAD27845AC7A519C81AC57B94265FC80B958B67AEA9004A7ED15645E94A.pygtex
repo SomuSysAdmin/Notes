@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} targetcli
+\PYG{g+go}{Warning: Could not load preferences file /root/.targetcli/prefs.bin.}
+\PYG{g+go}{targetcli shell version 2.1.fb46}
+\PYG{g+go}{Copyright 2011\PYGZhy{}2013 by Datera, Inc and others.}
+\PYG{g+go}{For help on commands, type \PYGZsq{}help\PYGZsq{}.}
+
+\PYG{g+go}{/\PYGZgt{}}
+\end{Verbatim}

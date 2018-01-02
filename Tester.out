@@ -1,17 +1,15 @@
-\BOOKMARK [0][-]{chapter.1}{Configuring Authentication}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Understanding RedHat Identity Management}{chapter.1}% 2
-\BOOKMARK [2][-]{subsection.1.1.1}{IdM Server Components and Requirements}{section.1.1}% 3
-\BOOKMARK [2][-]{subsection.1.1.2}{Preparing IdM Installation}{section.1.1}% 4
-\BOOKMARK [2][-]{subsection.1.1.3}{Installing IdM}{section.1.1}% 5
-\BOOKMARK [2][-]{subsection.1.1.4}{Understanding Kerberos Tickets}{section.1.1}% 6
-\BOOKMARK [2][-]{subsection.1.1.5}{Managing the IdM Server}{section.1.1}% 7
-\BOOKMARK [2][-]{subsection.1.1.6}{Creating User Accounts}{section.1.1}% 8
-\BOOKMARK [1][-]{section.1.2}{Using authconfig to Setup External Authentication}{chapter.1}% 9
-\BOOKMARK [1][-]{section.1.3}{Configuring a System to Authenticate using Kerberos}{chapter.1}% 10
-\BOOKMARK [2][-]{subsection.1.3.1}{Troubleshooting Authentication}{section.1.3}% 11
-\BOOKMARK [1][-]{section.1.4}{Understanding authconfig Configuration Files}{chapter.1}% 12
-\BOOKMARK [2][-]{subsection.1.4.1}{Authconfig Configuration}{section.1.4}% 13
-\BOOKMARK [2][-]{subsection.1.4.2}{SSSD Configuration}{section.1.4}% 14
-\BOOKMARK [2][-]{subsection.1.4.3}{Kerberos Configuration File}{section.1.4}% 15
-\BOOKMARK [2][-]{subsection.1.4.4}{NSSwtich Configuration}{section.1.4}% 16
-\BOOKMARK [2][-]{subsection.1.4.5}{NSLCD Configuration}{section.1.4}% 17
+\BOOKMARK [0][-]{chapter.1}{Configuring iSCSI Target and Initiator}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Understanding iSCSI Target and Initiator}{chapter.1}% 2
+\BOOKMARK [2][-]{subsection.1.1.1}{iSCSI Operation}{section.1.1}% 3
+\BOOKMARK [2][-]{subsection.1.1.2}{iSCSI Components}{section.1.1}% 4
+\BOOKMARK [2][-]{subsection.1.1.3}{Basic iSCSI Terminology}{section.1.1}% 5
+\BOOKMARK [2][-]{subsection.1.1.4}{After connecting an initiator to an iSCSI Target}{section.1.1}% 6
+\BOOKMARK [1][-]{section.1.2}{Setting up an iSCSI Target}{chapter.1}% 7
+\BOOKMARK [2][-]{subsection.1.2.1}{Creating the LVM}{section.1.2}% 8
+\BOOKMARK [2][-]{subsection.1.2.2}{Creating the iSCSI configuration using targetcli}{section.1.2}% 9
+\BOOKMARK [2][-]{subsection.1.2.3}{Target Creation}{section.1.2}% 10
+\BOOKMARK [2][-]{subsection.1.2.4}{TPG Configuration}{section.1.2}% 11
+\BOOKMARK [2][-]{subsection.1.2.5}{Adding a rule to the firewall}{section.1.2}% 12
+\BOOKMARK [2][-]{subsection.1.2.6}{Starting target.service}{section.1.2}% 13
+\BOOKMARK [1][-]{section.1.3}{Connecting the iSCSI Initiator to an iSCSI SAN}{chapter.1}% 14
+\BOOKMARK [1][-]{section.1.4}{Verifying the iSCSI Connection}{chapter.1}% 15

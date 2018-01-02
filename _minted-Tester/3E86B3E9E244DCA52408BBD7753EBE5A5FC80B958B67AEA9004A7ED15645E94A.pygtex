@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} ipa\PYGZhy{}server\PYGZhy{}install \PYGZhy{}\PYGZhy{}hostname\PYG{o}{=}vmPrime.somuVMnet.local \PYGZhy{}n somuVMnet.local \PYGZhy{}r SOMUVMNET.COM \PYGZhy{}p password \PYGZhy{}a password \PYGZhy{}U \PYGZhy{}\PYGZhy{}no\PYGZhy{}ntp
-\end{Verbatim}

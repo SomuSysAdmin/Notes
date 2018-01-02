@@ -16,44 +16,49 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\@writefile{toc}{\contentsline {chapter}{\numberline {1}Configuring Authentication}{1}{chapter.1}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Configuring iSCSI Target and Initiator}{1}{chapter.1}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {1.1}Understanding RedHat Identity Management}{1}{section.1.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.1}IdM Server Components and Requirements}{1}{subsection.1.1.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.2}Preparing IdM Installation}{2}{subsection.1.1.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.3}Installing IdM}{2}{subsection.1.1.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.4}Understanding Kerberos Tickets}{3}{subsection.1.1.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.5}Managing the IdM Server}{3}{subsection.1.1.5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.6}Creating User Accounts}{3}{subsection.1.1.6}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Using authconfig to Setup External Authentication}{4}{section.1.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}Configuring a System to Authenticate using Kerberos}{4}{section.1.3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}Troubleshooting Authentication}{5}{subsection.1.3.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Understanding authconfig Configuration Files}{6}{section.1.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.1}Authconfig Configuration}{6}{subsection.1.4.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.2}SSSD Configuration}{6}{subsection.1.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.3}Kerberos Configuration File}{7}{subsection.1.4.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Understanding iSCSI Target and Initiator}{1}{section.1.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.1}iSCSI Operation}{1}{subsection.1.1.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.2}iSCSI Components}{2}{subsection.1.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.3}Basic iSCSI Terminology}{2}{subsection.1.1.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1.4}After connecting an initiator to an iSCSI Target}{2}{subsection.1.1.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Setting up an iSCSI Target}{3}{section.1.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces iSCSI Target Setup}}{3}{figure.1.1}}
+\newlabel{fig:1 iSCSI Target Setup}{{1.1}{3}{iSCSI Target Setup}{figure.1.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.1}Creating the LVM}{3}{subsection.1.2.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.2}Creating the iSCSI configuration using targetcli}{4}{subsection.1.2.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.3}Target Creation}{5}{subsection.1.2.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.4}TPG Configuration}{6}{subsection.1.2.4}}
+\@writefile{toc}{\contentsline {subsubsection}{ACLs}{6}{section*.1}}
+\@writefile{toc}{\contentsline {subsubsection}{LUNs}{7}{section*.2}}
+\@writefile{toc}{\contentsline {subsubsection}{Portals}{7}{section*.3}}
 \gdef\minted@oldcachelist{,
   default-pyg-prefix.pygstyle,
   default.pygstyle,
-  209211916FA0DA31B205AEFC3BB2E9745FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  3E86B3E9E244DCA52408BBD7753EBE5A5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  57F00FAE11228C0A117EF7104FD04E345FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  4CA830187A7024BED713F1A1C2B27F625FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  383B80A297A283F8CDA84AA4261D813A5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  9267AEB13AA9E2F32423468BC5208AD05FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  897A63106228DBF9A364B4A47C95F37D5FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  7E37B3B0FB986ECF27DC14597C62B6485FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  E09FF46347953960ECA32AB81FED18CDB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  8EAFC74EB24F492BE42A49DEC816790DB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  218CE1C9FF2A013D199AA0038A3CC54FB2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  C4A36EC77BC98DCB05D4E5A112908FE75FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  9271D1D8530A2BE82515E45CC8C2EDA55FC80B958B67AEA9004A7ED15645E94A.pygtex,
-  0E299E0A45D6459FEE2636C9DF333593B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  C206AEB531429A1F12F5E70521F77A37B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  A7635D90EBA9718F5DC1ED0A32662124B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  420529302EFF4F0EB92413968B819B21B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  2987DB98D4EDFD5300D6F916E2B69866B2DC55294848DCE6CE6B7F9038926FD4.pygtex,
-  A97169AFC84491C6508FDE837D3FC478B2DC55294848DCE6CE6B7F9038926FD4.pygtex}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.4}NSSwtich Configuration}{8}{subsection.1.4.4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.5}NSLCD Configuration}{8}{subsection.1.4.5}}
+  EFC3BF1B7E717CC6F36E0D74CCA117AF5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  C7E6404918349FB283406B63CBADC2565FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  232D4B3646DF77210DFFB3F396BA3CD25FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  CD27BDAD27845AC7A519C81AC57B94265FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  F725B981C13915B61EDF011F6D5C50075FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  91B288E0A1A1FF66B4ABB248918FEB915FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  5B890AF1275DE0ED9627FFEF91684E085FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  A1437C136598296A8EE33E211368FAF65FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  A113202715ED8758071D21AF95D9145C5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  582321B3799A212454649460E847A51D5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  221CD754017A23C5B9116AE17183B7B15FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  C839990CA54D667B021D327AFD0C77955FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  B9C002E41F5F637A41279E6A5F37F25D5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  52BD816FDE008CCE8042C229336D54C85FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  9C958F87D3E53DD5F7D7D3D0B4DAD8BA5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  AAC70B8C78A2D69A3A9317F861EF531F5FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  4F73394B6F53566447FC54F22F0C1D895FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  C646AA6B58C9BEADC3F12A8DFB1A56465FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  D41DBC503DE7E518E5E4FC0A4EB675A85FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  F15310D2A33A3822913008C1C16D04895FC80B958B67AEA9004A7ED15645E94A.pygtex,
+  BF5DC8946E3EEEF6BF97EAC6F221B46B5FC80B958B67AEA9004A7ED15645E94A.pygtex}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.5}Adding a rule to the firewall}{8}{subsection.1.2.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.6}Starting target.service}{8}{subsection.1.2.6}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Connecting the iSCSI Initiator to an iSCSI SAN}{9}{section.1.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Verifying the iSCSI Connection}{9}{section.1.4}}

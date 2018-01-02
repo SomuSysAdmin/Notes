@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} lsblk
+\PYG{g+go}{NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT}
+\PYG{g+go}{sda               8:0    0   20G  0 disk}
+\PYG{g+go}{├─sda1            8:1    0    1G  0 part /boot}
+\PYG{g+go}{└─sda2            8:2    0   19G  0 part}
+\PYG{g+go}{├─centos\PYGZhy{}root 253:0    0   17G  0 lvm  /}
+\PYG{g+go}{└─centos\PYGZhy{}swap 253:1    0    2G  0 lvm  [SWAP]}
+\PYG{g+go}{sdb               8:16   0    1G  0 disk}
+\PYG{g+go}{sr0              11:0    1  8.1G  0 rom}
+\end{Verbatim}

@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{/backstores\PYGZgt{} ls}
+\PYG{g+go}{o\PYGZhy{} backstores ............................................................ [...]}
+\PYG{g+go}{  o\PYGZhy{} block ................................................ [Storage Objects: 2]}
+\PYG{g+go}{  | o\PYGZhy{} block1 ............ [/dev/vgSAN/lvSAN1 (500.0MiB) write\PYGZhy{}thru deactivated]}
+\PYG{g+go}{  | | o\PYGZhy{} alua ................................................. [ALUA Groups: 1]}
+\PYG{g+go}{  | |   o\PYGZhy{} default\PYGZus{}tg\PYGZus{}pt\PYGZus{}gp ..................... [ALUA state: Active/optimized]}
+\PYG{g+go}{  | o\PYGZhy{} block2 ............ [/dev/vgSAN/lvSAN2 (520.0MiB) write\PYGZhy{}thru deactivated]}
+\PYG{g+go}{  |   o\PYGZhy{} alua ................................................. [ALUA Groups: 1]}
+\PYG{g+go}{  |     o\PYGZhy{} default\PYGZus{}tg\PYGZus{}pt\PYGZus{}gp ..................... [ALUA state: Active/optimized]}
+\PYG{g+go}{  o\PYGZhy{} fileio ............................................... [Storage Objects: 1]}
+\PYG{g+go}{  | o\PYGZhy{} file1 ................. [/root/diskFile1 (1.0GiB) write\PYGZhy{}back deactivated]}
+\PYG{g+go}{  |   o\PYGZhy{} alua ................................................. [ALUA Groups: 1]}
+\PYG{g+go}{  |     o\PYGZhy{} default\PYGZus{}tg\PYGZus{}pt\PYGZus{}gp ..................... [ALUA state: Active/optimized]}
+\PYG{g+go}{  o\PYGZhy{} pscsi ................................................ [Storage Objects: 0]}
+\PYG{g+go}{  o\PYGZhy{} ramdisk .............................................. [Storage Objects: 0]}
+\end{Verbatim}

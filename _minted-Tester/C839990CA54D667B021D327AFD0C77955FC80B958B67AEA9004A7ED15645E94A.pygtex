@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{/iscsi\PYGZgt{} cd iqn.2018\PYGZhy{}01.local.somuvmnet:target1/tpg1/acls}
+\PYG{g+go}{/iscsi/iqn.20...et1/tpg1/acls\PYGZgt{}}
+\end{Verbatim}

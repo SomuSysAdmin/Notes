@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  1 JAN 2018 11:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  2 JAN 2018 13:21
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1016,7 +1016,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.24 ...guring Advanced Networking}{17}{chapter.6}
+l.25 ...stem Performance Reporting}{14}{chapter.3}
                                                    [1
 
 ])
@@ -1176,78 +1176,83 @@ E.pygtex [10])
 E.pygtex)) (./RHCE/Mod1/chapters/1.2 Configuring iSCSI Target and Initiator.tex
 [11]
 Chapter 2.
-) (./RHCE/Mod1/chapters/1.3 System Performance Reporting.tex [12
+[12
 
 ]
+Overfull \hbox (11.15747pt too wide) in paragraph at lines 18--34
+[] 
+ []
+
+) (./RHCE/Mod1/chapters/1.3 System Performance Reporting.tex [13]
 Chapter 3.
-) (./RHCE/Mod1/chapters/1.4 System Optimization Basics.tex [13
+) (./RHCE/Mod1/chapters/1.4 System Optimization Basics.tex [14
 
 ]
 Chapter 4.
-) (./RHCE/Mod1/chapters/1.5 Configuring Logging.tex [14
+) (./RHCE/Mod1/chapters/1.5 Configuring Logging.tex [15
 
 ]
 Chapter 5.
-)) (./RHCE/Mod2/2. Networking and Apache.tex [15
+)) (./RHCE/Mod2/2. Networking and Apache.tex [16
 
-] [16
+] [17
 
 ]
 (./RHCE/Mod2/chapters/2.6 Configuring Advanced Networking.tex
 Chapter 6.
-) (./RHCE/Mod2/chapters/2.7 Managing Linux-Based Firewalls.tex [17
+) (./RHCE/Mod2/chapters/2.7 Managing Linux-Based Firewalls.tex [18
 
 ]
 Chapter 7.
-) (./RHCE/Mod2/chapters/2.8 Configuring Apache Virtual Hosts.tex [18
+) (./RHCE/Mod2/chapters/2.8 Configuring Apache Virtual Hosts.tex [19
 
 ]
 Chapter 8.
-) (./RHCE/Mod2/chapters/2.9 Managing Advanced Apache Features.tex [19
+) (./RHCE/Mod2/chapters/2.9 Managing Advanced Apache Features.tex [20
 
 ]
 Chapter 9.
-)) (./RHCE/Mod3/3. DNS and File Sharing.tex [20
+)) (./RHCE/Mod3/3. DNS and File Sharing.tex [21
 
-] [21
+] [22
 
 ]
 (./RHCE/Mod3/chapters/3.10 Configuring a Cache-only DNS Server.tex
 Chapter 10.
-) (./RHCE/Mod3/chapters/3.11 Configuring NFS File Sharing.tex [22
+) (./RHCE/Mod3/chapters/3.11 Configuring NFS File Sharing.tex [23
 
 ]
 Chapter 11.
-) (./RHCE/Mod3/chapters/3.12 Managing SMB File Sharing.tex [23
+) (./RHCE/Mod3/chapters/3.12 Managing SMB File Sharing.tex [24
 
 ]
 Chapter 12.
-)) (./RHCE/Mod4/4. Essential Back-end Services.tex [24
+)) (./RHCE/Mod4/4. Essential Back-end Services.tex [25
 
-] [25
+] [26
 
 ]
 (./RHCE/Mod4/chapters/4.13 Setting Up an SMTP Server.tex
 Chapter 13.
-) (./RHCE/Mod4/chapters/4.14 Managing SSH.tex [26
+) (./RHCE/Mod4/chapters/4.14 Managing SSH.tex [27
 
 ]
 Chapter 14.
-) (./RHCE/Mod4/chapters/4.15 Managing MariaDB.tex [27
+) (./RHCE/Mod4/chapters/4.15 Managing MariaDB.tex [28
 
 ]
 Chapter 15.
-) (./RHCE/Mod4/chapters/4.16 Managing Time Services.tex [28
+) (./RHCE/Mod4/chapters/4.16 Managing Time Services.tex [29
 
 ]
 Chapter 16.
-) (./RHCE/Mod4/chapters/4.17 Shell Scripting.tex [29
+) (./RHCE/Mod4/chapters/4.17 Shell Scripting.tex [30
 
 ]
 Chapter 17.
 ))
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 17.
- [30
+ [31
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 17.
@@ -1255,18 +1260,18 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 17.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 17.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 17.
 Package rerunfilecheck Info: File `RHCE.out' has not changed.
-(rerunfilecheck)             Checksum: 6CBE160216993F23EE5FEEB9AE3E39F1;2709.
+(rerunfilecheck)             Checksum: 705FF3E844C55C093C4ED74DA6DCC754;3114.
 runsystem(rm RHCE.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 10101 strings out of 494946
- 162956 string characters out of 6180980
+ 10112 strings out of 494946
+ 163123 string characters out of 6180980
  295485 words of memory out of 5000000
- 12997 multiletter control sequences out of 15000+600000
+ 13002 multiletter control sequences out of 15000+600000
  42203 words of font info for 52 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 39i,9n,38p,829b,585s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,9n,38p,1186b,585s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr
 /share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/f
@@ -1277,10 +1282,10 @@ super/sftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
 ftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on RHCE.pdf (31 pages, 203895 bytes).
+Output written on RHCE.pdf (32 pages, 210581 bytes).
 PDF statistics:
- 380 PDF objects out of 1000 (max. 8388607)
- 334 compressed objects within 4 object streams
- 69 named destinations out of 1000 (max. 500000)
- 297 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 411 PDF objects out of 1000 (max. 8388607)
+ 364 compressed objects within 4 object streams
+ 75 named destinations out of 1000 (max. 500000)
+ 337 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{/iscsi/iqn.20...et1/tpg1/acls\PYGZgt{} cd /iscsi}
+\PYG{g+go}{/iscsi\PYGZgt{} ls}
+\PYG{g+go}{  o\PYGZhy{} iscsi .......................................................... [Targets: 1]}
+\PYG{g+go}{    o\PYGZhy{} iqn.2018\PYGZhy{}01.local.somuvmnet:target1 ............................. [TPGs: 1]}
+\PYG{g+go}{      o\PYGZhy{} tpg1 ............................................. [no\PYGZhy{}gen\PYGZhy{}acls, no\PYGZhy{}auth]}
+\PYG{g+go}{        o\PYGZhy{} acls ........................................................ [ACLs: 1]}
+\PYG{g+go}{        | o\PYGZhy{} iqn.2018\PYGZhy{}01.local.somuvmnet:vmdeux ................. [Mapped LUNs: 0]}
+\PYG{g+go}{        o\PYGZhy{} luns ........................................................ [LUNs: 0]}
+\PYG{g+go}{        o\PYGZhy{} portals .................................................. [Portals: 1]}
+\PYG{g+go}{          o\PYGZhy{} 0.0.0.0:3260 ................................................... [OK]}
+\end{Verbatim}

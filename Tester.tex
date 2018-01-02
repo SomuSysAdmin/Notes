@@ -4,9 +4,44 @@
 \usepackage{booktabs}
 
 \begin{document}
-	\input{"RHCE/Mod1/chapters/1.1 Configuring Authentication"}
+	\input{"RHCE/Mod1/chapters/1.2 Configuring iSCSI Target and Initiator"}
+	
+	\subsection{Adding a rule to the firewall}
+	Now, we need to allow the TCP connections through port 3260 to use for SAN, using:
+	
+	\vspace{-15pt}
+	\begin{minted}{console}
+	# firewall-cmd --add-port=3260/tcp --permanent 
+	success
+	# firewall-cmd --reload
+	success
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Starting target.service}
+	Even though \textbf{targetcli} saves the present configuration to disk, a service called \textit{target.service} must be enabled to ensure that the saved configuration is loaded each time after reboots. This is done with:
+	
+	\vspace{-15pt}
+	\begin{minted}{console}
+	# systemctl start target
+	# systemctl enable target
+	Created symlink from /etc/systemd/system/multi-user.target.wants/target.service to /usr/lib/systemd/system/target.service.
+	# systemctl status target
+	● target.service - Restore LIO kernel target configuration
+	Loaded: loaded (/usr/lib/systemd/system/target.service; enabled; vendor preset: disabled)
+	Active: active (exited) since Tue 2018-01-02 16:28:20 IST; 25s ago
+	Main PID: 4291 (code=exited, status=0/SUCCESS)
+	
+	Jan 02 16:28:19 vmprime.somuvmnet.local systemd[1]: Starting Restore LIO kern...
+	Jan 02 16:28:20 vmprime.somuvmnet.local systemd[1]: Started Restore LIO kerne...
+	\end{minted}
+	\vspace{-10pt}
+	
+	\noindent
 	
 	
+	\section{Connecting the iSCSI Initiator to an iSCSI SAN}
+	\section{Verifying the iSCSI Connection}	
 	
 \end{document}
 
