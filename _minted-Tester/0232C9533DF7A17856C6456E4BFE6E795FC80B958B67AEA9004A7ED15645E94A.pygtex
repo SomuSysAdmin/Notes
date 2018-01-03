@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} systemctl start target
+\PYG{g+gp}{\PYGZsh{}} systemctl \PYG{n+nb}{enable} target
+\PYG{g+go}{Created symlink from /etc/systemd/system/multi\PYGZhy{}user.target.wants/target.service to /usr/lib/systemd/system/target.service.}
+\PYG{g+gp}{\PYGZsh{}} systemctl status target
+\PYG{g+go}{● target.service \PYGZhy{} Restore LIO kernel target configuration}
+\PYG{g+go}{Loaded: loaded (/usr/lib/systemd/system/target.service; enabled; vendor preset: disabled)}
+\PYG{g+go}{Active: active (exited) since Tue 2018\PYGZhy{}01\PYGZhy{}02 16:28:20 IST; 25s ago}
+\PYG{g+go}{Main PID: 4291 (code=exited, status=0/SUCCESS)}
+
+\PYG{g+go}{Jan 02 16:28:19 vmprime.somuvmnet.local systemd[1]: Starting Restore LIO kern...}
+\PYG{g+go}{Jan 02 16:28:20 vmprime.somuvmnet.local systemd[1]: Started Restore LIO kerne...}
+\end{Verbatim}

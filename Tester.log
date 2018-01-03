@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  2 JAN 2018 16:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  3 JAN 2018 09:45
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1132,37 +1132,30 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
 
 
 (./_minted-Tester/D41DBC503DE7E518E5E4FC0A4EB675A85FC80B958B67AEA9004A7ED15645E
-94A.pygtex [7]))
+94A.pygtex [7])
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/F15310D2A33A3822913008C1C16D04895FC80B958B67AEA9004A7ED15645E
+(./_minted-Tester/13E6C3474AE148CE204C7A1297A7274C5FC80B958B67AEA9004A7ED15645E
 94A.pygtex)
 \openout3 = `Tester.pyg'.
 
 
-(./_minted-Tester/BF5DC8946E3EEEF6BF97EAC6F221B46B5FC80B958B67AEA9004A7ED15645E
+(./_minted-Tester/0232C9533DF7A17856C6456E4BFE6E795FC80B958B67AEA9004A7ED15645E
 94A.pygtex
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 6.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 6.
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 46.
+))
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 12.
  [8] [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 46.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 12.
  (./Tester.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 46.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 46.
-
-
-Package rerunfilecheck Warning: File `Tester.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Tester.out':
-(rerunfilecheck)             Before: F21E52BD86C8CD12799FCC640587141B;1207
-(rerunfilecheck)             After:  E29EA81CFCF6529ED50725C589F1FDF1;1185.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 12.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 12.
+Package rerunfilecheck Info: File `Tester.out' has not changed.
+(rerunfilecheck)             Checksum: E29EA81CFCF6529ED50725C589F1FDF1;1185.
 runsystem(rm Tester.pyg)...executed.
 
  ) 
@@ -1184,7 +1177,7 @@ super/sftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
 ftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Tester.pdf (9 pages, 331784 bytes).
+Output written on Tester.pdf (9 pages, 331755 bytes).
 PDF statistics:
  159 PDF objects out of 1000 (max. 8388607)
  135 compressed objects within 2 object streams

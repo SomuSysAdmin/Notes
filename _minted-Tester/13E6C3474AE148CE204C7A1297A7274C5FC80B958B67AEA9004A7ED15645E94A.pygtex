@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} firewall\PYGZhy{}cmd \PYGZhy{}\PYGZhy{}add\PYGZhy{}port\PYG{o}{=}\PYG{l+m}{3260}/tcp \PYGZhy{}\PYGZhy{}permanent
+\PYG{g+go}{success}
+\PYG{g+gp}{\PYGZsh{}} firewall\PYGZhy{}cmd \PYGZhy{}\PYGZhy{}reload
+\PYG{g+go}{success}
+\end{Verbatim}

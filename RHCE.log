@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  2 JAN 2018 13:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.12.19)  2 JAN 2018 17:22
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1016,22 +1016,22 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.25 ...stem Performance Reporting}{14}{chapter.3}
+l.26 ....1}Creating the LVM}{15}{subsection.2.2.1}
                                                    [1
 
-])
+] [2])
 \tf@toc=\write7
 \openout7 = `RHCE.toc'.
 
 
-(./RHCE/Mod1/1. Advanced System Management.tex [2]
+(./RHCE/Mod1/1. Advanced System Management.tex [3]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
- [3
+ [4
 
 ]
 (./RHCE/Mod1/chapters/1.1 Configuring Authentication.tex
@@ -1052,7 +1052,7 @@ Overfull \hbox (1.3599pt too wide) in paragraph at lines 19--21
 me pretty com-pli-cated projects
  []
 
-[4
+[5
 
 ]
 \openout3 = `RHCE.pyg'.
@@ -1083,7 +1083,7 @@ Overfull \hbox (17.04753pt too wide) in paragraph at lines 60--74
 
 
 (./_minted-RHCE/4CA830187A7024BED713F1A1C2B27F62DE228684BFC6BA4567CFFEAE2CF371D
-5.pygtex [5])
+5.pygtex [6])
 \openout3 = `RHCE.pyg'.
 
 
@@ -1103,7 +1103,7 @@ Overfull \hbox (17.04753pt too wide) in paragraph at lines 60--74
 
 
 (./_minted-RHCE/7E37B3B0FB986ECF27DC14597C62B648DE228684BFC6BA4567CFFEAE2CF371D
-5.pygtex) [6]
+5.pygtex) [7]
 \openout3 = `RHCE.pyg'.
 
 
@@ -1123,7 +1123,7 @@ E.pygtex)
 
 
 (./_minted-RHCE/218CE1C9FF2A013D199AA0038A3CC54F5BA2BCCC184DE14075F1521F2AE78EC
-E.pygtex [7])
+E.pygtex [8])
 \openout3 = `RHCE.pyg'.
 
 
@@ -1153,12 +1153,12 @@ s lo-cated at []\T1/cmtt/m/n/10 /etc/sysconfig/authconfig\T1/phv/m/n/10 .
 
 
 (./_minted-RHCE/A7635D90EBA9718F5DC1ED0A326621245BA2BCCC184DE14075F1521F2AE78EC
-E.pygtex [8])
+E.pygtex [9])
 \openout3 = `RHCE.pyg'.
 
 
 (./_minted-RHCE/420529302EFF4F0EB92413968B819B215BA2BCCC184DE14075F1521F2AE78EC
-E.pygtex [9])
+E.pygtex [10])
 Overfull \hbox (23.03793pt too wide) in paragraph at lines 357--358
 \T1/phv/m/n/10 The Ker-beros con-fig-u-ra-tion file (for con-nect-ing to a Ker-
 beros Server) is stored in []\T1/cmtt/m/n/10 /etc/krb5.conf
@@ -1168,91 +1168,201 @@ beros Server) is stored in []\T1/cmtt/m/n/10 /etc/krb5.conf
 
 
 (./_minted-RHCE/2987DB98D4EDFD5300D6F916E2B698665BA2BCCC184DE14075F1521F2AE78EC
-E.pygtex [10])
+E.pygtex [11])
 \openout3 = `RHCE.pyg'.
 
 
 (./_minted-RHCE/A97169AFC84491C6508FDE837D3FC4785BA2BCCC184DE14075F1521F2AE78EC
 E.pygtex)) (./RHCE/Mod1/chapters/1.2 Configuring iSCSI Target and Initiator.tex
-[11]
+[12]
 Chapter 2.
-[12
+[13
 
 ]
 Overfull \hbox (11.15747pt too wide) in paragraph at lines 18--34
 [] 
  []
 
-) (./RHCE/Mod1/chapters/1.3 System Performance Reporting.tex [13]
+[14] <RHCE/Mod1/chapters/1.2.a.png, id=323, 1371.1225pt x 770.88pt>
+File: RHCE/Mod1/chapters/1.2.a.png Graphic file (type png)
+
+<use RHCE/Mod1/chapters/1.2.a.png>
+Package pdftex.def Info: RHCE/Mod1/chapters/1.2.a.png used on input line 48.
+(pdftex.def)             Requested size: 342.62576pt x 192.62543pt.
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/EFC3BF1B7E717CC6F36E0D74CCA117AFDE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/C7E6404918349FB283406B63CBADC256DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex [15 <./RHCE/Mod1/chapters/1.2.a.png>])
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/232D4B3646DF77210DFFB3F396BA3CD2DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/CD27BDAD27845AC7A519C81AC57B9426DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/F725B981C13915B61EDF011F6D5C5007DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex) [16]
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/91B288E0A1A1FF66B4ABB248918FEB91DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/5B890AF1275DE0ED9627FFEF91684E08DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/A1437C136598296A8EE33E211368FAF6DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/A113202715ED8758071D21AF95D9145CDE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/582321B3799A212454649460E847A51DDE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex [17])
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/221CD754017A23C5B9116AE17183B7B1DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/C839990CA54D667B021D327AFD0C7795DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/B9C002E41F5F637A41279E6A5F37F25DDE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/52BD816FDE008CCE8042C229336D54C8DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/9C958F87D3E53DD5F7D7D3D0B4DAD8BADE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex [18])
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/AAC70B8C78A2D69A3A9317F861EF531FDE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/4F73394B6F53566447FC54F22F0C1D89DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/C646AA6B58C9BEADC3F12A8DFB1A5646DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/D41DBC503DE7E518E5E4FC0A4EB675A8DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex [19])
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/13E6C3474AE148CE204C7A1297A7274CDE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)
+\openout3 = `RHCE.pyg'.
+
+
+(./_minted-RHCE/0232C9533DF7A17856C6456E4BFE6E79DE228684BFC6BA4567CFFEAE2CF371D
+5.pygtex)) (./RHCE/Mod1/chapters/1.3 System Performance Reporting.tex [20]
 Chapter 3.
-) (./RHCE/Mod1/chapters/1.4 System Optimization Basics.tex [14
+) (./RHCE/Mod1/chapters/1.4 System Optimization Basics.tex [21
 
 ]
 Chapter 4.
-) (./RHCE/Mod1/chapters/1.5 Configuring Logging.tex [15
+) (./RHCE/Mod1/chapters/1.5 Configuring Logging.tex [22
 
 ]
 Chapter 5.
-)) (./RHCE/Mod2/2. Networking and Apache.tex [16
+)) (./RHCE/Mod2/2. Networking and Apache.tex [23
 
-] [17
+] [24
 
 ]
 (./RHCE/Mod2/chapters/2.6 Configuring Advanced Networking.tex
 Chapter 6.
-) (./RHCE/Mod2/chapters/2.7 Managing Linux-Based Firewalls.tex [18
+) (./RHCE/Mod2/chapters/2.7 Managing Linux-Based Firewalls.tex [25
 
 ]
 Chapter 7.
-) (./RHCE/Mod2/chapters/2.8 Configuring Apache Virtual Hosts.tex [19
+) (./RHCE/Mod2/chapters/2.8 Configuring Apache Virtual Hosts.tex [26
 
 ]
 Chapter 8.
-) (./RHCE/Mod2/chapters/2.9 Managing Advanced Apache Features.tex [20
+) (./RHCE/Mod2/chapters/2.9 Managing Advanced Apache Features.tex [27
 
 ]
 Chapter 9.
-)) (./RHCE/Mod3/3. DNS and File Sharing.tex [21
+)) (./RHCE/Mod3/3. DNS and File Sharing.tex [28
 
-] [22
+] [29
 
 ]
 (./RHCE/Mod3/chapters/3.10 Configuring a Cache-only DNS Server.tex
 Chapter 10.
-) (./RHCE/Mod3/chapters/3.11 Configuring NFS File Sharing.tex [23
+) (./RHCE/Mod3/chapters/3.11 Configuring NFS File Sharing.tex [30
 
 ]
 Chapter 11.
-) (./RHCE/Mod3/chapters/3.12 Managing SMB File Sharing.tex [24
+) (./RHCE/Mod3/chapters/3.12 Managing SMB File Sharing.tex [31
 
 ]
 Chapter 12.
-)) (./RHCE/Mod4/4. Essential Back-end Services.tex [25
+)) (./RHCE/Mod4/4. Essential Back-end Services.tex [32
 
-] [26
+] [33
 
 ]
 (./RHCE/Mod4/chapters/4.13 Setting Up an SMTP Server.tex
 Chapter 13.
-) (./RHCE/Mod4/chapters/4.14 Managing SSH.tex [27
+) (./RHCE/Mod4/chapters/4.14 Managing SSH.tex [34
 
 ]
 Chapter 14.
-) (./RHCE/Mod4/chapters/4.15 Managing MariaDB.tex [28
+) (./RHCE/Mod4/chapters/4.15 Managing MariaDB.tex [35
 
 ]
 Chapter 15.
-) (./RHCE/Mod4/chapters/4.16 Managing Time Services.tex [29
+) (./RHCE/Mod4/chapters/4.16 Managing Time Services.tex [36
 
 ]
 Chapter 16.
-) (./RHCE/Mod4/chapters/4.17 Shell Scripting.tex [30
+) (./RHCE/Mod4/chapters/4.17 Shell Scripting.tex [37
 
 ]
 Chapter 17.
 ))
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 17.
- [31
+ [38
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 17.
@@ -1260,32 +1370,33 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 17.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 17.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 17.
 Package rerunfilecheck Info: File `RHCE.out' has not changed.
-(rerunfilecheck)             Checksum: 705FF3E844C55C093C4ED74DA6DCC754;3114.
+(rerunfilecheck)             Checksum: A85617BF09F621FBE6B36C5336CF484E;3659.
 runsystem(rm RHCE.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 10112 strings out of 494946
- 163123 string characters out of 6180980
- 295485 words of memory out of 5000000
- 13002 multiletter control sequences out of 15000+600000
+ 10231 strings out of 494946
+ 170360 string characters out of 6180980
+ 297063 words of memory out of 5000000
+ 13040 multiletter control sequences out of 15000+600000
  42203 words of font info for 52 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 39i,9n,38p,1186b,585s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,10n,38p,1186b,585s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr
 /share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/cm-super/sfit0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/cm-super/sfrm0500.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-
-super/sftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
-ftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on RHCE.pdf (32 pages, 210581 bytes).
+pe1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/cm-super/sfit0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-
+super/sfrm0500.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/s
+ftt0800.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1000
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on RHCE.pdf (39 pages, 395854 bytes).
 PDF statistics:
- 411 PDF objects out of 1000 (max. 8388607)
- 364 compressed objects within 4 object streams
- 75 named destinations out of 1000 (max. 500000)
- 337 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 492 PDF objects out of 1000 (max. 8388607)
+ 434 compressed objects within 5 object streams
+ 93 named destinations out of 1000 (max. 500000)
+ 398 words of extra memory for PDF output out of 10000 (max. 10000000)
 
