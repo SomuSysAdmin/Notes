@@ -33,7 +33,7 @@ The diagram below explains the entire boot procedure. Once the power is supplied
 \noindent
 In case there's something wrong with the bootloader itself, we can make permanent modifications by editing the files: \verb|/etc/default/grub| and the config files in \verb|/etc/grub.d| directory. Once these modifications have been written, the boot loader needs to be updated using \verb|grub2-mkconfig| command. This ensures that the next time the MBR will be read, the edited grub2 configuration files will be used. 
 
-	\section{Modifying Grub2 Parameters}
+\section{Modifying Grub2 Parameters}
 The primary grub configuration file is \verb|/etc/default/grub|. The default contents of it look like:
 
 \vspace{-15pt}

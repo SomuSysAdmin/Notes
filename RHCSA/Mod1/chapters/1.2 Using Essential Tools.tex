@@ -1,7 +1,7 @@
 \chapter{Using Essential Tools}
 \section{Man Command}
 
-\textbf{man} followed by \textit{keyword} yields the manual page of that command. 
+\textbf{man} followed by \textit{keyword} yields the manual page of that command.
 \vspace{-20pt}
 \begin{minted}{console}
 $ man ls
@@ -10,7 +10,7 @@ $ man ls
 \vspace{-15pt}
 \noindent
 \textbf{man} followed by option \textbf{-k} (for keyword) and then followed by a \textit{keyword} yields a list of all the commands containing that keywork and a brief descripiton of that command.
-\vspace{-20pt} 
+\vspace{-20pt}
 \begin{minted}{console}
 $ man -k day
 daylight (3)         - initialize time conversion information
@@ -26,7 +26,7 @@ Time::HiRes (3pm)    - High resolution alarm, sleep, gettimeofday, interval time
 
 \vspace{-15pt}
 \noindent
-The numbers next to the commands indicate which seciton of the man pages the command belongs to (based on their functionality). The actual section that the commands belong to can be determined by the use of 
+The numbers next to the commands indicate which seciton of the man pages the command belongs to (based on their functionality). The actual section that the commands belong to can be determined by the use of
 
 \vspace{-20pt}
 \begin{minted}{console}
@@ -44,21 +44,21 @@ The relevant sections for SysAdmins are Section 1, 5 \& 8. The sections are:
 	Section Number & Deals with & Description \\
 	\midrule
 	1 & Commands (Programs) & Those  commands  that  can  be executed  by the user from within a	shell. \\
-	2 & System calls & Those functions which must be performed by the kernel. \\		
-	3 & Library calls & Most of the libc functions. \\		
-	4 & Special files (devices) & Files found in /dev. \\		
-	5 & File formats and conventions & The format for /etc/passwd and other human-readable files. \\		
-	6 & Games & \\		
-	7 & Overview, conventions, and miscellaneous & Overviews of various topics, conventions and  protocols,  character set standards, and miscellaneous other things. \\		
+	2 & System calls & Those functions which must be performed by the kernel. \\
+	3 & Library calls & Most of the libc functions. \\
+	4 & Special files (devices) & Files found in /dev. \\
+	5 & File formats and conventions & The format for /etc/passwd and other human-readable files. \\
+	6 & Games & \\
+	7 & Overview, conventions, and miscellaneous & Overviews of various topics, conventions and  protocols,  character set standards, and miscellaneous other things. \\
 	8 & System management commands & Commands like mount(8), many of which only root can execute.	\\
 	\bottomrule
 \end{tabular}
 
 \noindent
-To filter down the output of the \textbf{man -k} command, we can use \textbf{grep} to obtain only the relevant parts of the result on the basis of the appropriate section number in the man-pages. 
+To filter down the output of the \textbf{man -k} command, we can use \textbf{grep} to obtain only the relevant parts of the result on the basis of the appropriate section number in the man-pages.
 
 \noindent
-This can be achieved using the pipe which feeds the output of the first command to the input of the second command. 
+This can be achieved using the pipe which feeds the output of the first command to the input of the second command.
 
 \vspace{-20pt}
 \begin{minted}{console}
@@ -83,7 +83,7 @@ Time::HiRes (3pm)    - High resolution alarm, sleep, gettimeofday, interval time
 	\textbf{[a-f]} &- &Indicates any character provided within the range of a to f. \\
 \end{tabular}
 
-\section{Understanding Globbing and Wildcards}
+\section{Using Globbing and Wildcards}
 \noindent
 \begin{tabular}{lcp{0.8\textwidth}}
 	\textbf{\$ ls a*} &- &Lists all files and folders (including contents of each folder) that start with "a" \\
@@ -95,7 +95,7 @@ Time::HiRes (3pm)    - High resolution alarm, sleep, gettimeofday, interval time
 
 \section{Understanding I/O Redirection and Pipes}
 \subsection{I/O Redirection}
-File Descriptors: 
+File Descriptors:
 
 \noindent
 \begin{tabular}{rccclcp{0.5\textwidth}}
@@ -114,9 +114,9 @@ Redirection:
 	\textbf{STDOUT} &- &$>>$ &- &Stores the output of the command to the left of the "$>>$" to the file indicated on the right. \textit{APPENDS} the mentioned file.\\
 	\textbf{STDERR} &- &$2>$ &- &Redirects the errors from the command mentioned on the left to the file on the right. \textit{OVERWRITES} the mentioned file.\\
 \end{tabular}
-	
+
 \noindent
-\begin{minted}{console}	
+\begin{minted}{console}
 $ mail -s hi root < .
 $ ls > myFile
 $ ls -lh >> myFile
@@ -137,27 +137,27 @@ The difference in the usage of the piping and redirection operators is that Pipe
 \section{Using I/O Redireciton and Piping}
 
 \noindent
-\begin{minted}{console}	
+\begin{minted}{console}
 $ ps aux | awk '{print $2}'
 $ ps aux | awk '{print $2}' | sort
 $ ps aux | awk '{print $2}' | sort -n
 \end{minted}
 
 \noindent
-The second column (\$2) of the \verb|$ ps aux| command contains the Process ID (PID), and if we only want to filter the output such that only the PID is shown, we simply use the \textbf{awk} filtering utility. 
+The second column (\$2) of the \verb|$ ps aux| command contains the Process ID (PID), and if we only want to filter the output such that only the PID is shown, we simply use the \textbf{awk} filtering utility.
 
 If we want to sort the output of the command, we use the \textbf{sort} utility, but it generally sorts as a string. To sort the output as a number, we use the option \textbf{sort -n}.
 
 \noindent
-If you expect lots of errors for a particular command, but want to discard all errors and only see the output when successful, then simply redirect the STDERR to \verb|/dev/null|, which is a special device that discards all data written to it, i.e., a dustbin for data. 
+If you expect lots of errors for a particular command, but want to discard all errors and only see the output when successful, then simply redirect the STDERR to \verb|/dev/null|, which is a special device that discards all data written to it, i.e., a dustbin for data.
 
-\begin{minted}{console}	
+\begin{minted}{console}
 $ find / -name "*.rpm"
 $ find / -name "*.rpm" 2> /dev/null
 \end{minted}
 
 \noindent
-The first command shows all output including errors, but the second command discards all errors and shows the rest. 	
+The first command shows all output including errors, but the second command discards all errors and shows the rest.
 
 \begin{minted}{console}
 $ some_command > /dev/null 2> &1
