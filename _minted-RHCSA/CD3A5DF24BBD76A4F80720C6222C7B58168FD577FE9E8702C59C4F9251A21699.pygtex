@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZdl{}} ip route show
-\PYG{g+go}{default via 90.0.16.1 dev ens33 proto static metric 100}
-\PYG{g+go}{90.0.16.0/21 dev ens33 proto kernel scope link src 90.0.16.117 metric 100}
-\PYG{g+go}{192.168.122.0/24 dev virbr0 proto kernel scope link src 192.168.122.1}
-\end{Verbatim}

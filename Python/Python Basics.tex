@@ -1,0 +1,499 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+
+%	Changing document font to Helvetica.
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+%	Changing Margins and other formatting
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=1.5in,
+	top=1in,
+	right=1.5in,
+	bottom=1in
+}
+\setlength{\parskip}{1em}
+
+%	Source Code Highlighting
+\usepackage{minted}
+%	For Python Code
+\setminted[python]{
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos,
+breaklines
+}
+%	For Output
+\newminted{pycon}{
+bgcolor=bg, 
+linenos=true, 
+tabsize=4
+}
+%	Pycon formatting:
+\setminted[pycon]{
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+breaklines
+}
+
+%	Pretty Tables
+\usepackage{booktabs}
+\usepackage{array, multirow}
+
+%	Custom column for tables
+\newcolumntype{P}[1]{ >{\centering\arraybackslash} m{#1\linewidth} }
+\newcolumntype{M}[1]{m{#1\linewidth}}
+
+%	Images Support
+\usepackage{graphicx}
+
+%	Support for spaces in file names
+\usepackage[space]{grffile}
+
+\title{Python Basics}
+\author{Somenath Sinha}
+\date{December 2017}
+
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\chapter{Basics}
+	\section{Syntax}
+	The lines in python don't end with semicolon. Thus, the end of the lines matter, and the spaces matter. The 
+	\section{Printing}
+	
+	Printing is done with \verb|print()|. Each print automatically prints a newline at end, unless the end character is specified. The escape sequences are respected as usual. 
+	\vspace{-15pt}
+	\begin{minted}{python}
+	print("Hello")
+	print("Hello")
+	print("Hello", end="")
+	print("Hello")
+	print("Hello", end="! ")
+	print("Hello")
+	print("Hel\nlo")
+	print("Hello")
+	print("He\tllo")
+	print("Hello")
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	Hello
+	Hello
+	HelloHello
+	Hello! Hello
+	Hel
+	lo
+	Hello
+	He	llo
+	Hello
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Printing multiple words}
+	The procedure to print multiple words using the same print is:
+	
+	\vspace{-15pt}
+	\begin{minted}{python}
+	print("Hello"+"World")
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	HelloWorld
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Comments}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	#   Single line comment
+	
+	'''
+	Block comment!
+	'''
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Variables}
+	Python doesn't need a specific datatype declaration. So, we can directly assign a value to a variable. In python, both single and double quotes represent a string. 
+	
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x = 4.5
+	y = 'a word'
+	z = "a new string"
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Printing Value of a variable}
+	When printing a variable, python automatically prints a space every time a variable's value is printed. 
+	
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x = 4
+	print("x =",x)
+	y = "Space"
+	print("Without", y, sep="")
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	x = 4
+	WithoutSpace
+	\end{minted}
+	\vspace{-10pt}
+	
+	\section{Arithmetic Operations}
+	\subsection{Basic Arithmetic}
+	In Python +, -, * and \% (modulus) all act as in Java. Division however acts different. 
+	
+	\vspace{-15pt}
+	\begin{minted}{python}
+	a=5
+	b=4
+	x=a+b
+	y=a-b
+	z=a*b
+	w=a%b
+	
+	print("a+b =",x)
+	print("a-b =",y)
+	print("a*b =",z)
+	print("a%b =",w)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	a+b = 9
+	a-b = 1
+	a*b = 20
+	a%b = 1
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsubsection{Division}
+	In case of java, the division is called integer division where integer truncation occurs with the result. In python, a value with a decimal point will be returned. To bypass this, we use the \verb|//| (floor division) operator. 
+	
+	\vspace{-15pt}
+	\begin{minted}{python}
+	a=5
+	b=4
+	x=a/b
+	y=a//b
+	
+	
+	print("a/b =",x)
+	print("a//b =",y)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	a/b = 1.25
+	a//b = 1
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsubsection{Exponents}
+	The exponent operator is \verb|**|.
+	
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x=2**3
+	
+	print("2^3 =",x)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	2^3 = 8
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Casting}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x=int(3.5)
+	
+	print("x =",x)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	x = 3
+	\end{minted}
+	\vspace{-10pt}
+
+	\subsection{Library Math functions}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x=max(3,4,5)
+	y=min(3,4,5)
+	
+	print("Max =",x)
+	print("Min =",y)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	Max = 5
+	Min = 3
+	\end{minted}
+	\vspace{-10pt}
+	
+	\section{User Input}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	print("Enter a value for x: ")
+	x=input();
+	y=input("Test value for y: ")
+	print("x =",x)
+	print("y =",y)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	Enter a value for x: 
+	5
+	Test value for y: 6
+	x = 5
+	y = 6
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Casting user input}
+	If the input needs to be casted, it should be done so immediately, after the input.
+	
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x=float(input("Enter a num: "))
+	y=int(x)
+	print("x =", x)
+	print("y =", y)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	Enter a num: 3.5
+	x = 3.5
+	y = 3
+	\end{minted}
+	\vspace{-10pt}
+	
+	\section{String functions}
+	Just like in Java, strings are immutable in Python, and thus each string function returns a new string. 
+	\subsection{Printing String length}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	s="input"
+	print("Length of s =",len(s))
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	Length of s = 5
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Substring}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	s="input"
+	print("Last 3 characters: ",s[2:])	# Called slice notation
+	print("2rd and 4th characters: ",s[2:4])
+	print("Last 3 characters: ", s[-2:])	# Negative index indicates count from the last.
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	Last 3 characters:  put
+	2rd and 4th characters:  pu
+	Last 3 characters:  ut
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{In operator}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	s="input"
+	print("Contains pu: ", "pu" in s)   # Returns true if the string is present in s.
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	Contains pu:  True
+	\end{minted}
+	\vspace{-10pt}
+	
+	\chapter{Datastructures}
+	\section{Lists}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	list = []   # Creates an empty list
+	list.append("House")
+	list.append("Mouse")
+	list.append("Blouse")
+	print(list)
+	print("Size :", len(list))
+	print("Index 1:", list[1])
+	list.insert(1,"Grouse")
+	print("Index 1:", list[1], "\nEntire list:", list)
+	del(list[1:2])    # Delete the item at index 1 & 2 of list
+	print(list)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	['House', 'Mouse', 'Blouse']
+	Size : 3
+	Index 1: Mouse
+	Index 1: Grouse 
+	Entire list: ['House', 'Grouse', 'Mouse', 'Blouse']
+	['House', 'Blouse']
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Extend}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	list1 = []   # Creates an empty list1
+	list1.append("House")
+	list1.append("Mouse")
+	list1.append("Blouse")
+	
+	list2 = []   # Creates an empty list2
+	list2.append("House")
+	list2.append("Mouse")
+	list2.append("Blouse")
+	
+	list3 = list1 + list2
+	list1.extend(list2)
+	
+	print(list1)
+	print(list3)
+	
+	list4 = []  # Will be a list of lists!
+	list4.append(list1)
+	list4.append(list2)
+	print(list4)
+	print(list4[0][4])
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	['House', 'Mouse', 'Blouse', 'House', 'Mouse', 'Blouse']
+	['House', 'Mouse', 'Blouse', 'House', 'Mouse', 'Blouse']
+	[['House', 'Mouse', 'Blouse', 'House', 'Mouse', 'Blouse'], ['House', 'Mouse', 'Blouse']]
+	Mouse
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Immutable Tuples}
+	A \verb|tuple| is an immutable list. Once created, it cannot be changed, although new tuples can be created from it. 
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x= 2,3,4,5  # x is a tuple.
+	print(x)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	(2, 3, 4, 5)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsubsection{Tuple of tuples}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x= 2,3,4,5  # x is a tuple.
+	print(x)
+	y= x,6,7
+	print(y)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	(2, 3, 4, 5)
+	((2, 3, 4, 5), 6, 7)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsubsection{Tuple of only 1 element}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x=5,
+	print(x)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	(5,)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\subsection{Tuple functions}
+	\vspace{-15pt}
+	\begin{minted}{python}
+	x=5,4,3,2,1
+	print(x)
+	print(len(x))
+	print(3 in x)
+	\end{minted}
+	\vspace{-10pt}
+	
+	\textit{Output}
+	\vspace{-15pt}
+	\begin{minted}{pycon}
+	(5, 4, 3, 2, 1)
+	5
+	True
+	\end{minted}
+	\vspace{-10pt}
+	
+\end{document}

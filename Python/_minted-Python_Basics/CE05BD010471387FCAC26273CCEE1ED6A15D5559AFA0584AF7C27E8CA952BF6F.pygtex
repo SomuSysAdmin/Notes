@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{x}\PYG{o}{=}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n+nb}{input}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Enter a num: \PYGZdq{}}\PYG{p}{))}
+	\PYG{n}{y}\PYG{o}{=}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}x =\PYGZdq{}}\PYG{p}{,} \PYG{n}{x}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}y =\PYGZdq{}}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+\end{Verbatim}

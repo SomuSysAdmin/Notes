@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZdl{}} nmcli connection show
-\PYG{g+go}{NAME   UUID                                  TYPE            DEVICE}
-\PYG{g+go}{ens33  26c54678\PYGZhy{}6784\PYGZhy{}47ba\PYGZhy{}8afc\PYGZhy{}ca9924ed63af  802\PYGZhy{}3\PYGZhy{}ethernet  ens33}
-\end{Verbatim}

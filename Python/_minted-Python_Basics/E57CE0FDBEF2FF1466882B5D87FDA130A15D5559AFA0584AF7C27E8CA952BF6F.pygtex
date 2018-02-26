@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{x}\PYG{o}{=}\PYG{n+nb}{max}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{4}\PYG{p}{,}\PYG{l+m+mi}{5}\PYG{p}{)}
+	\PYG{n}{y}\PYG{o}{=}\PYG{n+nb}{min}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,}\PYG{l+m+mi}{4}\PYG{p}{,}\PYG{l+m+mi}{5}\PYG{p}{)}
+
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Max =\PYGZdq{}}\PYG{p}{,}\PYG{n}{x}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Min =\PYGZdq{}}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}
+\end{Verbatim}

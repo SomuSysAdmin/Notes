@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} kinit admin
-\PYG{g+gp}{\PYGZsh{}} ipa user\PYGZhy{}add lisa
-\PYG{g+gp}{\PYGZsh{}} ipa passwd lisa
-\PYG{g+gp}{\PYGZsh{}} ipa user\PYGZhy{}find lisa
-\end{Verbatim}

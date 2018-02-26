@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{/iscsi/iqn.20...:target1/tpg1\PYGZgt{} luns/ create /backstores/block/block1}
-\PYG{g+go}{Created LUN 0.}
-\PYG{g+go}{Created LUN 0\PYGZhy{}\PYGZgt{}0 mapping in node ACL iqn.2018\PYGZhy{}01.local.somuvmnet:vmdeux}
-\end{Verbatim}

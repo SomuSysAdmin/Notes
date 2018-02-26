@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-xfs\PYGZus{}admin      xfs\PYGZus{}copy       xfs\PYGZus{}estimate   xfs\PYGZus{}fsr        xfs\PYGZus{}info
-xfs\PYGZus{}logprint   xfs\PYGZus{}metadump   xfs\PYGZus{}ncheck     xfs\PYGZus{}repair     xfs\PYGZus{}bmap
-xfs\PYGZus{}db         xfs\PYGZus{}freeze     xfs\PYGZus{}growfs     xfs\PYGZus{}io         xfs\PYGZus{}mdrestore
-xfs\PYGZus{}mkfile     xfs\PYGZus{}quota      xfs\PYGZus{}rtcp
-\end{Verbatim}

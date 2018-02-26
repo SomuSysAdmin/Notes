@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} ls \PYGZhy{}Z hosts2
-\PYG{g+go}{\PYGZhy{}rw\PYGZhy{}r\PYGZhy{}\PYGZhy{}r\PYGZhy{}\PYGZhy{}. root root unconfined\PYGZus{}u:object\PYGZus{}r:etc\PYGZus{}t:s0   hosts2}
-\end{Verbatim}

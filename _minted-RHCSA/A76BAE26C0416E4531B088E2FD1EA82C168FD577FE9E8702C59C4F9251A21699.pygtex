@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} uptime
-\PYG{g+go}{11:59:13 up 2 days,  6:02,  2 users,  load average: 0.00, 0.01, 0.05}
-\end{Verbatim}

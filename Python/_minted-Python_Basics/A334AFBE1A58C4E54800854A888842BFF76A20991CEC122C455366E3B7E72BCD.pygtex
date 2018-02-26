@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{	[\PYGZsq{}House\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}, \PYGZsq{}House\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}]}
+\PYG{g+go}{	[\PYGZsq{}House\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}, \PYGZsq{}House\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}]}
+\PYG{g+go}{	[[\PYGZsq{}House\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}, \PYGZsq{}House\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}], [\PYGZsq{}House\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}]]}
+\PYG{g+go}{	Mouse}
+\end{Verbatim}

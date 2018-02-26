@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} firewall\PYGZhy{}cmd \PYGZhy{}\PYGZhy{}set\PYGZhy{}default\PYGZhy{}zone home
-\PYG{g+go}{success}
-\PYG{g+gp}{\PYGZsh{}} firewall\PYGZhy{}cmd \PYGZhy{}\PYGZhy{}get\PYGZhy{}default\PYGZhy{}zone
-\PYG{g+go}{home}
-\end{Verbatim}

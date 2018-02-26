@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} grep \PYGZhy{}E \PYG{l+s+s2}{\PYGZdq{}vmx|svm\PYGZdq{}} /proc/cpuinfo
-\end{Verbatim}

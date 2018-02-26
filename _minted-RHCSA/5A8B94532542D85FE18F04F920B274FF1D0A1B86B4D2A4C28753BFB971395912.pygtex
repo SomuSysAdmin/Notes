@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-Command \PYG{o}{(}m \PYG{k}{for} \PYG{n+nb}{help}\PYG{o}{)}: w
-The partition table has been altered!
-
-Calling ioctl\PYG{o}{()} to re\PYGZhy{}read partition table.
-Syncing disks.
-\end{Verbatim}

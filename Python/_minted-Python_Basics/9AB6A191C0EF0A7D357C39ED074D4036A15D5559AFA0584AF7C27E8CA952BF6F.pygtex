@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello\PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello\PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello\PYGZdq{}}\PYG{p}{,} \PYG{n}{end}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello\PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello\PYGZdq{}}\PYG{p}{,} \PYG{n}{end}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}! \PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello\PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hel}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{lo\PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello\PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}He}\PYG{l+s+se}{\PYGZbs{}t}\PYG{l+s+s2}{llo\PYGZdq{}}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hello\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}

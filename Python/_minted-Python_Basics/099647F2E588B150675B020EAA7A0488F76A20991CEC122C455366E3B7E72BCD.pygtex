@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{	a+b = 9}
+\PYG{g+go}{	a\PYGZhy{}b = 1}
+\PYG{g+go}{	a*b = 20}
+\PYG{g+go}{	a\PYGZpc{}b = 1}
+\end{Verbatim}

@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} cp vncserver@.service vncserver@\PYG{l+s+se}{\PYGZbs{}:}\PYG{l+m}{1}.service
-\PYG{g+gp}{\PYGZsh{}} ls vncserver*
-\PYG{g+go}{vncserver@:1.service  vncserver@.service}
-\end{Verbatim}

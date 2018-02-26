@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{/backstores\PYGZgt{} cd /iscsi}
-\PYG{g+go}{/iscsi\PYGZgt{} ls}
-\PYG{g+go}{o\PYGZhy{} iscsi .......................................................... [Targets: 0]}
-\end{Verbatim}

@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{iscsi/iqn.20...:target1/tpg1\PYGZgt{} portals/ create 90.0.16.27}
-\PYG{g+go}{Using default IP port 3260}
-\end{Verbatim}

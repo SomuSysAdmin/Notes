@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{/iscsi/iqn.20...et1/tpg1/acls\PYGZgt{} create iqn.2018\PYGZhy{}01.local.somuvmnet:vmdeux}
-\PYG{g+go}{Created Node ACL for iqn.2018\PYGZhy{}01.local.somuvmnet:vmdeux}
-\end{Verbatim}

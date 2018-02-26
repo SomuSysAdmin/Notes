@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} virsh
-\PYG{g+go}{Welcome to virsh, the virtualization interactive terminal.}
-
-\PYG{g+go}{Type:  \PYGZsq{}help\PYGZsq{} for help with commands}
-\PYG{g+go}{\PYGZsq{}quit\PYGZsq{} to quit}
-
-\PYG{g+go}{virsh \PYGZsh{}}
-\end{Verbatim}

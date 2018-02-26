@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{/iscsi\PYGZgt{} create iqn.2018\PYGZhy{}01.local.somuvmnet:target1}
-\PYG{g+go}{Created target iqn.2018\PYGZhy{}01.local.somuvmnet:target1.}
-\PYG{g+go}{Created TPG 1.}
-\PYG{g+go}{Global pref auto\PYGZus{}add\PYGZus{}default\PYGZus{}portal=true}
-\PYG{g+go}{Created default portal listening on all IPs (0.0.0.0), port 3260.}
-\end{Verbatim}

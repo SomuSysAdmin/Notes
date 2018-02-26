@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} rpm \PYGZhy{}qc vsftpd
-\PYG{g+go}{/etc/logrotate.d/vsftpd}
-\PYG{g+go}{/etc/pam.d/vsftpd}
-\PYG{g+go}{/etc/vsftpd/ftpusers}
-\PYG{g+go}{/etc/vsftpd/user\PYGZus{}list}
-\PYG{g+go}{/etc/vsftpd/vsftpd.conf}
-\end{Verbatim}

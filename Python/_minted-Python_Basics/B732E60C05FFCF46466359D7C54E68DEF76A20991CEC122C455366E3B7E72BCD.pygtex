@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{	[\PYGZsq{}House\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}]}
+\PYG{g+go}{	Size : 3}
+\PYG{g+go}{	Index 1: Mouse}
+\PYG{g+go}{	Index 1: Grouse}
+\PYG{g+go}{	Entire list: [\PYGZsq{}House\PYGZsq{}, \PYGZsq{}Grouse\PYGZsq{}, \PYGZsq{}Mouse\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}]}
+\PYG{g+go}{	[\PYGZsq{}House\PYGZsq{}, \PYGZsq{}Blouse\PYGZsq{}]}
+\end{Verbatim}

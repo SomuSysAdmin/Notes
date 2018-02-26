@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{/backstores\PYGZgt{} block/ create block2 /dev/vgSAN/lvSAN2}
-\PYG{g+go}{Created block storage object block2 using /dev/vgSAN/lvSAN2.}
-\PYG{g+go}{/backstores\PYGZgt{} fileio/ create file1 /root/diskFile1 1G}
-\PYG{g+go}{Created fileio file1 with size 1073741824}
-\end{Verbatim}

@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} nmcli con down ens33\PYG{p}{;} nmcli con up ens33
-\PYG{g+go}{Connection \PYGZsq{}ens33\PYGZsq{} successfully deactivated (D\PYGZhy{}Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/3)}
-\PYG{g+go}{Connection successfully activated (D\PYGZhy{}Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/5)}
-\end{Verbatim}

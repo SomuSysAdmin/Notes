@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} lsmod \PYG{p}{|} grep kvm
-\PYG{g+go}{kvm\PYGZus{}intel             200704  0}
-\PYG{g+go}{kvm                   585728  1 kvm\PYGZus{}intel}
-\PYG{g+go}{irqbypass              16384  1 kvm}
-\end{Verbatim}

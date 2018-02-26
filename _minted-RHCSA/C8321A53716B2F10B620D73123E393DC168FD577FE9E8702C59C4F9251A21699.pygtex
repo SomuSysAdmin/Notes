@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} ping \PYGZhy{}f cliServer
-\PYG{g+go}{PING cliServer.somuVMnet.local (90.0.18.206) 56(84) bytes of data.}
-\PYG{g+go}{.\PYGZca{}}
-\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZhy{} cliServer.somuVMnet.local ping statistics \PYGZhy{}\PYGZhy{}\PYGZhy{}}
-\PYG{g+go}{5215 packets transmitted, 5215 received, 0\PYGZpc{} packet loss, time 3354ms}
-\PYG{g+go}{rtt min/avg/max/mdev = 0.140/0.381/6.757/0.516 ms, ipg/ewma 0.643/0.287 ms}
-\end{Verbatim}

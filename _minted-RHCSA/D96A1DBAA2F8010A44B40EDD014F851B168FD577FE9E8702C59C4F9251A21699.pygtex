@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZdl{}} id
-\PYG{g+go}{uid=1000(somu) gid=1000(somu) groups=1000(somu) context=unconfined\PYGZus{}u:unconfined\PYGZus{}r:unconfined\PYGZus{}t:s0\PYGZhy{}s0:c0.c1023}
-\end{Verbatim}

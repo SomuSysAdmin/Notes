@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n+nv}{LABEL}\PYG{o}{=}myfs	/data	xfs	defaults	\PYG{l+m}{1}	\PYG{l+m}{2}
-\end{Verbatim}

@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{n}{a}\PYG{o}{=}\PYG{l+m+mi}{5}
+	\PYG{n}{b}\PYG{o}{=}\PYG{l+m+mi}{4}
+	\PYG{n}{x}\PYG{o}{=}\PYG{n}{a}\PYG{o}{/}\PYG{n}{b}
+	\PYG{n}{y}\PYG{o}{=}\PYG{n}{a}\PYG{o}{//}\PYG{n}{b}
+
+
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}a/b =\PYGZdq{}}\PYG{p}{,}\PYG{n}{x}\PYG{p}{)}
+	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}a//b =\PYGZdq{}}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}
+\end{Verbatim}

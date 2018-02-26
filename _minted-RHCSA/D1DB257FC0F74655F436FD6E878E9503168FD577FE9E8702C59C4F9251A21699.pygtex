@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} grep ftp /etc/passwd
-\PYG{g+go}{ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin}
-\end{Verbatim}

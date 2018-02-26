@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{	x = 4}
+\PYG{g+go}{	WithoutSpace}
+\end{Verbatim}

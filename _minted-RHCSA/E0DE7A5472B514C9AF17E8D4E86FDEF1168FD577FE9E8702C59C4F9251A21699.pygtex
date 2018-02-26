@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} ps aux \PYG{p}{|} grep dd
-\PYG{g+go}{...}
-\PYG{g+go}{root      49575 50.3  0.0 107948   608 pts/0    R    13:25}
-\PYG{g+go}{[2]+  Running                 dd if=/dev/zero of=/dev/null \PYGZam{}}
-\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{kill} \PYGZhy{}9 \PYG{l+m}{49575}
-\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{jobs}
-\PYG{g+go}{[2]+  Killed                  dd if=/dev/zero of=/dev/null}
-\end{Verbatim}
