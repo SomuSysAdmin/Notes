@@ -45,7 +45,7 @@ The iSCSI target works with several storage backend devices on the SAN. These st
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\linewidth]{RHCE/Mod1/chapters/1.2.a}
+	\includegraphics[width=0.9\linewidth]{Mod1/chapters/1.2.a}
 	\caption{iSCSI Target Setup}
 	\label{fig:1 iSCSI Target Setup}
 \end{figure}
@@ -413,5 +413,302 @@ Main PID: 4291 (code=exited, status=0/SUCCESS)
 
 Jan 02 16:28:19 vmprime.somuvmnet.local systemd[1]: Starting Restore LIO kern...
 Jan 02 16:28:20 vmprime.somuvmnet.local systemd[1]: Started Restore LIO kerne...
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This particular services instructs the kernel of its responsibilities as a SAN server and how the iSCSI targets are configured, so that it can accept incoming connections from iSCSI initiators and act accordingly. 
+
+	\section{Connecting the iSCSI Initiator to an iSCSI SAN}
+Now that the iSCSI SAN server is setup, we need an iSCSI initiator on a different (remote) server that can use the SAN. For this, the very first requirement is to obtain the software in the \verb|iscsi-initiator-utils| package, which help in creating the initiator. We do this by using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# yum -y install iscsi-initiator-utils
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Setting up an initiator name}
+Next, we need to setup an \textbf{initiator name}, which must be the one we used in the ACL for the iSCSI \textit{target}. To do this, we edit the \verb|/etc/iscsi/initiatorname.iscsi| file. It's contents should be:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+InitiatorName=iqn.2018-02.com.somuVMnet:vmPrime
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The iSCSI configuration file is located at \verb|/etc/iscsi/iscsid.conf| and this can be used to optimize the iSCSI configuration for the server. 
+
+\subsection{iscsiadm Command}
+Now, we're going to set up the initiator using the \verb|iscsiadm| command. The syntax of this command can be a bit cryptic, and thus it's recommended to use the man page's example section for a jump start on the syntax of the command. 
+
+The primary purpose of the \textbf{iscsiadm} command is to discover iSCSI targets and login to them, as well as access and manage the open-iscsi configuration database. 
+
+\subsection{Discovery}
+Now, the initiator is ready for discovery. For this, we use the command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# iscsiadm --mode discoverydb --type sendtargets --portal 10.0.99.12 --discover
+10.0.99.12:3260,1 iqn.2018-02.local.somuvmnet:vmdeux
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|--mode discoverydb| option instructs the iscsiadm command to operate on the \textit{discoverydb} section of the configuration database. It can also be abbreviated to \verb|-m discoverydb|. The \verb|--type sendtargets| (or \verb|-t st|) tells the action to perform, i.e., send a list of targets. The \verb|--portal 10.0.99.12| (\verb|-p 10.0.99.12|) specifies the portal to be used for the action. Finally, the \verb|--discovery| (\verb|-D|) flag tells the command to perform discovery and add records if necessary. The output returned is a list of the targets on that particular portal. The most important piece of information here is the IQN of the relevant target. 
+
+\subsection{Login}
+The login is performed on a particular IQN at a particular portal/node. This is achieved using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# iscsiadm --mode node --targetname iqn.2018-02.local.somuVMnet:vmDeux --portal 10.0.99.12 --login
+Logging in to [iface: default, target: iqn.2018-02.local.somuvmnet:vmdeux, portal: 10.0.99.12,3260] (multiple)
+Login to [iface: default, target: iqn.2018-02.local.somuvmnet:vmdeux, portal: 10.0.99.12,3260] successful.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now the \textit{mode} has been changed to \textbf{node} since we're dealing with a particular portal to login. The \verb|--targetname iqn.2018-02.local.somuVMnet:vmDeux| option can be shortened to \verb|-T iqn.2018-02.local.somuVMnet:vmDeux| and the portal can have a port specified with \verb|-p 10.0.99.12:3260|.
+
+Note that if the iqn of the initiator hasn't been set properly then login won't succeed with a failure due to authentication message. In that case, probably the IQN of the initiator hasn't been set properly. We need to edit the \verb|/etc/iscsi/initiatorname.iscsi| file again and ensure it's identical to that in the ACL of the target. After the change, the \textbf{iscsid} service needs to be restarted for the new IQN to be used by the initiator: \verb|systemctl restart iscsid|. 
+
+The presence of the new partitions as locally connected devices can be verified using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cat /proc/partitions
+major minor  #blocks  name
+
+8        0   10485760 sda
+8        1    1048576 sda1
+8        2    9436160 sda2
+11        0    3963904 sr0
+253        0    8384512 dm-0
+253        1    1048576 dm-1
+8       16     520192 sdb
+8       32     520192 sdc
+8       48      10240 sdd
+[root@vmPrime ~]# lsblk
+NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda             8:0    0   10G  0 disk 
+├─sda1          8:1    0    1G  0 part /boot
+└─sda2          8:2    0    9G  0 part 
+  ├─rhel-root 253:0    0    8G  0 lvm  /
+  └─rhel-swap 253:1    0    1G  0 lvm  [SWAP]
+sdb             8:16   0  508M  0 disk 
+sdc             8:32   0  508M  0 disk 
+sdd             8:48   0   10M  0 disk 
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The sdb, sdc and sdd devices are all LUNs on the iSCSI target. The \verb|lsscsi| tool provides the iSCSI information for the target in even greater depth:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# lsscsi
+[0:0:0:0]    disk    VMware,  VMware Virtual S 1.0   /dev/sda 
+[4:0:0:0]    cd/dvd  NECVMWar VMware SATA CD01 1.00  /dev/sr0 
+[40:0:0:0]   disk    LIO-ORG  block1           4.0   /dev/sdb 
+[40:0:0:1]   disk    LIO-ORG  block2           4.0   /dev/sdc 
+[40:0:0:2]   disk    LIO-ORG  file1            4.0   /dev/sdd 
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+All the details of this connection to the IQN via the node is stored in the file \\\verb|/var/lib/iscsi/nodes/iqn.2018-02.local.somuvmnet:vmdeux/10.0.99.12,3260,1/default|. Once logged in, after every reboot, the iSCSI initiator will automatically login to the SAN and present the LUNs of the target as locally mounted devices. To prevent that, we need to explicitly logout.
+
+\subsection{Logout}
+The logout operation needs the exact same parameters to be passed, other than \verb|--login| which of course gets changed to \verb|--logout|. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# iscsiadm -m node -T iqn.2018-02.local.somuvmnet:vmdeux -p 10.0.99.12 --logout
+Logging out of session [sid: 7, target: iqn.2018-02.local.somuvmnet:vmdeux, portal: 10.0.99.12,3260]
+Logout of [sid: 7, target: iqn.2018-02.local.somuvmnet:vmdeux, portal: 10.0.99.12,3260] successful.
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Deleting node information}
+To delete all the information pertaining to an iSCSI target we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# iscsiadm -m node -T iqn.2018-02.local.somuvmnet:vmdeux -o delete
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Another option would be to delete the folder with the IQN name of the target from \\\verb|/var/lib/iscsi/nodes/|.
+
+	\section{Verifying the iSCSI Connection}	
+\subsection{Verification on the iSCSI Initiator}
+To verify the iSCSI connection we use the \textbf{iscsiadm} command. The \verb|-P| command is used to specify the print-level which means that the information is shown as a tree of varying levels of information (the higher the print level, more information is given). 
+
+To verify the iSCSI connection, we need information about the session, acquired using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# iscsiadm -m session -P 1
+Target: iqn.2018-02.local.somuvmnet:vmdeux (non-flash)
+Current Portal: 10.0.99.12:3260,1
+Persistent Portal: 10.0.99.12:3260,1
+**********
+Interface:
+**********
+Iface Name: default
+Iface Transport: tcp
+Iface Initiatorname: iqn.2018-02.local.somuvmnet:vmprime
+Iface IPaddress: 10.0.99.11
+Iface HWaddress: <empty>
+Iface Netdev: <empty>
+SID: 8
+iSCSI Connection State: LOGGED IN
+iSCSI Session State: LOGGED_IN
+Internal iscsid Session State: NO CHANGE
+# iscsiadm -m session -P 2
+Target: iqn.2018-02.local.somuvmnet:vmdeux (non-flash)
+Current Portal: 10.0.99.12:3260,1
+Persistent Portal: 10.0.99.12:3260,1
+**********
+Interface:
+**********
+Iface Name: default
+Iface Transport: tcp
+Iface Initiatorname: iqn.2018-02.local.somuvmnet:vmprime
+Iface IPaddress: 10.0.99.11
+Iface HWaddress: <empty>
+Iface Netdev: <empty>
+SID: 8
+iSCSI Connection State: LOGGED IN
+iSCSI Session State: LOGGED_IN
+Internal iscsid Session State: NO CHANGE
+*********
+Timeouts:
+*********
+Recovery Timeout: 120
+Target Reset Timeout: 30
+LUN Reset Timeout: 30
+Abort Timeout: 15
+*****
+CHAP:
+*****
+username: <empty>
+password: ********
+username_in: <empty>
+password_in: ********
+************************
+Negotiated iSCSI params:
+************************
+HeaderDigest: None
+DataDigest: None
+MaxRecvDataSegmentLength: 262144
+MaxXmitDataSegmentLength: 262144
+FirstBurstLength: 65536
+MaxBurstLength: 262144
+ImmediateData: Yes
+InitialR2T: Yes
+MaxOutstandingR2T: 1
+# iscsiadm -m session -P 3
+iSCSI Transport Class version 2.0-870
+version 6.2.0.874-2
+Target: iqn.2018-02.local.somuvmnet:vmdeux (non-flash)
+Current Portal: 10.0.99.12:3260,1
+Persistent Portal: 10.0.99.12:3260,1
+**********
+Interface:
+**********
+Iface Name: default
+Iface Transport: tcp
+Iface Initiatorname: iqn.2018-02.local.somuvmnet:vmprime
+Iface IPaddress: 10.0.99.11
+Iface HWaddress: <empty>
+Iface Netdev: <empty>
+SID: 8
+iSCSI Connection State: LOGGED IN
+iSCSI Session State: LOGGED_IN
+Internal iscsid Session State: NO CHANGE
+*********
+Timeouts:
+*********
+Recovery Timeout: 120
+Target Reset Timeout: 30
+LUN Reset Timeout: 30
+Abort Timeout: 15
+*****
+CHAP:
+*****
+username: <empty>
+password: ********
+username_in: <empty>
+password_in: ********
+************************
+Negotiated iSCSI params:
+************************
+HeaderDigest: None
+DataDigest: None
+MaxRecvDataSegmentLength: 262144
+MaxXmitDataSegmentLength: 262144
+FirstBurstLength: 65536
+MaxBurstLength: 262144
+ImmediateData: Yes
+InitialR2T: Yes
+MaxOutstandingR2T: 1
+************************
+Attached SCSI devices:
+************************
+Host Number: 40	State: running
+scsi40 Channel 00 Id 0 Lun: 0
+Attached scsi disk sdb		State: running
+scsi40 Channel 00 Id 0 Lun: 1
+Attached scsi disk sdc		State: running
+scsi40 Channel 00 Id 0 Lun: 2
+Attached scsi disk sdd		State: running
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Verification on the iSCSI Target}	
+To verify the iSCSI config on the target, we need only check the contents of the targetcli command:
+
+\vspace{-15pt}
+\begin{minted}[tabsize=2]{console}
+# targetcli
+targetcli shell version 2.1.fb46
+Copyright 2011-2013 by Datera, Inc and others.
+For help on commands, type 'help'.
+
+/> ls
+o- / ..................................................................... [...]
+	o- backstores .......................................................... [...]
+	| o- block .............................................. [Storage Objects: 2]
+	| | o- block1 ............ [/dev/vgSAN/lvSAN1 (508.0MiB) write-thru activated]
+	| | | o- alua ............................................... [ALUA Groups: 1]
+	| | |   o- default_tg_pt_gp ................... [ALUA state: Active/optimized]
+	| | o- block2 ............ [/dev/vgSAN/lvSAN2 (508.0MiB) write-thru activated]
+	| |   o- alua ............................................... [ALUA Groups: 1]
+	| |     o- default_tg_pt_gp ................... [ALUA state: Active/optimized]
+	| o- fileio ............................................. [Storage Objects: 1]
+	| | o- file1 ................ [/root/diskFile1 (10.0MiB) write-back activated]
+	| |   o- alua ............................................... [ALUA Groups: 1]
+	| |     o- default_tg_pt_gp ................... [ALUA state: Active/optimized]
+	| o- pscsi .............................................. [Storage Objects: 0]
+	| o- ramdisk ............................................ [Storage Objects: 0]
+	o- iscsi ........................................................ [Targets: 1]
+	| o- iqn.2018-02.local.somuvmnet:vmdeux ............................ [TPGs: 1]
+	|   o- tpg1 ........................................... [no-gen-acls, no-auth]
+	|     o- acls ...................................................... [ACLs: 1]
+	|     | o- iqn.2018-02.local.somuvmnet:vmprime .............. [Mapped LUNs: 3]
+	|     |   o- mapped_lun0 ............................ [lun0 block/block1 (rw)]
+	|     |   o- mapped_lun1 ............................ [lun1 block/block2 (rw)]
+	|     |   o- mapped_lun2 ............................ [lun2 fileio/file1 (rw)]
+	|     o- luns ...................................................... [LUNs: 3]
+	|     | o- lun0 ........ [block/block1 (/dev/vgSAN/lvSAN1) (default_tg_pt_gp)]
+	|     | o- lun1 ........ [block/block2 (/dev/vgSAN/lvSAN2) (default_tg_pt_gp)]
+	|     | o- lun2 .......... [fileio/file1 (/root/diskFile1) (default_tg_pt_gp)]
+	|     o- portals ................................................ [Portals: 1]
+	|       o- 10.0.99.12:3260 .............................................. [OK]
+	o- loopback ..................................................... [Targets: 0]
 \end{minted}
 \vspace{-10pt}	
