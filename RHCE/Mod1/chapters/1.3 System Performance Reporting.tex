@@ -130,3 +130,262 @@ TID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN     IO>    COMMAND
 
 \noindent
 Here we can see that the \verb|dd if=/dev/sda of=/dev/null| is performing the most amount of I/O by copying the entire hard disk to \verb|/dev/null|. 
+
+	\section{Understanding vmstat}
+\subsection{Virtual Memory}
+Let us consider the typical output of top sorted on the basis of the Virtual Memory being used:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# top
+ PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND                                                   
+1920 somu      20   0 1901016 215552  47856 S  0.7 11.6   0:47.79 gnome-shell                                               
+...
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can see that the \verb|gnome-shell| is using 1901016 KiB of virtual memory, which is $\approx$ 1.82 GiB of virtual memory. Virtual Memory in Linux is memory that doesn't really exist. If we take a look at the \verb|/proc/meminfo| file, we see:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+VmallocTotal:   34359738367 kB
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+If we convert the VmallocTotal (Total amount of virtual memory that is possible for the kernel to allocate) to human readable units, it comes up to 32PB! That's not possible on most enterprise gear, let alone consumer hardware. Thus, the memory here doesn't really exist. 
+
+The key point here is that the kernel frequently needs to dish out unique memory address pointers to programs that demand it, but not actually assign any real memory till it's needed, i.e., the program tries to write to that location.
+
+The kernel, instead of assigning real memory locations to programs, assigns memory in a virtual address space, which it then maps on to real memory on demand. The program itself remains blissfully oblivious to the knowledge of whether the memory it is referencing is virtual or real. All the trouble of fetching data on requirement and saving data falls on the kernel. 
+
+\subsection{Resident Memory}
+A much more important concept is that of Resident Memory. Contrastingly to the Virtual Memory, the Resident memory is really used and is the total amount RAM being assigned to the process. 
+
+\subsection{vmstat}
+The \verb|vmstat| command when used without arguments shows various statistics pertaining to the resource consumption on the system:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# vmstat
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 3  0      0 269904   2116 860396    0    0   176    25  124  129  2  2 95  2  0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The significance of each is:
+
+\noindent
+\begin{tabular}{rM{0.84}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} \\
+	\midrule
+	\textbf{proc}	&This part shows information about the processes: the \textbf{r} shows the number of running processes, \textbf{b} shows the number of blocking processes. A blocking process is a process that's waiting for something (e.g., I/O). \\
+	\midrule
+	\textbf{memory}	&This is the total amount of memory in swap, as well as real physical memory (RAM) used for buffers and cache. \\
+	\midrule
+	\textbf{swap}	&The two sub-categories are \textit{swap-in}\verb|(si)| and \textit{swap-out}\verb|(so)|. If at any time we see that the system is utilizing swap memory, we can use \verb|vmstat| to find out if the swap is being used actively, i.e., whether data is being written to or read from it actively. \\
+	\midrule
+	\textbf{io}	&The IO section deals with the number of blocks of I/O that's being performed - \textit{blocks-in}\verb|(bi)| and \textit{blocks-out}\verb|(bo)| provide a way to measure the real I/O activity at the moment, thus helping us discern if the server is spending a lot of time reading or writing during high I/O waits. \\
+	\midrule
+	\textbf{system}	&The metrics shown are \textit{interrupts}\verb|(in)| and \textit{context switches}\verb|(cs)|. Interrupts are generally generated when a piece of hardware demands CPU attention. Context switches occur when the CPU switches the present task it's working on after being triggered by the scheduler. It is critical to the multi-tasking ability of a server since multiple processes need to coordinate and divide the CPU cycles. A high number of context-switches would indicate that the CPU isn't getting enough time per process.\\
+	\midrule
+	\textbf{cpu}	&These metrics refer to the percentage of CPU time spent executing programs in the \textit{user-space}\verb|(us)|, \textit{system space}\verb|(sy)|, \textit{idle}\verb|(id)| or \textit{waiting} \verb|(wa)|.\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+Just like \verb|iostat|, the \verb|vmstat| provides an option to show the information at multiple points in time - the first argument is the time delay and the second the number of loops. To re-run vmstat every 2 seconds for 5 times we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# vmstat 2 5
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 2  0      0 255824   2116 877492    0    0   135    20  118  122  1  1 96  2  0
+ 0  0      0 255576   2116 877492    0    0     0     0  174  178  6  3 91  0  0
+ 0  0      0 255576   2116 877492    0    0     0     0  152  145  6  2 92  0  0
+ 1  0      0 255384   2116 877492    0    0     0     0  179  161  8  2 90  0  0
+ 0  0      0 255452   2116 877492    0    0     0     0  256  406  9  8 83  0  0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Just like in \verb|iostat| output, the first line has higher values of certain metrics because it gives a generic overview of the system operations where applicable. The next lines portray the activity within the delay time frame. 
+
+For detailed memory utilization statistics, we use \verb|vmstat -s|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# vmstat -s
+1865964 K total memory
+730672 K used memory
+902516 K active memory
+466968 K inactive memory
+255684 K free memory
+2116 K buffer memory
+877492 K swap cache
+1048572 K total swap
+0 K used swap
+1048572 K free swap
+6813 non-nice user cpu ticks
+1125 nice user cpu ticks
+7128 system cpu ticks
+543996 idle cpu ticks
+8383 IO-wait cpu ticks
+0 IRQ cpu ticks
+180 softirq cpu ticks
+0 stolen cpu ticks
+734741 pages paged in
+106795 pages paged out
+0 pages swapped in
+0 pages swapped out
+667859 interrupts
+685758 CPU context switches
+1519798095 boot time
+4208 forks
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To change the display unit being used, we use the \verb|-S (k/K/m/M)| option to change units. (where K=KiB and k=kB). 
+
+\section{Understanding sar components}
+\verb|sar| stands for the \textbf{System Activity Reporter}. It is a part of the \textit{sysstat} package (like \verb|iostat| and \verb|vmstat|), and it collects data on an interval of 10 minutes by default. However, it can also be used to collect instantaneous data about the system as well. 
+
+What truly distinguishes \verb|sar| from the other tools is the fact that it can be tasked to data collection for an extended period of time and the queried for information about a very specific period. 
+
+To make sorting and finding data in \verb|sar| easier, it is recommended to set \verb|LANG=C| before starting sar. Every Linux OS has an environment variable called \textbf{LANG} that affects the behavior of several utilities as well as setting the language. POSIX standard mandates that a locale called either POSIX or C be defined. Thus, it disables localization and makes the output predictable. Unless the option is set, timestamps are formatted in AM/PM which makes filtering said data harder. With the \verb|LANG=C| option however, the timestamps use the military time format (24-hour format). A handy option is to generate an alias such as:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# echo "alias sar='LANG=C sar'" >> /etc/bashrc
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+sar data is collected via cron jobs in \verb|/etc/cron.d/sysstat|. The collected data is written to \verb|/var/log/sa|. The file \verb|/etc/sysconfig/sysstat| has a \verb|HISTORY| variable which dictates how long data should be stored. Typically, it's on a monthly basis. 
+
+\subsection{/etc/cron.d/sysstat}
+This cronjob launches two different jobs are launched: \textbf{sa1} and \textbf{sa2}. The \textit{sa1} job is for collecting short term statistics data while the \textit{sa2} job executes once a day to collect data for long term statistics. Both of these write the results of their monitoring in a file in the \verb|/var/log| directory. 
+
+\subsection{/var/log/sa/sa[dd]}
+These are actually a bunch of files that start with the prefix \verb|sa| and end with the date in \verb|dd| format. Thus, typical file names are: \textit{sa01, sa25, sa31,} etc. These files are unreadable by typical pagers like \verb|less| and needs to be read by using the \verb|sar| utility itself, by issuing commands like \verb|sar -q| to get information about disk statistics, etc. One common mistake while accustoming to \verb|sar| is to forget to start the sysstat services, since without them the data for the sar log files aren't populated and the utility has no data to work with. 
+
+\section{Setting up sar}
+If the \textbf{sysstat} package isn't already installed, we first need to install it using \verb|yum -y install sysstat|. Next, we ensure that the cron job for data collection via \textit{sa1} and \textit{sa2} were set up properly in \verb|/etc/cron.d/sysstat| file, which should have the contents:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# Run system activity accounting tool every 10 minutes
+*/10 * * * * root /usr/lib64/sa/sa1 1 1
+# Generate a daily summary of process accounting at 23:53
+53 23 * * * root /usr/lib64/sa/sa2 -A
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Thus, \textit{sa1} is collecting data every 10 mins and \textit{sa2} executes everyday at 11:53PM to collect long term data for the day. Now sar is ready to collect data, but if we were to query the sar already, we'd come up empty, since \verb|sar| hasn't had the opportunity to log data yet! 
+
+Next, we check the config in \verb|/etc/sysconfig/sysstat| file, which typically looks like:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# sysstat-10.1.5 configuration file.
+
+# How long to keep log files (in days).
+# If value is greater than 28, then log files are kept in
+# multiple directories, one for each month.
+HISTORY=28
+
+# Compress (using gzip or bzip2) sa and sar files older than (in days):
+COMPRESSAFTER=31
+
+# Parameters for the system activity data collector (see sadc manual page)
+# which are used for the generation of log files.
+SADC_OPTIONS="-S DISK"
+
+# Compression program to use.
+ZIP="bzip2"
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The primary feature of interest in this file is the value of the \verb|HISTORY| variable which decides how long the collected data is stored. 
+
+Now, we have to wait for the \verb|sadc| (\textit{System Activity Data Collector}) utility to collect data for \textbf{sar} to analyse. 
+
+	\section{Analyzing sar data}
+Some of the most common options that print certain categories of the collected data are:
+
+\subsection{I/O operations}	
+The \verb|sar -b| command shows us the total transfers per second (\verb|tps|), read tps(\verb|rtps|), write tps(\verb|wtps|), blocks read per second (\verb|bread|)(1 block = 512B) and blocks written to per second (\verb|bwrtn|). Typical output of the command looks like:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# sar -b
+00:00:02          tps      rtps      wtps   bread/s   bwrtn/s
+00:10:01         2.70      1.15      1.55     64.96    995.40
+00:20:01         0.47      0.27      0.20     12.97      8.26
+00:30:01         0.07      0.00      0.07      0.00      0.86
+00:40:01         0.08      0.00      0.08      0.00      1.04
+...
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Thus, the use of military time makes the output a lot easier to process. 
+
+\subsection{Processor information}
+It is possible to get the information about a single processor (i.e., a single logical core on a physical CPU, since linux considers each a separate processor) using the \verb|sar -P <processorNumber>| command. Typical usage is (to find the usage of processor 0):
+
+\vspace{-15pt}
+\begin{minted}{console}
+# sar -P 0
+00:00:02        CPU     %user     %nice   %system   %iowait    %steal     %idle
+00:10:01          0      5.21      0.00      3.09      0.59      0.00     91.11
+00:20:01          0      0.12      0.00      0.24      0.15      0.00     99.48
+...
+04:10:01          0      0.29      0.00      0.36      0.10      0.00     99.25
+Average:          0      1.04      0.00      1.03      0.31      0.00     97.62
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Network Statistics}
+The \verb|sar -n DEV| command shows the network statistics for each interface:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# sar -n DEV
+Linux 3.10.0-693.17.1.el7.x86_64 (vmPrime.somuVMnet.local) 	02/28/18 	_x86_64_	(1 CPU)
+
+00:00:02        IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
+00:10:01           lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+00:10:01    virbr0-nic      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+00:10:01       virbr0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+00:10:01        ens33     63.83     19.03     90.10      1.19      0.00      0.00      0.00
+...
+16:40:01        ens33      1.28      1.13      0.15      0.36      0.00      0.00      0.00
+
+Average:        IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s
+Average:           lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+Average:    virbr0-nic      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+Average:       virbr0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+Average:        ens33      1.19      0.92      0.83      0.12      0.00      0.00      0.00
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To view the statistics for just one interface, we can use \verb|sar -n DEV \| grep <interfaceName>|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# sar -n DEV | grep ens33
+00:10:01        ens33     63.83     19.03     90.10      1.19      0.00      0.00      0.00
+...
+16:40:01        ens33      1.28      1.13      0.15      0.36      0.00      0.00      0.00
+Average:        ens33      1.19      0.92      0.83      0.12      0.00      0.00      0.00
+\end{minted}
