@@ -1,1 +1,88 @@
 \chapter{Configuring Logging}
+
+	\section{Understandig Logging In RHEL 7}
+Due to the introduction of Systemd several services of the older Unix System V now have a counter part in their systemd equivalent. Such is the case for rsyslogd and journald. The former is responsible for logging in System V systems while journald does it in systemd systems. However, due to the concern of backwards compatibility (i.e., being able to use tools written for older versions of Linux which may have used System V utilities), modern distros like RHEL 7 also have rsyslogd installed. 
+
+There can be thus, three different ways of logging application information in RHEL 7: 
+\begin{itemize}
+	\item Directly write to a log file somewhere - no standardized way of accessing logs.
+	\item Write to Systemd's \textit{Journald} - logs are accessible via \textbf{journalctl}
+	\item Write to \textit{rsyslogd} - logs are accessible via \verb|/var/log|.
+\end{itemize}
+
+An important point to note here is that \textbf{rsyslog} is still the central logging authority, but journald simply adds features to the way that logging is organized. Thus, journald doesn't really replace rsyslog. 
+
+This however means that there's scope for confusion on part of the user (or admin) who's handling the system - to understand exactly where a certain programs might write it's logs to. Thus, we can connect the two together to show the same information. 
+
+\section{Connecting Journald to Rsyslogd}
+We merely need to add a few lines of configuration to have both services report their own logs to each other:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# To connect Journald to rsyslogd:
+## In /etc/rsyslog.conf:
+$ModLoad imuxsock
+$OmitLocalLogging off
+## In /etc/rsyslog.d/listend.conf:
+$SystemLogSocketName /run/systemd/journal/syslog
+
+# To connect rsyslogd to journald:
+## In /etc/rsyslog.conf:
+$ModLoad omjournal 
+*.* :omjournal:
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+\textbf{rsyslog} messages are sent to \textbf{journald}, and vice versa. However, sending to journald is disabled by default in rsyslog.conf. To fix this we add the load the module omjournal (\textit{output module journal}) using \verb|$ModLoad omjournal|. Next, we use rsyslog's notation for indicating the facility, priority and destination. The statement \verb|*.* :omjournal:| means for any facility and any priority, we want the log to be forwarded to \textit{omjournal}. 
+
+Receiving from journal is enabled by default in \verb|rsyslog.conf|. This is done via: \\\verb|$ModLoad imuxsock| (Input Module UniX SOCKet), which instructs rsyslog to listen to a socket. Now, local logging has to be enabled using the \verb|$OmitLocalLogging off| option. Finally, the socket name on which rsyslog will listen will have to be specified in the \verb|/etc/rsyslog.d/listend.conf| file, and has to be set to the value \\\verb|/run/systemd/journal/syslog|. Everything on the systemd end is already configured and needs no manual intervention. This completes the integration of the two. 
+
+\subsection{Modules}
+Thus, the connection between rsyslog and journald is facilitated by modules. There are several types of modules, which can be identified and classified by:
+
+\noindent
+\begin{tabular}{rlM{0.67}}
+	\toprule
+	\textbf{Prefix} &\textbf{Type} &\textbf{Description} \\
+	\midrule
+	\textbf{im*} &Input Module &Source of information for the rsyslog journal; Loaded in \verb|/etc/rsyslog.conf| and socket name specified in \verb|/etc/rsyslog.d/listend.conf|. \\
+	\midrule
+	\textbf{om*} &Output Module &Destination to which data from rsyslog will be sent; Configured in \verb|/etc/rsyslog.conf| \\
+	\midrule
+	&&Other modules such as parser modules, message modification modules, etc. \\
+	\bottomrule
+\end{tabular}
+
+\noindent
+Together these modules lets us manipulate the log messages any way we want. 
+
+\subsection{Importing text files to log : httpd error log}
+To import the HTTPD error log to rsyslog, the following needs to be added to the file \verb|/etc/rsyslog.conf|:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+$ModLoad imfile
+$InputFileName /var/log/httpd/error_log
+$InputFileTag apache-error:
+$InputFileState state-apache-error
+$InputRunFileMontitor
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This takes the error log read and maintained by apache and inserts the data into rsyslog. The \verb|$InputRunFileMonitor| enables monitoring of the specified file. 
+
+\subsection{Exporting data to an output module : exporting to a database}
+Since rsyslog writes the data to a simple text file, and for managing log information the ability to query is very important, we may choose to export the data to a database. Assuming we're using a MySQL database:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+$ModLoad ommysql
+$ActionOmmysqlServerPort 1234
+*.* :ommysql:database-serverName,database-name,database-userid,database-password
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The first line loads the MySQL Output module for rsyslog. Then, we define the server port on which the logs will be forwarded. Then, finally, we configure the output module using the \textit{facility, priority :destination} method where we send everything (all facilities and every priority[\verb|*.*|]) to the output module, while also providing the database details. 
