@@ -1,1 +1,386 @@
 \chapter{System Optimization Basics}
+	
+\section{Understanding /proc contents}
+To optimize a Linux system, we should know in depth about the \verb|/proc| file system. This file system provides an interface to the kernel using which we can take a look at the present state of the system as well as optimize it as per our requirements. 
+
+The \verb|/proc| file system is filled with several \textbf{status files} which tell us about many operational system parameters. In fact, may performance monitoring utilities get their data from the \verb|/proc| file system itself! 
+
+In older versions of Linux, there were several hard-coded parameters that needed to be changed to optimize the system, and thus required a recompilation of the kernel. Modern Linux kernels however, get many of these parameters from the \verb|/proc/sys| file system and thus offer optimization in a flexible manner! 
+
+The \verb|/proc/sys| file system offers different interfaces that are related to different aspects of the file system which can be tuned through their corresponding interface. 
+
+\section{Analysing the /proc filesystem}
+\subsection{Process Directories}
+The \verb|/proc| file system has a process directory named with a number corresponding to the \textit{PID} of every running process on the system:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls /proc
+1     17    2064  2514  333  362  465  7    93           locks
+10    1759  2070  2530  334  363  466  732  acpi         mdstat
+1180  1764  2093  26    335  364  479  734  asound       meminfo
+1186  18    2094  2611  336  365  480  736  buddyinfo    misc
+1187  1856  2109  2616  337  366  481  757  bus          modules
+1191  1875  2116  2664  338  367  482  758  cgroups      mounts
+1195  1880  212   2665  339  368  483  760  cmdline      mpt
+1196  1884  2128  27    340  369  484  762  consoles     mtrr
+1199  19    2147  273   341  370  485  766  cpuinfo      net
+12    1903  2150  274   342  371  486  767  crypto       pagetypeinfo
+1297  1907  2151  275   343  372  487  768  devices      partitions
+1298  1921  2164  278   344  373  488  772  diskstats    sched_debug
+1299  1933  2167  279   345  374  489  773  dma          schedstat
+13    1938  2175  28    346  375  5    779  driver       scsi
+1331  1940  2180  284   347  376  560  791  execdomains  self
+1336  1948  2181  286   348  377  561  793  fb           slabinfo
+1337  1953  2186  287   349  378  587  794  filesystems  softirqs
+1338  1954  2188  288   350  379  589  795  fs           stat
+1344  1961  2208  295   351  38   590  8    interrupts   swaps
+1383  1962  2243  3     352  380  60   800  iomem        sys
+14    1970  2250  323   353  381  601  801  ioports      sysrq-trigger
+15    1973  2321  324   354  382  616  802  irq          sysvipc
+1569  1979  2322  325   355  39   638  803  kallsyms     timer_list
+1584  1983  2358  326   356  4    640  818  kcore        timer_stats
+1586  2     2426  327   357  40   641  827  keys         tty
+16    2001  2454  328   358  406  642  831  key-users    uptime
+1640  2043  2460  329   359  407  645  835  kmsg         version
+1643  2048  2462  330   36   41   646  852  kpagecount   vmallocinfo
+1686  2053  2481  331   360  453  647  869  kpageflags   vmstat
+1691  2059  25    332   361  454  648  9    loadavg      zoneinfo
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Inside each of these process directories, there are several files that tell us about the present status of the process, and provide other necessary details about it. For example, inside the directory for the process with \textit{PID 881}, we find:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls /proc/561/
+attr             cpuset   limits      net            projid_map  stat
+autogroup        cwd      loginuid    ns             root        statm
+auxv             environ  map_files   numa_maps      sched       status
+cgroup           exe      maps        oom_adj        schedstat   syscall
+clear_refs       fd       mem         oom_score      sessionid   task
+cmdline          fdinfo   mountinfo   oom_score_adj  setgroups   timers
+comm             gid_map  mounts      pagemap        smaps       uid_map
+coredump_filter  io       mountstats  personality    stack       wchan
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \textbf{cmdline} file in this directory tells us about the command that is being run in the process. For example, the command that spawned the process with PID 561 is:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cat /proc/561/cmdline 
+/usr/lib/systemd/systemd-journald
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Status files}
+The \verb|/proc| directory also houses several files that tell us about the different aspects of what our Operating System is doing and how it's performing. For example, the \verb|/proc/partitions| file contains a list of all the storage devices that our system can access, as well as all the partitions that are housed on those devices:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cat /proc/partitions 
+major  minor    #blocks name
+8        0   10485760 sda
+8        1    1048576 sda1
+8        2    9436160 sda2
+11        0    1048575 sr0
+253        0    8384512 dm-0
+253        1    1048576 dm-1
+
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Similarly, the \verb|/proc/cpuinfo| file has information about the CPU configuration, and the \verb|/proc/meminfo| has information about the memory configuration. A list of all the file systems supported by the currently running operating systems (that have a kernel module presently loaded) can be found in \verb|/proc/filesystems|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cat /proc/filesystems 
+nodev	sysfs
+nodev	rootfs
+nodev	ramfs
+nodev	bdev
+nodev	proc
+nodev	cgroup
+nodev	cpuset
+nodev	tmpfs
+nodev	devtmpfs
+nodev	debugfs
+nodev	securityfs
+nodev	sockfs
+nodev	pipefs
+nodev	anon_inodefs
+nodev	configfs
+nodev	devpts
+nodev	hugetlbfs
+nodev	autofs
+nodev	pstore
+nodev	mqueue
+nodev	selinuxfs
+	     xfs
+nodev	rpc_pipefs
+nodev	nfsd
+	     fuseblk
+nodev	fuse
+nodev	fusectl
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Thus, if we insert the module for vFat or ext4 into the kernel, it'll show up in the \verb|/proc/filesystems| listing:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# modprobe vfat
+[root@vmPrime proc]# modprobe ext4
+[root@vmPrime proc]# cat /proc/filesystems 
+nodev	sysfs
+nodev	rootfs
+...
+nodev	selinuxfs
+	     xfs
+nodev	nfsd
+	     fuseblk
+nodev	fusectl
+	     vfat
+	     ext3
+	     ext2
+	     ext4
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{/proc/sys}
+The \verb|/proc/sys| file system is our interface to optimization of the system. It has folders related to the different aspects of the kernel's functions:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls /proc/sys
+abi  crypto  debug  dev  fs  kernel  net  sunrpc  user  vm
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Among these, the most important ones are \textbf{fs} for \textit{file systems}, \textbf{kernel} for \textit{kernel optimizations}, \textbf{net} for \textit{networking} and \textbf{vm} for the \textit{virtual memory}. 
+
+For example, the \verb|/proc/sys/vm| directory contains several files that help tune the kernel for memory optimization:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls /proc/sys/vm
+admin_reserve_kbytes        lowmem_reserve_ratio       oom_dump_tasks
+block_dump                  max_map_count              oom_kill_allocating_task
+compact_memory              memory_failure_early_kill  overcommit_kbytes
+dirty_background_bytes      memory_failure_recovery    overcommit_memory
+dirty_background_ratio      min_free_kbytes            overcommit_ratio
+dirty_bytes                 min_slab_ratio             page-cluster
+dirty_expire_centisecs      min_unmapped_ratio         panic_on_oom
+dirty_ratio                 mmap_min_addr              percpu_pagelist_fraction
+dirty_writeback_centisecs   mmap_rnd_bits              stat_interval
+drop_caches                 mmap_rnd_compat_bits       swappiness
+extfrag_threshold           nr_hugepages               user_reserve_kbytes
+hugepages_treat_as_movable  nr_hugepages_mempolicy     vfs_cache_pressure
+hugetlb_shm_group           nr_overcommit_hugepages    zone_reclaim_mode
+laptop_mode                 nr_pdflush_threads
+legacy_va_layout            numa_zonelist_order
+# cat swappiness 
+30
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+One such file is the \verb|swappiness| file - which defines the willingness of a server to write data to the swap. The default value of \textit{30} means it isn't very willing. If we were to increase the value set in the file, we would make it more likely for the kernel to use swap in cases where it normally wouldn't have. 
+
+\section{Optimizing through /proc}
+Optimization through the \verb|/proc/sys| file system is an easy affair that needs us to only change the value contained in certain files to tune the associated aspect. Let us consider the \verb|/proc/sys/net/ipv4| directory, which deals with IPv4 networking on the system:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cd /proc/sys/net/ipv4
+# ls
+# ls ip_*
+ip_default_ttl  ip_forward           ip_local_reserved_ports
+ip_dynaddr      ip_forward_use_pmtu  ip_nonlocal_bind
+ip_early_demux  ip_local_port_range  ip_no_pmtu_disc
+# cat ip_forward
+0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The value of \verb|0| in the \textit{ip\_forward} file shows that this system doesn't do IP forwarding, i.e., it doesn't forward specific IP packets for other IPs, i.e., it doesn't act as a router. To change this, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# echo 1 > ip_forward
+# cat ip_forward
+1
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+When we echo values into the proc file system, it is only temporary and is wiped with every reboot - thus giving us an opportunity to test our settings directly before making anything permanent. If we like the results, we can make it permanent - otherwise reboot to restore the original values. 
+
+\subsection{Sysctl}
+The utility \verb|sysctl| can be used to display as well as control all the tunables that exist for a system:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# sysctl -a
+abi.vsyscall32 = 1
+crypto.fips_enabled = 0
+debug.exception-trace = 1
+...
+vm.swappiness = 30
+vm.user_reserve_kbytes = 55126
+vm.vfs_cache_pressure = 100
+vm.zone_reclaim_mode = 0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Thus, there is no need to manually traverse the file system hierarchy in the \verb|proc| file system. We can directly set the values using \verb|sysctl| command. Further, it can help us find every single tunable that is related to a keyword very easily by piping the output to \textit{grep}. For example, if we want to tune ICMP (the protocol behind Ping and other control messages that can be sent over IP packets) , we can use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# sysctl -a | grep icmp
+sysctl: reading key "net.ipv6.conf.all.stable_secret"
+sysctl: reading key "net.ipv6.conf.default.stable_secret"
+net.ipv4.icmp_echo_ignore_all = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.icmp_errors_use_inbound_ifaddr = 0
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+net.ipv4.icmp_msgs_burst = 50
+net.ipv4.icmp_msgs_per_sec = 1000
+net.ipv4.icmp_ratelimit = 1000
+net.ipv4.icmp_ratemask = 6168
+sysctl: reading key "net.ipv6.conf.ens33.stable_secret"
+sysctl: reading key "net.ipv6.conf.lo.stable_secret"
+sysctl: reading key "net.ipv6.conf.virbr0.stable_secret"
+sysctl: reading key "net.ipv6.conf.virbr0-nic.stable_secret"
+net.ipv6.icmp.ratelimit = 1000
+net.netfilter.nf_conntrack_icmp_timeout = 30
+net.netfilter.nf_conntrack_icmpv6_timeout = 30
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Thus, \verb|sysctl -a| and \verb|grep| together make it extremely easy to discover the tunable we need to optimize any facet pertaining to our current needs. 
+
+\section{Introducing sysctl}
+The purpose of the \textbf{sysctl} utility is that it can act as an interface to control the entirity of the \verb|/proc/sys| file system, including making \textbf{permanent} changes to the tunables for system optimization. Thus, it's an invaluable tool to handle kernel runtime parameters. 
+
+We can put our parameters in \verb|/etc/sysctl.conf| or the related directory \verb|/etc/sysctl.d|. All of these parameters are read by \textbf{sysctl} and then passed on to the \verb|/proc/sys| file system (also known as \textbf{procfs}). It is encouraged to thoroughly test out the changes by first echoing the parameter values to the concerned file in \verb|/proc/sys| first so that any errors can be weeded out and then making the changes permanent by creating a \verb|.conf| file in the \verb|/etc/sysctl.d| directory. 
+
+	\section{Using sysctl}
+Any user changes to kernel runtime parameters should be put inside the \verb|/etc/sysctl.d| directory. Anything put in this directory overwrites the vendor presets in the \verb|/usr/lib/sysctl.d| directory, and of course, the default kernel parameter values. One such file containing vendor preset kernel parameters is the \verb|/usr/lib/sysctl.d/00-system.conf|:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# Kernel sysctl configuration file
+#
+# For binary values, 0 is disabled, 1 is enabled.  See sysctl(8) and
+# sysctl.conf(5) for more details.
+
+# Disable netfilter on bridges.
+net.bridge.bridge-nf-call-ip6tables = 0
+net.bridge.bridge-nf-call-iptables = 0
+net.bridge.bridge-nf-call-arptables = 0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The files in the \verb|/usr/lib/| directory in general shouldn't be touched since they're mostly vendor presets and thus get overwritten with every update. The only way to have our settings overwrite theirs is via configuring the settings in the concerned directory in the \verb|/etc| directory. 
+
+The kernel parameters controllable through the sysctl utility are all named according to the convention : if the file is \verb|/proc/sys/net/ipv4/ip_local_port_range|, then its equivalent sysctl setting will be \verb|net.ipv4.ip_local_port_range|, i.e., each directory in the path name of the file after \verb|/proc/sys| seperated by a '.', terminating with the file name. This can be demonstrated with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cat /proc/sys/net/ipv4/ip_local_port_range
+32768	60999
+# sysctl -a | grep net.ipv4.ip_local_port_range
+net.ipv4.ip_local_port_range = 32768	60999
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Thus, to change the swappiness permanently, we write the setting in \verb|/etc/sysctl.conf| (or a new configuration file in \verb|/etc/sysctl.d|) and then reboot to see the changes: 
+
+\vspace{-15pt}
+\begin{minted}{bash}
+vm.swappiness = 60
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{sysctl -w}
+To directly load a sysctl setting immediately without reading it from the \verb|/proc/sys| file system, we use: \verb|sysctl -w <parameter=value>|.
+
+\subsection{sysctl -p}
+To load an entire configuration file and set all of the kernel parameters mentioned in it, we use \verb|sysctl -p <configFile.conf>|.
+
+	\section{Modifying Network Behaviour through /proc and sysctl}
+We can see our IP address(es) and ping it via:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ip a
+1: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+link/ether 00:0c:29:3b:b9:1c brd ff:ff:ff:ff:ff:ff
+inet 10.0.99.11/24 brd 10.0.99.255 scope global ens33
+valid_lft forever preferred_lft forever
+inet6 fe80::f408:1ebf:7742:9fd8/64 scope link 
+valid_lft forever preferred_lft forever
+# ping -c 2 10.0.99.11
+PING 10.0.99.11 (10.0.99.11) 56(84) bytes of data.
+64 bytes from 10.0.99.11: icmp_seq=1 ttl=64 time=0.420 ms
+64 bytes from 10.0.99.11: icmp_seq=2 ttl=64 time=0.135 ms
+
+--- 10.0.99.11 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.135/0.277/0.420/0.143 ms
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, ping is an ICMP control message, and ICMP control messages can be blocked by changing an associated kernel parameter. To find the parameter responsible for ignoring ICMP echo requests that ping needs, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# sysctl -a | grep icmp
+net.ipv4.icmp_echo_ignore_all = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.icmp_errors_use_inbound_ifaddr = 0
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+net.ipv4.icmp_msgs_burst = 50
+net.ipv4.icmp_msgs_per_sec = 1000
+net.ipv4.icmp_ratelimit = 1000
+net.ipv4.icmp_ratemask = 6168
+net.ipv6.icmp.ratelimit = 1000
+net.netfilter.nf_conntrack_icmp_timeout = 30
+net.netfilter.nf_conntrack_icmpv6_timeout = 30
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The very first displayed parameter is exactly what we need. So, we first test it with: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_all 
+[root@vmPrime ~]# ping 10.0.99.11
+PING 10.0.99.11 (10.0.99.11) 56(84) bytes of data.
+^C
+--- 10.0.99.11 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3000ms
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now that our host has stopped replying to pings, we can make the changes permanent by adding to the \verb|/etc/sysctl.conf| file (and then rebooting):
+
+\vspace{-15pt}
+\begin{minted}{bash}
+net.ipv4.icmp_echo_ignore_all = 1
+\end{minted}
