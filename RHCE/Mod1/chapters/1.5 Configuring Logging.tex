@@ -34,6 +34,9 @@ $ModLoad omjournal
 \vspace{-10pt}	
 
 \noindent
+\textbf{NOTE} \textit{- this is legacy syntax and will probably not work anymore. Plus, it causes errors in journalctl. Further investigation is needed.} 
+
+\noindent
 \textbf{rsyslog} messages are sent to \textbf{journald}, and vice versa. However, sending to journald is disabled by default in rsyslog.conf. To fix this we add the load the module omjournal (\textit{output module journal}) using \verb|$ModLoad omjournal|. Next, we use rsyslog's notation for indicating the facility, priority and destination. The statement \verb|*.* :omjournal:| means for any facility and any priority, we want the log to be forwarded to \textit{omjournal}. 
 
 Receiving from journal is enabled by default in \verb|rsyslog.conf|. This is done via: \\\verb|$ModLoad imuxsock| (Input Module UniX SOCKet), which instructs rsyslog to listen to a socket. Now, local logging has to be enabled using the \verb|$OmitLocalLogging off| option. Finally, the socket name on which rsyslog will listen will have to be specified in the \verb|/etc/rsyslog.d/listend.conf| file, and has to be set to the value \\\verb|/run/systemd/journal/syslog|. Everything on the systemd end is already configured and needs no manual intervention. This completes the integration of the two. 
@@ -86,3 +89,64 @@ $ActionOmmysqlServerPort 1234
 
 \noindent
 The first line loads the MySQL Output module for rsyslog. Then, we define the server port on which the logs will be forwarded. Then, finally, we configure the output module using the \textit{facility, priority :destination} method where we send everything (all facilities and every priority[\verb|*.*|]) to the output module, while also providing the database details. 
+
+	\section{Setting up Remote Logging}
+It is via the use of modules that remote logging can be configured. This can be done using two types of protocols: TCP and UDP. UDP is the classical solution and is backwards compatible, but due to the very nature of the protocol, the message transfer isn't connection oriented. What this means is that messages may get lost in transit, and thus data loss may occur. Contrastingly, TCP only does data exchange after a connection has been established, and thus provides more reliable logging. So, if everything in our syslog configuration is compatible with TCP, then we should definitely opt for TCP syslog reception. Example usage for both are provided in a commented section in the \verb|/etc/rsyslog.conf| file:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# Provides UDP syslog reception
+#$ModLoad imudp
+#$UDPServerRun 514
+
+# Provides TCP syslog reception
+#$ModLoad imtcp
+#$InputTCPServerRun 514
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The TCP syslog reception needs to be done exactly as the example states and so uncommenting the lines is all we need to do. The \textbf{imtcp} module enables the reception of log information via TCP connection and the \verb|InputTCPServerRun| option chooses port 514 to use as incoming port for the messages (the IP is the IP of the server itself). 
+
+Now, for the other servers, the configuration has to be such that they send their own logging data to the same IP and port as we just configured. If our logging server is running on 10.0.50.11:514, then the \textit{forwarding rule} configuration (an example of which is present in the \verb|rsyslog.conf| file itself) becomes:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+# ### begin forwarding rule ###
+# The statement between the begin ... end define a SINGLE forwarding
+# rule. They belong together, do NOT split them. If you create multiple
+# forwarding rules, duplicate the whole block!
+# Remote Logging (we use TCP for reliable delivery)
+#
+# An on-disk queue is created for this action. If the remote host is
+# down, messages are spooled to disk and sent when it is up again.
+#$ActionQueueFileName fwdRule1 # unique name prefix for spool files
+#$ActionQueueMaxDiskSpace 1g   # 1gb space limit (use as much as possible)
+#$ActionQueueSaveOnShutdown on # save messages to disk on shutdown
+#$ActionQueueType LinkedList   # run asynchronously
+#$ActionResumeRetryCount -1    # infinite retries if host is down
+# remote host is: name/ip:port, e.g. 192.168.0.1:514, port optional
+*.* @@10.0.50.11:514
+# ### end of the forwarding rule ###
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Note that the \verb|@@| sign in the line \verb|*.* @@10.0.50.11:514| statement signifies the use of TCP. If UDP is to be used instead, we replace it with a single \verb|@| sign, thus making the statement: \verb|*.* @10.0.50.11:514|. The forwarding rule asks rsyslogd to forward logs from any facility of any priority should be sent to the server over at 10.0.50.11 on port 514 via TCP. Now, after rsyslog service has been restarted on both the server and the client, remote logging should work. 
+
+An additional thing to remember is that on the logging server, i.e., the server accepting the logs, the port 514 needs to be unblocked for TCP traffic using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# firewall-cmd --add-port=514/tcp --permanent
+# firewall-cmd --reload
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+If SELinux blocks TCP traffic or the port isn't the standard port for remote logging, i.e., port 514, then the associated port needs to be given the right security context of \verb|syslogd_port_t|. For the TCP port 514, the command to allow logging on the server is:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# semanage port -a -t syslogd_port_t -p tcp 514
+\end{minted}
