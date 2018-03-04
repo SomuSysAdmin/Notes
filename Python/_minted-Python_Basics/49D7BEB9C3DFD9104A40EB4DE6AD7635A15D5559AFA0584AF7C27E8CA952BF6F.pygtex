@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-	\PYG{c+c1}{\PYGZsh{}   Single line comment}
-
-	\PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
-\PYG{l+s+sd}{	Block comment!}
-\PYG{l+s+sd}{	\PYGZsq{}\PYGZsq{}\PYGZsq{}}
-\end{Verbatim}

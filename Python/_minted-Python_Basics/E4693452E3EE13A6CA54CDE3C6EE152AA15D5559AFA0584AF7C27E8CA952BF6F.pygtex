@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Enter a value for x: \PYGZdq{}}\PYG{p}{)}
-	\PYG{n}{x}\PYG{o}{=}\PYG{n+nb}{input}\PYG{p}{();}
-	\PYG{n}{y}\PYG{o}{=}\PYG{n+nb}{input}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Test value for y: \PYGZdq{}}\PYG{p}{)}
-	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}x =\PYGZdq{}}\PYG{p}{,}\PYG{n}{x}\PYG{p}{)}
-	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}y =\PYGZdq{}}\PYG{p}{,}\PYG{n}{y}\PYG{p}{)}
-\end{Verbatim}

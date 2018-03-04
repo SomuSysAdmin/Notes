@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-	\PYG{n}{s}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}input\PYGZdq{}}
-	\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Contains pu: \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}pu\PYGZdq{}} \PYG{o+ow}{in} \PYG{n}{s}\PYG{p}{)}   \PYG{c+c1}{\PYGZsh{} Returns true if the string is present in s.}
-\end{Verbatim}

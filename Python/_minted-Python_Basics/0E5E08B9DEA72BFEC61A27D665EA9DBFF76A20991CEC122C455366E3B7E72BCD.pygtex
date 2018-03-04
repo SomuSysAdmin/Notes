@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{	a/b = 1.25}
-\PYG{g+go}{	a//b = 1}
-\end{Verbatim}

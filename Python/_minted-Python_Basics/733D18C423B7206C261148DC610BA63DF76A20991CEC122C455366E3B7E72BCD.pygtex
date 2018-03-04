@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{	Enter a value for x:}
-\PYG{g+go}{	5}
-\PYG{g+go}{	Test value for y: 6}
-\PYG{g+go}{	x = 5}
-\PYG{g+go}{	y = 6}
-\end{Verbatim}
