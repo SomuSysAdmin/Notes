@@ -147,3 +147,217 @@ GATEWAY0=192.168.1.2
 
 \noindent
 Note that the nmtui utility has translated the \verb|/24| prefix from the \textbf{CIDR} (Classless Inter-Domain Routing) notation \verb|10.0.0.0/24| to the standard Network IP and Network Masks, where \verb|/24| translates to the network mask of \verb|255.255.255.0|. 
+
+	\section{Understanding Network Bridges}
+A network bridge is a device that connects two or more networks to form one extended network. For example, an Ethernet bridge connects two or more LANs to create a unified, extended LAN. Virtual bridges are special purpose network interfaces used in virtualized environments. 
+
+Let us consider that the physical host has a NIC called \verb|eno1|. The entire virtualized network in the diagram then has to communicate with any external networks via this interface. However, they can't all just send their packets to the driver of the NIC. Thus, they need a virtual bridge \verb|virbr0|. There can be multiple virtual bridges too. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{Mod2/chapters/2.6.b}
+	\caption{A virtualized network}
+	\label{fig:2}
+\end{figure}
+
+\noindent	
+The virtual bridge acts like a physical switch in the network and merely passes data between the networks. Note that it is incapable of routing decisions. All network traffic - even the traffic that originates from the physical KVM host are handled by it and thus, the virtual bridge decides who can send their packets at a specific moment. 
+
+Each of the virtual machines have their own virtualized Ethernet interface called \verb|eth0| which have to be connected to an interface (port) on the virtual bridge. The virtual bridge names them \verb|vnet0| and \verb|vnet1| accordingly. 
+\vspace{-10pt}
+
+\subsection{Working with Network Bridges} \vspace{-10pt}
+Let us consider a physical host with two KVM virtual machines running on it. Then, we can see their details using:
+
+\vspace{-20pt}
+\begin{minted}{console}
+# virsh list --all
+Id    Name                           State
+----------------------------------------------------
+3     vm0                            running
+4     vm1                            running
+\end{minted}
+\vspace{-15pt}	
+
+\noindent 
+Linux has an inbuilt layer 2 Ethernet bridge. This can be controlled using the \verb|brctl| command. The status of the devices (VMs) connected to the bridge can be viewed with:
+
+\vspace{-20pt}
+\begin{minted}{console}
+# brctl show
+bridge name	 bridge id		STP enabled	interfaces
+virbr0	      8000.525400683445	yes		virbr0-nic
+								vnet0
+								vnet1
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|vnet0| and \verb|vnet1| interfaces are from the \verb|vm0| and \verb|vm1| virtual machines that are running on the host machine. The details of these interfaces can be seen with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ip link show
+...
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
+link/ether 00:0c:29:d8:97:c2 brd ff:ff:ff:ff:ff:ff
+3: virbr0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT qlen 1000
+link/ether 52:54:00:68:34:45 brd ff:ff:ff:ff:ff:ff
+...
+7: vnet0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master virbr0 state UNKNOWN mode DEFAULT qlen 1000
+link/ether fe:54:00:0d:4a:d5 brd ff:ff:ff:ff:ff:ff
+8: vnet1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master virbr0 state UNKNOWN mode DEFAULT qlen 1000
+link/ether fe:54:00:21:93:04 brd ff:ff:ff:ff:ff:ff
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The virtual bridge \verb|virbr0| connects several devices together: the virtual ethernet interfaces from the VMs, \verb|vmnet0| and \verb|vmnet1| to the external LAN via interface \verb|ens33|, which is the NIC for the physical host. The virtual bridge only shows active interfaces connected to it, i.e., only when the VMs are running will they appear on the output of \verb|brctl show|. 
+
+\subsection{Difference between network device and interface}
+In terms of hardware, a device refers to the physical NIC that's connected to the host, while an interface refers to the physical port that an Ethernet cable is plugged into, i.e., the hardware Ethernet port. Back when each NIC had only one interface, the terms \textit{device} and \textit{hardware} meant the same thing. However, with the advent of NICs with multiple interfaces on the same NIC, for example dual or quad port configurations, interfaces refer to each separate hardware port that's capable of accepting a network cable. Thus, for a NIC with 4 hardware ports, the single device has 4 interfaces. 
+
+Linux however, doesn't see these interfaces as connected devices (unless configured to do so) and treat them like separate hardware devices, even though they're on the same card! So, there can be multiple interfaces per hardware device. However, from Linux's perspective, they're all separate network devices, thus making the terms \textit{interface} and \textit{device} synonymous. 
+
+\section{Setting up Network Bridges}
+The roles of the interfaces on the bridge are defined by the connections (profiles) for the available interfaces. Thus, we generate new profiles for the interfaces that we want to act as slaves, and one connection for the interface that we intend to act as master.
+
+\subsection{Creating a slave interface on the bridge}
+The package needed to set up software bridges on RHEL 7 is called \verb|bridge-utils|. To set up bridging all connected interfaces need to be disconnected and then connected to the bridge. The connected interface can be viewed with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli dev show
+GENERAL.DEVICE:                         ens33
+GENERAL.TYPE:                           ethernet
+GENERAL.HWADDR:                         00:0C:29:3B:B9:1C
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected)
+GENERAL.CONNECTION:                     ens33
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/1
+WIRED-PROPERTIES.CARRIER:               on
+IP4.ADDRESS[1]:                         10.0.99.11/24
+IP4.GATEWAY:                            10.0.99.2
+IP4.DNS[1]:                             10.0.99.2
+IP6.ADDRESS[1]:                         fe80::f408:1ebf:7742:9fd8/64
+...
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, we disconnect the devices using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli dev disconnect ens33
+Device 'ens33' successfully disconnected.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Once the disconnection is complete, we can now start defining the bridge, by adding an interface connection with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli con add con-name br0-port1 type bridge-slave master br0 ifname ens33 
+Warning: master='br0' doesn't refer to any existing profile.
+Connection 'br0-port1' (3dee7b9b-6197-4eb7-be8d-46290361b9fd) successfully added.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+In this command, we have created a new connection with the name \verb|br0-port1| and connected it to the interface \textit{ens33}, which refers to the hardware NIC of the host. We've set the connection type to \textbf{bridge-slave}, which refers to the fact that the details of the incoming connection to the \textit{slave} interface (\textit{ens33}) will be configured at the bridge. The master of the new slave connection is set to a connection called \textit{br0} (which doesn't yet exist, leading to the warnings).
+
+The advantage of the master-slave configuration in network bridges is that if there are many connected slave interfaces, we need not set up their properties individually, and the master (bridge) thus provides a central point of configuration. The above slave configuration has to be repeated for every slave interface that we wish to connect to the bridge. 
+
+\subsection{Creating a master interface on the bridge}
+The connection for the master interface will determine the settings for all the slave interfaces connected to it. We create the master connection by setting the type to \verb|bridge| (instead of \verb|bridge-slave|, unlike the previous cases):
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli con add con-name br0 type bridge ifname br0
+Connection 'br0' (493c6288-7f40-4a9b-9ac0-aee7a7aebe71) successfully added.
+# brctl show
+bridge name	bridge id		STP enabled	interfaces
+br0		8000.000000000000	yes			
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The NetworkManager must be restarted to be actually able to use any of this, since these only refer to the configuration in scripts \verb|/etc/sysconfig/network-scripts| that need to be created by the NetworkManager. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cd /etc/sysconfig/network-scripts/
+# ls ifcfg-*
+ifcfg-br0  ifcfg-br0-1  ifcfg-br0-port1  ifcfg-ens33  ifcfg-lo
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The contents of the interface configuration file for the br0 master port:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+DEVICE=br0
+STP=yes
+BRIDGING_OPTS=priority=32768
+TYPE=Bridge
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=br0
+UUID=5da1229d-27f1-4261-8491-e30046b9d03d
+ONBOOT=yes
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Since no information about IPs were provided, the boot protocol was chosen to be \textit{DHCP} automatically. The slave interfaces only have the configuration:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+TYPE=Ethernet
+NAME=br0-port1
+UUID=3dee7b9b-6197-4eb7-be8d-46290361b9fd
+DEVICE=ens33
+ONBOOT=yes
+BRIDGE=br0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Since the configuration via the \verb|nmcli| utility is hard to remember, it's man page has a link to the \textit{nmcli-examples} man page, which has specific examples on setting up a bridge connection, as well as much more of the \verb|nmcli| functionality. 
+
+	\section{Understanding Network Bonds and Teams}
+Both network bonds and teams accomplish roughly the same goal - the aggregation of links or network interfaces to form Link Aggregation Groups (LAG) or virtual links. This means several physical/logical interfaces can be combined to form a \textit{team} that together fulfil a responsibility. Thus, one link may be set up as a primary connection to the WAN while the other may act as a backup or they both may be configured to act together while load balancing. Network bonding has been deprecated in RHEL 7 and thus we'll concentrate on Network teaming. 
+
+Network bonding used to perform the same responsibility as network teaming, but in the user space. Contrastingly, network teaming works with a kernel driver but also has a user space daemon, called \textbf{teamd}. This \textit{teamd} daemon has several modes of operation called \textit{runners}. These determine the function of the ports in the team and have possible values of: \textit{broadcast, roundrobin, activebackup, loadbalance} and \textit{lacp}. 
+
+\noindent
+\begin{tabular}{rM{0.85}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} \\
+	\midrule
+	\textbf{broadcast}	&Any packet is broadcast all over the interfaces.\\
+	\midrule
+	\textbf{roundrobin}	&The port which can transmit data is chosen in a roundrobin fashion.\\
+	\midrule
+	\textbf{activebackup}	&One of the interfaces stays active while the other is backup, ready to kick in the moment the active interface fails.\\
+	\midrule
+	\textbf{loadbalance}	&The network load (i.e., the packets in the network) is split between the interfaces so as to not overload any single interface.\\
+	\midrule
+	\textbf{lacp}	&Link Aggregation Control Protocol - allows formation of LAGs on a peer by automatically negotiating by transmitting LACP packets.\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+The command to control and manage teams is called \verb|teamdctl|. Thus, to show the state of the team called \textit{team0}, we'd use: \verb|teamdctl team0 state|. 
+
