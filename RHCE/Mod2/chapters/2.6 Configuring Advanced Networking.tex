@@ -361,3 +361,142 @@ Network bonding used to perform the same responsibility as network teaming, but 
 \noindent
 The command to control and manage teams is called \verb|teamdctl|. Thus, to show the state of the team called \textit{team0}, we'd use: \verb|teamdctl team0 state|. 
 
+	\section{Configuring Network Teams}
+There are four parts to creating a team:
+\begin{itemize}
+	\item Creating a team interface
+	\item Determining the network configuration
+	\item Assigning the port interfaces
+	\item Bring team and port interfaces up and down respectively. 
+\end{itemize}
+
+\noindent
+Once the above has been taken care of, the team connection can be verified with \verb|teamdctl team0 status| (assuming \textit{team0} is the name of the team). 
+
+\subsection{Creating the team interface}
+We have to create the new team connection, preferably with the same interface name as the team:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli con add type team con-name team0 ifname team0 config '{"runner": {"name": "loadbalance"}}'
+Connection 'team0' (d0eba200-591c-4ce3-a089-12d8a5692243) successfully added.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+In this command, we have created a connection of type \textit{team}, which indicates that it'll be a link aggregate. We provide a name to it called \textit{team0} and connect it to an interface called team0 (which is logical - the interface that'll act as the aggregate of the member links). Finally, we provide the configuration as a JSON array: \verb|'{"runner": {"name": "loadbalance"}}'|. This sets the team to act as a load balancer, and thus split the load of the packets over all the interfaces configured in the team. 
+
+\subsection{Determining the network configuration}
+The team needs to be configured to use an IP address to use as its interface (i.e., team interface). This is specified using the CIDR (Classless Inter-Domain Routing) notation with a Network IP address and a prefix. From this both the Network ID and the Subnet mask can be determined. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli con mod team0 ipv4.addresses 10.0.0.10/24
+# nmcli con mod team0 ipv4.method manual
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Note that the \verb|mod| command uses \verb|ipv4| instead of \verb|ip4|, unlike the \verb|nmcli add| command. The IP assignment method also needs to be switched to manual since DHCP isn't involved here. 
+
+\subsection{Assigning the port interfaces}
+Now that the master (team) interface has a port defined for it, we also need to assign the individual interfaces that are going to be slaves to the team. This is done using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli con add type team-slave con-name team0-ens33 ifname ens33 master team0
+Connection 'team0-ens33' (78e706bd-395c-456f-b16a-75430c48be2c) successfully added.
+# nmcli con add type team-slave con-name team0-enss37 ifname ens37 master team0
+Connection 'team0-enss37' (d17ad2f5-9a55-422a-ad5d-f4b327674393) successfully added.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The command defines two interfaces (\textit{eth0} and \textit{eth1}) to be slaves to the team interface. They are named according to the format \verb|<teamName>-<interfaceName>|. Now we only need to define a master for them from which they can be controlled. 
+
+\subsection{Bringing the team and port interfaces up/down}
+Once the above sections have been handled, the team is basically ready for operation. However, we still need to bring the physical devices (that are slaves to the team) to be disconnected and then reconnected as part of the team. Since we've already defined them as a part of the team, we just need to:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli con up team0
+Connection successfully activated (master waiting for slaves) (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/7)
+# nmcli dev disconnect ens33; nmcli dev dis ens37
+Device 'ens33' successfully disconnected.
+Device 'ens37' successfully disconnected.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The devices \textit{eth0} and \textit{eth1} needed to be disconnected because they're slaves to the team now, and thus, their operation should only be influenced by the team itself. Thus, there's no point in having them exist as separate individual devices (network interfaces). 
+
+\subsection{Verifying the team connection}
+We can verify the team connection by:
+\vspace{-15pt}
+\begin{minted}{console}
+# teamdctl team0 state
+setup:
+  runner: loadbalance
+ports:
+  ens33
+    link watches:
+      link summary: up
+      instance[link_watch_0]:
+        name: ethtool
+        link: up
+        down count: 0
+  ens37
+    link watches:
+      link summary: up
+      instance[link_watch_0]:
+        name: ethtool
+        link: up
+        down count: 0
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Creating a bridge based on Network Teams}
+When creating bridges based on network teams, it becomes important to switch off NetworkManager since they're incompatible. The team configuration file \verb|ifcfg-team0| needs to be edited to add the line \verb|BRIDGE=brteam0| has to be added to it to ask it to connect to the bridge device. 
+
+Since the team interfaces will be slaves to the connection provided by the team, it's important to ensure that there are no IP configurations in the \verb|ifcfg-team0-port| files anymore.
+
+Now we can manually create a configuration file for the bridge connection that has the contents:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+DEVICE=brteam0
+TYPE=Bridge
+IPADDR0=192.168.122.100
+PREFIX0=24
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, the bridge on top of the team interface should be active and operational. Again, examples for these congigurations are present in the nmcli-examples man page, accessible with \verb|man 5 nmcli-settings|. 
+
+\section{Configuring IPv6} 
+Since there is a shortage of unique IPv4 addresses when compared to the number of devices that are connected to the internet, IPv6 is the new standard for the IP addresses. Just like IPv4 addresses, it can be divided into two parts: the network ID and the host ID. However, in the case of the IPv6 addresses, the host ID contains the MAC address of the interface itself! A typical IPv6 address looks like:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+fe80::2af4:9908:7092:34cb/64
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+In this, the network ID is \verb|fe80| while the node part is the \verb|2af4:9908:7092:34cb| with the prefix of \verb|64| defining how long the network ID is. Thus, the computer listens for the Network ID, and then appends it's own MAC address to obtain a truly unique IPv6 address! For configuring connections with both IPv6 and IPv4 addresses, nmcli can be used as:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli con add con-name testCon type ethernet ip6 2001:db8:0:10::d000:310/64 gw6 2001:db8:0:10::1 ip4 192.168.0.10/24 gw4 192.168.0.1
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Again, for new connection just like for IPv4 connections where \verb|nmcli con add| takes as argument the term \textbf{ip4} instead of \textit{ipv4} (unlike the \verb|con mod| command, which accepts \textit{ipv4}), the \verb|nmcli con add| needs an argument of \textbf{ip6} and not \textit{ipv6}. Now to add a DNS server for it:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli con mod testCon +ipv6.dns 2001:4680:4680::8888
+\end{minted}
+\vspace{-10pt}
