@@ -458,7 +458,17 @@ ports:
 \subsection{Creating a bridge based on Network Teams}
 When creating bridges based on network teams, it becomes important to switch off NetworkManager since they're incompatible. The team configuration file \verb|ifcfg-team0| needs to be edited to add the line \verb|BRIDGE=brteam0| has to be added to it to ask it to connect to the bridge device. 
 
-Since the team interfaces will be slaves to the connection provided by the team, it's important to ensure that there are no IP configurations in the \verb|ifcfg-team0-port| files anymore.
+Since the team interfaces will be slaves to the connection provided by the team, it's important to ensure that there are no IP configurations in the \verb|ifcfg-team0-port| files anymore. Basically, we need to disable the team driver since the bridge will now control the team interface. For this we do:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli dev dis team0
+# systemctl stop NetworkManager; systemctl disable NetworkManager
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+
 
 Now we can manually create a configuration file for the bridge connection that has the contents:
 
@@ -472,7 +482,7 @@ PREFIX0=24
 \vspace{-10pt}	
 
 \noindent
-Now, the bridge on top of the team interface should be active and operational. Again, examples for these congigurations are present in the nmcli-examples man page, accessible with \verb|man 5 nmcli-settings|. 
+Finally, since we're not using the \verb|NetworkManager| service, we directly restart the networking with: \verb|systemctl restart network|. Now, the bridge on top of the team interface should be active and operational. Again, examples for these congigurations are present in the nmcli-examples man page, accessible with \verb|man 5 nmcli-settings|. 
 
 \section{Configuring IPv6} 
 Since there is a shortage of unique IPv4 addresses when compared to the number of devices that are connected to the internet, IPv6 is the new standard for the IP addresses. Just like IPv4 addresses, it can be divided into two parts: the network ID and the host ID. However, in the case of the IPv6 addresses, the host ID contains the MAC address of the interface itself! A typical IPv6 address looks like:
