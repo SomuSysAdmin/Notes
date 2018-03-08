@@ -1,2 +1,280 @@
 \chapter{Managing Advanced Apache Features}
 
+\section{Setting up Authenticated Web Servers}
+\subsection{The HTTPD Manual}
+The first thing that we're going to do is use \verb|yum -y install httpd-manual| to install the httpd-manual. This package installs a set of local web-pages that serve as a manual for all Apache configurations. Thus, it provides an easy way to look up information and/or commands offline when needed. Once installed, the manual can be browsed from \verb|http://localhost/manual|.
+
+\subsection{Apache Users for basic Authentication}
+Let us consider a website with 3 sections: a public space, a private space and an exclusive space for a certain user '\textit{lisa}'. For authentication we need users - and rather than use Linux users, Apache has it's own system to create users. The users and their passwords are stored in password-files, which are created using the \verb|htpasswd| utility that comes bundled with Apache. To create a password and show it on screen, we use \verb|htpasswd -n <username>| and enter the password when prompted:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# htpasswd -n somu
+New password: 
+Re-type new password: 
+somu:$apr1$ejEfs5E7$wzlrLgYWYNKSrG7BQVLIa1
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+However, this is of no use for authentication, since the information isn't stored and Apache can't use it to verify users. Thus, to securely store the password in some passwordfile (that is inaccessible from the internet, so that people can't just \textit{download} it), we choose to store it in \verb|/etc/httpd/htpasswd| with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# htpasswd -c /etc/httpd/htpasswd lisa
+New password: 
+Re-type new password: 
+Adding password for user lisa
+# cat /etc/httpd/htpasswd
+lisa:$apr1$pUh9Uxin$zCRJuoWcbkkpDBw04ZaxS0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|-c| option enables the creating of a new password file, or replace (overwrite) an existing one if present. It's very important to only use the -c option for a brand new password file. Every subsequent use should be without any option:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# htpasswd /etc/httpd/htpasswd lori
+New password: 
+Re-type new password: 
+Adding password for user lori
+# cat /etc/httpd/htpasswd
+lisa:$apr1$r6Xj/zbR$MTFl/9Oq/vcmO1.PLue5W0
+lori:$apr1$gZ8ZnGGD$q3GL3wpB0T.JTCa2pw/jD0
+\end{minted}
+\vspace{-15pt}	
+
+\subsection{Directory rules in httpd.conf}
+Now that we have users, we need to add the specifications for the protected directory in the Apache configs, and dictate when the server should ask for a password and which users should be allowed access. The next part of the required config can either be added in \verb|/etc/httpd/conf/httpd.conf| (preferably at the very bottom to maintain organization) or in a seperate \verb|.htaccess| file within the directory whose access it'll control (For this, the \verb|AllowOverride| directive for the directory can't be set to \verb|none|). In either case, the \verb|<Directory>| directives must be defined in the \verb|httpd.conf| file, or any \verb|.conf| file in the \verb|conf.d| directory. Let us assume we've set up a virtual host called \textit{authtest.somuvmnet.local} which will house the files we need. So, the file \verb|/etc/httpd/conf.d/authtest.conf| will contain:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+# Rules for the directory private and all its subdirs (which have .htaccess files)
+<Directory "/var/www/html/authtest/private">
+	AllowOverride all
+</Directory>
+# Virtual host config
+<VirtualHost *:80>
+	DocumentRoot /var/www/html/authtest
+	ServerName 	authtest.somuvmnet.local
+	ServerAlias 	 aut.somuvmnet.local
+	ServerAlias 	 aut.svmn.loc
+	ServerAdmin	root@aut.somuvmnet.local
+	ErrorLog 	"logs/aut_error_log"
+	CustomLog	"logs/aut_access_log" combined
+</VirtualHost>
+\end{minted}
+\vspace{-15pt}	
+
+\noindent
+In the next step, either the steps in Section 9.1.4 or 9.1.5 should be followed:
+
+\vspace{-10pt}
+\subsection{Controlling access via .htaccess files}
+The final directory structure of our site will look like:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# tree -a /var/www/html/authtest
+/var/www/html/authtest
+├── index.html
+└── private
+	├── .htaccess
+	├── index.html
+	└── lisaZone
+		├── .htaccess
+		└── index.html
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+For example, if we're trying to restrict access to \verb|/var/www/html/authtest/private| we'll add a new \verb|.htaccess| file in it, with the contents: 
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+AuthType Basic
+AuthName "Private Space"
+AuthUserFile /etc/httpd/htpasswd        
+Require valid-user
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, we create a directory \verb|/var/www/html/authtest/private/lisaZone| and create a \verb|.htaccess| file within it with the contents:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+# Only one user (lisa) allowed in lisaZone
+AuthType Basic
+AuthName "lisaZone"
+AuthUserFile /etc/httpd/htpasswd        
+Require user lisa
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The above \verb|.htaccess| files sets up the permissions for two folders: \textit{private} and \textit{private/lisaZone}. While any valid Apache user is allowed in the \verb|private| directory, only user lisa can enter \verb|private/lisaZone|, due to the \verb|Require user| directive. 
+
+\subsection{Controlling access via httpd.conf}
+If we were to put these settings in \verb|httpd.conf| instead of \verb|.htaccess| files in the proper directories, we'd need \verb|<Directory>| directives to define the location where these'd be applied. The following lines would then need to be added to \verb|httpd.conf|:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+<Directory /var/www/html/authtest/private>
+	AllowOverride none
+	AuthType Basic
+	AuthName "Private Space"
+	AuthUserFile /etc/httpd/htpasswd        
+	Require valid-user
+</Directory>
+
+<Directory /var/www/html/authtest/private/lisaZone>
+	AllowOverride none
+	AuthType Basic
+	AuthName "lisaZone"
+	AuthUserFile /etc/httpd/htpasswd        
+	Require user lisa
+</Directory>
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Finally, we add the html content for the site.
+
+\subsection{Adding HTML Content}
+The \verb|/var/www/html/authtest/index.html| should contain:
+
+\vspace{-15pt}
+\begin{minted}{html}
+<html>
+	<head>
+		<title>Public Space</title>
+	</head>
+	<body>
+		<h1>Welcome to the public space!</h1>
+		<p>This portion of the website should be accessible by all!</p>
+		<p>The only reason this page exists is to act as a control page to test the reactions of the private page to the new configs. Regardless, try to click the link below and see if you can actually access it...</p>
+		<a href="private/">Click me to Enter the Restricted Area!</a>
+	</body>
+</html>
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|/var/www/html/authtest/private/index.html| should contain:
+
+\vspace{-15pt}
+\begin{minted}{html}
+<html>he \verb|/var/www/html/authtest/private/index.html| should contain:
+	<head>
+		<title>Private Space</title>
+	</head>
+	<body>
+		<h1>Welcome to the PRIVATE Space</h1>
+		<p>This portion of the website should be accessible to only authenticated users</p>
+		<p>If you can see this page without authenticating something is wrong with the configs!!!</p>
+		<a href="../">Go Back</a>
+		<a href="lisaZone/">Go to lisaZone!</a>
+	</body>
+</html>
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Finally, the \verb|/var/www/html/authtest/private/lisaZone/index.html| should contain:
+
+\vspace{-15pt}
+\begin{minted}{html}
+<html>
+	<head>
+		<title>LisaZone -- the ultimate protected space</title>
+	</head>
+	<body>
+		<h1>Welcome to the lisaZone</h1>
+		<p>This portion of the website should be accessible to user lisa</p>
+		<p>If you can see this page and aren't user LISA, something is wrong with the configs!!!</p>
+		<p><a href="../">Go Back to Private Zone</a></p>
+		<p><a href="../../">Go Back to Public Zone</a></p>
+	</body>
+</html>
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now our site is ready. So, we need to check the httpd config syntax using \verb|httpd -t|. If the syntax is correct, we restart httpd using \verb|systemctl restart httpd|. Then we visit the website by \verb|elinks http://authtest.somuvmnet.local|. Based on authentication, we should be allowed to access the different parts of the sites. 
+
+\section{Configuring Apache for LDAP Authentication}
+Manual user creation via \verb|htpasswd| gets cumbersome and inefficient when large sites are concerned. In those cases, we can choose LDAP authentication instead. This, however, doesn't mean that local users and groups have to be omitted from the config. 
+
+Let us consider an organization \verb|myorg|. Let it contain a group \verb|mygroup|. We want to restrict access to directory \verb|/www/docs/private| to either Apache or LDAP users and groups. Then, configuration in \verb|/etc/httpd/conf/httpd.conf| will look like:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+<Directory /www/docs/private>
+	AuthType Basic
+	AuthName "Private"
+	AuthBasicProvider file
+	AuthUserFile /usr/local/apache/passwd/passwords
+	AuthLDAPURL ldap://ldaphost/o=myorg
+	AuthGroupFile /usr/local/apache/passwd/groups
+	Requrie group GroupName
+	Require ldap-group cn=mygroup,o=myorg
+</Directory>
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Here, we have an order of checking for the users/groups, just like in the case of the Pluggable Authentication Module (PAM). First Apache tries to find the user in the password file. If it can't \textit{then} it checks LDAP.
+
+	\section{Enabling CGI Scripts}
+On any web server, there might be a requirement for dynamic content. This kind of content is generated by a script using a server side scripting language such as CGI, PHP or even python. Scripts becomes crucial when databases are involved since the scripts often fetch information from a database. 
+
+\subsection{CGI}
+CGI is an abbreviation for \textbf{Common Gateway Interface}. It is a specification for information transfer between a web server (such as Apache) and a CGI program/script. CGI is the oldest standard, and even though it can be used by both PHP and python, it's not optimal. To use CGI, we need to use:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+ScriptAlias	/cgi-bin/	"/var/www/cgi-bin"
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The CGI scripts must be executable by the \verb|apache| user and group. There are also a certain file context (\verb|httpd_sys_script_exec_t|) on the directory \verb|/var/www/cgi-bin| which is needed by SELinux to permit the execution of such scripts. 
+
+\subsection{PHP}
+\textbf{PHP} has been much more common than CGI for quite some time now. For PHP scripting to be enabled, the \textbf{mod\_php} Apache module must be installed and loaded. This simple act itself adds all the necessary configuration to the http configuration, such as setting:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+SetHandler	application/x-httpd-php
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This line ensures that PHP can be run from the Apache web server, and other than the installation of \textit{mod\_php} Apache module, no manual intervention is needed by default. 
+
+\subsection{Python}
+In case of python, the name of the required module is \textbf{mod\_wsgi}. Then we'd need to define a \verb|WSGIScriptAlias| to redirect to the correct application:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+WSGIScriptAlias	/myapp/	/srv/myapp/www/myapp.py
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To connect to a local database, no additional configuration besides that in the script is necessary. However, if the database is a remote database, then certain SELinux booleans need to be set to true. These are: \verb|httpd_can_network_connect_db| and depending on the database we're using, perhaps \verb|httpd_can_network_connect| as well.
+
+	\section{Understanding TLS protected Web Sites} 
+TLS stands for \textbf{Transport Layer Security} and it performs data encryption and identity verification to enhance security. For example, if we visit the website of our bank, we would want to ensure that it's indeed the website of the bank that we're visiting and not some other site that some nefarious agent may have copied to steal data. 
+
+Further, we'd also want to ensure that the login credentials, or our personal data that the bank holds (such as account numbers or balances) are not being leaked during transit. Both of these features are provided by TLS. The entire basis of TLS are certificates that act as public keys for websites. 
+
+\subsection{Certificate Authorities}
+The validity of the certificates are guaranteed by a Certificate Authority (CA), who are 3rd party agents who verify that the organization handing out the certificate are the true owner of the server you're about to access. If so, they sign a digital certificate and provide it to them which they can then give to people who're interested in visiting their site. Now, when we communicate with the site, we can by ourselves check whether their credentials match the one on the certificate to determine if we're communicating with the right server. 
+
+\subsection{Self-Signed Certificates}
+Certificates can be self-signed too. There are mechanisms via which any server can generate it's own certificate and provide/install it on a client's computer. However, we can't be sure if the organization who just provided us the certificate is really who they claim to be. For example, a site impersonating our bank's website may also hand out a TLS Certificate that matches it's signature. Now, unless we involve CAs, there's no way for us to determine which certificate is the genuine one belonging to our bank. 
+
+However, for testing environments, a self-signed certificate is good enough, since no actual valuable data is being passed around, and in case of internal networks, attacks such as \textit{man-in-the-middle} attack (which TLS Certs actively protect against) are useless/impractical. However, signed certificates are essential for production due to the concerns noted above. 
