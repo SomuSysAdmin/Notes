@@ -488,3 +488,18 @@ Now, we can close the file, check the syntax with \verb|httpd -t| and if all is 
 
 \noindent
 Now when we try to visit the site using firefox with the command: \verb|firefox https://localhost|, firefox is going to warn about the fact that the certificate is self-signed, and the fact that localhost doesn't match the CN of the certificate (vmPrime.somuVMnet.local). We can add an exception and move on. 
+
+\subsection{Configuring TLS Certs for Virtual Hosts}
+While everything else remains the same, the \verb|genkey| utility will need to be invoked with the name of the virtual host itself. Then, on the configuration for the virtual host, the following lines should be added:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+<VirtualHost *:443>
+	ServerName	sales.example.com
+	DocumentRoot	/web/sales
+	SSLEngine	on
+	SSLCertificateFile	/etc/pki/tls/certs/sales.example.com.crt	
+	SSLCertificateKeyFile	/etc/pki/tls/private/sales.example.com.key	
+</VirtualHost>
+\end{minted}
+\vspace{-10pt}	
