@@ -278,3 +278,213 @@ The validity of the certificates are guaranteed by a Certificate Authority (CA),
 Certificates can be self-signed too. There are mechanisms via which any server can generate it's own certificate and provide/install it on a client's computer. However, we can't be sure if the organization who just provided us the certificate is really who they claim to be. For example, a site impersonating our bank's website may also hand out a TLS Certificate that matches it's signature. Now, unless we involve CAs, there's no way for us to determine which certificate is the genuine one belonging to our bank. 
 
 However, for testing environments, a self-signed certificate is good enough, since no actual valuable data is being passed around, and in case of internal networks, attacks such as \textit{man-in-the-middle} attack (which TLS Certs actively protect against) are useless/impractical. However, signed certificates are essential for production due to the concerns noted above. 
+
+\subsection{Asymmetrical Encryption}
+\textbf{NOTE}: This particular section is \textbf{optional} since it deals with a bit of complicated mathematics, and is irrelevant to the RHCE course, and should only be interesting to those who want a glimpse at the inner mechanisms of public-private key encryption. 
+
+Cryptography is a branch of mathematics that deals in creating algorithms of functions that can scramble information. Much like a padlock that needs a key, a number (or a set of them) is required to scramble and unscramble this message. Thus, we refer to such a number as a key. The entire basis of cryptography is contingent upon creating messages that are hard to decode without a certain key. As such, there are two possible methods: Symmetric encryption and Asymmetric encryption. 
+
+\subsubsection{Method of Symmetric Encryption}
+\vspace{-10pt}
+In the case of symmetric encryption, there is a function \textit{Encrypt} $E_k(m)=f(m,k)$ that takes a message $m$ and encrypts it with a key $k$. Let this output be a \textit{cypher-text} denote by $E_k(m)=f(m,k)=c$. Now, if this same key can be used to decrypt the message with a function Decrypt ($D_k(c)=f^{-1}(c,k)$) that does the opposite actions of function $f$, i.e. $D_k(c)=f^{-1}(c,k)=m$,  then we've got symmetric cryptography. So, it the rules for symmetric crypto are: 
+
+\begin{equation}
+	E_k(m) = f(m,k) = c
+\end{equation}
+\vspace{-30pt}
+
+\begin{equation}
+	D_k(c) = f^{-1}(c,k) = m
+\end{equation}
+
+\noindent
+So, the initiator of the communication simply performs $E_k(m)$ to get the encrypted message $e$ and sends it to the recipient. The recipient, who is also in possession of the key, then performs $D_k(c)$ to obtain the original message $m$. 
+
+The drawback of this form of crypto is that the key must be known to both parties. However, this means that the key itself has to be shared over some means of encryption or risk some 3rd party intercepting the key and gaining access to privileged communication. This problem is so serious that spies in the cold war used to meet up in secret and share encryption/decryption keys in envelopes. Thankfully, we now have a better way.
+
+\subsubsection{Method of Asymmetric Encryption}
+\vspace{-10pt}
+In the case of asymmetric encryption we need two keys, instead of just one: we'll called them a public key ($k_p$) and private (secret) key ($k_s$). The encryption function $E_{k_p}(m)=f_1(m,k_p)=c$ now uses the public key ($k_p$) to encrypt the message, and the decryption function $D_{k_s}(c)=f_2(c,k_s)=m$ uses the private (secret) key ($k_s$) to decrypt it. So, we have:
+
+\begin{equation}
+	E_{k_p}(m)=f_1(m,k_p)=c
+\end{equation}
+\vspace{-30pt}
+
+\begin{equation}
+	D_{k_s}(c)=f_2(c,k_s)=m
+\end{equation}
+
+\noindent
+The functions $E_{k_p}$ and $D_{k_s}$ are often \textit{one-way} functions which are a special category of functions that produce an output so complex, that the computational power and/or time required to reverse engineer the functions from the given input and output without the key is near zero. Contrastingly, a one-way function is easy to solve: for function $s(i)=i^2$, we get $s(2)=2^2=4$ and we can reverse engineer it to find $s^{-1}(4)=\sqrt{4}=2$, if we know the input and output, i.e., $2$ and $4$. 
+
+\subsection{Mathematics of Asymmetrical Encryption}
+\subsubsection{Encryption step}
+\vspace{-10pt}
+Practically in RSA encryption, the keys are the product of two \textbf{gargantuan} prime numbers, while the cypher-text is based on modular arithmetic. Thus, it becomes computationally intensive enough to be declared \textit{practically} impossible to factor the key to generate the original set of prime numbers. An example would be where the encryption (private/secret) key $N$ is the product of two primes $p_1$ and $p_2$. We'd also choose another number $e$ such that the result of $((p_1-1) \times (p_2-1))$ and $e$ are relatively prime, i.e., they don't share a common factor. Then, the encryption function for a message $m$ is:
+
+\begin{align}
+	E_{k_s}(m) &= m^e(\mod N) \\
+	&= m^e(\mod (p_1 \times p_2)) \text{, where:} \\
+	N &= (p_1 \times p_2) \\
+	1 &= \operatorname{GCD}(e,(p_1-1) \times (p_2-1))
+\end{align}
+\vspace{-35pt} 
+\begin{center}
+	i.e., $p_1$ and $p_2$ are relatively prime (when greatest common divisor=1)
+\end{center}
+
+\subsubsection{Decryption step}
+\vspace{-10pt}
+In this step, we need yet another number which is the decryption key $d$ such that:
+
+\begin{align}
+	e \times d &\cong 1\mod ((p_1 -1) \times (p_2 - 1)) \text{, i.e.,} \\
+	1 &= ed \mod (p_1-1)(p_2-1)
+\end{align}
+
+\noindent
+Due to the above relation, it's so important that N and e be relatively prime! (otherwise, due to the nature of congruity, and due to the many-to-1 mapping of the modulus function's input and output, weird things happen). And the decrypted text, i.e., the original message $m$ is given by:
+
+\begin{align}
+	D_{k_p}(c) &= c^d(\mod N) \\
+	&=c^d (\mod (p_1 \times p_2)) \\ 
+	&= m 
+\end{align}
+
+\noindent
+So, the only way to know the decryption number $d$ is to know the numbers $p_1$ and $p_2$. Then our \textbf{private key} is the set of numbers $p_1$ and $p_2$ while the public keys are the set of the numbers $N$ and $e$:
+
+\begin{align}
+	\text{Private Key} : k_s &= \{ p_1, p_2 \} \\
+	\text{Public Key} : k_p &= \{ N, e \}
+\end{align}
+
+Since alphanumeric characters can be mapped to their decimal equivalent via ASCII/UTF-8/etc conversion standards, they can be encrypted and decrypted via asymmetrical encryption called public key encryption. 
+
+\subsection{Implications of the Encryption}
+Due to the nature of these keys, only a message encrypted by a private key can only be decrypted by the proper public key. Thus, utilities like the \verb|ssh-keygen| and \verb|genkey| always generate key-pairs, i.e, both private and public key together. These keys can be used in two ways: 
+
+\vspace{-10pt}
+\begin{itemize}
+	\item Encryption for transmission
+	\item Authentication
+\end{itemize}
+\vspace{-10pt}
+
+\noindent
+Since only the message encrypted with the private key can be transformed to form the original message when decrypted with the public key, a person or an organization could convert a pre-determined message (that is expected by the recipient) to cypher-text using their private key. Now, recipient simply decrypts the message with the public key of sender. If the message is as expected, then we know that only the sender could've encrypted it with the private key, since no one else has it, thus verifying his/her/their identity. Both of these properties are used by TLS certificates. 
+
+\section{Setting up TLS protected Web Sites}
+\subsection{Generating the TLS Certificate}
+To generate a TLS certificate, we need the \textbf{crypto-utils} package and the \textbf{mod\_ssl} Apache plugin. So, we execute:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# yum -y install crypto-utils mod_ssl
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Within the crypto-utils package an utility called \verb|genkey| is capable of generating TLS certificates. We launch the TUI for it using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# genkey vmPrime.somuvmnet.local
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The utility then notifies us that a \textbf{key} will be stored in \verb|/etc/pki/tls/private/| location with the file name \verb|vmPrime.somuVMnet.local.key|. This is our private key. The public key is the certificate that we give everyone, and is stored in \verb|/etc/pki/tls/certs/| with the name \verb|vmPrime.somuVMnet.local.crt|. Thus the important things to remember are:
+
+\noindent
+\begin{tabular}{rlll}
+	\toprule
+	\textbf{Key type} &\textbf{Location} &\textbf{Name}\\
+	\midrule
+	\textbf{Private Key}	&\verb|/etc/pki/tls/private/|	&vmPrime.somuVMnet.local.key\\
+	\textbf{Public Key}	&\verb|/etc/pki/tls/certs/|	&vmPrime.somuVMnet.local.crt\\
+	\midrule
+	\textit{Common Path} &\verb|/etc/pki/tls/| &\\
+	\textit{Naming Convention} &\verb|<FQDN>.key| \textbf{OR} \verb|<FQDN>.crt| &\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+Next, we're asked about the security level used in the certificates, and the \textit{2048 bits} used are good enough for most purposes. The shorter the key, the faster the response time for the server, but the key is also easier to crack. 
+
+Once the key generation is completed, it asks us if we'd like the certificate to be sent to a CA for it to be a signed. Since this is going to be a self-signed certificate, we choose No. Next, we're asked if we'd like to encrypt the private key using a pass-phrase. If we choose to encrypt it, we'll have to enter the pass-phrase (that should be the same for all keys installed on a server installation) every time the web server boots. If left unencrypted, anyone who steals the file from the server can decrypt the communication. Encrypting the private key makes this significantly harder. This should be followed for any real installation. However, for our test, we'll choose not to encrypt. 
+
+Next, we're asked for information about the server needed to form its \textit{Distinguished Name (DN)}. While the rest of the information is used for non-technical purposes, the common name is the most important part. The common name must match the server name! Upon choosing "next" the certificate will be generated:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# genkey vmPrime.somuVMnet.local
+/usr/bin/keyutil -c makecert -g 2048 -s "CN=vmPrime.somuVMnet.local, O=SomuVMnet, L=Bangalore, ST=Karnataka, C=IN" -v 1 -a -z /etc/pki/tls/.rand.2953 -o /etc/pki/tls/certs/vmPrime.somuVMnet.local.crt -k /etc/pki/tls/private/vmPrime.somuVMnet.local.key
+cmdstr: makecert
+
+cmd_CreateNewCert
+command:  makecert
+keysize = 2048 bits
+subject = CN=vmPrime.somuVMnet.local, O=SomuVMnet, L=Bangalore, ST=Karnataka, C=IN
+valid for 1 months
+random seed from /etc/pki/tls/.rand.2953
+output will be written to /etc/pki/tls/certs/vmPrime.somuVMnet.local.crt
+output key written to /etc/pki/tls/private/vmPrime.somuVMnet.local.key
+
+
+Generating key. This may take a few moments...
+
+Made a key
+Opened tmprequest for writing
+/usr/bin/keyutil Copying the cert pointer
+Created a certificate
+Wrote 1682 bytes of encoded data to /etc/pki/tls/private/vmPrime.somuVMnet.local.key 
+Wrote the key to:
+/etc/pki/tls/private/vmPrime.somuVMnet.local.key
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can see that the certificates have been generated with the correct SELinux context label of \verb|cert_t|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls -Z /etc/pki/tls/private/vmPrime.somuVMnet.local.key; ls -Z /etc/pki/tls/certs/vmPrime.somuVMnet.local.crt 
+-r--------. root root unconfined_u:object_r:cert_t:s0  /etc/pki/tls/private/vmPrime.somuVMnet.local.key
+-rw-r-----. root root unconfined_u:object_r:cert_t:s0  /etc/pki/tls/certs/vmPrime.somuVMnet.local.crt
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Setting up Apache to use the TLS Certificates}
+The installation of \verb|mod_ssl| creates a configuration file called \verb|/etc/httpd/conf.d/ssl.conf|. The important parameters in this file are:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+Listen 443 https
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This instructs the httpd process to listen for incoming https connections on port \verb|443|, which is the designated port for HTTPS by default. In this default configuration, the server listens to both port 80 (HTTP) and 443 (HTTPS), but if we really want our server to be secure, we only want to accept incoming HTTPS connections, and thus we should ask the httpd process to refrain from listening on port 80 and the port 80 should be closed. We could setup a virtual host and have it listen only on port 443. 
+
+By default this configuration is set to use a file called \verb|localhost.crt| and \verb|localhost.key|. However, we must use our self-signed certificates here, by changing the paths to the correct file paths:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+SSLCertificateFile /etc/pki/tls/certs/vmPrime.somuVMnet.local.crt
+SSLCertificateKeyFile /etc/pki/tls/private/vmPrime.somuVMnet.local.key
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, we can close the file, check the syntax with \verb|httpd -t| and if all is ok, we restart the server using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl restart httpd
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now when we try to visit the site using firefox with the command: \verb|firefox https://localhost|, firefox is going to warn about the fact that the certificate is self-signed, and the fact that localhost doesn't match the CN of the certificate (vmPrime.somuVMnet.local). We can add an exception and move on. 
