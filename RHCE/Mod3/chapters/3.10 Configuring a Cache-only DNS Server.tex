@@ -331,3 +331,27 @@ To replace the current contents of the cache with that of a cache file, we can u
 \begin{minted}{console}
 # echo dnsCacheFile | unbound-control load_cache
 \end{minted}
+
+\subsection{Fixing issues with no replies}
+Sometimes, it may so happen that the cache-only DNS server doesn't reply with the necessary information, and reports that the "hostname wasn't found" or other such error messages typically signifying network issues. In such cases, the first thing to try is pinging google's name server at the ip address 8.8.8.8 (or any external IP that's not a private IP). If the ping is successful, it'll confirm an issue with the DNS server's settings. 
+
+The next point is to check the logs. The location of the logs can be set manually in \verb|unbound.conf|, but generally it writes to the syslog. Thus, we need to check if there are any errors in it by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# less /var/log/messages | grep unbound
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+If there are messages indicating: \verb|failed to prime trust anchor -- DNSKEY rrset |\\ \verb|is not secure . DNSKEY IN| and/or \verb|validation failure google.com. A IN| (after pinging google.com), then the issue is with the DNSSEC configuration. Since we haven't set it up yet, we can simply set it to permissive mode where even though the DNS server won't trust the replies that aren't validated, they'll still be allowed in the cache and be sent as replies to the client. For this, in \verb|/etc/unbound/unbound.conf|, we simply need to change the line:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+val-permissive-mode: yes
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This line is present in the \verb|server:| section of the config. Now, the server should be working properly!
+

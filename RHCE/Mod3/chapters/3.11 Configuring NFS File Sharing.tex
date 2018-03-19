@@ -1,1 +1,616 @@
 \chapter{Configuring NFS File Sharing}
+
+\section{Understanding NFSv4 Features}
+There are certain features of \textit{NFSv4} that make it better than the previous versions:
+\begin{itemize}
+	\item \textbf{Fake root mount} - Let us consider that there are two directories that are exported for a user, \verb|/home/user| and \verb|/data|. Now, instead of mounting both individually, he could just mount this \textit{root} directory which would automatically make all the directories that is shared and accessible to him available to him!
+	
+	\item \textbf{Kerberos Security} - Previous versions of NFS were rather insecure since there was no authentication method available other than marking IP addresses or hostname for access. Kerberos security can ensure that only authenticated clients are allowed to access the files hosted on the NFS server. 
+	
+	\item \textbf{Previous versions of NFS worked with \textit{port mapper}} which worked with dynamic ports, thus making it difficult to allow it through a firewall. Now, a fixed port \textbf{2049} has been assigned to NFSv4 thus making firewalling a lot easier. 
+\end{itemize}
+
+\section{Configuring NFS Exports Suitable for Group Collaboration}
+\subsection{Configuring a NFS server with basic options}
+The starting point of mounting NFS directories is \verb|/etc/export|, where we configure directories that we want to share. In this file, the first parameter we provide is the name of the directory being shared. Then, we put who has access to that directory. This can be \verb|*| to make it available to everyone, \verb|*.example.com| to only make it avialable for people on the \verb|example.com| domain, or even \verb|10.0.0.0/16| to make it accessible for people having IP addresses starting with \verb|10.0|. 
+
+Immediately following it, we have the mounting options. This can be \verb|ro| (read-only) or \verb|rw| (read-write). Whether the client can really write to the directory also depends on the permissions for that folder as related to that user on the file system, but if the mounting options are set to read-only, even if the user has \verb|rw-| permissions in the file system, NFS won't allow it.
+
+Another interesting options is \verb|no_root_squash|. By default, if the root user from another system accesses a file on the NFS, he'll be mapped to \verb|nfsnobody| user. This is because it isn't guaranteed that a root user on one system also has admin access on the NFS server. This system is useful on multi-user systems where the clients are not granted admin access on the NFS servers, but for our simple NFS config, where we only set it up to share files over the network, we'll use \verb|no_root_squash|, where root user remain a root user on the the NFS server and retains his privileges. 
+
+There is another kind of squashing available called \verb|all_squash|. By default, the user id of the user on the client gets mapped to a corresponding user id on the NFS server. So, if a user with UID \textit{601} is granted access to the NFS server, he's assigned the UID of 601 on the server as well. With \verb|all_squash|, this behaviour is prevented and all users are mapped to the \verb|nfsnobody| user. Thus the config of \verb|/etc/export| looks like:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+/share	*(rw,all_squash)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now that the configuration is done, we create the directory \verb|/share|. The current permission settings for that directory will be \verb|755|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# vim /etc/exports
+# mkdir /share
+# cd /share
+# ls -ld /share
+drwxr-xr-x. 2 root root 6 Mar 11 11:21 /share
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now since we have used \verb|all_squash|, we also need to change the ownership of the shared directory to \verb|nfsnobody|, since only then he'll be granted write access to the folder:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# chown nfsnobody /share
+# ls -ld /share
+drwxr-xr-x. 2 nfsnobody root 6 Mar 11 11:21 /share
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This however, makes the share extremely insecure because anybody can write to the folder, but this is a great way of making a folder where every user on the system has read-write access to a shared folder. Now, we're ready to start the NFS server, which we can do using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl enable nfs-server
+Created symlink from /etc/systemd/system/multi-user.target.wants/nfs-server.service to /usr/lib/systemd/system/nfs-server.service.
+# systemctl start nfs-server
+# systemctl status -l nfs-server
+● nfs-server.service - NFS server and services
+   Loaded: loaded (/usr/lib/systemd/system/nfs-server.service; enabled; vendor preset: disabled)
+  Drop-In: /run/systemd/generator/nfs-server.service.d
+           └─order-with-mounts.conf
+   Active: active (exited) since Sun 2018-03-11 11:28:52 IST; 6s ago
+  Process: 4062 ExecStart=/usr/sbin/rpc.nfsd $RPCNFSDARGS (code=exited, status=0/SUCCESS)
+  Process: 4057 ExecStartPre=/bin/sh -c /bin/kill -HUP `cat /run/gssproxy.pid` (code=exited, status=0/SUCCESS)
+  Process: 4056 ExecStartPre=/usr/sbin/exportfs -r (code=exited, status=0/SUCCESS)
+ Main PID: 4062 (code=exited, status=0/SUCCESS)
+   CGroup: /system.slice/nfs-server.service
+
+Mar 11 11:28:52 vminfra.somuvmnet.local systemd[1]: Starting NFS server and services...
+Mar 11 11:28:52 vminfra.somuvmnet.local systemd[1]: Started NFS server and services.
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{NFS commands}
+The command \verb|exportfs -r| updates all the exported NFS shares. This command is invaluable in scenarios where the NFS server is currently running, and we need to add new shares. The typical solution of restarting the \verb|nfs-server| service that we follow for other services, could cause data corruption/failure. In such cases, the \verb|exportfs -r| command simply updates the shares that are available on the NFS server without disruption of service. 
+
+Another useful command is \verb|showmount -e localhost| which shows us the currently mounted NFS shares. The \verb|showmount -e| command queries a host (\textit{localhost} in our case), to find out what exactly is shared by it:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# showmount -e localhost
+Export list for vminfra.somuvmnet.local:
+/share *
+\end{minted}
+\vspace{-10pt}	
+
+\section{Mounting NFS Shares}
+First of all, we can use use \verb|showmount -e <NFSServerName>| to view the available NFS shares. \textbf{NOTE:} This step will fail with an error stating "no route to host" unless the firewall has been configured to allow the \verb|nfs, rpc-bind| and \verb|mountd| service on the NFS server:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# firewall-cmd --permanent --add-service=nfs --add-service=rpc-bind --add-service=mountd
+# firewall-cmd --reload
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can now view the share using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# showmount -e vminfra
+Export list for vminfra:
+/share *
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now we can create the mount point for the NFS share on our local machine. For this, we create a directory called \verb|/nfs| and then mount the \verb|/share| directory on it:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mkdir /nfs
+# mount vminfra:/share /nfs
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can check the mount and the options using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mount | grep nfs
+nfsd on /proc/fs/nfsd type nfsd (rw,relatime)
+sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)
+vminfra:/share on /nfs type nfs4 (rw,relatime,vers=4.1,rsize=262144,wsize=262144,namlen=255,hard,proto=tcp,port=0, timeo=600,retrans=2,sec=sys,clientaddr=10.0.99.12,local_lock=none,addr=10.0.99.99)
+\end{minted}
+
+\section{Using Kerberos to Control Access to NFS Network Shares Part 1}
+\vspace{-10pt}
+\subsection{Securing NFS Exports}
+By default NFS can be insecure since it has no means of authentication beyond only allowing certain IPs or hostnames. However, certain security options may be added by adding \verb|sec=| option:
+
+\begin{itemize}
+	\item \textbf{none} - in this case, there are anonymous access to files and writes to the server are done as \textit{nfsnobody} user. This requires a SELinux boolean \verb|nfsd_anon_write| to be set true.
+	
+	\item \textbf{sys} - the default security option. When used, file access is dictated by UID, GID and ID mapping. User id 601 on client will be mapped to UID 601 on the server. This can lead to unintended consequences if the UID belongs to different users on the client and server. Only the UIDs are matched, and not the actual user. Thus, it makes more sense when a centralized directory system such as LDAP that ensures on all connected computers, the same users and UIDs are used. 
+	
+	\item \textbf{krb5} - Clients must provide an ID via kerberos. 
+	
+	\item \textbf{krb5i} - like krb5, but also ensures that the data being entered has'nt been tampered with (in transit). 
+	
+	\item \textbf{krb5p} like krb5, kerberos authentication is require and encryption is also added. 
+\end{itemize}
+
+\noindent for any of these options to be active, it's necessary that in addition to nfs-server, nfs-secure-server must also be running on the NFS server. In the case of the client, \textbf{nfs-secure} package is needed, \textbf{after} the NFS Server has been started. Kerberos integration can't be done without the \verb|nfs-secure server| package. A Kerberos \verb|/etc/krb5| keytab file is also required to contain the host principal, the NFS principal or both of them. 
+
+\subsection{Understanding the Principal and Keytab}
+The Kerberos server stores accounts and keys for systems, which it refers to as service \textbf{principals}. Every network service that a user authenticates to needs both a service principal and a corresponding key. Thus, to connect to the NFS server, both a service principal for that server and the corresponding key is required. To verify the service identity (identity of the server), a copy of this key is required, which is called the \textbf{keytab}. 
+
+By default after the installation of the IPA server and client, even though there will be auto-generated keytabs, they won't contain the NFS server details. The contents of a keytab can be viewed with the \verb|klist -k| command. 
+
+The keytab for a particular service is created at the IdM server. If the NFS server is hosted on a different machine, it must be copied on to that machine, since the NFS server needs access to this file. 
+
+\subsection{Setting up Kerberized NFS - Setting up IPA}
+To set up a Kerberized NFS server, an IPA server is required. The IPA server needs to be configured to use integrated DNS. Further, all other servers on the network must be configured to use the IPA server's DNS server, i.e., on each server in the \verb|/etc/resolv.conf| file, the IPA server's IP should be listed as a nameserver. This can be done by putting the IP of the IPA server as the DNS server in the configuration of the currently used connection in \verb|/etc/sysconfig/network-scripts/ifcfg-<currentConnection>| or via the \verb|nmcli| command. Then we can start the service using \verb|ipactl start|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ipactl start
+Existing service file detected!
+Assuming stale, cleaning and proceeding
+Starting Directory Service
+Starting krb5kdc Service
+Starting kadmin Service
+Starting named Service
+Starting httpd Service
+Starting ipa-custodia Service
+Starting ntpd Service
+Starting pki-tomcatd Service
+Starting ipa-otpd Service
+Starting ipa-dnskeysyncd Service
+ipa: INFO: The ipactl command was successful
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The command \verb|ipactl| is the IPA Server Control Interface and is used to both start and stop (\verb|ipactl stop|) the server. The command can also show the current status of the IPA server using \verb|ipactl status|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ipactl status
+Directory Service: RUNNING
+krb5kdc Service: RUNNING
+kadmin Service: RUNNING
+named Service: RUNNING
+httpd Service: RUNNING
+ipa-custodia Service: RUNNING
+ntpd Service: RUNNING
+pki-tomcatd Service: RUNNING
+ipa-otpd Service: RUNNING
+ipa-dnskeysyncd Service: RUNNING
+ipa: INFO: The ipactl command was successful
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+On the ipa-client, we must get the Kerberos credentials using \verb|kinit admin|. After we've entered the password, the generated ticket will last till the end of this procedure. The command \verb|klist -l|	will show the presently active kerberos ticket:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# kinit admin
+Password for admin@IPA.SOMUVMNET.LOCAL: 
+# klist -l
+Principal name                 Cache name
+--------------                 ----------
+admin@IPA.SOMUVMNET.LOCAL          FILE:/tmp/krb5cc_0
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Setting up the principal on Kerberos Server}
+Since the principal needs to be know to the DNS server via A/AAAA (IPv6/IPv6) resource records, it's imperative that the IPA server be configured to use itself as the DNS server. This can be confirmed via:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# dig server.ipa.somuvmnet.local
+
+; <<>> DiG 9.9.4-RedHat-9.9.4-51.el7_4.2 <<>> server.ipa.somuvmnet.local
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41343
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;server.ipa.somuvmnet.local.	IN	A
+
+;; ANSWER SECTION:
+server.ipa.somuvmnet.local. 1200 IN	A	10.0.25.25
+
+;; AUTHORITY SECTION:
+ipa.somuvmnet.local.	86400	IN	NS	server.ipa.somuvmnet.local.
+
+;; Query time: 1 msec
+;; SERVER: 127.0.0.1#53(127.0.0.1)
+;; WHEN: Mon Mar 19 10:02:42 IST 2018
+;; MSG SIZE  rcvd: 85
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+If this isn't the output of the dig command, then NetworkManager's present connection must be reconfigured to use the IP \verb|127.0.0.1| (localhost) as the DNS server. The IPA server will then need to be restarted with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ipactl restart 
+Stopping pki-tomcatd Service
+Restarting Directory Service
+Restarting krb5kdc Service
+Restarting kadmin Service
+Restarting named Service
+Restarting httpd Service
+Restarting ipa-custodia Service
+Restarting ntpd Service
+Restarting pki-tomcatd Service
+Restarting ipa-otpd Service
+Restarting ipa-dnskeysyncd Service
+ipa: INFO: The ipactl command was successful
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+On the IPA server, we now need to add a \textit{principal} for the NFS server using \verb|ipa service-add|. This'll start an interactive prompt that'll ask for which service the principal needs to be added:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ipa service-add 
+Principal name: nfs/server.ipa.somuvmnet.local
+------------------------------------------------------------------
+Added service "nfs/server.ipa.somuvmnet.local@IPA.SOMUVMNET.LOCAL"
+------------------------------------------------------------------
+Principal name: nfs/server.ipa.somuvmnet.local@IPA.SOMUVMNET.LOCAL
+Principal alias: nfs/server.ipa.somuvmnet.local@IPA.SOMUVMNET.LOCAL
+Managed by: server.ipa.somuvmnet.local
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Note that the tool will automatically append the Kerberos realm (\verb|SOMUVMNET.LOCAL| in our case) to the name of the principal. Now a keytab file needs to be generated with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ipa-getkeytab -s server.ipa.somuvmnet.local -p nfs/server.ipa.somuvmnet.local -k /tmp/nfs.keytab
+Keytab successfully retrieved and stored in: /tmp/nfs.keytab
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+If the NFS server is hosted on the same host as the Kerberos server, then we merely need to move the \verb|nfs.keytab| file to the right location. If, however, they're different hosts, then this keytab file needs to be copied to the NFS server itself! We can check the contents of the generated keytab file using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# klist -k /tmp/nfs.keytab
+Keytab name: FILE:/tmp/nfs.keytab
+KVNO Principal
+---- --------------------------------------------------------------------------
+1 nfs/server.ipa.somuvmnet.local@IPA.SOMUVMNET.LOCAL
+1 nfs/server.ipa.somuvmnet.local@IPA.SOMUVMNET.LOCAL
+\end{minted}
+\vspace{-10pt}	
+
+\section{Using Kerberos to Control Access to NFS Network Shares Part 2}
+\vspace{-10pt}
+\subsection{Preparing the client}
+We first need to ensure that the client is a part of the Kerberos domain as well. For this, initially, we make sure that the client uses the Kerberos server's integrated DNS service. Now, we install a couple of tools and then configure the client with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# yum -y install ipa-client ipa-admintools
+# ipa-client-install --enable-dns-updates
+Discovery was successful!
+Client hostname: client.ipa.somuvmnet.local
+Realm: IPA.SOMUVMNET.LOCAL
+DNS Domain: ipa.somuvmnet.local
+IPA Server: server.ipa.somuvmnet.local
+BaseDN: dc=ipa,dc=somuvmnet,dc=local
+
+Continue to configure the system with these values? [no]: y
+Synchronizing time with KDC...
+Attempting to sync time using ntpd.  Will timeout after 15 seconds
+User authorized to enroll computers: admin
+Password for admin@IPA.SOMUVMNET.LOCAL: 
+Successfully retrieved CA cert
+Subject:     CN=Certificate Authority,O=IPA.SOMUVMNET.LOCAL
+Issuer:      CN=Certificate Authority,O=IPA.SOMUVMNET.LOCAL
+Valid From:  2018-03-17 10:51:53
+Valid Until: 2038-03-17 10:51:53
+
+Enrolled in IPA realm IPA.SOMUVMNET.LOCAL
+Created /etc/ipa/default.conf
+New SSSD config will be created
+Configured sudoers in /etc/nsswitch.conf
+Configured /etc/sssd/sssd.conf
+Configured /etc/krb5.conf for IPA realm IPA.SOMUVMNET.LOCAL
+trying https://server.ipa.somuvmnet.local/ipa/json
+[try 1]: Forwarding 'schema' to json server 'https://server.ipa.somuvmnet.local/ipa/json'
+trying https://server.ipa.somuvmnet.local/ipa/session/json
+[try 1]: Forwarding 'ping' to json server 'https://server.ipa.somuvmnet.local/ipa/session/json'
+[try 1]: Forwarding 'ca_is_enabled' to json server 'https://server.ipa.somuvmnet.local/ipa/session/json'
+Systemwide CA database updated.
+Hostname (client.ipa.somuvmnet.local) does not have A/AAAA record.
+Missing reverse record(s) for address(es): 10.0.25.30.
+Adding SSH public key from /etc/ssh/ssh_host_rsa_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ecdsa_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ed25519_key.pub
+[try 1]: Forwarding 'host_mod' to json server 'https://server.ipa.somuvmnet.local/ipa/session/json'
+SSSD enabled
+Configured /etc/openldap/ldap.conf
+NTP enabled
+Configured /etc/ssh/ssh_config
+Configured /etc/ssh/sshd_config
+Configuring ipa.somuvmnet.local as NIS domain.
+Client configuration complete.
+The ipa-client-install command was successful
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+During the above process, it's possible to get an error stating that '\textit{error trying to clean keytab}', which is normal and we'll fix it in a later stage. Now, the client is a part of the Kerberos trusted domain. To gain access to the NFS server, the client generates a \textbf{Ticket Granting Ticket} and sends it to the \textbf{Ticket Granting Service} (Kerberos) which replies with session keys that permit the client to connect. Thus, the keytab file needs to be present on the NFS server, and not the client. Finally, we start and enable the \verb|nfs-secure| service with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl enable nfs-secure; systemctl start nfs-secure; systemctl status nfs-secure
+● rpc-gssd.service - RPC security service for NFS client and server
+   Loaded: loaded (/usr/lib/systemd/system/rpc-gssd.service; static; vendor preset: disabled)
+   Active: active (running) since Mon 2018-03-19 09:36:29 IST; 2h 18min ago
+ Main PID: 868 (rpc.gssd)
+   CGroup: /system.slice/rpc-gssd.service
+           └─868 /usr/sbin/rpc.gssd
+
+Mar 19 09:36:28 client.ipa.somuvmnet.local systemd[1]: Starting RPC security service for NFS client and server...
+Mar 19 09:36:29 client.ipa.somuvmnet.local systemd[1]: Started RPC security service for NFS client and server.
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Setting up the NFS server}
+In this step, we move and rename the \verb|/tmp/nfs.keytab| file we created earlier on the Kerberos server as the \verb|/etc/krb5.keytab| file on the NFS server. Since in our case, both the Kerberos and NFS server are the same machine, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cp /tmp/nfs.keytab /etc/krb5.keytab 
+cp: overwrite ‘/etc/krb5.keytab’? y
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, we enable and start both the \textbf{nfs-server} and \textbf{nfs-secure-server} services. However, on the latest versions, the \verb|nfs-secure-server| is not needed anymore, and thus not available either. So, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl enable nfs-server
+# systemctl start nfs-server
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, we can configure the security settings (via the mount options) in \verb|/etc/exports| to show:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+/nfs-shares/exp1	*(rw,sec=krb5p)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The security option \verb|krb5p| provides the greatest NFS security Kerberos has. Once done, we restart the NFS service using \verb|systemctl restart nfs|, but since the service is already running, we can use \verb|exportfs| instead, and then check the mounting using: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# exportfs -r
+# showmount -e server.ipa.somuvmnet.local
+Export list for server.ipa.somuvmnet.local:
+/nfs-shares/exp1 *
+\end{minted}
+\vspace{-10pt}	
+
+\subsubsection{Firewall}
+\vspace{-10pt}
+The NFS service must be opened on the firewall since external connections need to be able to \textit{talk} to the NFS server. However, to allow the \verb|showmount| command to work on the client, we also need to add two additional service: \verb|rpc-bind| and \verb|mountd|. Unless all three services are allowed, the \verb|showmount| command on the client won't work! We do this using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# firewall-cmd --add-service=nfs --add-service=mountd --add-service=rpc-bind --permanent 
+success
+# firewall-cmd --reload
+success
+# firewall-cmd --list-services 
+ssh dhcpv6-client freeipa-ldap freeipa-ldaps dns nfs rpc-bind mountd
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Mounting the NFS share on the client}
+The very first thing we need to do is to ensure that the \verb|nfs-secure| service is up and running, since Kerberos authentication just won't work without it:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl start nfs-secure; systemctl status nfs-secure
+● rpc-gssd.service - RPC security service for NFS client and server
+   Loaded: loaded (/usr/lib/systemd/system/rpc-gssd.service; static; vendor preset: disabled)
+   Active: active (running) since Mon 2018-03-19 12:30:30 IST; 44min ago
+ Main PID: 846 (rpc.gssd)
+   CGroup: /system.slice/rpc-gssd.service
+           └─846 /usr/sbin/rpc.gssd
+
+Mar 19 12:30:30 client.ipa.somuvmnet.local systemd[1]: Starting RPC security service for NFS client and server...
+Mar 19 12:30:30 client.ipa.somuvmnet.local systemd[1]: Started RPC security service for NFS client and server.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, we check if the mount is available via \verb|showmount -e <serverHostname>|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# showmount -e server.ipa.somuvmnet.local
+Export list for server.ipa.somuvmnet.local:
+/nfs-shares/exp1 *
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, we finally mount the share using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mount -o sec=krb5p server.ipa.somuvmnet.local:/nfs-shares/exp1 /mnt
+# mount | grep nfs-shares
+server.ipa.somuvmnet.local:/nfs-shares/exp1 on /mnt type nfs4 (rw,relatime,vers=4.1,rsize=262144,wsize=262144,namlen=255,hard,proto=tcp,port=0,timeo=600, retrans=2,sec=krb5p,clientaddr=10.0.25.30,local_lock=none,addr=10.0.25.25)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now the nfs share(s) are available and fully operational. 
+
+\section{Opening the Firewall for NFS}
+If convenient, the firewall could be disabled during the set up (using \verb|systemctl stop firewalld|) and testing of the NFS server (upto this point) and then be started once everything is confirmed to be working. Now, the ports that need to be opened on the firewall have services that group them together. The list of the services that are available can be viewed with:
+
+
+\vspace{-15pt}
+\begin{minted}{console}
+# # firewall-cmd --get-services 
+RH-Satellite-6 amanda-client amanda-k5-client bacula bacula-client bitcoin bitcoin-rpc bitcoin-testnet bitcoin-testnet-rpc ceph ceph-mon cfengine condor-collector ctdb dhcp dhcpv6 dhcpv6-client dns docker-registry dropbox-lansync elasticsearch freeipa-ldap freeipa-ldaps freeipa-replication freeipa-trust ftp ganglia-client ganglia-master high-availability http https imap imaps ipp ipp-client ipsec iscsi-target kadmin kerberos kibana klogin kpasswd kshell ldap ldaps libvirt libvirt-tls managesieve mdns mosh mountd ms-wbt mssql mysql nfs nrpe ntp openvpn ovirt-imageio ovirt-storageconsole ovirt-vmconsole pmcd pmproxy pmwebapi pmwebapis pop3 pop3s postgresql privoxy proxy-dhcp ptp pulseaudio puppetmaster quassel radius rpc-bind rsh rsyncd samba samba-client sane sip sips smtp smtp-submission smtps snmp snmptrap spideroak-lansync squid ssh synergy syslog syslog-tls telnet tftp tftp-client tinc tor-socks transmission-client vdsm vnc-server wbem-https xmpp-bosh xmpp-client xmpp-local xmpp-server
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We could just select the services that we need, such as \textit{kerberos}, \textit{nfs}, etc., or upon closer inspection we can see that there are pre-built services for both \verb|FreeIPA-ldap| and \verb|FreeIPA-ldaps|. We can see which ports they open by: 
+
+\vspace{-15pt}
+\begin{minted}{xml}
+# cat /usr/lib/firewalld/services/freeipa-ldap.xml /usr/lib/firewalld/services/freeipa-ldaps.xml 
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+	<short>FreeIPA with LDAP</short>
+	<description>FreeIPA is an LDAP and Kerberos domain controller for Linux systems. Enable this option if you plan to provide a FreeIPA Domain Controller using the LDAP protocol. You can also enable the 'freeipa-ldaps' service if you want to provide the LDAPS protocol. Enable the 'dns' service if this FreeIPA server provides DNS services and 'freeipa-replication' service if this FreeIPA server is part of a multi-master replication setup.</description>
+	<port protocol="tcp" port="80"/>
+	<port protocol="tcp" port="443"/>
+	<port protocol="tcp" port="88"/>
+	<port protocol="udp" port="88"/>
+	<port protocol="tcp" port="464"/>
+	<port protocol="udp" port="464"/>
+	<port protocol="udp" port="123"/>
+	<port protocol="tcp" port="389"/>
+</service>
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+	<short>FreeIPA with LDAPS</short>
+	<description>FreeIPA is an LDAP and Kerberos domain controller for Linux systems. Enable this option if you plan to provide a FreeIPA Domain Controller using the LDAPS protocol. You can also enable the 'freeipa-ldap' service if you want to provide the LDAP protocol. Enable the 'dns' service if this FreeIPA server provides DNS services and 'freeipa-replication' service if this FreeIPA server is part of a multi-master replication setup.</description>
+	<port protocol="tcp" port="80"/>
+	<port protocol="tcp" port="443"/>
+	<port protocol="tcp" port="88"/>
+	<port protocol="udp" port="88"/>
+	<port protocol="tcp" port="464"/>
+	<port protocol="udp" port="464"/>
+	<port protocol="udp" port="123"/>
+	<port protocol="tcp" port="636"/>
+</service>
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Thus, all required ports, but the ones for \verb|nfs| are pre-configured. Now, for NFS, we need two additional services: \verb|rpc-bind| and \verb|mountd| which are needed to get the \verb|showmount -e| command to work on a NFSv4 server. Thus, the following services need to be added and then the firewall reloaded:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# firewall-cmd --list-services 
+ssh dhcpv6-client freeipa-ldap freeipa-ldaps dns nfs rpc-bind mountd
+\end{minted}
+\vspace{-10pt}	
+
+\section{Understanding showmount and NFSv4}
+\vspace{-10pt}
+\subsection{The 'portmapper' error}
+If we didn't open the ports for portmapper (firewalld service \textbf{rpc-bind}) and \textbf{mountd} along with \textbf{nfs} in the last step, the error we encounter when using \verb|showmount -e| is:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# showmount -e server.ipa.somuvmnet.local
+clnt_create: RPC: Port mapper failure - Unable to receive: errno 113 (No route to host)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+What makes this especially weird is the fact that \textit{portmapper} is a NFSv3 functionality! The first hint that the issue with the firewall on the NFS server is that the client is \textit{unable to receive}. If we turn off the firewall (as a debugging measure), we find that the expected output is shown. However, the error persists with the firewall on!
+
+The problem is that \verb|showmount| isn't completely NFSv4 compatible, and thus tries to use port-mapper to address some \textit{dynamic} ports that are blocked by the firewall, which only allows port \verb|2049|! This problem can be circumvented by enabling the listed (above) firewalld services. However, even if those ports aren't enabled, NFSv4 mounting via the mount command works perfectly fine!
+
+\section{Understanding NFS SELinux Configuration}
+If we examine the NFS mount point (any folder with the NFS share mounted on it), we can see it has the security context of \verb|nfs_t|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls -Zd /mnt
+drwxr-xr-x. nfsnobody root system_u:object_r:nfs_t:s0       /mnt
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+While this is the default behaviour, it's also possible to set the security label on the export directory on the server and get the NFS server to manage the security context for the NFS share on the client! The very first requirement for this is NFS version $\geq$ v4.2. We can ensure that we're running the 4.2 version by changing the value of \verb|RPCNFSDARGS| in the \verb|/etc/sysconfig/nfs| file:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+...
+# Optional arguments passed to rpc.nfsd. See rpc.nfsd(8)
+RPCNFSDARGS="-V 4.2"
+...
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The name of the NFS server process is \verb|rpc.nfsd|. While the system space's \textbf{nfsd} kernel module handles the NFS functionality and operations, the user space program is responsible for specifying the parameters, one of which is version. This value is read from the \verb|RPCNFSDARGS|(\textit{rpc nfsd args}) parameter that we pass via the config file. Thus, we chose the NFSv4 Minor verson 4.2 of NFS server to use. Now we restart the NFS service using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# vim /etc/sysconfig/nfs
+# systemctl restart nfs-server
+\end{minted}
+\vspace{-10pt}
+The security context of \verb|public_content_rw_t| is especially suited for directories and files that are available to multiple services like NFS, FTP and Samba, since it provides read-write access to all these services. We change the security context of the directory on the server: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+# semanage fcontext -a -t public_content_rw_t "/nfs-shares/exp1(/.*)?"
+# restorecon -R -v /nfs-shares/exp1
+restorecon reset /nfs-shares/exp1 context unconfined_u:object_r:default_t:s0->unconfined_u:object_r:public_content_rw_t:s0
+restorecon reset /nfs-shares/exp1/msg context unconfined_u:object_r:default_t:s0->unconfined_u:object_r:public_content_rw_t:s0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+On the client, we have to unmount and then mount the share again to see the changes:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# umount /mnt
+# mount | grep mnt
+# mount -o sec=krb5p,v4.2 server.ipa.somuvmnet.local:/nfs-shares/exp1 /mnt
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+More information about the connectivity of nfsd with selinux can be acquired from the \verb|nfsd_selinux| manpage from the \verb|selinux-policy-devel| package. All we need to do is:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# yum -y install selinux-policy-devel
+# sepolicy -a -p /usr/share/man/man8
+# mandb
+# man nfsd_selinux
+\end{minted}
+\vspace{-10pt}	
