@@ -573,11 +573,19 @@ RPCNFSDARGS="-V 4.2"
 \vspace{-10pt}	
 
 \noindent
-The name of the NFS server process is \verb|rpc.nfsd|. While the system space's \textbf{nfsd} kernel module handles the NFS functionality and operations, the user space program is responsible for specifying the parameters, one of which is version. This value is read from the \verb|RPCNFSDARGS|(\textit{rpc nfsd args}) parameter that we pass via the config file. Thus, we chose the NFSv4 Minor verson 4.2 of NFS server to use. Now we restart the NFS service using:
+The name of the NFS server process is \verb|rpc.nfsd|. While the system space's \textbf{nfsd} kernel module handles the NFS functionality and operations, the user space program is responsible for specifying the parameters, one of which is version. This value is read from the \verb|RPCNFSDARGS|(\textit{rpc nfsd args}) parameter that we pass via the config file. Thus, we chose the NFSv4 Minor verson 4.2 of NFS server to use. We then have to add an option to the nfs share in \verb|/etc/exports| called \verb|security_label|:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+/nfs-shares/exp1	*(rw,sec=krb5p,security_label)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now we restart the NFS service and \verb|nfs-secure| (on the client, for an already mounted share) using:
 
 \vspace{-15pt}
 \begin{minted}{console}
-# vim /etc/sysconfig/nfs
 # systemctl restart nfs-server
 \end{minted}
 \vspace{-10pt}
@@ -593,13 +601,15 @@ restorecon reset /nfs-shares/exp1/msg context unconfined_u:object_r:default_t:s0
 \vspace{-10pt}	
 
 \noindent
-On the client, we have to unmount and then mount the share again to see the changes:
+On the client, we have to unmount and then mount the share again to see the changes. Note that sometimes, instead of the assigned label, the folder may be marked with a \textit{unlabled\_t} label, which is okay since it shows the NFS server is still controlling the label assignment since it changed from \textit{nfs\_t}:
 
 \vspace{-15pt}
 \begin{minted}{console}
 # umount /mnt
 # mount | grep mnt
 # mount -o sec=krb5p,v4.2 server.ipa.somuvmnet.local:/nfs-shares/exp1 /mnt
+# ls -dZ /mnt
+drwxr-xr-x. nfsnobody root unconfined_u:object_r:public_content_rw_t:s0 /mnt
 \end{minted}
 \vspace{-10pt}	
 

@@ -1,1 +1,372 @@
 \chapter{Setting up an SMTP Server}
+
+\section{Understanding Server Roles in Email}
+The mail server we're going to use is called \textbf{postfix mail server}. Typical jobs of mail servers include email transmission, done via \textbf{SMTP} (\textit{Simple Mail Transfer Protocol}) and email reception typically done with \textbf{POP} (\textit{Post Office Protocol}) or \textbf{IMAP} (\textit{Internet Message Access Protocol}), which are responsible for receiving the mail and making them accessible to the end-users. 
+
+Email clients such as Evolution, mutt and outlook are the applications that the users use to view and send messages. Users also use \textit{postfix} as a mail client, but of a different kind, called: \textbf{null client}. A null client doesn't accept any incoming mail for delivery and only forwards all outgoing mail. This is useful because the users can connect to a POP or an IMAP server to fetch their mail from there! 
+
+Thus, email transmission becomes the most important part of this section. We need to configure our postfix process such that it's capable of forwarding mail to other mail servers. The ultimate utility of this is the fact that the services on our server(s) can then automatically send notifications via email if something is going wrong with them. 
+
+\section{Understanding Postfix Configuration}
+\subsection{Relaying}
+\vspace{-10pt}
+In terms of email, \textbf{relaying} is the act of sending a mail to an outgoing mail server for further processing. This is the typical solution when the server itself doesn't want to send the mail. For relaying to occur, \textit{DNS} plays an important role, since the name resolution for the mail server in the recipient domain is dependent upon the \textbf{MX} (\textit{Mail eXchange}) record for that server. 
+
+The basic setup of an SMTP server required by RHCE needs an unsecured SMTP server listening on port 25 that can relay messages. No authentication needs to be done and security is handled via a list of authorized hosts and firewall configurations. 
+
+	\section{Configuring Postfix for Mail Reception}
+\subsection{Configuration Files}
+\vspace{-10pt}
+The \textbf{Postfix Mail Transport Agent} has it's configuration file in \verb|/etc/postfix|. The first important file among these are \verb|/etc/postfix/master.cf|. Even though much customization is not required to this file, the different postfix processes are called from it. It controls the master postfix process. The main (global) configuration file for Postfix is called \verb|/etc/postfix/main.cf|. Some of the different parameters that we might need to change are:
+
+\noindent
+\begin{tabular}{rM{0.76}}
+	\toprule
+	\textbf{Parameter} &\textbf{Description} \\
+	\midrule
+	\textbf{inet\_interfaces}	&IP addresses the process is listening on. When set to localhost, no one else on the network can use it. We can set it to \textit{all} or a comma separated list of hostnames. by default, set to \verb|localhost|.\\
+	\midrule
+	\textbf{myorigin}	&This parameter can be configured to set a hostname or a domain name from which the outgoing mails will originate. Thus, if we're working on \verb|vmPrime.somuvmnet.local|, the mails when set to a hostname will have the form \textit{user@vmPrime.somuvmnet.local} and when set to the domain \verb|somuvmnet.local|, will appear to be coming from \textit{user@somuvmnet.local} \\
+	\midrule
+	\textbf{relayhost}	&The server to which we want to send the messages for further processing. We use \verb|relayhost| when our server isn't responsible for looking up the MX records to find the destination server running that service. This field can accept any IP address or FQDNs for the mail server to which the outgoing messages should be forwarded. In case the \textit{relayhost} isn't set, we'd also need to take care of all outgoing messages ourselves! \\
+	\midrule
+	\textbf{mydestination}	&Defines the domains for which it'll receive messages. So, if the mail server handles the mail for both somuvmnet.com and somuvmnet.org, then both values should be specified (delimited by commas).\\
+	\midrule
+	\textbf{local\_transport}	&This is used for local email delivery. It works by forwarding messages to some other program.\\
+	\midrule
+	\textbf{mynetworks}		&Acts as a security option. Defines the CIDR IP address ranges for which this mail server will accept messages. For example, if only localhost and a private subnet are supposed to use the mail server, the value should be set as: \verb|mynetworks = 10.0.15.0/24, 127.0.0.0/8|. \\
+	\bottomrule
+\end{tabular}
+
+\subsection{postconf}
+This command shows us all the parameters that are currently being used by \textit{postfix}:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postconf
+2bounce_notice_recipient = postmaster
+access_map_defer_code = 450
+access_map_reject_code = 554
+address_verify_cache_cleanup_interval = 12h
+...
+virtual_recipient_refill_limit = $default_recipient_refill_limit
+virtual_transport = virtual
+virtual_uid_maps =
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This comes in handy when the value of a certain parameter has to be looked up since any keyword in a parameter name that's connected to postfix can be \textit{grepped} from the list, including those set by \verb|main.cf|. Further, a specific parameter can be looked up using \verb|postfix <parameterName>|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postconf | grep inet
+inet_interfaces = all
+inet_protocols = all
+local_header_rewrite_clients = permit_inet_interfaces
+# postconf inet_interfaces
+inet_interfaces = all
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The value of a certain parameter can even be edited by postconf by using \verb|postconf -e| command, which directly writes the value of the argument in the appropriate configuration file. This can be done using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postconf -e 'myorigin = somuvmnet.local'
+# grep 'somuvmnet.local' /etc/postfix/main.cf
+myorigin = somuvmnet.local
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The manpage for this command can be accessed using: \verb|man 5 postconf|.
+
+\subsection{postqueue}
+When the user sends a message, it arrives in a queue, called the \textit{postqueue}. The postfix process then processes the contents of the entire queue till it's empty (by forwarding all the messages). However, if the recipient of the message is not available, the message will be retained in the queue and postfix will try to deliver the message again after \textit{1 hour}. This command shows us the postqueue, but needs some arguments to specify which arguments need to be shown. The \verb|postqueue -p| command shows us the \textit{mail queue}, i.e., the messages currently waiting to be served:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postqueue -p
+Mail queue is empty
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+In case we're configuring postfix and due to a wrong config, a test message isn't sent and is waiting in the postqueue, we don't need to wait an hour for postfix to try again. The \verb|postfix -f| command \textit{flushes} the postqueue, i.e., tries to send everything in the postqueue immediately. 
+
+\subsection{tail -f /var/log/maillog}
+All the activities currently being done by postfix are mailed in \verb|/var/log/maillog| and thus using the \verb|tail -f| command gives us realtime updates for any interesting occurrence or errors that may happen:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# tail -f /var/log/maillog
+Mar 21 16:43:03 vmPrime postfix/postfix-script[5923]: starting the Postfix mail system
+Mar 21 16:43:03 vmPrime postfix/master[5925]: daemon started -- version 2.10.1, configuration /etc/postfix
+^C
+\end{minted}
+\vspace{-10pt}
+
+\section{Configuring Postfix for Relaying Mail}
+We have two servers, one of which we want to set up as the \textit{postfix server} and the other as the \textit{null client}. 
+
+\subsection{SMTP Server setup}
+First of all, we're going to need to modify a couple of parameters in the \verb|/etc/postfix/main.cf| file. The first is the \verb|inet_interfaces| which decides which interfaces the postfix process will be listening on. By default it is set to \verb|localhost|, which is fine for a client machine, but not a SMTP server. Every Linux client has a postfix process running by default and the value of \verb|localhost| provides the best security for it's needs. Thus for our server, it must be set to \verb|all|.
+
+The next parameter is \verb|myorigin| which by default is set to the \verb|hostname| and we want it to be set to the domain name. Instead of giving a custom domain, we can also set it to the value of the \verb|$mydomain| variable already mentioned in the file (by un-commenting the line).
+
+While technically not needed, we can still use the next parameter, \verb|mydestination| to tell the SMTP server which domains it's responsible for, by telling the server for which domains it should accept incoming mail. However, since we're not going to use this mail server to accept incoming mail, we don't have to do it and this step is optional. 
+
+Thus the following lines need to be edited in the \verb|main.cf| file:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+inet_interfaces = all
+myorigin = $mydomain
+mydestination = somuvmnet.local, ipa.somuvmnet.local
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Once the above configurations have been done, we must restart the postfix service:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl restart postfix
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now we can move on to the client set up.
+
+\subsection{Null Client Set up}
+On the client machine, we're going to be using \verb|postconf -e| since we can use it to edit the parameters without manually setting values in the config files, thus making it less likely that we'll inadvertently edit a value leading to errors. 
+
+The first value we'll change is that of the \verb|relayhost| since it decides which SMTP server our mails will be relayed to. We'll write the name of the server within square brackets to indicate that the server need not perform a DNS lookup on that name. We use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postconf -e "relayhost = [prime.vm.somuvmnet.local]"
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+While the next value isn't required to be set on a client, we should still ensure that on every client which is only going to send outgoing mail and not receive any, the \verb|inet_interfaces| value should be set to \verb|loopback_only|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postconf -e "inet_interfaces = loopback-only"
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We set the null-client to accept mail from the loopback network only with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postconf -e "mynetwork = 127.0.0.0/8"
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Finally we set \verb|mydestination| to nothing since the client will only relay messages to the SMTP server and not accept anything:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postconf -e "mydestination="
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This concludes our configuration for the null client. Most of these options were already set up correctly since out of the box the postfix process is configured as a null client on a RHEL server. 
+
+\subsection{Sending a test mail}
+To test our configuration, we can send a test email message using the \verb|mail| utility. We specify the subject using the \verb|-s| flag, and then send a single "." (null-body) as the message since we're only testing the functionality:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mail -s "Test Message" somu@prime.vm.somuvmnet.local < .
+Null message body; hope that's ok
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, if we were to check the mail for the user on the SMTP server, we'd see:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ mail
+No mail for somu
+\end{minted}
+\vspace{-10pt}	
+
+In the next section, we'll see how we can debug the situation and ensure that the mail is delivered. 
+
+	\section{Monitoring a Working Mail Configuration}
+Whenever the mail hasn't been delivered, the best first place to start looking for the problem is the postqueue on the sender machine. Ours shows:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# postqueue -p
+-Queue ID- --Size-- ----Arrival Time---- -Sender/Recipient-------
+67877899BA6      478 Thu Mar 22 11:09:45  root@deux.vm.somuvmnet.local
+(Host or domain name not found. Name service error for name=prime.vm.somuvmnet.local type=AAAA: Host not found)
+somu@prime.vm.somuvmnet.local
+
+-- 0 Kbytes in 1 Request.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The section in the error: \verb|type=AAAA: Host not found| tells us that a IPv6 name resolution failed. This is a DNS problem since A records are IPv4 records and AAAA records are IPv6. Normally, postfix tries both IPv4 and IPv6, and this error is caused when the IPv6 records is missing. We can either provide the AAAA Resource record to the DNS server, or just ask the postfix server to use the IPv4 record instead. The latter is a better option for the admin taking care of email, and can be done by changing the value of \verb|inet_protocols| which is set to \verb|all| by default:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+inet_protocols = ipv4
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+After restarting the client's postfix service, we should retry sending. However, it's safer to do the same on the SMTP server also. Now, on the client we can retry sending the message using the \verb|postqueue -f| command. 
+
+Another place where we can look for errors is the \verb|/var/log/maillog| file:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+Mar 22 11:26:00 deux postfix/qmgr[5237]: 67877899BA6: from=<root@deux.vm.somuvmnet.local>, size=478, nrcpt=1 (queue active)
+Mar 22 11:26:00 deux postfix/smtp[5394]: warning: relayhost configuration problem
+Mar 22 11:26:00 deux postfix/smtp[5394]: 67877899BA6: to=<somu@prime.vm.somuvmnet.local>, relay=none, delay=975, delays=975/0.07/0.01/0, dsn=4.3.5, status=deferred (Host or domain name not found. Name service error for name=prime.vm.somuvmnet.local type=A: Host not found)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This is typically the problem when DNS has either not been set up or not been set up properly. The IPv4 A record is missing for the stipulated relayhost. In such cases, since, we're not using DNS, we don't need the relayhost either! Let's try to remove it by commenting the line in the \verb|main.cf| config. Then, after we use \verb|postqueue -f|, if we check the \verb|/var/log/maillog|, we see: 
+
+\vspace{-15pt}
+\begin{minted}{bash}
+Mar 22 11:36:52 deux postfix/pickup[5236]: C836E96E168: uid=0 from=<root>
+Mar 22 11:36:52 deux postfix/cleanup[5931]: C836E96E168: message-id=<20180322060652.C836E96E168@deux.vm.somuvmnet.local>
+Mar 22 11:36:52 deux postfix/qmgr[5237]: C836E96E168: from=<root@deux.vm.somuvmnet.local>, size=470, nrcpt=1 (queue active)
+Mar 22 11:36:52 deux postfix/smtp[5933]: C836E96E168: to=<somu@prime.vm.somuvmnet.local>, relay=none, delay=0.11, delays=0.07/0.02/0.02/0, dsn=5.4.4, status=bounced (Host or domain name not found. Name service error for name=prime.vm.somuvmnet.local type=A: Host not found)
+Mar 22 11:36:52 deux postfix/cleanup[5931]: DFEFB96E174: message-id=<20180322060652.DFEFB96E174@deux.vm.somuvmnet.local>
+Mar 22 11:36:52 deux postfix/qmgr[5237]: DFEFB96E174: from=<>, size=2497, nrcpt=1 (queue active)
+Mar 22 11:36:52 deux postfix/bounce[5934]: C836E96E168: sender non-delivery notification: DFEFB96E174
+Mar 22 11:36:52 deux postfix/qmgr[5237]: C836E96E168: removed
+Mar 22 11:36:52 deux postfix/smtp[5933]: DFEFB96E174: to=<root@deux.vm.somuvmnet.local>, relay=none, delay=0.01, delays=0/0/0.01/0, dsn=5.4.4, status=bounced (Host or domain name not found. Name service error for name=deux.vm.somuvmnet.local type=A: Host not found)
+Mar 22 11:36:52 deux postfix/qmgr[5237]: DFEFB96E174: removed
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+On \textit{line 9} we can see that the mail was bounced (\verb|status=bounced|), i.e., it couldn't be delivered. The reason was there's n \verb|A| record! We can now set the proper DNS record by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmcli c mod somuVMnetLAN10 ipv4.dns 10.0.10.10
+# nmcli c d somuVMnetLAN10; nmcli c u somuVMnetLAN10 
+Connection 'somuVMnetLAN10' successfully deactivated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/8)
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/9)
+# nmcli c s somuVMnetLAN10 | grep ipv4.dns:
+ipv4.dns:                               10.0.10.10
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Again, we send another message to test delivery:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mail -s "Test2" somu@prime.vm.somuvmnet.local < .
+Null message body; hope that's ok
+# postqueue -p
+Mail queue is empty
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can see the message was processed from the queue. Now we check the client maillog:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+Mar 22 11:49:04 deux postfix/pickup[5236]: D400C96E168: uid=0 from=<root>
+Mar 22 11:49:04 deux postfix/cleanup[6682]: D400C96E168: message-id=<20180322061904.D400C96E168@deux.vm.somuvmnet.local>
+Mar 22 11:49:04 deux postfix/qmgr[5237]: D400C96E168: from=<root@deux.vm.somuvmnet.local>, size=471, nrcpt=1 (queue active)
+Mar 22 11:49:04 deux postfix/smtp[6684]: D400C96E168: to=<somu@prime.vm.somuvmnet.local>, relay=prime.vm.somuvmnet.local[10.0.99.11]:25, delay=0.17, delays=0.07/0.02/0.04/0.04, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as DB6498D217C)
+Mar 22 11:49:05 deux postfix/qmgr[5237]: D400C96E168: removed
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can see that the mail was successfully sent to the SMTP server from the client. Now, just to be sure, we need to check the log on the SMTP server as well:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+Mar 22 11:56:57 prime postfix/smtpd[5892]: connect from deux.vm.somuvmnet.local[10.0.99.12]
+Mar 22 11:56:57 prime postfix/smtpd[5892]: C30658D217C: client=deux.vm.somuvmnet.local[10.0.99.12]
+Mar 22 11:56:57 prime postfix/cleanup[5895]: C30658D217C: message-id=<20180322062657.B9C6B899BA6@deux.vm.somuvmnet.local>
+Mar 22 11:56:57 prime postfix/qmgr[4681]: C30658D217C: from=<root@deux.vm.somuvmnet.local>, size=693, nrcpt=1 (queue active)
+Mar 22 11:56:57 prime postfix/smtpd[5892]: disconnect from deux.vm.somuvmnet.local[10.0.99.12]
+Mar 22 11:56:57 prime postfix/smtp[5896]: C30658D217C: to=<somu@prime.vm.somuvmnet.local>, relay=none, delay=0.07, delays=0.04/0.03/0/0, dsn=5.4.6, status=bounced (mail for prime.vm.somuvmnet.local loops back to myself)
+Mar 22 11:56:57 prime postfix/cleanup[5895]: D4F818D217F: message-id=<20180322062657.D4F818D217F@prime.vm.somuvmnet.local>
+Mar 22 11:56:57 prime postfix/qmgr[4681]: D4F818D217F: from=<>, size=2678, nrcpt=1 (queue active)
+Mar 22 11:56:57 prime postfix/bounce[5897]: C30658D217C: sender non-delivery notification: D4F818D217F
+Mar 22 11:56:57 prime postfix/qmgr[4681]: C30658D217C: removed
+Mar 22 11:56:57 prime postfix/smtp[5896]: connect to deux.vm.somuvmnet.local[10.0.99.12]:25: Connection refused
+Mar 22 11:56:57 prime postfix/smtp[5896]: D4F818D217F: to=<root@deux.vm.somuvmnet.local>, relay=none, delay=0.01, delays=0/0/0.01/0, dsn=4.4.1, status=deferred (connect to deux.vm.somuvmnet.local[10.0.99.12]:25: Connection refused)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+On \textit{Line 6} we can see the mail was now bounced by the server, due to the reason \textit{"mail for prime.vm.somuvmnet.local loops back to myself"}. So, the server tries to send the message but sees that the message is addressed to itself. However, something prevents it from sending the message to itself! 
+
+So, we can either add the hostname to the \verb|mydestination| variable, or simply comment out the \verb|mydestination| parameter in the main.cf file. If after this we try to send the mail, on the server's maillog we find:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+Mar 22 12:09:52 prime postfix/local[6126]: 5534D80504D: to=<somu@prime.vm.somuvmnet.local>, relay=local, delay=0.12, delays=0.07/0.05/0/0, dsn=2.0.0, status=sent (delivered to mailbox)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The mail has been finally delivered, and we can check it using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mail
+Heirloom Mail version 12.5 7/5/10.  Type ? for help.
+"/var/spool/mail/somu": 1 message 1 new
+>N  1 root                  Thu Mar 22 12:09  21/871   "Test2"
+& 
+Message  1:
+From root@deux.vm.somuvmnet.local  Thu Mar 22 12:09:52 2018
+Return-Path: <root@deux.vm.somuvmnet.local>
+X-Original-To: somu@prime.vm.somuvmnet.local
+Delivered-To: somu@prime.vm.somuvmnet.local
+Date: Thu, 22 Mar 2018 12:09:52 +0530
+To: somu@prime.vm.somuvmnet.local
+Subject: Test2
+User-Agent: Heirloom mailx 12.5 7/5/10
+Content-Type: text/plain; charset=us-ascii
+From: root@deux.vm.somuvmnet.local (root)
+Status: R
+\end{minted}
+\vspace{-10pt}	
+
+	\section{Understanding Postfix Maps}
+In the \verb|/etc/postfix| directory, there are different files that can be used for configuration, which are collectively called \textbf{postfix maps}. We can edit these files and configure them as per our linking and then the \verb|postmap <fileName>| command can then be used to process the configuration contained within these files. Some of these postmap files are:
+
+\noindent
+\begin{tabular}{rM{0.53}M{0.3}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} &\textbf{Example}\\
+	\midrule
+	\textbf{access}	&Used to configure access restrictions. Manpage: \verb|man 5 access|. We can define which IP addresses or subnets have access.	&\verb|10.0.55.1 OK| \verb|10.0.56   REJECT|\\
+	\midrule
+	\textbf{canonical}	&Contains alias configurations. Manpage: \verb|man 5 canonical|.	We can define alias for mail IDs or even entire domains. &\verb|linda linda@example.com| \verb|@dom1.com @dom2.com|\\
+	\midrule
+	\textbf{relocated}	&Gives information about users that have been relocated. Manpage: \verb|man 5 relocated|.	&\verb|usr@d1.com usr@d2.com|\\
+	\midrule
+	\textbf{Virtual}	&Forwards mail addresses to specific users. Especially useful to forward customer's messages to former employees to a single account for review. 	&\verb|linda@example.com root|\\
+	\bottomrule
+\end{tabular}
