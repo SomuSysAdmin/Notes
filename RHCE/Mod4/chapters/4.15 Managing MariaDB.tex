@@ -1,3 +1,739 @@
 \chapter{Managing MariaDB}
 
+\section{Understanding Relational Databases}
+Relational Database Management Systems (RDBMS) store data for applications in tables and maintain relationships between them. Since System Administrators deal with applications on a daily basis, it becomes important that we know how to deal with databases as well. Apache fetches data from databases and several logging applications log data to databases as well. 
 
+In a database, data is stored in tables. To interact with the tables, we use (typically) some form of querying language, such as \textbf{SQL}. to show the entire contents of a table, we use:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+SELECT * FROM videos
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Here, \verb|videos| is the name of the table we're querying and we want all attributes or fields (indicated by \verb|*|) in the table displayed for every \textit{record} (row) in the table (indicated by the lack of filtering options, i.e., show all records). Each record consists of several columns called \textit{attributes}.
+
+MariaDB is a community branch of MySQL. Before being acquired by Oracle, MySQL was the most used open-source RDBMS, which is why the original developers decided to \textit{fork} the MySQL project's code base before the acquisition and started MariaDB. Thus, the commands are virtually identical between the two. Another open-source database is called PostgreSQL. 
+
+\section{Creating a Base MariaDB Configuration}
+\subsection{Installation of Mariadb server}
+First of all, we need to install a couple of software to be able to use \textbf{mariadb}. These are:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# yum -y install mariadb mariadb-libs mariadb-test
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The last item is a test database to check the configuration of the mariadb server. Now that it is installed, we must start and enable the server:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl enable mariadb; systemctl start mariadb; systemctl status mariadb
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The basic configuration for mysql (or in our case, mariadb) in a secure environment is done with the command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mysql_secure_installation 
+
+NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we'll need the current
+password for the root user.  If you've just installed MariaDB, and
+you haven't set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none): 
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+
+You already have a root password set, so you can safely answer 'n'.
+
+Change the root password? [Y/n] Y
+New password: 
+Re-enter new password: 
+Password updated successfully!
+Reloading privilege tables..
+... Success!
+
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The first requirement is that we set a password for the root user \textbf{of the database}. This isn't the Linux root user we're concerned about. First it asks us for the present password, but since we haven't set up the root user, we just press enter (An empty string is the default password). 
+
+Next we're asked if we want to use anonymous users. Anonymous users are used for testing purposes, and can gain access to the data. To remove anonymous users, we simply type '\textit{Y}' when prompted. 
+
+Now, we're asked if remote root login should be disabled. Just like in the case of operating systems, the root user has immense power in administering the DB. So, it's a security practice to disable the remote login of root. If an administrator needs to access the database he/she can gain access to the physical server. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y/n] Y
+... Success!
+
+Normally, root should only be allowed to connect from 'localhost'.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y/n] n
+... skipping.
+
+By default, MariaDB comes with a database named 'test' that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y/n] n
+... skipping.
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y/n] Y
+... Success!
+
+Cleaning up...
+
+All done!  If you've completed all of the above steps, your MariaDB
+installation should now be secure.
+
+Thanks for using MariaDB!
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Next we remove the test database for production environments, or keep it otherwise, if we want and reload the privilege table. After this the database should be operational. The mariadb database has a configuration file located at \verb|/etc/my.cnf|. 
+
+\subsection{Logging in to the Mariadb server}
+We can login to the server now using the username, hostname and password. While the username and the hostname we provide as arguments to their respective options, the \verb|-p| option makes the system prompt for a password. To do this, we type:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mysql -u root -h localhost -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 12
+Server version: 5.5.56-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2017, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The existing set of databases can be verified with:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+4 rows in set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+	\section{Creating Databases and Tables}
+\subsection{Creating and using a new database}
+If we want to create a new database called \textit{addressbook}, we simply type at the mysql prompt:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [(none)]> CREATE DATABASE addressbook;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| addressbook        |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Note that every command in MySQL and MariaDB must terminate with a semicolon to indicate where the command ends. We now have a database, but to indicate that all further queries should be directed towards it, we use:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [(none)]> USE addressbook;
+Database changed
+MariaDB [addressbook]> 
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Since our database is newly created and contains no data yet, it's empty and has no tables. We can show all tables in a database by using:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [addressbook]> SHOW TABLES;
+Empty set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To switch to a different database, we simply \textit{use} that database instead, by:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [addressbook]> USE mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [mysql]> 
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+If we were to use the \verb|SHOW TABLES| command on this database, we'd see:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [mysql]> SHOW TABLES;
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| columns_priv              |
+| db                        |
+| event                     |
+| func                      |
+| general_log               |
+| help_category             |
+| help_keyword              |
+| help_relation             |
+| help_topic                |
+| host                      |
+| ndb_binlog_index          |
+| plugin                    |
+| proc                      |
+| procs_priv                |
+| proxies_priv              |
+| servers                   |
+| slow_log                  |
+| tables_priv               |
+| time_zone                 |
+| time_zone_leap_second     |
+| time_zone_name            |
+| time_zone_transition      |
+| time_zone_transition_type |
+| user                      |
++---------------------------+
+24 rows in set (0.01 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This is an internal table used by MariaDB itself, and is thus already populated! To see the structure of any table we type:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [mysql]> DESCRIBE host;
++-----------------------+---------------+------+-----+---------+-------+
+| Field                 | Type          | Null | Key | Default | Extra |
++-----------------------+---------------+------+-----+---------+-------+
+| Host                  | char(60)      | NO   | PRI |         |       |
+| Db                    | char(64)      | NO   | PRI |         |       |
+| Select_priv           | enum('N','Y') | NO   |     | N       |       |
+| Insert_priv           | enum('N','Y') | NO   |     | N       |       |
+| Update_priv           | enum('N','Y') | NO   |     | N       |       |
+| Delete_priv           | enum('N','Y') | NO   |     | N       |       |
+| Create_priv           | enum('N','Y') | NO   |     | N       |       |
+| Drop_priv             | enum('N','Y') | NO   |     | N       |       |
+| Grant_priv            | enum('N','Y') | NO   |     | N       |       |
+| References_priv       | enum('N','Y') | NO   |     | N       |       |
+| Index_priv            | enum('N','Y') | NO   |     | N       |       |
+| Alter_priv            | enum('N','Y') | NO   |     | N       |       |
+| Create_tmp_table_priv | enum('N','Y') | NO   |     | N       |       |
+| Lock_tables_priv      | enum('N','Y') | NO   |     | N       |       |
+| Create_view_priv      | enum('N','Y') | NO   |     | N       |       |
+| Show_view_priv        | enum('N','Y') | NO   |     | N       |       |
+| Create_routine_priv   | enum('N','Y') | NO   |     | N       |       |
+| Alter_routine_priv    | enum('N','Y') | NO   |     | N       |       |
+| Execute_priv          | enum('N','Y') | NO   |     | N       |       |
+| Trigger_priv          | enum('N','Y') | NO   |     | N       |       |
++-----------------------+---------------+------+-----+---------+-------+
+20 rows in set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Basic Commands}
+The basic MySQL commands allow us to \textit{create}, \textit{select} (view), \textit{update} and \textit{delete} records in the databases. To be able to use these commands, or \textit{queries}, we need to know which attributes are present in the table, which is shown by the \verb|DESCRIBE <tableName>| command. 
+
+\subsubsection{Insert Query}
+\vspace{-10pt}
+Once we know the attributes, we can use SQL queries like an \textit{insert query}, which is used to insert a new record:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+INSERT INTO user(Host,User,Password) VALUES ('localhost',lisa,password);
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The usage of uppercase for SQL keywords is optional, but it makes the commands more readable and makes it easier to distinguish entity (database,tables,etc.) names from the commands at a glance. 
+
+The above command \textit{inserts} data into the table \verb|user| for the attributes \textit{Host,User and Password}: specifically the values \verb|localhost,lisa,password|. These values will form a new record in the table \verb|user|. 
+
+\subsubsection{Delete Query}
+\vspace{-10pt}
+It is also possible to delete data from tables, but it would need a special \verb|WHERE| clause that filter out only specific records to delete! The syntax is \verb|DELETE FROM tableName WHERE| \verb|attribute='value';|. Without the \verb|WHERE| clause, all data from the table would be deleted indiscriminately! Thus, to delete the record for the user 'rick', we use:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+DELETE FROM user WHERE user='rick';
+\end{minted}
+\vspace{-10pt}	
+
+\subsubsection{Update Query}
+\vspace{-10pt}
+To update the value of an attribute for a record, we use an \textit{update query} which looks like:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+UPDATE user SET password = 'secret' WHERE user = 'lisa';
+\end{minted}
+\vspace{-10pt}	
+
+\subsubsection{Select Query}
+\vspace{-10pt}
+To show only parts of, or the contents of the entire table, we use \textit{select queries}. To see all attributes, we use \verb|SELECT * FROM ...|, but to only see specific attributes:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+SELECT host,user FROM user;
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To see every record in the table where the username is '\textit{Johnson}', we use:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+SELECT * FROM user WHERE user='Johnson';
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Querying a database}
+Let us create an example table \verb|videos|. For this, first we create a new database called \verb|videos| and then describe the table:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [(none)]> CREATE DATABASE videos;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> USE videos;
+Database changed
+MariaDB [videos]> CREATE TABLE videos(
+-> title VARCHAR(40),
+-> actor VARCHAR(40),
+-> year INT,
+-> registration INT);
+Query OK, 0 rows affected (0.04 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The Datatype (varchar, int, etc.) need to be specified while creating the attributes in the table, with an optional number specifying the size (if applicable). Note that when the line isn't terminated with a \verb|';'|, the prompt assumes there's more to the command, and let's us add additional data with a new \verb|->| prompt. Now we're ready to insert data into the table:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [videos]> INSERT INTO videos
+-> (registration, title, actor, year) VALUES
+-> (1, 'Basic Instinct', 'Sharon Stone', 1992);
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can add more data to populate the table:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+MariaDB [videos]> INSERT INTO videos (registration, title, actor, year) VALUES (2,'Terminator 1','Arnold Schwarzenegger',1984);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [videos]> INSERT INTO videos (registration, title, actor, year) VALUES (3,'Pretty Woman', 'Julia Roberts', 1990);
+Query OK, 1 row affected (0.01 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can now view the contents of the table using:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> SELECT * FROM videos;
++----------------+-----------------------+------+--------------+
+| title          | actor                 | year | registration |
++----------------+-----------------------+------+--------------+
+| Basic Instinct | Sharon Stone          | 1992 |            1 |
+| Terminator 1   | Arnold Schwarzenegger | 1984 |            2 |
+| Pretty Woman   | Julia Roberts         | 1990 |            3 |
++----------------+-----------------------+------+--------------+
+3 rows in set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\section{Managing Users and Permissions}
+Just like in the case of operating systems, different users should be assigned different privileges, each carefully controlled to restrict their access to their job roles and nothing beyond. 
+
+\subsection{Adding a DB user}
+To add a user 'lisa' with the password 'password' on the host 'localhost', we use:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+CREATE USER lisa@localhost IDENTIFIED BY 'password';
+Query OK, 0 rows affected (0.01 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This user is created as a record in the \verb|mysql| database, and can be viewed with:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> USE mysql;
+Database changed
+> SELECT host,user,password FROM user WHERE user='lisa';
++-----------+------+-------------------------------------------+
+| host      | user | password                                  |
++-----------+------+-------------------------------------------+
+| localhost | lisa | *2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19 |
++-----------+------+-------------------------------------------+
+1 row in set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Instead of adding a user this way, it's also acceptable to use PAM (Pluggable Authentication Modules) as used during user authentication in Linux.
+
+\subsection{Dropping (deleting) a user}
+We can delete an existing user by:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> DROP USER lisa@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+> SELECT host,user,password FROM user WHERE user='lisa';
+Empty set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Privileges}
+By default, the new users have no privileges (permissions) at all. Thus, for the user accounts to be useful, certain appropriate privileges must be granted to them. This can be done either on a per-table basis, or globally for a database! For example:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> GRANT UPDATE,DELETE,INSERT,SELECT ON addressbook.names TO lisa@localhost;
+Query OK, 0 rows affected (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To now give the user \textit{lisa} SELECT privileges on the entire \textit{addressbook} database, we use:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> GRANT SELECT ON addressbook.* TO lisa@localhost;
+Query OK, 0 rows affected (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To give the user permissions to edit the schema of the database, but not have access to the records within, we give him/her the permission:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+GRANT CREATE,ALTER,DROP ON addressbook.* TO lisa@localhost;
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Finally, to make a user Database-admin, i.e., give them all privileges, we use the command:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+GRANT ALL PRIVILEGES ON *.* TO user@host;
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+After modifying privileges with the above command, to make them usable we need to apply them with the command:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.01 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To see all the privileges that a user has, we use the command:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> SHOW GRANTS FOR lisa@localhost;
++------------------------------------------------------------------------------------+
+| Grants for lisa@localhost                                                          |
++------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'lisa'@'localhost' IDENTIFIED BY PASSWORD '*2470C0C06D..9'   |
+| GRANT SELECT ON `addressbook`.* TO 'lisa'@'localhost'                              |
+| GRANT SELECT, INSERT, UPDATE, DELETE ON `addressbook`.`names` TO 'lisa'@'localhost'|
++------------------------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Advanced user options}
+Let us first create a user 'julia' who isn't bound to any certain host:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+CREATE USER julia@'%' IDENTIFIED BY 'secret';
+Query OK, 0 rows affected (0.01 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now we grant some privileges to the user with:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> GRANT SELECT,INSERT,UPDATE,DELETE ON videos.* TO julia@'%';
+Query OK, 0 rows affected (0.01 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now we apply the privileges and check them:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [videos]> SHOW GRANTS FOR julia@'%';
++------------------------------------------------------------------------+
+| Grants for julia@%                                                     |
++------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'julia'@'%' IDENTIFIED BY PASSWORD '*14E655..E7' |
+| GRANT SELECT, INSERT, UPDATE, DELETE ON `videos`.* TO 'julia'@'%'      |
++------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To check what is currently in the database, we use:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> DESCRIBE videos;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| title        | varchar(40) | YES  |     | NULL    |       |
+| actor        | varchar(40) | YES  |     | NULL    |       |
+| year         | int(11)     | YES  |     | NULL    |       |
+| registration | int(11)     | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Let us now insert another value into the database:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> INSERT INTO videos(registration,title,year,actor) VALUES (4, 'The Last Stand', 2013, 'Arnold Schwarzennegger');
+Query OK, 1 row affected (0.01 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, to only see the results where the actor is \textit{Arnold}, we use:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> SELECT * FROM videos WHERE actor='Arnold Schwarzenegger';
++----------------+-----------------------+------+--------------+
+| title          | actor                 | year | registration |
++----------------+-----------------------+------+--------------+
+| Terminator 1   | Arnold Schwarzenegger | 1984 |            2 |
+| The Last Stand | Arnold Schwarzenegger | 2013 |            4 |
++----------------+-----------------------+------+--------------+
+2 rows in set (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To quit the MariaDB management interface, we can now use \verb|quit|. 
+
+\section{Backing up the Database}
+There can be two types of database backups: \textit{logical} and \textit{physical}. In the case of physical backups, the database must be stopped. The resultant backup is portable to other machine with a similar hardware and software set up. Depending on the backup options, this backup can contain logs and configurations as well. 
+
+Contrastingly, a logical backup is only a backup of the data contained within the tables of the database, obtained by querying the database itself. The main advantage is that such a backup can be created while the database is online, thus avoiding service disruption. However, it is relatively slow. Since the output is a bunch of SQL queries, the output is portable to other database vendors as well!
+
+\subsection{Creating a logical backup}
+To create a logical backup, all we need to do is use the \verb|mysqldump| command from the shell:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mysqldump -u root -p videos > ~/videos-db.dump
+Enter password: 
+# cat ~/videos-db.dump 
+-- MySQL dump 10.14  Distrib 5.5.56-MariaDB, for Linux (x86_64)
+--
+-- Host: localhost    Database: videos
+-- ------------------------------------------------------
+-- Server version	5.5.56-MariaDB
+...
+CREATE TABLE `videos` (
+`title` varchar(40) DEFAULT NULL,
+`actor` varchar(40) DEFAULT NULL,
+`year` int(11) DEFAULT NULL,
+`registration` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+...
+INSERT INTO `videos` VALUES ('Basic Instinct','Sharon Stone',1992,1),('Terminator 1','Arnold Schwarzenegger',1984,2),('Pretty Woman','Julia Roberts',1990,3),('The Last Stand','Arnold Schwarzenegger',2013,4);
+/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
+...
+-- Dump completed on 2018-03-28 19:09:32
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To generate a backup (dump) of all databases, we'd use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mysqldump -u root -p --all-databases > all-db.dump
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{Physical Backups}
+The first requirement for physical backups is LVM. First we need to know which directory to backup, which can be obtained using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mysqladmin -u root -p variables | grep datadir
+Enter password: 
+| datadir                                           | /var/lib/mysql/
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, we need to check the available disk space on the VG with \verb|vgs <vgName>| to ensure enough is available, since we're going to create a snapshot. Then, we \textbf{Freeze} the database (stopping it completely is also an option), using the commands:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+> FLUSH TABLES WITH READ LOCK;
+Query OK, 0 rows affected (0.00 sec)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The above is done to ensure absolutely no changes are made to the database during the physical backup process. Once frozen, we can create a LVM snapshot from a different terminal, using a command like:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# lvcreate -L 25 -s -n lvMariaDB-Snapshot /dev/vgData/lvMariaDB
+Using default stripesize 64.00 KiB.
+Logical volume "lvMariaDB-Snapshot" created.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|-s| option tells lvcreate that the new LV will be a snapshot of some existing LV, which is \verb|/dev/vgData/lvMariaDB| mounted on \verb|/var/lib/mysql|. Once this step is done, the tables can now be unfrozen by:
+
+\vspace{-15pt}
+\begin{minted}{sql}
+UNLOCK TABLES;
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, the snapshot \verb|/dev/vgData/lvMariaDB-Snapshot| can be mounted and used to create a backup. Snapshots act like a \textit{picture} of the state of that LV in that moment. To mount the snapshot:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mkdir /mnt/snapshot
+# mount /dev/vgData/lvMariaDB-Snapshot /mnt/snapshot
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To create the actual backup, we create a \verb|tar| archive, using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# tar -cvf /root/mariadb.tar /mnt/snapshot
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We can now unmount the snapshot and then delete the LV snapshot:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# umount /mnt/snapshot
+# lvremove /dev/vgData/lvMariaDB-Snapshot
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The important point to remember here is the fact that it's \textbf{not possible} to create a physical database backup without having the datadir set up on an LVM. 
+
+\subsection{Restoring a Database from a Backup}
+\subsubsection{Lgoical Backup}
+We just need to run the commands in the backup file on a sql terminal by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mysql -u root -p videos < ~/videos-db.dump
+\end{minted}
+\vspace{-10pt}	
+
+\subsubsection{Physical Backup}
+In case of physical backups, we first need to stop the database, and then delete the existing contents of the \verb|/var/lib/mysql| directory, and replace it with the contents of the backup:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl stop mariadb
+# rm -rf /var/lib/mysql/*
+# tar xvzf /root/mariadb.tar -C /
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This extracts the files to \verb|/var/lib/mysql| directory, thus restoring the database from the backups.
