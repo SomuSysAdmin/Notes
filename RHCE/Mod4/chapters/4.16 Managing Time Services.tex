@@ -1,4 +1,89 @@
 \chapter{Managing Time Services}
-
+	
 \section{Understanding RHEL7 Time Services}
+The command to control the current time and date is called \verb|timedatectl|. For example, to set the current time, we can use \verb|timedatectl set-time 9:00:00|. To use a NTP server, the \textbf{chronyd} service is used. To start using a NTP server, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# timedatectl set-ntp true
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The configuration file for the chronyd service is : \verb|/etc/chrony.conf|. By default the NTP server used is \textit{ntp.pool.org}. 
+
 \section{Configuring NTP Peers}
+\subsection{Server vs Peer}
+The difference between an NTP server and peer is authority. A server is always authoritative, i.e., whatever time the NTP server says it is, our server will set it's clocks accordingly \textbf{if withing tolerances}, which is \textit{1000 seconds} by default, as defined by the NTP protocol. 
+
+NTP peers are not authoritative. If two peers have different times set, they'll try to \textit{middle-time}, i.e., they'll split the difference in time. So, if \textit{peer1} thinks it's 8:00AM and \textit{peer2} thinks it's 9:00AM, they'll split the difference and set the clocks to \textit{8.30AM}. 
+
+While servers are always better, peers provide redundancy and ensure that time configuration doesn't go haywire if the internet connection drops out.
+
+\vspace{-10pt}
+\subsection{Peer Configuration}
+Just like NTP server config, the peer configuration is also handled by \textbf{chronyd} and thus the configuration file is \verb|/etc/chrony.conf|. To set \textit{time.google.com} as the server, and \textit{dns.somuvmnet.local} and \textit{prime.somuvmnet.local} as the peers, the configuration would be:
+
+\vspace{-15pt}
+\begin{minted}{lighttpd}
+server 	 time.google.com
+peer		dns.somuvmnet.local
+peer		prime.vm.somuvmnet.local
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+As with all changes in the configuration of services and daemons, the chronyd service needs to be restarted for the changes to take effect. We do this via:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl restart chronyd
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, chronyc can be used for monitoring, with the command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# chronyc sources -v
+210 Number of sources = 3
+
+.-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+/ .- Source state '*' = current synced, '+' = combined , '-' = not combined,
+| /   '?' = unreachable, 'x' = time may be in error, '~' = time too variable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^? fwdns2.vbctv.in               0   6     0     -     +0ns[   +0ns] +/-    0ns
+^? 14.139.56.74                  0   6     0     -     +0ns[   +0ns] +/-    0ns
+^? 139.59.43.68                  0   6     0     -     +0ns[   +0ns] +/-    0ns
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To get further detailed information about the time tracking between the time servers, we can use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# chronyc tracking
+Reference ID    : 0E8B384A (14.139.56.74)
+Stratum         : 3
+Ref time (UTC)  : Wed Mar 28 07:14:54 2018
+System time     : 0.000516075 seconds slow of NTP time
+Last offset     : -0.000552038 seconds
+RMS offset      : 0.000552038 seconds
+Frequency       : 43.027 ppm slow
+Residual freq   : -20.514 ppm
+Skew            : 4.453 ppm
+Root delay      : 0.057402052 seconds
+Root dispersion : 0.044555884 seconds
+Update interval : 64.8 seconds
+Leap status     : Normal
+\end{minted}
+\vspace{-10pt}	
+
