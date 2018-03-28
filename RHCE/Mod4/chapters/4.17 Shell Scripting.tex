@@ -1,9 +1,93 @@
 \chapter{Shell Scripting}
 
-\section{Understanding Shell Scripting Core Elements}
+	\section{Understanding Shell Scripting Core Elements}
+To help understand the components of the shell scripts, we're going to look at a couple of them. The first one is:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+#!/bin/bash
+# 
+# This is a script that greets the world
+# Usage : ./hello
+
+clear
+echo Hello, World!
+
+exit 0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The first line of the script \verb|#!/bin/bash| is called the \textbf{shebang}. The shebang defines which program is going to execute the script that we're writing, and since we're writing bash scripts here, we put the location of the bash binary executable here on the first line. This is \textit{extremely} important in Linux since many shells such as ksh, tcsh, zsh, etc., share a somewhat common syntax with bash, and as such unexpected errors may occur if a wrong shell is used!
+
+The next few lines (\textit{lines 2-4}) is a comment. It's a good idea to include comments in shell scripts, since bash has a tendency to seem cryptic at first sight, and the comments make the goal of the program easier to understand, and thus the code more readable. 
+
+The next few lines are self-explanatory, where the script clears the shell and then echoes (prints) \textit{Hello, World!} to the terminal. Finally, the program exits with an \textbf{exit code of 0}. While this line is \textit{not} required here, it's important in certain places. Every program in Linux tells it's parent shell if the operation it tried to perform was successful while exiting via the means of an exit code. An exit code of \textbf{0 = success} while anything else means failure. This gives us the opportunity to debug our programs via custom exit codes that indicate what a problem is in the script. 
+
+The exit code of the last command can be viewed both in the script or in the shell by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ chmod u+x hello 
+$ ./hello 
+...
+Hello, world!
+$ echo $?
+0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+On line 1 we have to give the script executable permissions since otherwise bash won't be able to execute it! Then, we execute our script, which executes with an exit code of 0, which we can verify using \verb|echo $?|.
+
 \section{Using Variables}
-\section{Using Positional Parameters}
-\section{Understanding if then else}
-\section{Understanding for}
-\section{Understanding while and until}
-\section{Understanding case}
+\subsection{Setting and getting the value of a variable}
+To set a variable to a certain value, we use the syntax: \verb|var=<valueToSet>|, while anywhere that the value of variable is required to be output, we use the variable name with a \verb|$| in front of it, \verb|<something>=$var|. Thus, to assign the value of \verb|var1| to \verb|var2|, the code is:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+var2=$var1
+\end{minted}
+\vspace{-10pt}	
+
+\subsection{if-else flow control}
+In bash each \verb|if| code block eventually ends with a corresponding \verb|fi|. In between there can be multiple \verb|elif| checks and finally an \verb|else|, although the last two aren't compulsory. 
+
+Conditions are checked using the \verb|test| command. Quite often, we use a shorthand notation for the test command: put the test between square brackets, i.e., \verb|[ <testCriteria ]|. The other way would be to write \verb|test <testCriteria>|. This command has several options that check for different criteria. For example, \verb|test -z| checks to see if a variable is empty, \verb|test -d| checks to see if a folder exists in the current directory with a name same as that of the content of the variable, etc. A list of all possible tests are documented in the manpage for test, accessible with: \verb|man 1 test|. 
+
+\subsection{Example program}
+Let us consider the following program that prints the first command-line argument if present, or prompts the user for one:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+#!/bin/bash
+
+if [ -z $1 ]; then
+echo "Enter a name:"
+read NAME
+else
+NAME=$1
+fi
+
+echo "The name you entered is: $NAME"
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The command line arguments are represnted by a variable corresponding to their position. So, \verb|$1| is the first argument, \verb|$2| the second and so on. \verb|$0| is the name of the program/script itself!
+
+On line 4 we check if a name has been provided in the form of the first command line argument by checking if the \verb|$1| variable is empty or not. The \verb|test -z| command succeeds if the variable is empty (i.e., if a name hasn't been provided). In that case, it asks for a value. Otherwise it prints the value of the command line argument. The read command stores input from \verb|stdin| and stores it in the variable provided (here, \textit{NAME}). 
+
+The output of the script is:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ ./ex2
+Enter a name:
+Sam
+The name you entered is: Sam
+$ ./ex2 Dean
+The name you entered is: Dean
+\end{minted}
+\vspace{-10pt}
+
