@@ -63,10 +63,10 @@ Let us consider the following program that prints the first command-line argumen
 #!/bin/bash
 
 if [ -z $1 ]; then
-echo "Enter a name:"
-read NAME
+	echo "Enter a name:"
+	read NAME
 else
-NAME=$1
+	NAME=$1
 fi
 
 echo "The name you entered is: $NAME"
@@ -91,3 +91,284 @@ The name you entered is: Dean
 \end{minted}
 \vspace{-10pt}
 
+\section{Using Positional Parameters}
+Anything that's provided to a script as an argument becomes a positional parameter. For example, in the command \verb|ls -l /etc|, the first positional parameter, i.e., \verb|$1| is the value \verb|-l| while the second parameter \verb|$2| is \verb|/etc|. One \textbf{wrong} way to use positional parameters in a script would be:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+#!/bin/bash
+
+echo parameter 1: $1
+echo parameter 2: $2
+echo parameter 3: $3
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This script works as expected when 3 positional arguments are provided: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ ./ex3 a b c 
+parameter 1: a
+parameter 2: b
+parameter 3: c
+$ ./ex3 a b c d e f
+parameter 1: a
+parameter 2: b
+parameter 3: c
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+In the second case, when more than 3 arguments are given, the ones after the $3^{rd}$ argument are simply ignored. But when the number of arguments is just 1, the second and the third line are executed anyway:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ ./ex3 a 
+parameter 1: a
+parameter 2:
+parameter 3:
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We should intelligently find out the number of arguments provided to a script and then treat them accordingly. For this, we need a mechanism like a for loop, which iterates over the contents of an item. So, the script becomes:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+#!/bin/bash
+count=1
+for i in "$@";
+do
+	echo "parameter $count : $i"
+	((count++))
+done
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The count variable is used to keep track of the position of the argument being displayed, while the \verb|$@| variable is actually an array (i.e., a variable that stores multiple values of the same type) which contains all of the positional arguments. The final line, \verb|((count++))| increments the value of count and is called an \textit{arithmetic expression} in bash. Such expressions must always occur inside the double brackets to be evaluated. The output of this script is:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ ./ex4 a b c d e f
+parameter 1 : a
+parameter 2 : b
+parameter 3 : c
+parameter 4 : d
+parameter 5 : e
+parameter 6 : f
+$ ./ex4 a 
+parameter 1 : a
+$ ./ex4
+$
+\end{minted}
+\vspace{-10pt}	
+
+	\section{Understanding if then else}
+Let us consider another script that checks if the passed argument is a file or a directory:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+#!/bin/bash
+# Run this script with one argument.
+# Tells whether the passed argument is a file or a directory.
+
+if [ -f $1 ]
+then
+	echo "$1 is a file"
+elif [ -d $1 ]
+then
+	echo "$1 is a directory"
+else
+	echo "I don't know what \$1 is!"
+fi
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The output of the above script for different arguments is:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ ./ex5 none
+I don't know what $1 is
+$ ./ex5 Desktop
+Desktop is a directory
+$ ./ex5 ex3
+ex3 is a file
+\end{minted}
+\vspace{-10pt}	
+
+\section{Understanding for}
+A for loop just keeps executing a bunch of statements or commands as long as some condition is true. Let us consider the following script:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+#!/bin/bash
+
+for ((counter=10; counter>=1; counter--)); do
+	echo $counter;
+done	
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+It has the output:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ ./ex6
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+This is another type of for loop that executes as long as a certain condition is true, unlike the last time we used the for loop where it executed as long as there were elements in the array \verb|$@|. 
+
+\subsection{For loop on the command line}
+Let us consider we have a bunch of hosts with the Network ID 10.0.99./24 and host IDs: \verb|.11|, \verb|.12| and \verb|.99|. If we want to ping them all one after the other and check if they're up, we could do:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ for hid in 11 12 99; do ping -c 1 10.0.99.$hid; done
+PING 10.0.99.11 (10.0.99.11) 56(84) bytes of data.
+64 bytes from 10.0.99.11: icmp_seq=1 ttl=64 time=0.314 ms
+
+--- 10.0.99.11 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.314/0.314/0.314/0.000 ms
+PING 10.0.99.12 (10.0.99.12) 56(84) bytes of data.
+64 bytes from 10.0.99.12: icmp_seq=1 ttl=64 time=0.399 ms
+
+--- 10.0.99.12 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.399/0.399/0.399/0.000 ms
+PING 10.0.99.99 (10.0.99.99) 56(84) bytes of data.
+From 10.0.99.11 icmp_seq=1 Destination Host Unreachable
+
+--- 10.0.99.99 ping statistics ---
+1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Let us now modify this script to only show an error when a host is down:
+
+\vspace{-15pt}
+\begin{minted}{console}
+$ for hid in 11 12 99; do ping -c 1 10.0.99.$hid > /dev/null || echo "10.0.99.$hid is down..."; done
+10.0.99.99 is down...
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The normal output is sent to /dev/null to discard the results of the ping. If however the host is down, the \verb|ping -c 10.0.99.$hid| command exits with an exit code \textit{not equal} to zero, i.e., error. This indicates that the host is down and couldn't reply. This is when our script prints that the host is down. 
+
+The double pipe represents a or statement where the stuff on the right of the double pipe is executed if the entirety of the command on the left, (previous command) fails, i.e., exits with a non-zero value. 
+
+\section{Understanding while and until}
+Both the \verb|while| loop and the \verb|until| loop work in a similar fashion -- \textit{while} keeps the loop running as long as a condition is true, and \textit{until} keeps the loop running as long as a condition is false, i.e., until the condition is met. 
+
+\subsection{While example}
+The following script shows us an example of the utility of the while loop:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+#!/bin/bash
+#
+# Usage : monitor <processName> 
+
+while ps aux | grep top | grep -vE "(bash|grep)" > /dev/tty11
+do
+	sleep 1
+done
+
+clear
+echo "Your process has stopped"
+logger $1 is no longer present
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Here, the \textit{condition} is a command, i.e., as long as the exit status of the command is 0, the loop persists. As soon as the exit code is non-zero, for example when the output is empty, the loop stops. 
+
+The first part of the command shows all processes that are related to top (or contain the word top), and \verb~grep -vE "(bash|grep)"~ removes the irrelevant results. The \verb|-E| flag is used for the regular Expression "\verb~(bash|grep)~" to be passed and understood by \textit{grep}. The \verb|-v| option shows the lines that don't meet the criteria, i.e., inverts the match. Thus we end up with the lines that are related to the top process, but do not contain irrelevant results. 
+
+As long as the above condition is true, the script \textit{sleeps}, i.e., waits 1 second and then checks again. When the process terminates, a statement is printed and also logged in \textit{syslog} via \verb|logger|. 
+
+\subsection{Until example}
+Let us consider the following script:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+#!/bin/bash
+
+until users | grep $1 > /dev/null
+do
+	echo "$1 is not logged in yet"
+	sleep 5 
+done
+
+echo "$1 has just logged in"
+mail -s "$1 has just logged in" root <.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|users| command show us the names of the users that are currently logged in:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# users
+somu somu somu
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, the expression \verb~users | grep $1~ is always going to be false unless the username mentioned in \$1 is presently logged in, i.e., till the user logs in. The \verb|> /dev/null| is used to discard any output. The moment the user logs in, the root user is notified via email and a message is printed on the console!
+
+\section{Understanding case}
+\verb|case| is used to check if an argument has a certain value within a list of values, and act accordingly. Below is an example of the 
+\verb|case| statement as used in the \verb|service| commands in old RHEL versions. For example to start the \verb|httpd| service, the command was \verb|/etc/init.d/httpd start|. To the service script, the \verb|$0| parameter would be \verb|httpd|, the process name and \verb|$1| would be the activity, \verb|start|. The concerned script is:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+case "$1" in
+	start)
+		start;;
+	stop)
+		rm -f $lockfile
+		stop
+		;;
+	status)
+		status;;
+	restart)
+		restart;;
+	reload)
+		reload;;
+	*)
+		echo $"Usage: $0 {start|stop|restart|reload|status}"
+		exit 1
+esac
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+In the script, there'd be functions called \textit{start, stop, status, restart and reload} to perform specific actions, and based on the argument passed, those actions would be performed. 
+
+The \verb|;;| statements are to prevent \textit{fall-through} - a condition where all the statements below the matched case are executed until a \verb|;;| is encountered. We wouldn't want the code for \verb|stop| to be executed after just starting the service!
+
+Finally, the \verb|*)| is the \textit{default} case, which matches everything else for which we didn't define a case. Here, it shows an error message detailing how to properly use the command. 
+
+In the error message, \verb~echo $"Usage: $0 {start|stop|restart|reload|status}"~, we see the use of \verb|$0| which represents the name of the script itself! 
