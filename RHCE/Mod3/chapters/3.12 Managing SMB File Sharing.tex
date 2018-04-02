@@ -1,12 +1,440 @@
 \chapter{Managing SMB File Sharing}
 
 \section{Accessing SMB Shares}
+On Linux, a samba client is available that lets us connect to any Samba Server or CIFS export that is offered on our network. This includes samba exports from both Linux and Widows! To see which samba exports are available on a host, we use:
 
+\vspace{-15pt}
+\begin{minted}{console}
+# smbclient -L //localhost
+Enter SAMBA\somu's password: 
+Anonymous login successful
+OS=[Windows 6.1] Server=[Samba 4.6.2]
+
+Sharename       Type      Comment
+---------       ----      -------
+print$          Disk      Printer Drivers
+sambashare      Disk      my share
+IPC$            IPC       IPC Service (Samba 4.6.2)
+Anonymous login successful
+OS=[Windows 6.1] Server=[Samba 4.6.2]
+
+Server               Comment
+---------            -------
+
+Workgroup            Master
+---------            -------
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+While it did ask for the root password, since we're just using the \verb|-L| option to view the available shares, it's not needed. While \verb|smbclient| does offer many more options, it's not very convenient to use. Instead, it's possible to directly mount the samba share on to the file system. This can be done with the command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mount -o username=somu //prime.vm.somuvmnet.local/sambashare /mnt
+mount: wrong fs type, bad option, bad superblock on //prime.vm.somuvmnet.local/sambashare,
+missing codepage or helper program, or other error
+(for several filesystems (e.g. nfs, cifs) you might
+need a /sbin/mount.<type> helper program)
+
+In some cases useful info is found in syslog - try
+dmesg | tail or so.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The utility complains that it doesn't know how to mount a CIFS file system. For this reason, we need a mount helper program, that usually starts with the prefix \verb|mount.| and we can check if one is installed by typing it and pressing \textit{double tab} to see if one appears in the command suggestions. In our case, the list doesn't contain \verb|mount.cifs|, so we need to see which package might provide it:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# yum provides */mount.cifs
+Loaded plugins: langpacks, product-id, search-disabled-repos, subscription-manager
+rhel-7-server-rpms/7Server/x86_64/filelists_db                                                         |  31 MB  00:00:15     
+rhel-7-server-rt-rpms/7Server/x86_64/filelists_db                                                      |  16 MB  00:00:10     
+cifs-utils-6.2-6.el7.x86_64 : Utilities for mounting and managing CIFS mounts
+Repo        : rhel-7-server-rpms
+Matched from:
+Filename    : /usr/sbin/mount.cifs
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+So, we have to install it using \verb|yum -y install cifs-utils| to be able to mount CIFS file systems. Now, the previous mount command will work:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mount -o username=lisa //prime.vm.somuvmnet.local/sambashare /mnt
+Password for lisa@//prime.vm.somuvmnet.local/sambashare:  ********
+# mount | grep mnt
+//prime.vm.somuvmnet.local/sambashare on /mnt type cifs (rw,relatime,vers=1.0,cache=strict,username=lisa,domain=PRIME,uid=0,noforceuid,gid=0, noforcegid,addr=10.0.99.11,unix,posixpaths,serverino,mapposix,acl,rsize=1048576, wsize=65536,echo_interval=60,actimeo=1)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Once the password has been entered, if we go to the mount location, i.e., in our case, \verb|/mnt|, we can see the contents of the samba share. Using this method, we can mount samba shares directly onto our local file system, and it even allows us to copy files from Windows shares to our Linux computers!
 
 \section{Samba Server Configuration Overview}
-\section{Linux Tasks}
-\section{smb.conf Tasks}
+The purpose of a samba share, just like a NFS share, is to share something on the file system. As such, the following are the steps involved in the creation of a samba share:
+
+\begin{itemize}
+	\item Create the share (i.e., a directory) on the Linux File system. 
+	\item Grant access permissions on the Linux File System - without this no matter what is shared gets an \textit{access denied} error. 
+	\item Define the share in \verb|smb.conf| - the main configuration file for the samba server, and every share needs to be defined in it.
+	\item Configure security (in \verb|smb.conf| as well).
+	\item Consider Access Restrictions through \verb|smb.conf| and/or Linux File System permissions.
+	\item Start the Samba Server with \verb|systemctl start smb nmb|. While \verb|smb| is the file sharing service, \verb|nmb| is for \textit{naming}. So, if we want that naming is available as it is on a Windows system, the \verb|nmb| service must also be started. 
+	\item Both services must be enabled as well with \verb|systemctl enable smb nmb|.
+\end{itemize}
+
+\section{Creating the Samba Share: Linux Tasks}
+This particular section deals with preparing Linux for use with Samba. Before work on the samba share can begin, a directory (which will eventually become the samba share) is available, the appropriate permissions are set and the required Linux users are configured as well. 
+
+So, first we create a directory called \verb|/sambashare|. Next comes permissions - which can be anything, but if we want we could do it the \textit{Windows way}:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mkdir /sambashare
+# chmod 777 /sambashare
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+While the above isn't secure, it ensures that whatever functionality we're trying to provide won't be hindered by file system permission restrictions. 
+
+If we want to grant access to specific users, we must ensure that the users exist at the Linux level. If they don't yet exist, we create said users using \verb|useradd <userName>|. While we're going to create \textit{samba users} later as well, samba users can only be created if a corresponding Linux user exists already!
+
+\section{Creating the Samba Share: smb.conf Tasks}
+The two primary packages required for a Samba server are called \verb|samba| and \verb|samba-client|. While there are packages that add functionality, they're optional. The primary configuration file for the samba server is called \verb|/etc/samba/smb.conf|. 
+
+Within the file, there's a \textbf{global} section that deals with the configuration of the server itself. The first important parameter is the \verb|workgroup| which is set to a value of \textit{MYGROUP} by default. 
+
+It is also possible to set the interface(es) to be used by the samba server as well as allow connections only from certain hosts by setting the following lines (with appropriately modified values):
+
+\vspace{-15pt}
+\begin{minted}{bash}
+interfaces = lo eth0 192.168.12.2/24 192.168.13.2/24
+hosts allow = 127. 192.168.12. 192.168.13.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Down below, there are share definitions as well, that define everything that will be shared from the server. There are a lot of examples available for us to configure our own shares. An especially illuminating one is the \textit{[public]} share. We can define our own share with:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+[sambashare]
+comment = my stuff
+path = /sambashare
+public = yes
+writable = yes
+write list = +users
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|public = yes| statement makes it available to everyone in read-only mode, but the option \verb|writable = yes| makes it writeable by everyone as well. The mere inclusion of \textit{writable = yes} demands that a \textit{write list} also be added. This indicates that anyone can access the contents of the share, but only those who're a part of the group \textit{users} can write to the share. 
+
+\subsection{Starting the samba server and verifying shares}
+Now we can start the service with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# systemctl start smb
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+At this point we can verify that it works by using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# smbclient -L //localhost
+Enter SAMBA\somu's password: 
+Anonymous login successful
+OS=[Windows 6.1] Server=[Samba 4.6.2]
+
+Sharename       Type      Comment
+---------       ----      -------
+print$          Disk      Printer Drivers
+sambashare      Disk      my share
+IPC$            IPC       IPC Service (Samba 4.6.2)
+Anonymous login successful
+OS=[Windows 6.1] Server=[Samba 4.6.2]
+
+Server               Comment
+---------            -------
+
+Workgroup            Master
+---------            -------
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To use this share, the one thing that's lacking is \textit{samba users}. 
+
+\subsection{Creating Samba users}
+The command to create new samba users is \verb|smbpasswd -a <userName>| (the \verb|-a| option adds a new user):
+
+\vspace{-15pt}
+\begin{minted}{console}
+# smbpasswd -a lisa
+New SMB password:
+Retype new SMB password:
+Added user lisa.
+# smbpasswd -a lori
+New SMB password:
+Retype new SMB password:
+Added user lori.	
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Again, the above user-creation process will only work if there is a user with the same username on the Linux system as well. If not, we'll get an error message like:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# smbpasswd -a tesla
+New SMB password:
+Retype new SMB password:
+Failed to add entry for user tesla.
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now we're free to mount it on the file system, using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# mount -o username=lisa //localhost/sambashare /mnt
+Password for lisa@//localhost/sambashare:  ********
+# mount | grep mnt
+//localhost/sambashare on /mnt type cifs (rw,relatime,vers=1.0,cache=strict,username=lisa,domain=PRIME,uid=0,noforceuid,gid=0, noforcegid,addr=0000:0000:0000:0000:0000:0000:0000:0001,unix,posixpaths,serverino, mapposix,acl,rsize=1048576,wsize=65536,echo_interval=60,actimeo=1)
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now if user \textit{lisa} were to go to /mnt and type the command \verb|ls|, she'd get:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# su - lisa
+$ cd /mnt
+$ ls -l
+ls: reading directory .: Permission denied
+total 0
+\end{minted}
+\vspace{-10pt}
+
 \section{Tuning the Share for Access Restrictions}
+So, even when a user on samba with a corresponding Linux user tries to \verb|ls| in the \textit{samba share}, they get a \textit{Permission denied} error. This is a SELinux issue. For example, when we see the security context of the share, the context is:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# ls -Zd /sambashare
+drwxrwxrwx. root root unconfined_u:object_r:default_t:s0 /sambashare
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+To ensure that the problem is caused by SELinux, one quick and easy way to test it is using \verb|setenforce 0| and then checking if that worked. Now if we used the \verb|ls| command in that directory, we'd get no errors. While turning SELinux to permissive mode is okay for testing purposes, it's only a temporary solution at best. Before we can enable SELinux to work with samba however, we need to take care of certain other options.
+
+\subsection{hosts allow}
+The \verb|hosts allow| defines the networks that are allowed to use the samba share. The parameter values consist of only the relevant bits of the network ID. Thus, instead of writing \verb|192.168.12.0/24|, we need only write \verb|192.168.12.| and even host names are also allowed here in the format \verb|.example.com|. 
+
+There's another way to specify which hosts can access the shares and which can't using \textbf{firewalld}. It might be better to allows hosts through only in firewalld, but for the end result it doesn't matter. However, setting up both \verb|hosts allow| and firewalld may cause conflicts. Thus, one should allow all hosts to pass through, while the other restricts the passage to only certain hosts. 
+
+\subsection{Read/Write permissions}
+Within the smb.conf file, the \verb|writable = yes| parameter makes the share writable. However, we also need a \verb|write list| parameter defined which is set to the name of a group. For example, if the members of the group \textit{users} are to be allowed, then the parameter can be either: \verb|write list = +users| or \verb|write list = @users|. Both are accepted. 
+
+The use of \verb|public = yes| makes the share accessible with \textit{read} access to all users. However, if only certain users should have read access, then instead of the public parameter, we use the \verb|valid users| parameter. To ensure only the users of the group \textit{users} have read-write access, we use:
+
+\vspace{-15pt}
+\begin{minted}{bash}
+valid users = @users
+writable = yes
+write list = @users
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Finally, we can remove any permission settings from the smb.conf file using \verb|read only = no|, which makes the share readable and writeable to anyone, subject to the Linux file system permissions. If, however, \verb|read only = yes| has been set, no one can write to the share no matter what Linux file system permissions have been applied. 	
+
 \section{Verifying the Configuration}
+To verify that the configuration itself contains no errors, we can use the command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# testparm
+Load smb config files from /etc/samba/smb.conf
+rlimit_max: increasing rlimit_max (1024) to minimum Windows limit (16384)
+Processing section "[homes]"
+Processing section "[printers]"
+Processing section "[print$]"
+Processing section "[sambashare]"
+Loaded services file OK.
+Server role: ROLE_STANDALONE
+
+Press enter to see a dump of your service definitions
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The fact that it isn't complaining about any errors, as well as the \verb|Loaded services file OK| statement prove that there's no errors. 
+
 \section{Using Samba-Related SELinux Settings}
+To find out all the man pages related to SELinux and Samba, we have to first ensure that all the SELinux manpages are installed (using \verb|sepolicy -a -p /usr/share/man/man8; mandb| commands) and then use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# man -k _selinux | grep samba
+samba_net_selinux (8) - Security Enhanced Linux Policy for the samba_net processes
+samba_selinux (8)    - Security Enhanced Linux Policy for the smbd processes
+samba_unconfined_net_selinux (8) - Security Enhanced Linux Policy for the samba_unconfined_net processes
+samba_unconfined_script_selinux (8) - Security Enhanced Linux Policy for the samba_unconfined_script processes
+sambagui_selinux (8) - Security Enhanced Linux Policy for the sambagui processes
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The manpage we're looking for is called \verb|samba_selinux| which contains information about the correct file and port contexts required. We can use two different types of SELinux contexts: \verb|samba_share_t| and \verb|public_content_rw_t|. 
+
+\subsection{Choosing file security context}
+\vspace{-15pt}
+\subsubsection{samba\_share\_t}
+\vspace{-10pt}
+Allows the samba share to only be used by samba. 
+
+\vspace{-15pt}
+\subsubsection{public\_content\_rw\_t}
+\vspace{-10pt}
+This security context enables access to the directory from multiple services such as samba, apache, etc.
+
+\subsection{Setting the appropriate file context}
+If for example, we choose \verb|samba_share_t| to be set as the new file context, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# cd /
+# ls -dZ /sambashare
+drwxrwxrwx. root root unconfined_u:object_r:default_t:s0 /sambashare
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+We have to change the \verb|default_t| file context to \verb|samba_share_t| file context using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# semanage fcontext -a -t samba_share_t "/sambashare(/.*)?"
+[root@prime /]# restorecon -Rv /sambashare
+restorecon reset /sambashare context unconfined_u:object_r:default_t:s0->unconfined_u:object_r:samba_share_t:s0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+At this point the directory should be accessible while SELinux is turned on. Finally, we do:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# setenforce 1; getenforce
+Enforcing
+# mount | grep sambashare
+# mount -o username=lisa //localhost/sambashare /mnt
+Password for lisa@//localhost/sambashare:  ********
+# mount | grep samba
+//localhost/sambashare on /mnt type cifs (rw,relatime,vers=1.0,cache=strict,username=lisa,domain=PRIME,uid=0,noforceuid,gid=0, noforcegid,addr=0000:0000:0000:0000:0000:0000:0000:0001,unix,posixpaths,serverino, mapposix,acl,rsize=1048576,wsize=65536,echo_interval=60,actimeo=1)
+# cd /mnt
+# ls -l
+total 0
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now the samba share mounts and is accessible without errors!
+
+\subsection{SELinux Booleans for Samba}
+The list of SELinux booleans for samba can be seen with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# getsebool -a | grep samba
+samba_create_home_dirs --> off
+samba_domain_controller --> off
+samba_enable_home_dirs --> off
+samba_export_all_ro --> off
+samba_export_all_rw --> off
+samba_load_libgfapi --> off
+samba_portmapper --> off
+samba_run_unconfined --> off
+samba_share_fusefs --> off
+samba_share_nfs --> off
+sanlock_use_samba --> off
+tmpreaper_use_samba --> off
+use_samba_home_dirs --> off
+virt_use_samba --> off
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|samba_enable_home_dirs| and \verb|use_samba_home_dirs| are two of the most important and useful ones. The former allows the users to access the Linux home directories shared by the present (this) samba server. However, the \verb|use_samba_home_dirs| allows users to access \textit{remote} home directories. So, on the samba server, we turn on home dirs by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# setsebool -P samba_enable_home_dirs on
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now samba home directories are enabled on this server. 
+
 \section{Opening the Firewall for SMB Traffic}
+To get a list of all the possible services on the firewall, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# firewall-cmd --get-services 
+RH-Satellite-6 amanda-client amanda-k5-client bacula bacula-client bitcoin bitcoin-rpc bitcoin-testnet bitcoin-testnet-rpc ceph ceph-mon cfengine condor-collector ctdb custom dhcp dhcpv6 dhcpv6-client dns docker-registry dropbox-lansync elasticsearch freeipa-ldap freeipa-ldaps freeipa-replication freeipa-trust ftp ganglia-client ganglia-master high-availability http https imap imaps ipp ipp-client ipsec iscsi-target kadmin kerberos kibana klogin kpasswd kshell ldap ldaps libvirt libvirt-tls managesieve mdns mosh mountd ms-wbt mssql mysql nfs nrpe ntp openvpn ovirt-imageio ovirt-storageconsole ovirt-vmconsole pmcd pmproxy pmwebapi pmwebapis pop3 pop3s postgresql privoxy proxy-dhcp ptp pulseaudio puppetmaster quassel radius rpc-bind rsh rsyncd samba samba-client sane sip sips smtp smtp-submission smtps snmp snmptrap spideroak-lansync squid ssh synergy syslog syslog-tls telnet tftp tftp-client tinc tor-socks transmission-client vdsm vnc-server wbem-https xmpp-bosh xmpp-client xmpp-local xmpp-server
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+Now, since we're using the samba server, we need the \verb|samba| service to be allowed on the firewall. We enable it using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# firewall-cmd --permanent --add-service=samba
+success
+# firewall-cmd --reload
+success
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+On another machine (samba client), we can use \verb|nmap| to verify the availability of service using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+# nmap prime.vm.somuvmnet.local
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2018-04-02 01:05 IST
+Nmap scan report for prime.vm.somuvmnet.local (10.0.99.11)
+Host is up (0.00070s latency).
+Not shown: 991 filtered ports
+PORT     STATE  SERVICE
+22/tcp   open   ssh
+25/tcp   open   smtp
+53/tcp   open   domain
+80/tcp   open   http
+139/tcp  open   netbios-ssn
+443/tcp  open   https
+445/tcp  open   microsoft-ds
+2022/tcp closed down
+3306/tcp open   mysql
+MAC Address: 00:0C:29:3B:B9:1C (VMware)
+
+Nmap done: 1 IP address (1 host up) scanned in 4.95 seconds
+\end{minted}
+\vspace{-10pt}	
+
+\noindent
+The \verb|netbios-ssn| and \verb|microsoft-ds| ports are the ones corresponding to the samba server, and thus it is accessible through the firewall. 
