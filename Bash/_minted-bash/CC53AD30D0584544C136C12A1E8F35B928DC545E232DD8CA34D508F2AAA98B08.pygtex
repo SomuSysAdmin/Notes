@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{help} \PYG{p}{|} grep \PYG{n+nb}{test}
+\PYG{g+go}{disown [\PYGZhy{}h] [\PYGZhy{}ar] [jobspec ... | pid \PYGZgt{}  test [expr]}
+\PYG{g+gp}{\PYGZdl{}} which \PYG{n+nb}{test}
+\PYG{g+go}{/usr/bin/test}
+\end{Verbatim}

@@ -1,0 +1,49 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{help}
+\PYG{g+go}{GNU bash, version 4.4.19(1)\PYGZhy{}release (x86\PYGZus{}64\PYGZhy{}redhat\PYGZhy{}linux\PYGZhy{}gnu)}
+\PYG{g+go}{These shell commands are defined internally.  Type `help\PYGZsq{} to see this list.}
+\PYG{g+go}{Type `help name\PYGZsq{} to find out more about the function `name\PYGZsq{}.}
+\PYG{g+go}{Use `info bash\PYGZsq{} to find out more about the shell in general.}
+\PYG{g+go}{Use `man \PYGZhy{}k\PYGZsq{} or `info\PYGZsq{} to find out more about commands not in this list.}
+
+\PYG{g+go}{A star (*) next to a name means that the command is disabled.}
+
+\PYG{g+go}{job\PYGZus{}spec [\PYGZam{}]                            history [\PYGZhy{}c] [\PYGZhy{}d offset] [n] or hist\PYGZgt{}}
+\PYG{g+go}{(( expression ))                        if COMMANDS; then COMMANDS; [ elif C\PYGZgt{}}
+\PYG{g+go}{. filename [arguments]                  jobs [\PYGZhy{}lnprs] [jobspec ...] or jobs \PYGZgt{}}
+\PYG{g+go}{:                                       kill [\PYGZhy{}s sigspec | \PYGZhy{}n signum | \PYGZhy{}sigs\PYGZgt{}}
+\PYG{g+go}{[ arg... ]                              let arg [arg ...]}
+\PYG{g+go}{[[ expression ]]                        local [option] name[=value] ...}
+\PYG{g+go}{alias [\PYGZhy{}p] [name[=value] ... ]          logout [n]}
+\PYG{g+go}{bg [job\PYGZus{}spec ...]                       mapfile [\PYGZhy{}d delim] [\PYGZhy{}n count] [\PYGZhy{}O or\PYGZgt{}}
+\PYG{g+go}{bind [\PYGZhy{}lpsvPSVX] [\PYGZhy{}m keymap] [\PYGZhy{}f file\PYGZgt{}  popd [\PYGZhy{}n] [+N | \PYGZhy{}N]}
+\PYG{g+go}{break [n]                               printf [\PYGZhy{}v var] format [arguments]}
+\PYG{g+go}{builtin [shell\PYGZhy{}builtin [arg ...]]       pushd [\PYGZhy{}n] [+N | \PYGZhy{}N | dir]}
+\PYG{g+go}{caller [expr]                           pwd [\PYGZhy{}LP]}
+\PYG{g+go}{case WORD in [PATTERN [| PATTERN]...)\PYGZgt{}  read [\PYGZhy{}ers] [\PYGZhy{}a array] [\PYGZhy{}d delim] [\PYGZhy{}\PYGZgt{}}
+\PYG{g+go}{cd [\PYGZhy{}L|[\PYGZhy{}P [\PYGZhy{}e]] [\PYGZhy{}@]] [dir]            readarray [\PYGZhy{}n count] [\PYGZhy{}O origin] [\PYGZhy{}s\PYGZgt{}}
+\PYG{g+go}{command [\PYGZhy{}pVv] command [arg ...]        readonly [\PYGZhy{}aAf] [name[=value] ...] o\PYGZgt{}}
+\PYG{g+go}{compgen [\PYGZhy{}abcdefgjksuv] [\PYGZhy{}o option] [\PYGZgt{}  return [n]}
+\PYG{g+go}{complete [\PYGZhy{}abcdefgjksuv] [\PYGZhy{}pr] [\PYGZhy{}DE] \PYGZgt{}  select NAME [in WORDS ... ;] do COMM\PYGZgt{}}
+\PYG{g+go}{compopt [\PYGZhy{}o|+o option] [\PYGZhy{}DE] [name ..\PYGZgt{}  set [\PYGZhy{}abefhkmnptuvxBCHP] [\PYGZhy{}o option\PYGZhy{}\PYGZgt{}}
+\PYG{g+go}{continue [n]                            shift [n]}
+\PYG{g+go}{coproc [NAME] command [redirections]    shopt [\PYGZhy{}pqsu] [\PYGZhy{}o] [optname ...]}
+\PYG{g+go}{declare [\PYGZhy{}aAfFgilnrtux] [\PYGZhy{}p] [name[=v\PYGZgt{}  source filename [arguments]}
+\PYG{g+go}{dirs [\PYGZhy{}clpv] [+N] [\PYGZhy{}N]                  suspend [\PYGZhy{}f]}
+\PYG{g+go}{disown [\PYGZhy{}h] [\PYGZhy{}ar] [jobspec ... | pid \PYGZgt{}  test [expr]}
+\PYG{g+go}{echo [\PYGZhy{}neE] [arg ...]                   time [\PYGZhy{}p] pipeline}
+\PYG{g+go}{enable [\PYGZhy{}a] [\PYGZhy{}dnps] [\PYGZhy{}f filename] [na\PYGZgt{}  times}
+\PYG{g+go}{eval [arg ...]                          trap [\PYGZhy{}lp] [[arg] signal\PYGZus{}spec ...]}
+\PYG{g+go}{exec [\PYGZhy{}cl] [\PYGZhy{}a name] [command [argume\PYGZgt{}  true}
+\PYG{g+go}{exit [n]                                type [\PYGZhy{}afptP] name [name ...]}
+\PYG{g+go}{export [\PYGZhy{}fn] [name[=value] ...] or ex\PYGZgt{}  typeset [\PYGZhy{}aAfFgilnrtux] [\PYGZhy{}p] name[=v\PYGZgt{}}
+\PYG{g+go}{false                                   ulimit [\PYGZhy{}SHabcdefiklmnpqrstuvxPT] [l\PYGZgt{}}
+\PYG{g+go}{fc [\PYGZhy{}e ename] [\PYGZhy{}lnr] [first] [last] o\PYGZgt{}  umask [\PYGZhy{}p] [\PYGZhy{}S] [mode]}
+\PYG{g+go}{fg [job\PYGZus{}spec]                           unalias [\PYGZhy{}a] name [name ...]}
+\PYG{g+go}{for NAME [in WORDS ... ] ; do COMMAND\PYGZgt{}  unset [\PYGZhy{}f] [\PYGZhy{}v] [\PYGZhy{}n] [name ...]}
+\PYG{g+go}{for (( exp1; exp2; exp3 )); do COMMAN\PYGZgt{}  until COMMANDS; do COMMANDS; done}
+\PYG{g+go}{function name \PYGZob{} COMMANDS ; \PYGZcb{} or name \PYGZgt{}  variables \PYGZhy{} Names and meanings of so\PYGZgt{}}
+\PYG{g+go}{getopts optstring name [arg]            wait [\PYGZhy{}n] [id ...]}
+\PYG{g+go}{hash [\PYGZhy{}lr] [\PYGZhy{}p pathname] [\PYGZhy{}dt] [name \PYGZgt{}  while COMMANDS; do COMMANDS; done}
+\PYG{g+go}{help [\PYGZhy{}dms] [pattern ...]               \PYGZob{} COMMANDS ; \PYGZcb{}}
+\end{Verbatim}

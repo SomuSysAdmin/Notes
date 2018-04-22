@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ls
+\PYG{g+go}{Apps   Desktop    Downloads  Notes     Public  rpmbuild  Templates  Videos}
+\PYG{g+go}{Cloud  Documents  Music      Pictures  Repo    Scripts   tmp        VM}
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{echo} \PYG{n+nv}{\PYGZdl{}?}
+\PYG{g+go}{0}
+\PYG{g+gp}{\PYGZsh{}} ls doesntExist
+\PYG{g+go}{ls: cannot access \PYGZsq{}doesntExist\PYGZsq{}: No such file or directory}
+\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{echo} \PYG{n+nv}{\PYGZdl{}?}
+\PYG{g+go}{2}
+\end{Verbatim}

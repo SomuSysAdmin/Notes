@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{help} \PYG{n+nb}{trap}
+\PYG{g+go}{trap: trap [\PYGZhy{}lp] [[arg] signal\PYGZus{}spec ...]}
+\PYG{g+go}{Trap signals and other events.}
+
+\PYG{g+go}{Defines and activates handlers to be run when the shell receives signals}
+\PYG{g+go}{or other conditions.}
+\PYG{g+go}{...}
+\end{Verbatim}

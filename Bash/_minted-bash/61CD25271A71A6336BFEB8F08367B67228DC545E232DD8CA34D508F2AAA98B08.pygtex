@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} which doesntYetExist
+\PYG{g+go}{/usr/bin/which: no doesntYetExist in (/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/somu/.local/bin:/home/somu/bin)}
+\end{Verbatim}

@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+ch}{\PYGZsh{}!/bin/bash}
+\PYG{n+nb}{echo} \PYG{l+s+s2}{\PYGZdq{}This is a test\PYGZdq{}}
+\end{Verbatim}

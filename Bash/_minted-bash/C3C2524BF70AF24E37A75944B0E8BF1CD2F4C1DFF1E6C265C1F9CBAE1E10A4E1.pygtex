@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{}/bin/bash}
+clear
+ls \PYGZhy{}l
+df \PYGZhy{}h
+\end{Verbatim}

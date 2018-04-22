@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZdl{}} chmod +x \PYG{n+nb}{test}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{test}
+\PYG{g+gp}{\PYGZdl{}} which \PYG{n+nb}{test}
+\PYG{g+go}{/usr/bin/test}
+\PYG{g+gp}{\PYGZdl{}} ./test
+\PYG{g+go}{This is a test}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+ch}{\PYGZsh{}!/bin/bash}
+\PYG{c+c1}{\PYGZsh{}}
+\PYG{c+c1}{\PYGZsh{} Demo script that greets the world}
+\PYG{c+c1}{\PYGZsh{} Usage: ./hello.sh}
+
+clear
+\PYG{n+nb}{echo} \PYG{l+s+s2}{\PYGZdq{}Hello, World!\PYGZdq{}}
+
+\PYG{n+nb}{exit} \PYG{l+m}{0}
+\end{Verbatim}

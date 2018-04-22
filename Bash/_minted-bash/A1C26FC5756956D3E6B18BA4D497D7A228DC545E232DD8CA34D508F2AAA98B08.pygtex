@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{echo \PYGZdl{}USER}
+\PYG{g+go}{somu}
+\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{echo} \PYG{n+nv}{\PYGZdl{}PATH}
+\PYG{g+go}{/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/somu/.local/bin:/home/somu/bin}
+\end{Verbatim}
