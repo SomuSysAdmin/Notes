@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZdl{}} test.sh
-\PYG{g+go}{bash: test.sh: command not found...}
-\PYG{g+gp}{\PYGZdl{}} chmod u+x test.sh
-\PYG{g+gp}{\PYGZdl{}} ./test.sh
-\PYG{g+go}{This is a test}
-\end{Verbatim}

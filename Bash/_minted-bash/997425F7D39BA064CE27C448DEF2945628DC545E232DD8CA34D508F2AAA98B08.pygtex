@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZsh{}} which whereami
-\PYG{g+go}{/usr/local/bin/whereami}
-\PYG{g+gp}{\PYGZsh{}} whereami
-\PYG{g+go}{/home/somu}
-\PYG{g+gp}{\PYGZsh{}} \PYG{n+nb}{cd} \PYGZti{}
-\PYG{g+gp}{\PYGZsh{}} whereami
-\PYG{g+go}{/root}
-\end{Verbatim}

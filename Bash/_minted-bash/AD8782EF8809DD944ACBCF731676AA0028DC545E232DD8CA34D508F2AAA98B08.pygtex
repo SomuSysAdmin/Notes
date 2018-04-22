@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZdl{}} \PYG{n+nb}{type} \PYG{n+nb}{test}
-\PYG{g+go}{test is a shell builtin5}
-\end{Verbatim}

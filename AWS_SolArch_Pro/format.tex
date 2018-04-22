@@ -1,0 +1,66 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+
+%	Changing document font to Helvetica.
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+%	Changing Margins and other formatting
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=1.5in,
+	top=1in,
+	right=1.5in,
+	bottom=1in
+}
+\setlength{\parskip}{1em}
+
+%	Source Code Highlighting
+\usepackage{minted}
+%	Global Minted Settings
+\setminted{
+	frame=lines,
+	framesep=2mm,
+	baselinestretch=1.2,
+	fontsize=\footnotesize,
+	linenos,
+	breaklines,
+	tabsize=4
+}
+
+%	Pretty Tables
+\usepackage{booktabs}
+\usepackage{array, multirow}
+
+%	Custom column for tables
+\newcolumntype{P}[1]{ >{\centering\arraybackslash} m{#1\linewidth} }
+\newcolumntype{M}[1]{m{#1\linewidth}}
+
+%	Images Support
+\usepackage{graphicx}
+
+%	Maths and equations support
+\usepackage{amsmath}
+
+%	Support for spaces in file names
+\usepackage[space]{grffile}
+
+%	SUPPORT FOR WEIRD CHARACTERS
+\DeclareUnicodeCharacter{25CF}{$\bullet$}
+\usepackage{pmboxdraw}
+
+%	Ignore Pygments Bugs & Errors
+\AtBeginEnvironment{minted}{%
+	\renewcommand{\fcolorbox}[4][]{#4}}
+
+%	Auto-generate Outline
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	filecolor=magenta,      
+	urlcolor=blue,
+}

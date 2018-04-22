@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{c+ch}{\PYGZsh{}!/bin/bash}
-\PYG{c+c1}{\PYGZsh{}}
-\PYG{c+c1}{\PYGZsh{} Prints the present working directory}
-\PYG{c+c1}{\PYGZsh{} Usage: whereami}
-
-\PYG{n+nb}{pwd}
-\end{Verbatim}
