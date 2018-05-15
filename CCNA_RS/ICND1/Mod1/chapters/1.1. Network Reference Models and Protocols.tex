@@ -1,1 +1,128 @@
 \chapter{Network Reference Models and Protocols}
+\section{Introduction}
+When talking about the components of a network such as Network devices and protocols, it's useful to have a common frame of reference. This is provided by the OSI and TCP/IP models. These reference models help us understand how a networking device works simply by comparing its functionality to an equivalent working device in the reference model. 
+
+\section{The OSI Model}
+The \textbf{OSI(\textit{Open Systems Interconnect})} model is used to categorize or classify network components. It consists of 7 layers - each dealing with a specific type of functionality that a networking device must perform to meet its goal. Thus, certain devices operate primarily on one particular layer of the OSI model. For example, switches \textit{live} (i.e., primarily operate on) Layer 2 of the OSI model while routers live on Layer 3. 
+
+The layers of the OSI model are stacked with the lower layers at the bottom, with Layer 1 at the base. Each layer interfaces with both the layers above and below it and passes them \textit{data} in the format that they're expecting. 
+
+\subsection{Terminology related to the OSI Model}
+
+To understand the different layers of the OSI stack, we first need to understand some basic terminology and devices:
+
+\noindent
+\begin{tabular}{rM{0.73}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} \\
+	\midrule
+	\textbf{Ethernet Switch}	&A device which allows data to flow between multiple computers in a network and only sends the data to the correct device by the use of a physical address.\\
+	\midrule
+	\textbf{Physical Address}	&A \textbf{Layer-2} address \textit{burned into} (programmed within) the Network Interface Card (\textbf{NIC}) via which the computer is connected to the Network.\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+\begin{tabular}{rM{0.75}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} \\
+	\midrule
+	\textbf{NIC}	&A \textbf{NIC(\textit{Network Interface Card})} is a physical device which is used to connect to the network and has physical interfaces (ports) for wired mediums. \\
+	\midrule
+	\textbf{MAC Address}	&In a PC, this physical address burned into the NIC is called the \textbf{MAC (\textit{Media Access Control})} address. It's a 48-bit address.\\
+	\midrule
+	\textbf{Logical Address}	&A logical address is an address that's assigned to a device by an external agent (such as a DHCP server) for the primary purpose of routing data within the network and among devices.\\
+	\midrule
+	\textbf{IP Address}	&The IP Address (i.e., the \textbf{IPv4 (\textit{Internet Protocol version 4})} address is a 32-bit logical address used by Layer-3 devices such as routers.\\
+	\midrule
+	\textbf{TCP}	&The \textbf{TCP \textit{(Transmission Control Protocol)}} is a framework or set of rules or method to send data from one device to another that's reliable because the receipt of data is acknowledged by the recipient.\\
+	\midrule
+	\textbf{UPD}	&The \textbf{UDP \textit{(User Datagram Protocol)}} is a similar protocol to TCP, but doesn't acknowledge the receipt of data and thus data loss in transit is possible, making it less reliable, but faster. \\
+	\bottomrule
+\end{tabular}
+
+\subsection{The 7 layers of the OSI Model}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{"Mod1/chapters/1.1.a OSI Stack"}
+	\caption{OSI Stack}
+	\label{fig:1 OSI Stack}
+\end{figure}
+
+\noindent
+\begin{tabular}{rM{0.75}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} \\
+	\midrule
+	\textbf{Physical Layer}	&This layer is concerned with actually sending the bits (0s \& 1s) through the physical media (i.e, wires like Ethernet cable or via wireless mediums). It deals with a way to \textit{electrically} represent them (in case of copper wire based mediums) or \textit{optically} represent them (in case of fiber optics), etc. \\
+	\midrule
+	\textbf{Data-Link Layer}	&Layer-2 devices make forwarding decisions based on a physical address. An Ethernet switch in its basic form is a Layer-2 device. It makes forwarding decisions (i.e, where to send the incoming data) on the basis of a \textbf{physical} address, such as the 48-bit MAC Addresses in case of PCs.\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+\begin{tabular}{rM{0.71}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} \\
+	\midrule
+	\textbf{Network Layer}	&Layer-3 devices such as a router make forwarding decisions based on a \textbf{logical} Address such as the IP addresses of the machines in the network. A router analyzes the incoming data on it's ports and determines where to send the data next by finding out which of its other ports lead to the destination IP address.\\
+	\midrule
+	\textbf{Transport Layer}	&The TCP and UDP protocols operate on this layer, and determine how the data is transmitted over the network.\\
+	\midrule
+	\textbf{Session Layer}	&Sets up, maintains and tears down sessions. E.g., \textbf{SIP (\textit{Session Initiation Protocol})} used by IP phones for VoIP calls. \\
+	\midrule
+	\textbf{Presentation Layer}	&Deals with how data is represented on the network. For example, data may be encoded in ASCII (American Standard Code for Information Interchange) or UTF-8(Unicode Transformation Format 8-bit), etc. \textbf{Encryption} is also performed within this layer.\\
+	\midrule
+	\textbf{Application Layer}	&The name of this layer is a bit misleading since it is not any application which lives on this layer, but a Network service that allows other desktop applications to take advantage of that service. E.g., The Microsoft Active Directory (AD) service provides the end-user applications with the functionality of logging in to the AD via the network.\\
+	\bottomrule
+\end{tabular}
+
+\noindent
+Note that it's perfectly possible for a devices to operate in more than one layers, and it's not required to neatly arrange a device or protocol in a single layer. The OSI model is like a book shelf. Similar devices and protocols are arranged in a layer but just like it's possible to have empty shelves in a book-shelf, there's no necessity for a networking device/protocol to have a component present in every single layer. 
+
+Since this stack forms the basis of all discussions in the domain of Networking, it's important to memorize the list of the components of the OSI stack and understand what each of the layers in the stack does. If we want to remember the names of the layers from Layer 7 downwards, the acrostic \textit{\textbf{A}ll \textbf{P}eople \textbf{S}eem \textbf{T}o \textbf{N}eed \textbf{D}ata \textbf{P}rocessing} can be helpful. To remember from bottom-up, the acrostic is: \textit{\textbf{P}lease \textbf{D}o \textbf{N}ot \textbf{T}hrow \textbf{S}ausage \textbf{P}izza \textbf{A}way}. 
+
+An important point to remember is that the OSI model was \textbf{designed} to be \textit{generic} and comprehensive, to act as a reference model for more protocols than just IP. While IP can have certain features that live on certain layers, that's just not universally true for other protocols. Most of our networks run on the \textbf{TCP/IP(\textit{Transmission Control Protocol/Internet Protocol})} stack or the \textbf{DoD (\textit{Department of Defence})} stack. 
+
+\section{TCP/IP Stack}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.55\linewidth]{"Mod1/chapters/1.1.b TCP-IP Stack"}
+	\caption{TCP/IP Stack}
+	\label{fig:1 TCP/IP Stack}
+\end{figure}
+
+The \textbf{TCP/IP(\textit{Transmission Control Protocol/Internet Protocol})} stack or the \textbf{DoD (\textit{Department of Defence})} model is another reference model that deals directly with the TCP/IP protocols and have a direct mapping to the layers in the OSI stack. This stack was created by the United States Dept. of Defence (DoD) and is thus named after it. 
+
+\noindent
+\begin{tabular}{rM{0.69}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} \\
+	\midrule
+	\textbf{Network Access Layer}	&Corresponds to the Physical and Data-link layers of the OSI stack. It's concerned with addressing via physical addresses as well as the representation of the data on physical mediums such as cables. Another name for this layer is the \textbf{Network Interface} or the \textbf{Link} layer.\\
+	\midrule
+	\textbf{Internet Layer}	&Corresponds to the Network Layer of the OSI stack and deals with logical addressing via the IPv4 and IPv6 protocols.\\
+	\midrule
+	\textbf{Transport Layer}	&This is the equivalent of the Transport Layer of the OSI stack and also deals with the same function of determining the mode of transport, i.e., the protocol to be used for data transmission.\\
+	\midrule
+	\textbf{Application Layer}	&This is the equivalent layer to the combination of the Application, Presentation and Session layers of the OSI stack, and performs all their functions. \\
+	\bottomrule
+\end{tabular}
+
+\noindent
+Note that some literature that discusses the DoD stack show it as a 5-layer model with the bottom Network Access Layer sub-divided into Data-link and Physical layers:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.1.c DoD Alternate Model"}
+	\caption{TCP/IP Stack Alternate Model}
+	\label{fig:1 TCP/IP Stack Alternate Model}
+\end{figure}
+
+\noindent
+Some may even choose to call this Data-link layer in the TCP/IP stack as the Network Interface Layer. Irrespective of the naming, the functioning of these layers remain consistent. 
+
+\section{TCP/IP Protocol Suite}
+The TCP/IP protocol suite consists of \textbf{IP, ICMP, TCP} and \textbf{UDP} protocols. 
+ 
