@@ -124,5 +124,80 @@ Note that some literature that discusses the DoD stack show it as a 5-layer mode
 Some may even choose to call this Data-link layer in the TCP/IP stack as the Network Interface Layer. Irrespective of the naming, the functioning of these layers remain consistent. 
 
 \section{TCP/IP Protocol Suite}
-The TCP/IP protocol suite consists of \textbf{IP, ICMP, TCP} and \textbf{UDP} protocols. 
- 
+The TCP/IP protocol suite consists of \textbf{IP, ICMP, TCP} and \textbf{UDP} protocols. In Layer 3, the Network layer of the OSI stack or the Internet layer of the TCP/IP stack, some of the most useful protocols are IP and ICMP.
+
+\textbf{IP (\textit{Internet Protocol})} is used to forward \textit{packets} of data to the right (intended) recipient. \textbf{ICMP (\textit{Internet Control Message Protocol})} is used to test the reachability of remote network devices by \textit{pinging} them and can also report error conditions in a network. 
+
+\subsection{Layer-3 (Network/Internet Layer) Protocols}
+\subsubsection{Internet Protocol (IP)}
+IP is a protocol which contains the data of other higher layer protocols as it's payload. Thus, it's payload consists of segments from UDP or TCP that need to be encapsulated within IP packets to be correctly formatted and sent over the network. Thus, routers, which are layer-3 devices can make forwarding decisions based on the logical address (destination IP address) packed by following the Internet Protocol. 
+
+\subsubsection{ICMP}
+A really common use of the \textbf{ICMP (\textit{Internet Control Message Protocol})} is to perform \textit{pings}. The \textbf{ping} utility is used to test if one network device is reachable from another network device. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\linewidth]{"Mod1/chapters/1.1.d ICMP example"}
+	\caption{Pings using ICMP}
+	\label{fig:1 Pings using ICMP}
+\end{figure}
+
+\noindent
+Let us consider the scenario above. A PC is connected to a switch which in turn is connected to a router. The switch, a layer-2 device, has two connections - one to the Ethernet port on the PC, which has a MAC address and another to the router's port, which also has it's own MAC address. These MAC addresses (and which port on the switch they're connected to) are known to the switch, which is how it makes forwarding decisions and facilitates the transmission of data. 
+
+Now, if the PC can't connect to the internet, during the troubleshooting, one of the first things that we do is to check if we can \textit{reach} the next hop router (the router that connects us to everybody else on the internet/network) from the PC. For this we can use a utility called \textbf{ping} that's built into most \textbf{OS (\textit{Operating Systems})}. When ping is used, the PC sends out an \textbf{ICMP Echo Request} to that router's IP address. If the router receives that echo request (and if the settings permit it), the router then sends an \textbf{ICMP Echo Reply} back to the PC. 
+
+The PC can then display that the router is reachable and tell us the \textit{round-trip time}, i.e., the amount of time it took for the packet to reach the router from the PC and then for the ICMP echo reply to acknowledge connectivity to reach the PC. 
+
+If our \textbf{next-hop router} or our \textbf{default gateway}, i.e., the devices that connects us to the rest of the network, has an IP address of \verb|10.10.30.1|, we could ping it from the command line using (The \verb|-c| option specifies the number of \textit{ICMP echo requests} to send.):
+
+\begin{minted}{console}
+# ping -c 4 10.10.90.1
+PING 10.10.90.1 (10.10.90.1) 56(84) bytes of data.
+64 bytes from 10.10.90.1: icmp_seq=1 ttl=64 time=2.06 ms
+64 bytes from 10.10.90.1: icmp_seq=2 ttl=64 time=1.31 ms
+64 bytes from 10.10.90.1: icmp_seq=3 ttl=64 time=1.42 ms
+64 bytes from 10.10.90.1: icmp_seq=4 ttl=64 time=3.37 ms
+
+--- 10.10.90.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 1.313/2.044/3.377/0.821 ms	
+\end{minted}
+
+\subsection{Layer-4 (Transport Layer) Protocols}
+\subsubsection{User Datagram Protocol (UDP)}
+\textbf{UDP} is a connection-less and unreliable protocol, because it doesn't receive acknowledgments for the segments that it transmits. While sending a UDP segment, while we hope that it reaches its destination, there's no guarantee that the data will reach the recipient. Further, there's no retransmission for data that failed to reach the destination because we don't know which data was received and which wasn't. 
+
+Thus, UDP is used for real-time network applications such as in VoIP phones, where it's not important that every segment of data reach the destination, but the speed at which the segments flow is important. This is applicable for VoIP since we don't care if there's a slight stutter, but delay in communications (such as lag in voice and video, etc.) is unacceptable. Further, the use of TCP in such an application would be an extra overhead that would cause further delays, since a TCP header is much larger than the header on an UDP segment. Another reason TCP isn't used for VoIP is because even if a dropped segment is retransmitted, it may (and probably will) arrive out of order and is thus useless. 
+
+\subsubsection{Transmission Control Protocol (TCP)}
+\textbf{TCP} is a connection-oriented protocol that's reliable since it can detect if segments are \textit{dropped}, i.e., lost in transit. In TCP, a \textbf{connection} is set up between the two parties involved in the communication and then the data transfer occurs, with acknowledgement for each of the segments received from the recipient to the sender. 
+
+A \textbf{Three-way handshake} is performed by the two-parties involved to establish a TCP connection. The steps involved are:
+
+\begin{itemize}
+	\item The sender sends a \textbf{SYN} (Synchronization message) to indicate that the sender wants to set up a \textit{session}. 
+	\item The receiver now needs to send back a \textbf{SYN+ACK} message, i.e., acknowledge the \verb|SYN| message from the sender and then send a \verb|SYN| message of its own to the sender. 
+	\item The final step in the 3-way handshake is for the sender to reply to the \verb|SYN| message from the recipient. 
+\end{itemize}
+
+\noindent
+Now the TCP session is set up. One feature of TCP is that we can send varying amounts of data before expecting an acknowledgement, called TCP windowing.
+
+\subsubsection{Sliding Window Protocol \& TCP Windowing}
+TCP's sliding window protocol deals with its ability to vary the amount of data that a sender can send before expecting an acknowledgement. If we're on a highly reliable network, it'd be prudent to send more data at one time before expecting an acknowledgement, because there's less time wasted waiting for acknowledgement. This is called having a \textit{larger window size}. TCP can try to exponentially grow that window size. Let us consider the following case:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{"Mod1/chapters/1.1.e Sliding Window"}
+	\caption{TCP's Sliding Window Protocol}
+	\label{fig:1 TCP's Sliding Window Protocol}
+\end{figure}
+
+\noindent
+Let us consider the laptop on the left is trying to communicate with the server on the right. After the three-way handshake is complete, the laptop sends the first segment of data. The server responds to this with and acknowledgement, and asks for the next segment, with \textbf{ACK 2}. The laptop now doubles the number of segments that it sends to 2. The server again responds with an acknowledgement, and demands segment 4 with \verb|ACK 4|. Once more the laptop doubles the number of segments it sends, this time to 4. The server, again responds with \verb|ACK 8|. 
+
+This doubling continues till no acknowledgement is received from the server. When that happens, the laptop realizes that it's sending data too aggressively. This might mean that either a packet was dropped, or maybe the sender needs to wait longer for the acknowledgement. Now the sender (i.e., laptop) is going to drop its window size back down and grow at a slower rate, much more cautiously. 
+
+\section{Domain Name System (DNS)}
+Websites are content hosted on a server accessible by connecting to the IP address of a server (on the port on which the web-server is running). Thus, each public website on the internet has its own public IP. We could connect to the website using its IP, but it's impossible to remember the IPs for such a large number of websites. This is why we have domain names - an organized way to store information about websites. Domain names are hierarchical in nature for ease of indexing and categorization. To connect to a website, we can use its \textbf{FQDN (\textit{Fully Qualified Domain Name})}, a complete domain name specifying each level in that server's DNS hierarchy, instead of its IP. The job of a \textbf{DNS (\textit{Domain Name System})} server is to map each FQDN to an IP address to which our host machine can connect.
