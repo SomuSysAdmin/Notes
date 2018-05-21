@@ -29,7 +29,7 @@ To understand the different layers of the OSI stack, we first need to understand
 	\midrule
 	\textbf{NIC}	&A \textbf{NIC(\textit{Network Interface Card})} is a physical device which is used to connect to the network and has physical interfaces (ports) for wired mediums. \\
 	\midrule
-	\textbf{MAC Address}	&In a PC, this physical address burned into the NIC is called the \textbf{MAC (\textit{Media Access Control})} address. It's a 48-bit address.\\
+	\textbf{MAC Address}	&In a PC, this physical address burned into the NIC is called the \textbf{MAC (\textit{Media Access Control})} address. It's a 48-bit address typically written in Hexadecimal.\\
 	\midrule
 	\textbf{Logical Address}	&A logical address is an address that's assigned to a device by an external agent (such as a DHCP server) for the primary purpose of routing data within the network and among devices.\\
 	\midrule
@@ -37,7 +37,7 @@ To understand the different layers of the OSI stack, we first need to understand
 	\midrule
 	\textbf{TCP}	&The \textbf{TCP \textit{(Transmission Control Protocol)}} is a framework or set of rules or method to send data from one device to another that's reliable because the receipt of data is acknowledged by the recipient.\\
 	\midrule
-	\textbf{UPD}	&The \textbf{UDP \textit{(User Datagram Protocol)}} is a similar protocol to TCP, but doesn't acknowledge the receipt of data and thus data loss in transit is possible, making it less reliable, but faster. \\
+	\textbf{UPD}	&The \textbf{UDP \textit{(User Datagram Protocol)}} is a similar protocol to TCP, buUt doesn't acknowledge the receipt of data and thus data loss in transit is possible, making it less reliable, but faster. \\
 	\bottomrule
 \end{tabular}
 
@@ -201,3 +201,153 @@ This doubling continues till no acknowledgement is received from the server. Whe
 
 \section{Domain Name System (DNS)}
 Websites are content hosted on a server accessible by connecting to the IP address of a server (on the port on which the web-server is running). Thus, each public website on the internet has its own public IP. We could connect to the website using its IP, but it's impossible to remember the IPs for such a large number of websites. This is why we have domain names - an organized way to store information about websites. Domain names are hierarchical in nature for ease of indexing and categorization. To connect to a website, we can use its \textbf{FQDN (\textit{Fully Qualified Domain Name})}, a complete domain name specifying each level in that server's DNS hierarchy, instead of its IP. The job of a \textbf{DNS (\textit{Domain Name System})} server is to map each FQDN to an IP address to which our host machine can connect.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{"Mod1/chapters/1.1.f DNS"}
+	\caption{DNS lookup}
+	\label{fig:1 DNS Lookup}
+\end{figure}
+
+\noindent
+Let us consider the PC above. It has the IP address of the DNS server set - either through manual settings or via the settings provided by DHCP. If we try to go to \verb|kwtrain.com| on the PC, a DNS query is issued to lookup its IP. The query reaches port 53 on the DNS server, which either passes on the IP address if previously saved on it, or performs a recursive lookup on other DNS servers till the IP address is found. Now the client PC can send HTTP/HTTPS data to the web server and the web server can respond with the requested data. 
+
+\subsection{Well-known Port}
+In a single session between two networking devices, there's a source port and a destination port number present. These ports act as the source of the incoming data/input and the port to which the output is sent. The port numbers in the range \textbf{0 - 1023} are called well-known ports, and common protocols such as DNS are assigned a port number in this range. DNS is assigned the port number 53 by default. 
+
+\subsection{Hierarchical DNS Structure}
+There isn't just one centralized master DNS server that handles all DNS queries, but a distributed system responsible for handling the queries in their DNS zones. There are several different root or \textbf{TLD (\textit{Top Level Domains})} such as \verb|.com| and \verb|.edu|, the IP addresses of which are known to the \textbf{root name server}. 
+
+Whenever a new unknown domain is queried, a DNS server checks its cache for any name server that might lead it to the queried name server. For example, if we want to go to \verb|science.purdue.edu|, then our DNS server checks it's caches. If it can't find the DNS record for \verb|science.purdue.edu|, it tries to check if the DNS record for \verb|.edu| zone's name server is in it's cache. 
+
+If not, since \verb|.edu| is a TLD, it queries the root name server for \verb|purdue.edu|'s IP. This is the first step in a recursive lookup process, where the DNS server queries each successive domain zone's server for the next domain till the required DNS record has been found. So, once the DNS server has the IP for the name server responsible for \verb|purdue.edu|, it will query it for the \verb|science.purdue.edu| and once it has it, the result will be returned to the host which originally asked for it. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{"Mod1/chapters/1.1.g. Hierarchial DNS"}
+	\caption{DNS Hierarchy}
+	\label{fig:1 DNS Hierarchy}
+\end{figure}
+
+
+\subsection{DNS Record Types}
+A DNS server or a name server doesn't simply map FQDNs to IP addresses, but has a database of several types of records:
+
+\noindent
+\begin{tabular}{rM{0.85}}
+	\toprule
+	\textbf{Terms} &\textbf{Description} \\
+	\midrule
+	\textbf{A}	&An \textbf{Address Record} is used to map a hostname to an IPv4 Address.\\
+	\midrule
+	\textbf{AAAA}	&An \textbf{IPv6 Address Record} is used to map a hostname to an IPv6 Address. There are 4 A's in the name because an IPv6 Address is 128-bits, i.e., 4 times as long as a 32-bit IPv4 Address.\\
+	\midrule
+	\textbf{CNAME}	&A \textbf{Canonical Name Record} is an alias of an existing record, which allows the DNS records for multiple hostnames to map to the same IP Address.\\
+	\midrule
+	\textbf{MX}	&A \textbf{Mail eXchange} record maps a domain name to an e-mail (or message transfer agent) server for that domain.\\
+	\midrule
+	\textbf{PTR}	&A \textbf{Pointer} record points to a canonical name. It's used to perform \textit{reverse DNS lookups} where we find the domain name associated with a known IP address.\\
+	\midrule
+	\textbf{SOA}	&A \textbf{Start of Authority} record provides authoritative information about a DNS Zone, such as email contact information for the zone's administrator, the zone's primary name server and various refresh timers. Further, when an SoA record is found, we know that the name server responsible for that zone itself is providing the information we need.\\
+	\bottomrule
+\end{tabular}
+
+\subsection{Dynamic DNS (DDNS)}
+It might be the case that our server is hosted with a dynamic IP, acquired from a DHCP server from our ISP. This means that the IP is bound to change periodically. Normally this'd mean that our DNS records would need to be \textit{manually} updated too, to reflect the changes and ensure that the lookup process isn't broken, but that's unnecessary with \textbf{DDNS (\textit{Dynamic DNS})}.
+
+In DDNS, a software (\textit{DDNS service provider}) on the network monitors the changing IP address for an associated hostname, and once a change it detected, it automatically updates the DNS records for that hostname in the DNS tables in the name server responsible for the zone in which our host resides. From this point, further queries from other name servers propagate the new DNS record. Thus, the FQDN is always mapped to the right IP address. 
+
+\section{Ports and Protocols}
+The TCP and UDP protocols, both residing on Layer-4 of the OSI or DoD stack, are designed to encapsulate and carry the data payload for our applications, i.e., the data sent from Layer-5 or above through the network. 
+
+Frequently, multiple applications are running on a single server with a given IP address. For example, a server may host applications that allow it to act as both the web server and the FTP server for a domain. If we try to access a web page in that domain, a query from our computer is sent to the server demanding the relevant info encapsulated within a TCP segment. 
+
+When this segment reaches the destination server, there needs to be a way for the server to tell if the data within the segment is meant for the web server or the FTP server. This is why these applications are associated with a \textbf{port number}. There are a set of standardized set of \textbf{well-known port numbers} that are the port numbers generally associated with applications, such as port 80 for HTTP, port 443 for HTTPS, port 53 for DNS, etc. 
+
+However, there are also un-assigned ports that can be used by any application, which range from \textbf{1024} to \textbf{65535}. These are used by applications to send data to another application on the network and receive replies from them. 
+
+\subsection{Communication using Ports}
+Let us consider the situation below - a client with the IP \verb|10.1.1.1| wants to access a web-server on the IP \verb|172.16.1.2|. Since the application is a web-server, we know that the well-known port associated with is port \verb|80|. So, the packet containing the query to access information on the web server is sent to \verb|172.16.1.2:80| from the client by an application. Let's say the application uses the port \verb|1248|. Since the application is requesting information from a web-server, the TCP protocol is used. Thus, we can say the request is made to \textit{TCP port 80} on the web server. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{"Mod1/chapters/1.1.h Port Numbers"}
+	\caption{Port Numbers}
+	\label{fig:1 Port Numbers}
+\end{figure}
+
+\noindent
+Now, when the query is processed by the web server and a reply is sent back to the client, the packet will have a source IP of \verb|172.16.1.2| from port \verb|80|, and the destination IP will be the origin of the request, i.e., IP of the client, \verb|10.1.1.1|. The reply will be sent to the same port on the client where the application that made the query is awaiting information, i.e., port \verb|1248|. 
+
+\subsection{List of some Well-Known ports}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth]{"Mod1/chapters/1.1.i Well Known Ports"}
+	\caption{Well known ports}
+	\label{fig:1 Well known ports}
+\end{figure}
+
+\subsection{FTP (File Transfer Protocol)}
+The \textbf{FTP (\textit{File Transfer Protocol})} is used to transfer files over a network. For example, in an office if we want our supervisor to review a report that we wrote, but we're working remotely, then we could authenticate to our department's FTP server with our username and password, and upload the file. Then our supervisor can log in with his credentials, make any required changes or recommendations, and save it. Then we can pull the file back down from the FTP server, and view the changes.
+
+Although there is an authentication in FTP, it's not secure because of the fact that the content as well as the username and password are sent over the network in an unencrypted (i.e., plain text) format and thus anyone snooping on our communications can get unauthorized access to our files. This problem is resolved using the \textbf{SFTP (\textit{Secure File Transfer Protocol})} instead, which uses FTP through a SSH tunnel. This is similar to SCP which copies file over the network within a SSH tunnel. 
+
+\subsection{SSH (Secure SHell)}
+The \textbf{SSH (\textit{Secure SHell})} Protocol is used to log on to other computers/network devices on the network and access files/configurations on them. It uses \textit{TCP port 22}, and it's a secure protocol, i.e., the information in the packets in the network layer are encrypted. 
+
+\subsection{SMTP, IMAP and POP3}
+The \textbf{SMTP (\textit{Simple Mail Transfer Protocol})} is used to \textbf{send} mail from our devices (PC, laptop, smart-phones, etc.) to a mail server for a domain from \textit{TCP port 25}, but to retrieve mail from our mail servers, we need a protocol like \textbf{IMAP4 (\textit{Internet Message Access Protocol v4})} [\textit{TCP port 143}] or \textbf{POP3 (\textit{Post Office Protocol v3})} [\textit{TCP port 110}]. 
+
+A problem that arises frequently with POP3 is that when multiple devices are accessing the same mailbox, mails can go missing. This is because POP3 after downloading mails from the server and storing them on the local computer/device, POP3 deletes them from the mailbox, thus making them unavailable from other devices. 
+
+\subsection{DNS}
+The \textbf{DNS (\textit{Domain Name System})} servers use port 53 (either \textit{TCP port 53} or \textit{UDP port 53}, but can use both) to resolve Fully Qualified Domain Names (FQDN) to IP addresses. 
+
+\subsection{TFTP}
+The \textbf{TFTP (\textit{Trivial File Transfer Protocol})} is similar to FTP but doesn't require any authentication for file transfer, using \textit{UDP port 69}. It's typically used internally within a controlled environment to provide files for operations like \textbf{PXE boot} (i.e., network booting). 
+
+\subsection{DHCP (Dynamic Host Configuration Protocol)}
+The \textbf{DHCP (\textit{Dynamic Host Configuration Protocol})} is used by a computer/smart phone or any other network device boots up on the network and needs to be assigned an IP address. It then can request the DHCP server on the network (\textit{UDP port 67}) for an IP address, which the DHCP server gives to it, along with some added information, such as the subnet mask, the default gateway IP, the DNS server IP, etc. 
+
+\subsection{HTTP, HTTPS}
+The \textbf{HTTP (\textit{HyperText Transfer Protocol})} [\textit{TCP port 80}] and \textbf{HTTPS (\textit{HyperText Transfer Protocol - Secure})} [\textit{TCP port 443}] are used to access content on a web-server. Webpages on the internet are served from web-servers using of these two protocols. 
+
+\subsection{NTP, SNTP}
+The \textbf{NTP (\textit{Network Time Protocol})} is used by network devices to synchronize their internal clocks using a time server (\textbf{NTP Server}). The \textbf{SNTP (\textit{Simple Network Time Protocol})} does the same job as NTP, but uses a less complex algorithm that generates a output that is less precise. Both NTP and SNTP use UDP port 123. 
+
+Both of the above protocols are especially useful for troubleshooting multiple devices, since if the clocks on multiple devices are synchronized, we can use the timestamps on them to determine if events might be correlated and/or if problems started on multiple devices at the exact same time (indicating the point of origin for the issues is external). 
+
+\subsection{LDAP}
+The \textbf{LDAP (\textit{Lightweight Directory Access Protocol})} uses \textit{TCP port 389}. It allows organizations to have a centralized repository of user information (username, password, email information, etc.) and multiple services can leverage this single database to provide a single sign on (SSO) system. 
+
+\subsection{rsh}
+The \textbf{rsh (\textit{remote shell})} protocol is used in *nix (UNIX, Linux, etc.) shells to remotely execute commands on other *nix hosts on \textit{TCP port 514}.
+
+\subsection{RealTime Streaming Protocol (RTSP)}
+The \textbf{RTSP (\textit{RealTime Streaming Protocol})} allows us to stream video content from a video server, using either \textit{TCP port 554} or \textit{UDP port 554}, allowing us to control the playback of the video coming from that server. 
+
+\subsection{Microsoft's Remote Desktop Protocol (RDP)}
+This protocol isn't strictly well-known in the sense that it's port number is \textit{TCP port 3389}, but it's still known industry-wide. It allows a user to view and control the desktop of a Microsoft Windows computer from another computer. 
+
+\section{Protocol Data Units (PDU)}
+A \textbf{PDU (\textit{Protocol Data Unit})} is the information that is transmitted as a single unit among peer entities, residing on the same layer in a computer network. This means if the sender sends a \textit{packet} of information in a certain format from it's layer-3, the recipient at the destination receives the same packet of information in the exact same format in its layer-3. Simply speaking, it's what we call data at a layer, specifically one among the bottom 4 layers of the OSI model. The PDUs for the layers of the OSI stack are:
+
+\vspace{-5pt}
+\begin{center}
+	\begin{tabular}{rc}
+		\toprule
+		\textbf{Layer}	&\textbf{PDU}\\
+		\midrule
+		\textbf{Transport}	&\hspace{20pt}\textbf{TCP:} Segments; \hspace{5pt} \textbf{UDP:} Datagrams\\
+		\textbf{Network}	&Packets\\
+		\textbf{Data-link}	&Frames\\
+		\textbf{Physical}	&Bits\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+\vspace{-5pt}
+
+\noindent
+In the physical layer, we're concerned with sending data \textit{on the wire}, i.e., through a transmission medium in the form of bits. Hence, it's PDU is bits. In the data-link layer, we have switches, which make forwarding decisions based on the information in frames, which is it's PDU. Routers on the Network Layer transmit packets among themselves, which is the basis for its PDU. Further, the term \textbf{packet} is used to generically used to refer to traffic at any layer. At the Transport layer, TCP PDUs are called \textbf{Segments}, and UDP PDUs are called \textbf{Datagrams}. It's okay to refer to both as segments generically. 
+
+An acrostic to remember the PDUs in a top-down fashion, i.e., from the Transport layer to the Physical layer is : \textit{\textbf{S}ome \textbf{P}eople \textbf{F}ear \textbf{B}irthdays}. To remember it in a bottom-up, i.e., from Physical to Transport layer, we use the acrostic \textit{\textbf{B}acon \textbf{F}rying \textbf{P}roduces \textbf{S}alivation}.

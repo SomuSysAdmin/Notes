@@ -1,1 +1,103 @@
 \chapter{Network Architecture}
+\section{Star Topology}
+The \textbf{star topology} is probably the most common Network architecture used in Ethernet networks today. In this topology, a device is at the center, and other devices and connections radiate outwards from that centralized device. Generally we have an Ethernet Switch acting as that centralize device and several end-user devices and network resources/appliances are connected to that switch. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.3.a Star topology"}
+	\caption{Star topology}
+	\label{fig:star_topo}
+\end{figure}
+
+\noindent
+To exchange data in this topology, the devices simply send the data on to the switch which then forwards the data to the appropriate device based on the destination MAC address in the frame. Some of the characteristics of star topology are:
+\vspace{-10pt}
+\begin{itemize}
+	\item If one link fails, the others continue to function normally.
+	\item The centralized device is still a potential single point of failure, i.e., it goes down and the entire network connected to it goes down. 
+	\item Used often in modern networks. 
+\end{itemize}
+
+\section{Mesh Topology}
+In mesh topology, we have multiple interconnections between the different devices and/or sites that make up our network. While multiple interconnections between Ethernet switches isn't done typically, because Ethernet switches typically forward frames at \textit{wire speed} and thus don't require a full-mesh. A few redundant links can still be beneficial though. 
+
+A full mesh of interconnections is much more common in Wide Area Networks (WANs) where multiple sites spread over a vast geographical distance are interlinked, with each site connected to every other site with a WAN link.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.3.b Full Mesh"}
+	\caption{Full Mesh}
+	\label{fig:full_mesh}
+\end{figure}
+\noindent
+However, in such a case, there's lots of redundant links - 10 links are required to connect 5 sites in a full mesh. If $n$ be the number of sites that need to be interconnected to each other in a full mesh, the number of links required $l$ is given by:
+$$
+l = \frac{n \times (n-1)}{2}
+$$
+This isn't very scalable. For 10 sites, the number of links in a full-mesh becomes $\frac{10 \times 9}{2} = \frac{90}{2} = 45$. Typically companies pay a fee per WAN link, and although such a high number of redundant links provide the ultimate reliability, it's ultimately wasteful (since it's extremely unlikely that most of the links will fail together).  
+
+Another option in this case would be to be more strategic about our connections - providing WAN links where a real need for direct connection is required, where traffic between sites is considerably large. Other than that, every office should be reachable from all other offices by relaying the traffic through one or more intermediary sites. What we end up is called a partial mesh topology. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.3.c Partial Mesh"}
+	\caption{Partial Mesh}
+	\label{fig:partial_mesh}
+\end{figure}
+
+\subsection{Comparison between Full and Partial Meshes}
+\begin{tabular}{M{0.47}M{0.47}}
+	\toprule
+	\textbf{Full Mesh} &\textbf{Partial Mesh} \\
+	\midrule
+	Optimal Path	&Might be suboptimal path \- if designed well the suboptimal path would be used less often.\\
+	\midrule
+	Not Scalable - too many links to handle.	&More Scalable. \\
+	\midrule
+	More expensive &Less expensive - we pay only for what we need. \\
+	\bottomrule
+\end{tabular}
+
+\section{Collapsed Core vs Three-Tier Architectures}
+\subsection{Three-Tier Architecture}
+There are three layers into which this architecture is divided: the \textbf{Access} layer, the \textbf{Distribution} Layer and the \textbf{Core} layer. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\linewidth]{"Mod1/chapters/1.3.d 3TierArch"}
+	\caption{Collapsed core vs 3-Tier Architecture}
+	\label{fig:collapsed_core_vs_3_tier}
+\end{figure}
+\vspace{-25pt}
+\subsubsection{Access Layer}
+\vspace{-10pt}
+In the example, we have Layer-2 Ethernet Switches in the Access Layer. The end-user devices like PCs, laptops, IP phones, etc. as well as network resources like printers are plugged in directly to the switches in the access layer. So, the end-user's devices are plugged into the wall Ethernet jack which have cables running till they reach the switches in the wiring closets at this layer. 
+
+At this point, each switch has their own connected networks, but they're not reachable from the other switch(es). We need to connect these switches such that each device on one switch is accessible from the others. If we have a file server connected to one switch, the devices on the other switch should be able to access it as well. One possible solution would be a full-mesh topology, but that would be impractical due to the huge number of switches in an office building. An alternative is this 3-tier architecture. 
+
+\subsubsection{Distribution Layer}
+\vspace{-10pt}
+This layer has a bunch of Layer-3 switches, i.e., switches that are capable of routing (i.e., forwarding packets on the basis of IP addresses). The access layer switches are connected to these layer-3 switches. Some \textit{literature} call this layer the \textbf{building distribution layer} because this layer provides interconnections between the switches (in the access layer) of a building or several buildings in close proximity. The layer-3 switches on the distribution layer are connected up at the core layer. 
+\vspace{-10pt}
+
+\subsubsection{Core Layer}
+\vspace{-10pt}
+The job of the core layer is to get the traffic as quickly as possible from one distribution layer switch to another distribution layer switch. The core layer also connects our network to the rest of the internet (or some other remote site). In this case, the outgoing connections from the core layer conntect to a router-firewall each which then lead (perhaps via different ISPs) to the internet. 
+
+The core layer has a multiple links from the layer-3 switches on this layer surrounded by an oval. This is called an \textbf{Ether-channel}. An Ether-channel is a logical interface that is a created by aggregating multiple physical interfaces, allowing higher throughput between devices as compared to a single link. If there are two interconnected links, each of 10Gbps, in the core layer between the two layer-3 switches in the example - then logically, the aggregate of these two physical links will be a logical link of 20 Gbps, which would allow very quick data transfer and exchange between the two layer-3 switches at the core layer. 
+
+In this architecture, at the access layer, we've got star topologies connecting to the end-user devices. On the distribution layer and core layer, we've got some redundant connections that make (partial) mesh topologies. This makes this particular type of architecture a \textbf{hybrid topology}, where the topology contains elements of multiple topology types. 
+
+Some networks, however, are just not large enough to justify the high investment in so many multi-layer switches. In such networks, we might not need a distinct core and distribution layer, which leads us to a collapsed-core architecture. 
+\vspace{-5pt}
+
+\subsection{Collapsed Core Architecture}
+In this architecture, the Distribution layer and the Core layer are merged to form the \textbf{Collapsed Core layer}. There are still redundant connections between the access layer switches, but an entire layer's been eliminated!
+\vspace{-7pt}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.3.e CollapsedCoreArch"}
+	\caption{Collapsed Core Architecture}
+	\label{fig:collapsed_core_arch}
+\end{figure}
+\vspace{-12pt}
+\noindent
+This architecture might not work well for a large campus with lots of buildings to interconnect, but works well for a smaller network within just a building or two. This is a two-tier architecture  with a consolidated core and distribution layer. 

@@ -1,1 +1,248 @@
 \chapter{Infrastructure Components}
+With the help of the OSI and DoD reference models, we can describe the behaviour and operation of the common network infrastructure devices. 
+
+\section{Common Network Infrastructure Devices}
+The figure below shows some of the common network devices that we might find in modern networks. The sample network topology consists of 3 locations: the \textbf{HQ} (\textit{Head Quarters}), \textbf{Br1}(\textit{Branch 1}) and \textbf{Br2}(\textit{Branch 2}). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{"Mod1/chapters/1.2.a Common Network Devices"}
+	\caption{Sample Network Topology}
+	\label{fig:sample_net_topo}
+\end{figure}
+
+\subsection{Router}
+
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.1 Router"}
+	\vspace{-10pt}
+\end{wrapfigure}
+
+A router is a layer-3 device that makes forwarding decisions based on the destination IP (logical/layer-3 address) of the packet. We might be dealing with the IPv4 or IPv6 variance of the address, but the operating principles remain the same. A router will take a look at the destination address of an incoming packet, and decide which port to forward the packet based on the networks connected to each of the other active ports, by looking up the network in it's \textbf{routing table}. 
+
+\subsection{Wide Area Network (WAN)}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.2 WAN"}
+	\vspace{-10pt}
+\end{wrapfigure}
+
+The thunderbolt icon in the network topology diagrams represent a \textbf{WAN (\textit{Wide Area Network})}, a network connection that interconnects geographically separated networks. The two networks on either side of the WAN link aren't located within a building or a campus, but much further apart, such as different cities, countries, etc. 
+
+In the figure \ref{fig:sample_net_topo} \textit{Sample Network Topology}, HQ is connected to Br1 via an IP WAN link (a dedicated connection), but to Br2 via the Internet. Both are examples of WANs. While the WAN link to Br1 is private and hence secure, the WAN link to Br2 is through the internet, which would mean that ordinarily our private and sensitive data is exposed to the internet. This requires the use of a VPN to keep the transmission secure. 
+
+\subsection{Virtual Private Network (VPN)}
+A \textbf{VPN (\textit{Virtual Private Network})} allows us to set up a secure connection over an untrusted network, such as the internet. We could form a VPN tunnel that provides end-to-end encryption on our data while it travels through the internet. So, even if someone were to intercept our data, it'd remain undecipherable and hence, harmless. Further, due to the use of the VPN tunnel, we can be sure that the data hasn't been corrupted in transit. 
+
+\subsection{End-user stations}
+\begin{wrapfigure}{L}{0.2\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.2\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.3 End-user stations"}
+	\vspace{-20pt}
+\end{wrapfigure}
+End-user stations are devices on which end users can log in and gain access to our network. These can be PCs, Laptops, smart-phones, etc. though which they can connect to network resources such as \textit{file servers} or \textit{network printers}. 
+
+\subsection{Wireless Access Points (WAP)}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.4 WAP"}
+	\vspace{-10pt}
+\end{wrapfigure}
+The end-user stations can connect wirelessly to our network using \textbf{WAP (\textit{Wireless Access Points})}, which is a device that communicates with wireless devices such as smartphones, printers and laptops and interconnects and integrates those devices into an existing wired network.  
+
+\subsection{Switch}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.5 Switch"}
+	\vspace{-10pt}
+\end{wrapfigure}
+The Wireless Access Point (WAP), along with all the other end-user stations can connect to a switch, a layer-2 device capable of making forwarding decisions based on the layer-2 physical address, i.e., the MAC address. The MAC address is burnt into each NIC (Network Interface Card) contained within each end-user workstation and network resource, i.e., each network connected device. The switch starts building a table that maps each port to a particular MAC address. Then, when a frame has to be forwarded to a particular MAC address, it simply sends the frame through the port with the matching MAC address. Every port on a switch is in its own collision domain. 
+
+\subsection{Intrusion Prevention System (IPS)}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS"}
+	\vspace{-10pt}
+\end{wrapfigure}
+An \textbf{IPS (\textit{Intrusion Prevention System})} is a sensor that sits in-line with the network traffic and analyses it. The signature of well-known attacks is available to the IPS, and when the signature of a packet in the traffic matches that of an attack, it can drop it, thus preventing the attack from ever reaching the network. Thus, every incoming packet from the internet passes through the IPS (from the edge-router) before it can reach the firewall. 
+
+\subsection{Intrusion Detection System (IDS)}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS"}
+	\vspace{-10pt}
+\end{wrapfigure}
+An \textbf{IPS (\textit{Intrusion Detection System})} is a sensor that receives a copy of the network traffic and analyses it. Just like an IPS, the signature of well-known attacks is available to the IDS in a database, and when the signature of a packet in the traffic matches that of an attack, it can instruct the router to block all packets coming from that source on the internet. An example is in Br2, where the switch has been trained to send a copy of all incoming packets to the IDS. However, by the time the IDS detects an attack, some packets might have already reached the network, and might have done some damage. Thus, an IPS is more secure than an IDS. 
+
+\subsection{Firewall}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.04\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.7 Firewall"}
+	\vspace{-10pt}
+\end{wrapfigure}
+A firewall is a network device that analyses the incoming and outgoing traffic based on a set of rules to determine which traffic to allow to pass through it and which to deny, between different portions (i.e., \textbf{zones}) of a network. In the figure \ref{fig:sample_net_topo}'s HQ section, the firewall has a port that connects the outside of the network (the internet) to the inside of the network The port connecting to the internet is called the \textit{outside interface} while the port connecting to the internal network is called the \textit{inside interface}. It allows us to define rules that can do things like: \textit{block all traffic that initiates on the internet}. 
+
+\subsection{Demilitarized Zone (DMZ)}
+A \textbf{DMZ (\textit{Demilitarized Zone})} is a section of the network that should be accessible from the outside of the network, on external devices, such as devices on the internet. In the following figure, the HQ has a DMZ containing the web server and the email server such that those functionalities aren't hindered while also allowing for higher security in the network connected to the inside interface of the firewall. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.8 DMZ"}
+	\caption{Demilitarized Zone (DMZ)}
+	\label{fig:DMZ}
+\end{figure}
+
+\noindent
+Firewall rules for the DMZ can be set up such that traffic can be allowed from devices on the internet that initiate the session, but only if the traffic is for certain ports, such as port 80 for web-servers, etc. 
+
+\subsection{Firewall-Router}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.9 Firewall-Router"}
+	\vspace{-10pt}
+\end{wrapfigure}
+If the site is big like the HQ, we might need a firewall that's a separate device from the router, but if the site is small, a \textbf{firewall-router} like that in Br2 may suffice. A Firewall-Router is a router that's been configured to perform the tasks of a firewall in addition to it's job as a router. Some routers can even provide the functionality of an IPS device. These combined devices however, have to perform much more functionality of a router on the same processor as a router. Thus, the processing power becomes a bottleneck for larger networks. 
+
+\subsection{Multilayer/Layer-3 Switch}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.10 Layer-3 Switch"}
+	\vspace{-10pt}
+\end{wrapfigure}
+A Multilayer switch is an Ethernet switch that can make forwarding decisions based on Layer-3 (and higher) information such as IP addresses just like a router, but can also make forwarding decisions based on Layer-2 MAC Addresses just like an ordinary switch. Thus, we can have some ports acting as switch ports while some other ports are configured to act as routing ports. These devices can give us a lot of flexibility. In the figure \ref{fig:sample_net_topo}, the multilayer switch acts as a router with each network connected to it having a different address space (i.e., subnet). 
+
+\subsection{Cache-Engine}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.11 Cache-engine"}
+	\vspace{-10pt}
+\end{wrapfigure}
+The \textbf{Cache Engine} is a network appliance that locally stores content retrieved from a remote network and sends that content directly to the local devices requesting the same content, thus saving bandwidth and download (i.e., data usage) for FUPs. Typically, a user-base tends to download the same content over and over again, and the storage of these resources locally can dramatically improve the time required to access the content and bandwidth. Website assets such as graphics that are reused throughout a site are also prime candidates for caching, thus providing savings even when the requested webpage is different but in the same domain/sub-domain. 
+
+\subsection{Network Attached Storage (NAS)}
+\begin{wrapfigure}{L}{0.12\textwidth}
+	\centering
+	\vspace{-10pt}
+	\includegraphics[width=0.1\textwidth]{"Mod1/chapters/1.2.b Network Icons/1.2.b.12 NAS"}
+	\vspace{-10pt}
+\end{wrapfigure}
+A \textbf{NAS (\textit{Network Attached Storage})} is a network appliance that makes storage resources, typically consisting of large, redundant hard-drives available to network clients. NAS generally has redundancy built in through the use of \textbf{RAID} arrays. They're generally more efficient than typical file servers and provide authentication mechanisms and enforce file system permissions (i.e, who can read/write those files). 
+
+\section{Firewalls}
+The term \textit{firewall} comes from the concept of an actual wall made from a non-flammable material such as a brick wall, that would be strategically constructed in a building to prevent the spread of fire from one portion of the building to another. 
+
+\noindent
+A \textbf{Firewall} is a network hardware (or software) that prevents the spread of malicious traffic from one part of the network (e.g., a part connected to the internet) to a secure part of the network via the implementation of sets of rules. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.2.c Firewall"}
+	\caption{Firewall}
+	\label{fig:firewall}
+\end{figure}
+\vspace{-15pt}
+\noindent
+Firewalls have evolved over the years into various types of firewalls.
+
+\subsection{Packet Filter}
+A basic firewall that can allow/deny traffic based on the source and destination IP addresses and port numbers. It is the equivalent of an \textit{Access Control List (\textbf{ACL})} set up on a router. The action of allowing or denying traffic is performed on the basis of a collection of rules called a rule-set. An example of a rule-set is:
+
+\vspace{-10pt}
+\begin{center}
+	\begin{tabular}{ccc}
+		\toprule
+		\textbf{Source} &\textbf{Destination} &\textbf{Action} \\
+		\midrule
+		\verb|192.0.2.0/24| &Any &Allow \\
+		\verb|203.0.113.0/24| &\verb|192.0.2.0/24| &Allow \\
+		Any &Any &Deny \\
+		\bottomrule	
+	\end{tabular}
+\end{center}
+\vspace{-10pt}
+
+\noindent
+Firewall rule-sets are generally processed top-down, i.e., if a packet matches the a rule, then the rules below it on the rule-set are not evaluated. If the packet, however, doesn't match a rule, the next rule in the rule-set is then evaluated. Let us consider that our HQ has the network addresses \verb|192.0.2.0/24| and a remote branch office has the addresses \verb|203.0.113.0/24|. Then our rules in the above rule-set will allow traffic to go to any site from the HQ, allow incoming connections from the branch office, but deny everything else. 
+
+In the above rule-set, if the source IP of a packet is from the \verb|192.0.2.0/24| network, we're going to pass it immediately, without considering any other rule. If not, we go to the next rule. If the packet is from the \verb|203.0.113.0/24| network and has a destination IP within the \verb|192.0.2.0/24| network, then we let it pass. Otherwise, we consider the next rule. In this case, since the packet matched no other rule, it'll match the default (\textbf{catch-all}) rule which is to deny all traffic that doesn't match any of the rules. 
+
+The problem with a packet filter is it won't let replies of our requests made to sites not allowed in the firewall to pass through. So, if we were visiting some website, we could send the request to it, but the reply from the web server would be dropped by the packet filter. 
+
+\subsection{Stateful Firewall}
+\vspace{-5pt}
+A type of firewall that in addition to the duties performed by a packet filter (i.e., permit/deny packets based on IP address and port numbers) can also inspect sessions to recognize return traffic (as described in the last paragraph) and let it through if the session was initiated from a trusted network. Let us consider the rule-set below:
+
+\vspace{-5pt}
+\begin{center}
+	\begin{tabular}{ccc}
+		\toprule
+		\textbf{Source} &\textbf{Destination} &\textbf{Action} \\
+		\midrule
+		\verb|192.0.2.0/24| &Any - TCP port 80 (\verb|*:80|) &Allow \\
+		Any &Any &Deny \\
+		\bottomrule	
+	\end{tabular}
+\end{center}
+\vspace{-10pt}
+
+\noindent
+The above rule states that any traffic initiated from the HQ can go to any IP if the TCP port 80 is the destination, i.e., any website can be visited. The out-going packet can be inspected for the source and destination IP and port numbers, sequence numbers, etc. by a stateful firewall which can recognise return traffic. 
+
+So, if we went to a website hosted on \verb|198.51.100.1:80|, the return traffic will have a source IP of 198.51.100.1 with a source port of 80, meant for our HQ. The stateful firewall can then recognize that the traffic is a part of the session initiated by someone within the HQ, and let it through. However, if traffic was initiated by someone outside the network, then the firewall's \textit{catch-all} rule (deny: any to any) will drop the packets. 
+
+However, even the above can face issues with certain applications that may use a variety of port numbers and protocols as part of the application, which need an \textbf{Application Layer Firewall}. 
+
+\subsection{Application Layer Firewall}
+An \textbf{Application Layer Firewall} is a special type of firewall that in addition to the powers of a stateful firewall (i.e., the ability to inspect sessions and allow/deny based on the source and destination IP and port numbers) also understands the nature of ab application and how the application uses the different protocols. An example rule-set for an application layer firewall:
+
+\vspace{-10pt}
+\begin{center}
+	\begin{tabular}{ccc}
+		\toprule
+		\textbf{Source} &\textbf{Destination} &\textbf{Action} \\
+		\midrule
+		\verb|192.0.2.0/24| &Any - VoIP &Allow \\
+		Any &Any &Deny \\
+		\bottomrule	
+	\end{tabular}
+\end{center}
+\vspace{-10pt}
+
+\noindent
+The above rule states that the firewall should let any traffic related to VoIP initiated from inside the network should be allowed to pass, as well as any reply to the VoIP application. The related protocols may include \textbf{H.323} and \textbf{SIP (\textit{Session Initiation Protocol})}. So, when the Application Layer Firewall is inspecting the SIP protocol used by the VoIP application, it can understand that although the SIP protocol might be using port \verb|5060| to initiate the session, the actual voice might be carried by the ports in the range of \verb|16384 - 32767| (the typical range for Cisco VoIP phones). The firewall will understand that we might be going from \textit{SIP} to \textbf{RTP(\textit{Realtime Transport Protocol})} to carry the voice traffic. It understands the needs of the application. 
+
+Large corporate networks need dedicated hardware firewalls, but for small sites, where a router isn't being utilized up to a high percentage, the router can be configured as a firewall in addition to a router. In case of end-user devices, the firewall contained in the OS can be used as a software firewall. 
+
+\section{Wireless Access Points and Controllers}
+In the old days, before wireless networks, devices had to be physically connected to a hub/switch using a cable. This drawback has been eliminated with the use of \textit{Wireless Access Points (\textbf{WAP})}. Wireless devices don't even need an WAP to communicate!
+
+\subsection{Wireless Ad Hoc Networks}
+A \textbf{wireless ad hoc network} allows wireless devices to communicate with one another without the use of a network infrastructure. This solution however, doesn't scale very well, and is only good for occasional and, as the name suggests, ad hoc use. A much better permanent solution is to use Wireless Access Points (WAP). 
+
+\subsection{Wireless Access Points (WAP)}
+A WAP has to be connected to a switch using a network cable, but it allows wireless devices such as smartphones and laptops to communicate wirelessly using some variance of the \textit{Wireless LAN (\textbf{WLAN})} standards as described in \textbf{IEEE 802.11}. 
+
+In larger enterprises, several Wireless Access Points have to be used to provide sufficient coverage for mobile devices. The challenge is then to manage all these separate APs. One method is to use Autonomous Access Points. With Autonomous APs, these devices can be managed individually and independent of each other. In this approach, we connect to one AP, configure all it's settings: the radio frequency, power level, etc. and then we move on to the next Autonomous AP and configure all the same settings on it one and so on.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{"Mod1/chapters/1.2.d WAPC"}
+	\caption{WAP Controllers}
+	\label{fig:wap_controllers}
+\end{figure}
+\vspace{-20pt}
+\noindent
+The above task is a huge administrative burden, since changing a single setting on the network would require connecting to each AP individually and changing the settings. A better approach is to use a \textbf{Wireless LAN (WLAN) Controller} with Lightweight Access Points. This method is scalable and hence used in enterprise networks. Several Lightweight APs are controlled using a WLAN controller using the \textbf{LWAPP}. 
+
+\subsection{LightWeight Access Point Protocol (LWAPP)}
+The \textbf{LightWeight Access Point Protocol (LWAPP)} is the protocol used by a WLAN controller to communicate with the Lightweight APs it manages. Thus, the LWAN controller becomes a single point of administration from which all of the Lightweight APs can be administered all together. A newer protocol called the \textbf{Control And Provisioning of Lightweight Access Points (CAPLAP)} protocol, which performs a similar function, is now replacing many LWAPP deployments.

@@ -1,1 +1,260 @@
 \chapter{Network Cabling}
+We can connect our devices using copper or fibre cables, which would require copper and fibre connectors respectively, or connect them through wireless means. We're now going to take a look at the various kinds of network cables, i.e., copper and fibre wired mediums for connecting devices. 
+
+\section{Copper Cables}
+When physical media are used to interconnect devices in a network, the cable used is most often either copper cable or fibre optic cables. 
+
+\begin{wrapfigure}{L}{0.4\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.35\textwidth]{"Mod1/chapters/1.4.a Coaxial Cable"}
+	\caption{\label{fig:coax_cable}Coaxial Cable}
+	\vspace{-15pt}
+\end{wrapfigure}
+
+The figure \ref{fig:coax_cable} to the left shows a coaxial cable that has an inner conductor, an insulator wrapped around it, another conductor that's generally either a wire mesh or a foil wrapped around the inner insulator and an outer conductor. The outer conductor provides great electrical characteristics and protection from \textbf{ElectroMagnetic Interference (\textit{EMI})} due to the fact that it's a mesh wrapped around the core containing the inner conductor that's primarily responsible for carrying the signal. 
+
+EMI is a phenomenon which occurs when radio waves are picked up by our cable or radiated by a cable carrying another signal, thus causing a degradation in the original signal carried by our cable. EMI can be caused by communication waves of high intensity (due to communication towers nearby), electrical spikes due to large machinery, etc. The insulation and shielding in a coaxial cable also helps prevent the cable from acting like an antenna by emitting frequencies that could interfere with the operation of other devices nearby. 
+
+\subsection{Impedance of a Coaxial Cable}
+The impedance of a coaxial cable is an electrical property of that cable. \textbf{Impedance} is a circuit's opposition to current flow (measured in Ohms) which can have resistive, capacitative and/or inductive components. This impedance of the cable needs to match up to the impedance of the device to which it's connected. 
+
+\subsection{Coaxial Cable Standards}
+\subsubsection{RG-59}
+\vspace{-10pt}
+\textbf{RG-59} is an older type of coaxial cable that is used to carry video over short distances, typically with an impedance of $75 \Omega$. It can be used to carry video from an old VCR to the TV. This cable is extremely lossy over long distances, and is thus not used that much these days. 
+
+\subsubsection{RG-6}
+\vspace{-10pt}
+The \textbf{RG-6} coaxial cable that's used by cable TV operators to transport video from their antenna/receiver on the client premises to the client's TV, or just connect the customer devices to their network directly. This cable too has an impedance of $75\Omega$. Overall, the RG-6 cable is replacing the RG-59 cable throughout the industry. 
+
+\subsubsection{RG-8}
+\vspace{-10pt}
+To carry data over a coaxial cable, the \textbf{RG-58} cable is used. This cable has an impedance of $50\Omega$ and is hence used to carry data in \textbf{10BASE-2} Ethernet networks. Most commercial network devices today, however, use twisted-pair cables over coaxial cables for carrying data. 
+
+\subsection{Twisted Pair Cables}
+A \textbf{twisted pair} cable has 8 separate wires, each colour coded and presented in pairs. There's a blue wire paired and twisted with a blue \& white wire, an orange wire twisted and paired with a orange \& white wire, and similar pairs in green and brown colours. 
+
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.25\textwidth]{"Mod1/chapters/1.4.b TwistedPair Cable"}
+	\caption{\label{fig:coax_cable}Twisted-Pair Cable}
+	\vspace{-10pt}
+\end{wrapfigure}
+
+In the twisted pair cable (figure on the left), the number of twists per unit length vary a little among the different colours to provide electromagnetic shielding from the other twisted pairs of other colours in the cable. Further, the twists are \textit{tight} enough to ensure that these cables don't act like antennas and start receiving/transmitting signals and degrade the quality of the signal they're carrying. The cable on the left is called an \textbf{Unshielded Twisted Pair (\textit{UTP})} and is the most common twisted pair cable in the industry.
+
+There is also a variance of the twisted pair cable called the \textbf{Shielded Twisted Pair (\textit{STP})} which has something like an aluminium wrapping around each pair of wires. This act of electrically insulating each pair of wires makes this cable much more resistant to EMI and making it possible to support higher data rates through the cable, but it also makes the cable costlier. For most applications, UTP suffices, thus not requiring the use of STP. In the case of UTP, the data throughput can be increased by increasing the number of twists. 
+
+\subsection{Categories of Twisted-Pair cables}
+\subsubsection{Category 3 (Cat-3)}
+\vspace{-10pt}
+The \textbf{Cat-3} cable was used in older Ethernet \textbf{10BASE-T} networks, where the maximum rate of data transfer was \textit{10 Mbps}. This cable was common in buildings wired for a telephone system, such as a \textbf{Private Branch Exchange (\textit{PBX})} within an office building. When we need speeds higher than \textit{10 Mbps}, we should use \textit{Cat-5} cable instead. 
+
+\subsubsection{Category 5 (Cat-5)}
+\vspace{-10pt}
+\textbf{Cat-5} cable is commonly used in Ethernet \textbf{100BASE-TX} networks providing data speeds of up to \textit{100 Mbps} and typically uses 24 gauge wire. 
+
+\subsubsection{Category 5e (Cat-5e)}
+\vspace{-10pt}
+The \textbf{Cat-5e} cable is an updated version of the \textit{Cat-5} cable, sometimes used for Ethernet \textbf{1000BASE-T} networks, supporting data speeds up to \textit{1 Gbps}, and offers reduced crosstalk (i.e., more protection against EMI) when compared to Cat-5 cables. 
+
+\subsubsection{Category 6 (Cat-6)}
+\vspace{-10pt}
+Similar to Cat-5e cables, the \textbf{Cat-6} cables are also commonly used for Ethernet \textbf{1000BASE-T} Gigabit connections which provide data rates of up to \textit{1000 Mbps} or \textit{1 Gbps}. However, Cat-6 cable is generally made from thicker wires - instead of using 24 gauge wires, they use 23-gauge or 22-gauge wires. 
+
+\subsubsection{Category 6a (Cat-6a)}
+\vspace{-10pt}
+A \textbf{Cat-6a} cable has tighter twists than Cat-6, allowing it to carry twice as many frequencies as Cat-6. Thus, the data throughput increases so much that it can be used in 10GBASE-T Networks, supporting speeds up to \textit{10 Gbps}. 
+
+\section{Fibre Cables}
+An alternative to copper cables in our networks is \textbf{fibre optic} cabling, in which light is used to transmit data instead of electricity. Since we're using light to transmit the binary 1s and 0s, the data in the wire is immune to EMI. Depending on the type of fibre, the light source, etc., data rates much higher than copper cables are possible. 
+
+A laser or an LED is used to inject light into the cable. Lasers tend to be more powerful and hence cover more distance. Broadly speaking, there are two categories of fibre optic cables.
+
+\subsection{Anatomy of a Fibre Optic cable}
+A fibre optic cable is constructed as shown in the following figure:
+
+\begin{wrapfigure}{L}{0.5\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.47\textwidth]{"Mod1/chapters/1.4.c FibreConstruction"}
+	\caption{\label{fig:coax_cable}Fibre Optic Cable Construction}
+	\vspace{-10pt}
+\end{wrapfigure}
+\noindent
+The \textbf{core} of the fibre optic cable is made of glass, with the surrounding \textbf{cladding} also made of glass, but of a different \textit{refractive index} to that of the core, due to the injection of \textbf{dopants}. \textit{Dopants} are impurities put into the glass specifically with the purpose of changing the refractive index. The core and the cladding are the only two components of the cable upon which the data transfer speed and characteristics depend. The cladding is then covered by a buffer/coating, which is a hard plastic layer designed to prevent light leakage from the cladding due to scratches. 
+
+The buffer is then covered with strengthening fibres (generally \textit{armid} fibres) which provide flexibility to the cable. All of these inner layers are then finally sheathed within a plastic jacket. 
+
+\subsection{Total Internal Refraction in Fibre Optic cable}
+Refraction of light is the phenomenon of bending of light as it passes from a medium to another medium with a different \textit{refractive index}. However, if the \textit{incident} angle of light, i.e., the angle at which the light meets the boundary between the mediums, is beyond an angle called \textbf{critical angle}, the light is reflected by the boundary instead of being allowed to pass into the other medium. 
+
+This principle is used by fibre optic cables to \textit{bend} light and have light travel through a cable. The cables are made so that the core has a higher refractive index than the cladding, and engineered to ensure that no matter what angle the cable is bent at, the cladding will always reflects the light. The \textit{mode} of the fibre optic cable is dependent upon the relative thickness of the core and the cladding. 
+
+\subsection{Single Mode Fibre (SMF)}
+In a \textbf{Single Mode Fibre}, the diameter of the core is so small that there's really just one path a ray of light can travel in - horizontal.
+
+\begin{wrapfigure}{L}{0.5\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.47\textwidth]{"Mod1/chapters/1.4.d SingleMode Fibre"}
+	\caption{\label{fig:sm_fibre}Single Mode Fibre Optic Cable}
+	\vspace{-10pt}
+\end{wrapfigure}
+
+\noindent
+Practically, the angle of incidence remains near parallel to the core itself, which means all light travelling through the fibre take identical paths and take the same amount of time to arrive at the other end of the fibre. The \textbf{mode} is the path taken by light while travelling through a fibre optic cable. A single mode fibre optic cable's core is so thin that it only allows light to enter at a single angle (or a very small range of angles), thus allowing only a single mode of propagation of light in the fibre. 
+
+\subsection{Multi Mode Fibre (MMF)} \label{sec:mmf}
+In the case of the \textbf{Multi Mode Fibre}, the diameter of the core is sufficiently large that there are multiple possible angle of incidences at which light can enter the fibre. 
+\begin{wrapfigure}{L}{0.5\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.47\textwidth]{"Mod1/chapters/1.4.e MultiMode Fibre"}
+	\caption{\label{fig:mm_fibre}Multi Mode Fibre Optic Cable}
+	\vspace{-10pt}
+\end{wrapfigure}
+
+\noindent
+So, there are multiple paths that the light can take, i.e., there's multiple modes of propagation of light in the fibre. This means that even if two different rays of light enter the fibre at the same time, one might be reflected (i.e., bounce around) more times than the other - which means it'll have to travel a greater distance to reach the other end. Since the speed of light in the medium is constant, this means that one ray will take a longer time to arrive at the other end than the other. Consequently, \textbf{Multi-mode Delay Distortion} may occur (if the distance is large enough). However, multi mode fibres are also cheaper to manufacture. 
+
+\subsection{Multimode Delay Distortion}
+As explained in sub-section \ref{sec:mmf}, in multi mode fibres, the difference in the angle of incidence may cause a substantial delay in travel time for the light waves over the same distance. This may cause the bits, represented by the light rays, to arrive out of order! This is why over longer distances, the use of single mode fibre becomes necessary. Often the distance limitation of multi mode fibre is going to be 2kms. 
+
+\section{Copper Connectors}
+\subsection{Common Connectors for Coaxial Cables}
+\subsubsection{F-Connector}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.f F-Connector"}
+	\caption{\label{fig:f_con}F-Connector}
+	\vspace{-10pt}
+\end{wrapfigure}
+
+The \textbf{F-Connector} is a coaxial cable connector often used in cable TV and cable modem connections. This is used when a coaxial cable is used to transmit video. For connecting network devices that deal with data, however, we're more likely to use the \textbf{BNC} connector. 
+
+\subsubsection{BNC (Bayonet Neill-Concelman or British Naval Connector)}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.g BNC-Connector"}
+	\caption{\label{fig:bnc_con}BNC}
+	\vspace{-15pt}
+\end{wrapfigure}
+The \textbf{BNC} is a coaxial connector which was often used for data connections involving coaxial cables such as those in 10BASE-2 Ethernet networks. 
+
+The connector needs to be pushed and then twisted, and an in-built spring mechanism secured the connector in place. Now-a-days twisted-pair and its associated connectors are much more common than coaxial cables and its connectors. 
+
+\subsection{Common Connectors for Twisted-Pair Cables}
+\subsubsection{DB-9 Connector}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.h DB-9 Connector"}
+	\caption{\label{fig:db9_con}DB-9}
+	\vspace{-15pt}
+\end{wrapfigure}
+
+The \textbf{DB-9} connector is a 9 pin connector used for asynchronous serial communications (or simply, serial connection) with devices. 
+
+DB-9 was (and in some cases, still is) a popular method of connecting to serial devices such as that of a console port from a router. Since most laptops today don't have a DB-9 port, we might need a \textit{DB-9 to USB} adapter to be able to communicate with such devices. 
+
+\subsubsection{RJ-11 (Type 11 Registered Jack)}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.i RJ-11"}
+	\caption{\label{fig:rj11_con}RJ-11}
+	\vspace{-20pt}
+\end{wrapfigure}
+
+The \textbf{RJ-11} connector is a 6 pin connector (which only uses 2 or 4 pins) that were commonly used with analogue telephones. 
+
+While it looks similar to an RJ-45 connector, the number of notches and the number of wires that can be \textit{punched down}, i.e., attached to these connectors is different. The RJ-45 connector is wider as compared to RJ-11. 
+
+\subsubsection{RJ-45 (Type 45 Registered Jack)}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.j RJ-45"}
+	\caption{\label{fig:rj45_con}RJ-45}
+	\vspace{-15pt}
+\end{wrapfigure}
+
+The \textbf{RJ-45} connector is a 8 pin connector commonly found at the ends of Twisted-pair Ethernet cables such as Cat-5 or Cat-6 cables.
+
+The RJ-45 connector is the most commonly used connector for Ethernet connections since it's compatible with Cat 5, Cat 6, Cat 6e cables - the most commonly used twisted pair cables for networking devices used today. 
+
+\section{Fibre Connectors}
+\subsubsection{ST (Straight Tip)}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.k ST Connector"}
+	\caption{\label{fig:st_con}ST Connector}
+	\vspace{-15pt}
+\end{wrapfigure}
+
+The \textbf{ST (\textit{Straight Tip})} connector, also sometimes referred to as the \textit{bayonet} connector, is commonly used with \textit{Multi Mode Fibre (MMF)} cables. 
+
+We use this connector by pressing down and twisting and the in-built spring mechanism will secure the connector in place with the port of the device that accepts ST connections, or the fibre patch panel. 
+
+\subsubsection{LC (Lucent Connector)}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.l LC Connector"}
+	\caption{\label{fig:lc_con}LC Connector}
+	\vspace{-15pt}
+\end{wrapfigure}
+
+A \textbf{LC (Lucent Connector)} connects by being pushed into the terminating device where the clip at the top of the connector holds it in place. It needs to be disconnected by pressing the tab on the top of the connector, followed by pulling out of the connecting device, similar to the RJ-45/RJ-11 connectors. 
+
+\subsubsection{SC (Subscriber/Standard/Square Connector)}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.m SC Connector"}
+	\caption{\label{fig:sc_con}SC Connector}
+	\vspace{-15pt}
+\end{wrapfigure}
+
+The SC connector is a simple connector that is connected by being pushed into the device or fibre patch panel and is disconnected simply by pulling out of said terminating device. \\ \\
+
+\subsubsection{MTRJ (Media Termination Recommended Jack)}
+\vspace{-10pt}
+\begin{wrapfigure}{L}{0.3\textwidth}
+	\centering
+	\vspace{-12pt}
+	\includegraphics[width=0.12\textwidth]{"Mod1/chapters/1.4.n MTRJ"}
+	\caption{\label{fig:mtrj_con}MTRJ}
+	\vspace{-15pt}
+\end{wrapfigure}
+
+Unlike the other connectors discussed here, the MTRJ has two fibre strands in a single connector. These two strands are the transmit and the receive strands. This allows us to have more connections in a small space, and is extremely useful for fibre patch panels. 
+
+\noindent
+The connector needs to be pushed in to the device to connect and pulled out to disconnect, just like the \textit{SC} connector. 
+
+\section{ETA/TIA 568 Standards}
+In an \textbf{Unshielded Twisted Pair (\textit{UTP})} cable, we've got colour coded insulators around the 8 copper cables. The \textbf{Electronic Industries Alliance (\textit{EIA})} and the \textbf{Telecommunications Industry Association (\textit{TIA})} have a set of joint standards called the \textbf{EIA/TIA 568 Standards}, describing how wiring should be done in office buildings. In this, the \textbf{T568A} and \textbf{T568B} standards describe which colour of insulator should be attached to which pin in an RJ-45 jack. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{"Mod1/chapters/1.4.o T568A-T568B Pinout"}
+	\label{fig:t568ab_pinout}
+\end{figure}
+
+\noindent
+Most often, we use the T568B colour scheme for wiring our RJ-45 connectors. Older installations however, might have been wired according to the T568A standard. 
