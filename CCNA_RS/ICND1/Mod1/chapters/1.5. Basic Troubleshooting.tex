@@ -1,1 +1,50 @@
 \chapter{Basic Troubleshooting}
+\section{Troubleshooting Fundamentals}
+\textbf{Troubleshooting} is the identification and resolution of a problem. There can be several approaches to this, focused on several aspects. Some troubleshooting models are based on detecting the problem in the layers of the OSI stack. 
+ 
+\subsection{Top-down Troubleshooting}
+This is an approach to troubleshooting based on the OSI model. With \textbf{top-down troubleshooting}, we start at the application layer of the OSI stack and work our way down to the physical layer.
+
+For example, if someone is unable to access a web server, we first confirm the problem by trying it for ourselves. If the problem can be reproduced, then we try accessing other sites and find out how widespread the problem is. If we're unable to access any site on the internet, we next open up a command prompt on their machine, and telnet to port 80 on the IP address of a website. If we can connect, it'll give us \textit{some} assurance that things are okay in layers 1-4.
+
+Then we can figure out what the problem is in the upper 3 layers - perhaps a misconfiguration on the browser like an invalid proxy server settings. If we're unable to telnet to port 80 of the website, then we have to focus on the lower levels. 
+
+\subsection{Bottom-up Troubleshooting}
+In this approach, we start from the bottom (physical) layer of the OSI stack, and work our way up. We start with checking the cabling - are the devices plugged in and the cables connected? If they are, then we can move up to the data-link layer, where we ensure that our switches have \textit{learned} the appropriate MAC addresses. If they have, we move up to the Network layer, and ensure that the correct routes are configured on the routers, they know the correct routes to connect to the destination network. 
+
+\subsection{Divide and Conquer Troubleshooting}
+In this approach, we start neither at the top, nor the bottom, but start from the middle by separating the three lower layers (physical, data-link and network) from the upper four layers (transport, session, presentation and application). We do this by first performing a \textbf{ping}. This tells us if the destination network is reachable using \textit{ICMP echo request} packets. If we get replies for the ping, we're sure that the IP address is reachable, indicating a problem in the upper four layers. If not, the problem might be in the bottom 3 layers (or the server may have disabled replies to ICMP echo requests).
+
+\subsection{Other approaches}
+After we've pinged a server, if there's no reply, we might also try to \textbf{follow the path}, where we successively test reachability (for example, with the \verb|traceroute| command), and find the device that's causing the problem, and then edit its configuration till the problem is resolved. 
+
+In case we have a copy of an earlier, working configuration, we could try to compare that to our present configuration, spot the differences and check which one of them could be causing the problem. 
+
+\subsection{Swapping Components}
+This approach gets rid of problems in the physical layer, since we're replacing hardware components to get rid of any defective equipment in the network. This can be a port on a switch, a fibre jumper, a Cat 6 cable to see if an observed problem follows one of the components. 
+
+\section{Cisco's Structured Troubleshooting Model}
+Since troubleshooting is an integral part of a Network professional's work, Cisco provides a \textbf{7 step troubleshooting methodology} since having a plan of attack while dealing with a problem will make us much more confident and attentive than trying things randomly. 
+
+\subsection{Define the problem}
+The goal of this step is to \textit{clearly} articulate/define the problem. So the problem isn't that the \textit{internet is broken}, but \textit{this particular PC can't get to this particular website}. 
+
+\subsection{Collect Information about the problem}
+Now that we know what is wrong, we need to figure out all the parameters of the problem for the next steps. We need to understand the problem at this stage. Thus, we may need to interview the end-user who reported the problem. It might also involve running \textbf{show} or \textbf{debug} commands on the networking devices. 
+
+\subsection{Analyse the Information}
+We now go through the data obtained in the last step, and we might need to research some of the errors/warnings/messages that the system generates, to better understand the problem.
+
+\subsection{Eliminate Potential Causes}
+This step involves removing things that don't make logical sense from the list of potential problems. For example, if a network suffers from poor performance \textit{all the time}, then we can eliminate network load as a suspect because the problem occurs even during low network usage conditions. 
+
+\subsection{Propose a Hypothesis}
+Once a few suspects have been eliminated, a clear picture about the issue can start to form in our minds, and eventually, we can present a hypothesis, i.e., \textit{I think this is most likely what's going on}. 
+
+\subsection{Test the Hypothesis}
+Now, we can test our hypothesis while \textbf{balancing} the urgency of fixing the issue right then, with the impact that our solution will have on the rest of the network. For example, if the solution is to reboot a router or a switch, we have to ask ourselves if the problem is critical enough at this point to reboot right now and disrupt the work of everyone else using the router/switch, or if it could wait for a scheduled maintenance window. 
+
+\subsection{Solve and Document}
+If our hypothesis turns out to be true, we can finally implement the solution and then \textbf{document} the solution so that it can help us if we run into a similar situation ever again, or help our co-workers if they're facing the issue in the future. 
+
+If the hypothesis turns out to be wrong, we can then gather additional information if required and propose a new hypothesis, and repeat - till the issue is fixed. 

@@ -1,1 +1,97 @@
 \chapter{IPv4 Addressing}
+Even though the global pool of IPv4 addresses has been exhausted, and IPv6 is the future, we still have a lot of IPv4 addressing in networking today. Thus, we need the following basic skills: 
+\vspace{-10pt}
+\begin{itemize}
+	\item Calculating the number of subnets for a subnet mask.
+	\item Calculating the number of hosts for a subnet mask.
+	\item Calculating the usable address range for a specific subnet.
+	\item Finding the Broadcast ID, Host IDs and Network ID in a network, etc. 
+\end{itemize}
+
+\section{Binary Numbering}
+An example of an IPv4 Address (or simply, an IP address) is \textbf{10.1.2.3}. Before we can start working with IP addresses and use them to design networks, and calculate the specifics of a network, we need to be able to convert an IP address into its binary equivalent. An IPv4 address is 32-bits, and we use the \textbf{Dotted Decimal notation} to represent it, dividing the 32 bits into four sets of 8 bits each, called an \textbf{octet} and then writing the decimal equivalent of each octet, separated by dots, to represent the IP address. 
+
+\begin{center}
+	\begin{tabular}{rcccc}
+		\toprule
+		\textbf{Dotted Decimal Notation} &10 &1 &2 &3 \\
+		\midrule
+		\textbf{Binary Equivalent}	&1010 &1 &10 &11\\
+		\textbf{8-bit Binary (Octet)}	&00001010 &00000001 &00000010 &00000011\\
+		\textbf{Octet Number} &$1^{st}$ Octet &$2^{nd}$ Octet &$3^{rd}$ Octet &$4^{th}$ Octet  \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{Binary to Decimal Conversion}
+Since binary numbers are \textbf{base-2} like decimal numbers are \textbf{base-10}, we need a binary conversion table such as the one shown below to convert a binary number to it's decimal equivalent.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccccccc}
+		\toprule
+		$2^7$ &$2^6$ &$2^5$ &$2^4$ &$2^3$ &$2^2$ &$2^1$ &$2^0$ \\
+		\textbf{128} &\textbf{64} &\textbf{32} &\textbf{16} &\textbf{8} &\textbf{4} &\textbf{2} &\textbf{1} \\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{Binary Conversion Table}
+\end{table}
+\vspace{-10pt}
+
+\noindent
+The above table simplifies the formula: 
+\begin{equation}
+	\text{Decimal} D = \sum_{i=n}^{0} 2^n b_i 
+	\label{eqn:bin2dec}
+\end{equation}
+\noindent where $b_i$ is the binary bit in the $i^{th}$ position of the binary number $B$, $n$ is the number of digits in $B$ and $D$ is the decimal representation of $B$. 
+
+\subsubsection{Converting 10010110 to decimal}
+First we construct the binary conversion table and write the binary digits beneath the powers of 2. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccccccc}
+		\toprule
+		$2^7$ &$2^6$ &$2^5$ &$2^4$ &$2^3$ &$2^2$ &$2^1$ &$2^0$ \\
+		\textbf{128} &\textbf{64} &\textbf{32} &\textbf{16} &\textbf{8} &\textbf{4} &\textbf{2} &\textbf{1} \\
+		\midrule
+		1 &0 &0 &1 &0 &1 &1 &0 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{Binary Conversion Table}
+\end{table}
+\vspace{-10pt}
+
+\noindent
+Now, from the above table, we simply add the powers of 2 (column headings) that have a 1 below them, and ignore those that have a zero in the binary representation to get the decimal equivalent.
+\begin{align*}
+	d &= 128 + 16 + 4 + 2\\
+	  &= 150
+\end{align*}
+So, the binary number $(10010110)_2$ in decimal is $(150)_{10}$. This can be directly calculated with the equation \ref{eqn:bin2dec}: 
+\begin{align*}
+	d &= \sum_{i=7}^{0} 2^i b_i \\
+	&= (2^7\times1) + (2^6\times0) + (2^5\times0) + (2^4\times1) + (2^3\times0) + (2^2\times1) +( 2^1\times1) + (2^0\times0) \\
+	&= 128 + 16 + 4 + 2\\
+	&= 150
+\end{align*}
+
+\section{IPv4 Address Formatting}
+\section{Address Clases}
+\section{Private vs. Public IPv4 Addresses}
+\section{Unicast}
+\section{Broadcast}
+\section{IPv4 Multicast}
+\section{The Need for Subnetting}
+\section{Calculating Available Subnets}
+\section{Calculating Available Hosts}
+\section{Subnetting Practice Exercise \#1}
+\section{Subnetting Practice Exercise \#2}
+\section{Subnetting Practice Exercise \#3}
+\section{Calculating Usable Ranges of IPv4 Addresses}
+\section{Subnetting Practice Exercise \#4}
+\section{Subnetting Practice Exercise \#5}
+\section{Classless Inter-Domain Routing (CIDR)}
