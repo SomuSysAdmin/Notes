@@ -79,10 +79,165 @@ So, the binary number $(10010110)_2$ in decimal is $(150)_{10}$. This can be dir
 	&= 150
 \end{align*}
 
+\subsection{Decimal to Binary Conversion}
+Decimal numbers can also be converted to Binary by using the binary conversion table. In this method, for each column in the binary conversion table, we ask if the number is greater than or equal to the value in the column. If yes, then we put a \textbf{1} in the cell below it and subtract the value of the column from the number, and then repeat the same process with the new value. 
+
+Note that if at any point during the calculation, the remainder turns \textbf{0}, then all the columns to the right will also be \textbf{0}, since the number has been broken down completely into factors of 2. 
+
+\subsubsection{Converting 167 to Binary}
+First we draw the binary conversion table. The first column is the value \verb|128|. Since $167>128$, we write \textbf{1} in the cell below 128, and then subtract $167-128=39$. This is the new value we'll compare against. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{rcccccccc}
+		\toprule
+		&$2^7$ &$2^6$ &$2^5$ &$2^4$ &$2^3$ &$2^2$ &$2^1$ &$2^0$ \\
+		&\textbf{128} &\textbf{64} &\textbf{32} &\textbf{16} &\textbf{8} &\textbf{4} &\textbf{2} &\textbf{1} \\
+		\midrule
+		\textbf{Quotient} &1 &0 &1 &0 &0 &1 &1 &1 \\
+		\midrule
+		\textbf{Remainder} &39 &39 &7 &7 &7 &3 &1 &0 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{Binary Conversion Table}
+\end{table}
+\vspace{-10pt}
+
+\noindent
+Since $32<64$, we just write a \textbf{0} in the cell below 64 and move on to the next column. This time, $39>32$, so we write a \textbf{1} below 32 and the new value to evaluate against is $39-32=7$. Again, $32<8<16$, so the columns of 16 and 8 both get a \textbf{0}. Since $7>4$, it gets a \textbf{1}, new value is $7-4=3$. This value, $3>2$, so the cell below 2 gets a value of \textbf{1} and the remainder is $3-2=1$. Finally, since 1 is the remainder from the last step, the cell for $1 == 1$ and hence, the last cell gets a 1 as well. Then, we have the equivalence $(167)_{10} = (10100111)_2$.
+
+\subsection{Exercises}
+\subsubsection{i) Convert 01101011 to decimal}
+\textbf{Solution} - First we draw the binary conversion table. Then, we add all the cells that have a \textbf{1} below them and ignore the ones associated with a \textit{0}.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccccccc}
+		\toprule
+		$2^7$ &$2^6$ &$2^5$ &$2^4$ &$2^3$ &$2^2$ &$2^1$ &$2^0$ \\
+		\textbf{128} &\textbf{64} &\textbf{32} &\textbf{16} &\textbf{8} &\textbf{4} &\textbf{2} &\textbf{1} \\
+		\midrule
+		0 &1 &1 &0 &1 &0 &1 &1 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{Binary Conversion Table}
+\end{table}
+\vspace{-10pt}
+\noindent
+Thus, we have the decimal value:
+\begin{align*}
+	d &= 64 + 32 + 8 + 2 + 1\\
+	&= 107
+\end{align*}
+\noindent
+So, we have the equivalence: $(1101011)_2 = (107)_{10}$ (\textbf{Ans}).
+
+\subsubsection{ii) Convert 49 to binary}
+\textbf{Solution} - We have the table:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{rcccccccc}
+		\toprule
+		&$2^7$ &$2^6$ &$2^5$ &$2^4$ &$2^3$ &$2^2$ &$2^1$ &$2^0$ \\
+		&\textbf{128} &\textbf{64} &\textbf{32} &\textbf{16} &\textbf{8} &\textbf{4} &\textbf{2} &\textbf{1} \\
+		\midrule
+		\textbf{Quotient}  &0  &0  &1  &1 &0 &0 &0 &1 \\
+		\midrule
+		\textbf{Remainder} &49 &49 &17 &1 &1 &1 &1 &0 \\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{Decimal 49 to Binary}
+\end{table}
+\vspace{-10pt}
+\noindent
+So, we find that $(49)_{10} = (110001)_2$. (\textbf{Ans}).
+
 \section{IPv4 Address Formatting}
-\section{Address Clases}
+An IPv4 address can be divided into two parts: the Host ID and the Network ID. The Host ID is the address of the device (PC, laptop, smartphone, printer, etc.) on the network. These are represented by the \textbf{host bits} of the IP address. The remaining bits for the Network ID and represent the network itself. Somewhere among those 32 bits, is a division that separates the Network ID from the Host ID, dictated by the \textbf{subnet mask}. 
+
+Since the number of bits in the IPv4 Address is constant, i.e., 32 - if we need to represent more devices in a network, we need more bits, which leaves less room for network address bits. If however, we need to represent a large number of network with few devices in each network (called \textbf{subnets}), then we need a larger number of bits for network ID and fewer in the host bits. The larger the size of the network (i.e., the number of devices per network) the fewer networks (i.e., subnets) there can be, and vice versa. 
+
+\subsection{Subnet Mask}
+A \textbf{subnet mask} is used to figure out which bits in the IP address are parts of the network ID and which bits are the host ID. Thus, a subnet mask tells us about the size of each subnet (\textit{based on the number of bits in the host id}) as well as the total number of subnets that there can be (\textit{based on the number of bits in the network ID}). 
+
+An IP address is much like an address in the real world, where neighbours living on the same street share parts of the address (street name, city, country, etc.) but have different house numbers. So, the Network ID is like the street name, i.e., shared by all the hosts in the network, but the Host ID is like the house number, unique to every host. All of the devices in a network share a common network address space.
+
+A subnet mask is a set of contiguous \textbf{1}s followed by a contiguous set of \textbf{0}s (i.e., a subnet mask always has a series of 1s followed by a series of 0s, and never mixes them).
+
+\begin{center}
+	\begin{tabular}{rcccc}
+		\toprule
+		\textbf{Dotted Decimal Notation} &10 &1 &2 &3 \\
+		\textbf{Subnet Mask in DDN} &255 &0 &0 &0 \\
+		\midrule
+		\textbf{IP in Binary}	&00001010 &00000001 &00000010 &00000011\\
+		\textbf{Subnet Mask} &11111111 &00000000 &00000000 &00000000\\
+		\midrule
+		&\textit{Network Bits} &\multicolumn{3}{c}{|<--------------- \textit{Host Bits} --------------->|} \\ 
+		\textbf{Network ID in Binary ($\wedge$)} &00001010 &00000000 &00000000 &00000000 \\
+		\midrule
+		\textbf{Network ID in DDN} &10 &0 &0 &0 \\
+		\textbf{Host ID in DDN} & &1 &2 &3 \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{Prefix/Slash Notation of Subnet Mask}
+Instead of writing the subnet mask in DDN, we can also just say the number of bits in the Network ID by writing the IP address as \textbf{(IP address)/(number of bits in Network ID)}. So, the above case, where the IP address is \verb|10.1.2.3| and the number of bits in the network ID is \verb|8|, the resultant \textbf{prefix notation} would be \verb|10.1.2.3/8|. 
+
+\subsection{Dotted Decimal Notation of Subnet Mask}
+We also have the option of writing the subnet mask in DDN, just like an IP address. Since the subnet mask consists of the first 8 bits, i.e., the first octet, the value of the subnet mask is \textbf{255} for the first octet (i.e., the maximum possible value of an octet) followed by 0s. Thus, the subnet mask in DDN is: \verb|255.0.0.0|.
+
+\noindent
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{rl}
+		\toprule
+		\textbf{Terms} &\textbf{Description} \\
+		\midrule
+		\textbf{IP address with no subnet information:}	&\verb|10.1.2.3|\\
+		\textbf{IP Address in Prefix Notation}	&\verb|10.1.2.3/8|\\
+		\textbf{IP Address in Dotted Decimal Notation}	&\verb|10.1.2.3 255.0.0.0|\\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{Types of Subnet Mask representations}.
+\end{table}
+\vspace{-10pt}
+
+\subsection{Calculating Network and Host ID}
+The network ID of a particular network is obtained by taking the original IP address and changing all the host bits to \textbf{0}s. Thus, the network address/ID for the given IP address is \verb|10.0.0.0/8| in prefix notation, or \verb|10.0.0.0 255.0.0.0| in DDN. 
+
+\section{Address Classes} experimental purposes and R\&D
+When we look at an IP address, we don't know which of the 32-bits represent the Network address and which represent the host ID unless we're provided with the Subnet Mask. While we can set the subnet mask ourselves, there are defaults, on the basis of which the entire IPv4 Address space (\verb|1.0.0.0 - 255.255.255.254|) can be divided into 5 classes: Classes A, B, C, D \& E. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{rcll}
+		\toprule
+		\textbf{Address Class} &\textbf{Value in First Octet} &\textbf{Classful Mask (DDN)} &Classful Mask (Prefix)\\
+		\midrule
+		A &1 - 126 &255.0.0.0 &/8 \\
+		B &128 - 191 &255.255.0.0 &/16 \\
+		C &192 - 223 &255.255.255.0 &/24 \\
+		D &224 - 239 &N/A &N/A \\
+		E &240 - 255 &N/A &N/A \\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{Classes of IPv4 Addresses}.
+\end{table}
+\vspace{-10pt}
+
+\noindent
+Among these, only classes A, B \& C are ever assigned to a normal host. Address \textbf{class D} is used for \textbf{Multicasts}, but even in that we send data to a multicast address, but no host is ever assigned an address in this range. It's a destination only address, and thus doesn't even have a default subnet mask. A \textbf{Class E} address is used for \textit{experimental purposes and R\&D}. 
+
 \section{Private vs. Public IPv4 Addresses}
-\section{Unicast}
+\section{Unicast} 
 \section{Broadcast}
 \section{IPv4 Multicast}
 \section{The Need for Subnetting}
