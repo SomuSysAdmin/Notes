@@ -212,14 +212,14 @@ We also have the option of writing the subnet mask in DDN, just like an IP addre
 \subsection{Calculating Network and Host ID}
 The network ID of a particular network is obtained by taking the original IP address and changing all the host bits to \textbf{0}s. Thus, the network address/ID for the given IP address is \verb|10.0.0.0/8| in prefix notation, or \verb|10.0.0.0 255.0.0.0| in DDN. 
 
-\section{Address Classes} experimental purposes and R\&D
+\section{Address Classes}
 When we look at an IP address, we don't know which of the 32-bits represent the Network address and which represent the host ID unless we're provided with the Subnet Mask. While we can set the subnet mask ourselves, there are defaults, on the basis of which the entire IPv4 Address space (\verb|1.0.0.0 - 255.255.255.254|) can be divided into 5 classes: Classes A, B, C, D \& E. 
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{rcll}
 		\toprule
-		\textbf{Address Class} &\textbf{Value in First Octet} &\textbf{Classful Mask (DDN)} &Classful Mask (Prefix)\\
+		\textbf{Address Class} &\textbf{Value in First Octet} &\textbf{Classful Mask (DDN)} &\textbf{Classful Mask (Prefix)}\\
 		\midrule
 		A &1 - 126 &255.0.0.0 &/8 \\
 		B &128 - 191 &255.255.0.0 &/16 \\
@@ -231,16 +231,113 @@ When we look at an IP address, we don't know which of the 32-bits represent the 
 	\vspace{-5pt}
 	\caption{Classes of IPv4 Addresses}.
 \end{table}
-\vspace{-10pt}
+\vspace{-20pt}
 
 \noindent
 Among these, only classes A, B \& C are ever assigned to a normal host. Address \textbf{class D} is used for \textbf{Multicasts}, but even in that we send data to a multicast address, but no host is ever assigned an address in this range. It's a destination only address, and thus doesn't even have a default subnet mask. A \textbf{Class E} address is used for \textit{experimental purposes and R\&D}. 
 
+The \textbf{Classful Mask}, also called the \textit{Natural Mask} is the default subnet mask for a specific address class. So, if an address such as \verb|10.1.2.3| uses a \textit{classful mask}, we know it's a Class A address (since first octet is in the range \textit{1 - 126}) which has a default mask of \verb|255.0.0.0| and so - \verb|10.0.0.0| is the network ID and \verb|.1.2.3| is the host ID.
+
+The class of an IP address is entirely dependent upon the first octet. It doesn't matter what the subnet mask is, only the first octet determines the class of an IP address. 
+
+\subsection{Loopback Addresses}
+The \verb|127.0.0.0| network is entirely missing from the IP class table, because the entire network is used for a special purpose.  It's called the \textbf{Loopback address}, and it's used to test the functionality of the TCP/IP stack on a host machine, by pinging \textbf{127.0.0.1}. Thus, it's also called the local address of a device. 
+
+\subsection{Assigning IP Addresses}
+Publicly routable IP addresses are assigned by \textbf{ICANN (\textit{Internet Corporation for Assigned Names and Numbers})}. It's a non-profit organization that \textit{gives} a block of numbers for registration to an \textit{international registry}, such as \textbf{ARIN (\textit{American Registry for Internet Numbers})} in North America and \textbf{IANA (\textit{Internet Assigned Numbers Authority})} outside North America, operated by ICANN. 
+
 \section{Private vs. Public IPv4 Addresses}
+There can be a total of $2^{32} = 4,294,967,296$ IPv4 Addresses, and the total number of internet connected devices has already exceeded that. Thus, there are not enough IPv4 addresses to identify each device uniquely, a problem which was solved by the use of IPv6. However, since there's a sizeable IPv4 deployment in the industry, a lot of companies use a \textbf{Private IP address range} for their hundreds/thousands of devices that are used internally. 
+
+These addresses are also called \textbf{RFC 1918} addresses. These addresses aren't publicly routable, i.e., no host on the internet should have one of these as their IP address. These exist solely to provide routing within a company/organization. These private IP addresses need to be translated to a public IP addresses when communicating with the internet (so that other computers can send data to them), and multiple private IP addresses can have the same public IP address. 
+
+For example, using a wireless router at home, one can have multiple devices connected to the internet at the same time, using the same external IP address. This is possible because of \textbf{NAT \textit{(Network Address Translation)}}, a way to convert private IP addresses to publicly routable IP addresses. The private IP address space as defined in RFC 1918 are:
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{rlll}
+		\toprule
+		\textbf{Class} &\textbf{Addr Block} &\textbf{Address Range} &\textbf{Default Subnet Mask} \\
+		\midrule
+		A &10.0.0.0/8 &10.0.0.0 - 10.255.255.255 &255.0.0.0 (/8) \\
+		B &172.16.0.0/12 &172.16.0.0 - 172.31.255.255 &255.255.0.0 (/16) \\
+		C &192.168.0.0/16 &192.168.0.0 - 192.168.255.255 &255.255.255.0 (/24) \\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{Private IPv4 Address Ranges}.
+\end{table}
+\vspace{-20pt}
+
+\subsection{Automatic Private IP Addressing (APIPA)}
+In addition to the RFC 1918 private IP ranges, there is another private IP address range, but one that's not routable - even by any router that we own, because this IP address range is self-assigned. Generally, we don't want a device in our network to have an IP within this range. When a network connected device isn't assigned an IP address, either manually or automatically from a \textbf{DHCP (\textit{Dynamic Host Configuration Protocol})} server, it self-assigns an IP address to itself from this range. Such an address is called an \textbf{APIPA (\textit{Automatic Private IP Addressing})} address. 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{rlll}
+		\toprule
+		\textbf{Class} &\textbf{Addr Block} &\textbf{Address Range} &\textbf{Default Subnet Mask} \\
+		\midrule
+		B &169.254.0.0/16 &169.254.0.0 - 169.254.255.255 &255.255.0.0 (/16) \\
+		\bottomrule
+	\end{tabular}
+	\vspace{-5pt}
+	\caption{APIPA Address Range}.
+\end{table}
+\vspace{-20pt}
+
+\noindent
+A host having an APIPA address is an indication that something on the network has failed and this host needs attention because it's not connected to the rest of the network. Another case when APIPA is used is when two or more hosts have to communicate within themselves but there's no IP assignment, such as the case where two hosts are connected by a network cable but no further configuration. 
+
 \section{Unicast} 
+Unicast, Broadcast and Multicast are some of the different traffic flows in IPv4 networks. \textbf{Unicast} is a \textit{one-to-one} communication flow, i.e., one device on the network is talking to another device on the network. For example, if a host sends some query to a server, and the server responds with the results only to that host, it's unicast. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.6.a Unicast"}
+	\caption{Unicast}
+	\label{fig:unicast}
+\end{figure}
+\vspace{-15pt}
+
+\noindent
+Let us consider the above situation where the hosts with host IDs \verb|.1| and \verb|.2| want to receive a video, but the host \verb|.3| doesn't. Then the video server has to send two packets - one two \verb|10.1.1.1| and another to \verb|10.1.1.2| when using an unicast model. While this is good for host \verb|10.01.1.3|, since it didn't have to see unwanted traffic, the video server at \verb|10.1.1.100| has an increased load. It has to send multiple copies of the same data to multiple hosts individually. If there had been 200 hosts that wanted the video, then it'd have to send 200 individual copies, causing more processor load for the video server and bandwidth demand on the link connecting to the video server. 
+
 \section{Broadcast}
+A \textbf{broadcast} is a \textit{one-to-all} communication flow. Thus, the communication occurs from one source to all the devices in a subnet. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.6.b Broadcast"}
+	\caption{Broadcast}
+	\label{fig:broadcast}
+\end{figure}
+
+\noindent
+In the above case, the video server sends the data to all the connected hosts, including PC \#3, i.e., \verb|10.1.1.3|. So, \verb|.3|'s NIC had to take some time to analyse the packet and then discard it, since it didn't request for that data. This will be done by PC \#3 for every single packet in the video stream that's being broadcast. 
+
+This solved the problem of processor load of the video server, since it only has to broadcast one packet and bandwidth usage on the link connecting the video server, since only one packet flows through it. However, now PC \#3 has to keep rejecting the packets of the video. 
+
+IPv4 utilizes broadcast a lot. The early versions of the \textbf{Routing Information Protocol (RIP)} used to advertise network information through broadcasts. Broadcasts can also be used to advertise services such as printer services on a local subnet. However, IPv6 doesn't use a broadcast at all!
+
 \section{IPv4 Multicast}
+\textbf{Multicast} is a \textit{one-to-many} communication flow. In multicast, the devices that want to receive the data join a \textbf{multicast group}. The multicast group has an IP address in the \textbf{Class D} range, i.e., \verb|224.0.0.1 - 239.255.255.254|. If the multicast group address is, say, \verb|239.1.1.1|, then it represents every host within that group. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Mod1/chapters/1.6.c Multicast"}
+	\caption{Multicast}
+	\label{fig:multicast}
+\end{figure}
+\vspace{-15pt}
+
+\noindent
+So now, the video server can send out one packet with the destination address of \verb|239.1.1.1| and it'll reach all the hosts within that group who want to receive the video, while those that don't want to, don't get any packets at all!
+
+Multicasts are used quite a bit in both IPv4 as well as IPv6. In IPv4, many routing protocols such as RIPv2, OSPF, EIGRP, etc., use multicasting to efficiently send out network advertisements. A router can only send out network advertisements to the other routers in a multicast group. 
+
 \section{The Need for Subnetting}
+
+
 \section{Calculating Available Subnets}
 \section{Calculating Available Hosts}
 \section{Subnetting Practice Exercise \#1}
