@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZsh{}} ping \PYGZhy{}c \PYG{l+m}{4} \PYG{l+m}{10}.10.90.1
+\PYG{g+go}{PING 10.10.90.1 (10.10.90.1) 56(84) bytes of data.}
+\PYG{g+go}{64 bytes from 10.10.90.1: icmp\PYGZus{}seq=1 ttl=64 time=2.06 ms}
+\PYG{g+go}{64 bytes from 10.10.90.1: icmp\PYGZus{}seq=2 ttl=64 time=1.31 ms}
+\PYG{g+go}{64 bytes from 10.10.90.1: icmp\PYGZus{}seq=3 ttl=64 time=1.42 ms}
+\PYG{g+go}{64 bytes from 10.10.90.1: icmp\PYGZus{}seq=4 ttl=64 time=3.37 ms}
+
+\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZhy{} 10.10.90.1 ping statistics \PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{g+go}{4 packets transmitted, 4 received, 0\PYGZpc{} packet loss, time 3004ms}
+\PYG{g+go}{rtt min/avg/max/mdev = 1.313/2.044/3.377/0.821 ms	}
+\end{Verbatim}

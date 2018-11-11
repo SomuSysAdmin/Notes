@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}int vlan 1}
+\PYG{g+go}{sw1(config\PYGZhy{}if)\PYGZsh{}}
+\end{Verbatim}

@@ -1,0 +1,14 @@
+\BOOKMARK [-1][-]{part.1}{I ICND1 - Switches}{}% 1
+\BOOKMARK [0][-]{chapter.1}{Basic Cisco Catalyst Switch Configuration}{part.1}% 2
+\BOOKMARK [1][-]{section.1.1}{Port Addressing}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.2}{Configuring a Management IP Address}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.2.1}{View how we're connected to a Switch}{section.1.2}% 5
+\BOOKMARK [2][-]{subsection.1.2.2}{Privileged mode, auto-completion and showing possible commands}{section.1.2}% 6
+\BOOKMARK [2][-]{subsection.1.2.3}{Configuring the Terminal}{section.1.2}% 7
+\BOOKMARK [2][-]{subsection.1.2.4}{Interface Configuration Mode}{section.1.2}% 8
+\BOOKMARK [2][-]{subsection.1.2.5}{Adding a Management IP}{section.1.2}% 9
+\BOOKMARK [1][-]{section.1.3}{Configuring a Default Gateway}{chapter.1}% 10
+\BOOKMARK [1][-]{section.1.4}{Setting Console and VTY Passwords}{chapter.1}% 11
+\BOOKMARK [2][-]{subsection.1.4.1}{Configuring a password for the VTY lines}{section.1.4}% 12
+\BOOKMARK [1][-]{section.1.5}{Show Running Configuration}{chapter.1}% 13
+\BOOKMARK [1][-]{section.1.6}{Checking for connectivity using Ping}{chapter.1}% 14

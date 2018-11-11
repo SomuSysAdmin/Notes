@@ -1,0 +1,173 @@
+\contentsline {part}{I\hspace {1em}Fundamentals of Networking}{7}{part.1}
+\contentsline {chapter}{\numberline {1}Network Reference Models and Protocols}{8}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introduction}{8}{section.1.1}
+\contentsline {section}{\numberline {1.2}The OSI Model}{8}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Terminology related to the OSI Model}{8}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}The 7 layers of the OSI Model}{9}{subsection.1.2.2}
+\contentsline {section}{\numberline {1.3}TCP/IP Stack}{10}{section.1.3}
+\contentsline {section}{\numberline {1.4}TCP/IP Protocol Suite}{11}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Layer-3 (Network/Internet Layer) Protocols}{12}{subsection.1.4.1}
+\contentsline {subsubsection}{Internet Protocol (IP)}{12}{section*.2}
+\contentsline {subsubsection}{ICMP}{12}{section*.3}
+\contentsline {subsection}{\numberline {1.4.2}Layer-4 (Transport Layer) Protocols}{13}{subsection.1.4.2}
+\contentsline {subsubsection}{User Datagram Protocol (UDP)}{13}{section*.4}
+\contentsline {subsubsection}{Transmission Control Protocol (TCP)}{13}{section*.5}
+\contentsline {subsubsection}{Sliding Window Protocol \& TCP Windowing}{14}{section*.6}
+\contentsline {section}{\numberline {1.5}Domain Name System (DNS)}{14}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}Well-known Port}{15}{subsection.1.5.1}
+\contentsline {subsection}{\numberline {1.5.2}Hierarchical DNS Structure}{15}{subsection.1.5.2}
+\contentsline {subsection}{\numberline {1.5.3}DNS Record Types}{16}{subsection.1.5.3}
+\contentsline {subsection}{\numberline {1.5.4}Dynamic DNS (DDNS)}{16}{subsection.1.5.4}
+\contentsline {section}{\numberline {1.6}Ports and Protocols}{17}{section.1.6}
+\contentsline {subsection}{\numberline {1.6.1}Communication using Ports}{17}{subsection.1.6.1}
+\contentsline {subsection}{\numberline {1.6.2}List of some Well-Known ports}{18}{subsection.1.6.2}
+\contentsline {subsection}{\numberline {1.6.3}FTP (File Transfer Protocol)}{18}{subsection.1.6.3}
+\contentsline {subsection}{\numberline {1.6.4}SSH (Secure SHell)}{18}{subsection.1.6.4}
+\contentsline {subsection}{\numberline {1.6.5}SMTP, IMAP and POP3}{19}{subsection.1.6.5}
+\contentsline {subsection}{\numberline {1.6.6}DNS}{19}{subsection.1.6.6}
+\contentsline {subsection}{\numberline {1.6.7}TFTP}{19}{subsection.1.6.7}
+\contentsline {subsection}{\numberline {1.6.8}DHCP (Dynamic Host Configuration Protocol)}{19}{subsection.1.6.8}
+\contentsline {subsection}{\numberline {1.6.9}HTTP, HTTPS}{19}{subsection.1.6.9}
+\contentsline {subsection}{\numberline {1.6.10}NTP, SNTP}{19}{subsection.1.6.10}
+\contentsline {subsection}{\numberline {1.6.11}LDAP}{20}{subsection.1.6.11}
+\contentsline {subsection}{\numberline {1.6.12}rsh}{20}{subsection.1.6.12}
+\contentsline {subsection}{\numberline {1.6.13}RealTime Streaming Protocol (RTSP)}{20}{subsection.1.6.13}
+\contentsline {subsection}{\numberline {1.6.14}Microsoft's Remote Desktop Protocol (RDP)}{20}{subsection.1.6.14}
+\contentsline {section}{\numberline {1.7}Protocol Data Units (PDU)}{20}{section.1.7}
+\contentsline {chapter}{\numberline {2}Infrastructure Components}{21}{chapter.2}
+\contentsline {section}{\numberline {2.1}Common Network Infrastructure Devices}{21}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Router}{21}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Wide Area Network (WAN)}{22}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Virtual Private Network (VPN)}{22}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}End-user stations}{22}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}Wireless Access Points (WAP)}{22}{subsection.2.1.5}
+\contentsline {subsection}{\numberline {2.1.6}Switch}{22}{subsection.2.1.6}
+\contentsline {subsection}{\numberline {2.1.7}Intrusion Prevention System (IPS)}{23}{subsection.2.1.7}
+\contentsline {subsection}{\numberline {2.1.8}Intrusion Detection System (IDS)}{23}{subsection.2.1.8}
+\contentsline {subsection}{\numberline {2.1.9}Firewall}{23}{subsection.2.1.9}
+\contentsline {subsection}{\numberline {2.1.10}Demilitarized Zone (DMZ)}{23}{subsection.2.1.10}
+\contentsline {subsection}{\numberline {2.1.11}Firewall-Router}{24}{subsection.2.1.11}
+\contentsline {subsection}{\numberline {2.1.12}Multilayer/Layer-3 Switch}{24}{subsection.2.1.12}
+\contentsline {subsection}{\numberline {2.1.13}Cache-Engine}{24}{subsection.2.1.13}
+\contentsline {subsection}{\numberline {2.1.14}Network Attached Storage (NAS)}{24}{subsection.2.1.14}
+\contentsline {section}{\numberline {2.2}Firewalls}{24}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Packet Filter}{25}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Stateful Firewall}{25}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Application Layer Firewall}{26}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Wireless Access Points and Controllers}{26}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Wireless Ad Hoc Networks}{26}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Wireless Access Points (WAP)}{27}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}LightWeight Access Point Protocol (LWAPP)}{27}{subsection.2.3.3}
+\contentsline {chapter}{\numberline {3}Network Architecture}{28}{chapter.3}
+\contentsline {section}{\numberline {3.1}Star Topology}{28}{section.3.1}
+\contentsline {section}{\numberline {3.2}Mesh Topology}{28}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Comparison between Full and Partial Meshes}{30}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.3}Collapsed Core vs Three-Tier Architectures}{30}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Three-Tier Architecture}{30}{subsection.3.3.1}
+\contentsline {subsubsection}{Access Layer}{30}{section*.7}
+\contentsline {subsubsection}{Distribution Layer}{31}{section*.8}
+\contentsline {subsubsection}{Core Layer}{31}{section*.9}
+\contentsline {subsection}{\numberline {3.3.2}Collapsed Core Architecture}{31}{subsection.3.3.2}
+\contentsline {chapter}{\numberline {4}Network Cabling}{32}{chapter.4}
+\contentsline {section}{\numberline {4.1}Copper Cables}{32}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Impedance of a Coaxial Cable}{32}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Coaxial Cable Standards}{33}{subsection.4.1.2}
+\contentsline {subsubsection}{RG-59}{33}{section*.10}
+\contentsline {subsubsection}{RG-6}{33}{section*.11}
+\contentsline {subsubsection}{RG-8}{33}{section*.12}
+\contentsline {subsection}{\numberline {4.1.3}Twisted Pair Cables}{33}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Categories of Twisted-Pair cables}{33}{subsection.4.1.4}
+\contentsline {subsubsection}{Category 3 (Cat-3)}{33}{section*.13}
+\contentsline {subsubsection}{Category 5 (Cat-5)}{34}{section*.14}
+\contentsline {subsubsection}{Category 5e (Cat-5e)}{34}{section*.15}
+\contentsline {subsubsection}{Category 6 (Cat-6)}{34}{section*.16}
+\contentsline {subsubsection}{Category 6a (Cat-6a)}{34}{section*.17}
+\contentsline {section}{\numberline {4.2}Fibre Cables}{34}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Anatomy of a Fibre Optic cable}{34}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Total Internal Refraction in Fibre Optic cable}{35}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Single Mode Fibre (SMF)}{35}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Multi Mode Fibre (MMF)}{35}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}Multimode Delay Distortion}{36}{subsection.4.2.5}
+\contentsline {section}{\numberline {4.3}Copper Connectors}{36}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Common Connectors for Coaxial Cables}{36}{subsection.4.3.1}
+\contentsline {subsubsection}{F-Connector}{36}{section*.18}
+\contentsline {subsubsection}{BNC (Bayonet Neill-Concelman or British Naval Connector)}{36}{section*.19}
+\contentsline {subsection}{\numberline {4.3.2}Common Connectors for Twisted-Pair Cables}{36}{subsection.4.3.2}
+\contentsline {subsubsection}{DB-9 Connector}{36}{section*.20}
+\contentsline {subsubsection}{RJ-11 (Type 11 Registered Jack)}{36}{section*.21}
+\contentsline {subsubsection}{RJ-45 (Type 45 Registered Jack)}{37}{section*.22}
+\contentsline {section}{\numberline {4.4}Fibre Connectors}{37}{section.4.4}
+\contentsline {subsubsection}{ST (Straight Tip)}{37}{section*.23}
+\contentsline {subsubsection}{LC (Lucent Connector)}{37}{section*.24}
+\contentsline {subsubsection}{SC (Subscriber/Standard/Square Connector)}{37}{section*.25}
+\contentsline {subsubsection}{MTRJ (Media Termination Recommended Jack)}{37}{section*.26}
+\contentsline {section}{\numberline {4.5}ETA/TIA 568 Standards}{38}{section.4.5}
+\contentsline {chapter}{\numberline {5}Basic Troubleshooting}{39}{chapter.5}
+\contentsline {section}{\numberline {5.1}Troubleshooting Fundamentals}{39}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Top-down Troubleshooting}{39}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Bottom-up Troubleshooting}{39}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Divide and Conquer Troubleshooting}{40}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}Other approaches}{40}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}Swapping Components}{40}{subsection.5.1.5}
+\contentsline {section}{\numberline {5.2}Cisco's Structured Troubleshooting Model}{40}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Define the problem}{40}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Collect Information about the problem}{40}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Analyse the Information}{41}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}Eliminate Potential Causes}{41}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}Propose a Hypothesis}{41}{subsection.5.2.5}
+\contentsline {subsection}{\numberline {5.2.6}Test the Hypothesis}{41}{subsection.5.2.6}
+\contentsline {subsection}{\numberline {5.2.7}Solve and Document}{41}{subsection.5.2.7}
+\contentsline {chapter}{\numberline {6}IPv4 Addressing}{42}{chapter.6}
+\contentsline {section}{\numberline {6.1}Binary Numbering}{42}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Binary to Decimal Conversion}{42}{subsection.6.1.1}
+\contentsline {subsubsection}{Converting 10010110 to decimal}{43}{section*.27}
+\contentsline {subsection}{\numberline {6.1.2}Decimal to Binary Conversion}{43}{subsection.6.1.2}
+\contentsline {subsubsection}{Converting 167 to Binary}{43}{section*.28}
+\contentsline {subsection}{\numberline {6.1.3}Exercises}{44}{subsection.6.1.3}
+\contentsline {subsubsection}{i) Convert 01101011 to decimal}{44}{section*.29}
+\contentsline {subsubsection}{ii) Convert 49 to binary}{44}{section*.30}
+\contentsline {section}{\numberline {6.2}IPv4 Address Formatting}{44}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Subnet Mask}{45}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Prefix/Slash Notation of Subnet Mask}{45}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}Dotted Decimal Notation of Subnet Mask}{45}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}Calculating Network and Host ID}{46}{subsection.6.2.4}
+\contentsline {section}{\numberline {6.3}Address Classes}{46}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Loopback Addresses}{46}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}Assigning IP Addresses}{47}{subsection.6.3.2}
+\contentsline {section}{\numberline {6.4}Private vs. Public IPv4 Addresses}{47}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Automatic Private IP Addressing (APIPA)}{47}{subsection.6.4.1}
+\contentsline {section}{\numberline {6.5}Unicast}{48}{section.6.5}
+\contentsline {section}{\numberline {6.6}Broadcast}{48}{section.6.6}
+\contentsline {section}{\numberline {6.7}IPv4 Multicast}{49}{section.6.7}
+\contentsline {section}{\numberline {6.8}The Need for Subnetting}{50}{section.6.8}
+\contentsline {section}{\numberline {6.9}Calculating Available Subnets}{50}{section.6.9}
+\contentsline {section}{\numberline {6.10}Calculating Available Hosts}{50}{section.6.10}
+\contentsline {section}{\numberline {6.11}Subnetting Practice Exercise \#1}{50}{section.6.11}
+\contentsline {section}{\numberline {6.12}Subnetting Practice Exercise \#2}{50}{section.6.12}
+\contentsline {section}{\numberline {6.13}Subnetting Practice Exercise \#3}{50}{section.6.13}
+\contentsline {section}{\numberline {6.14}Calculating Usable Ranges of IPv4 Addresses}{50}{section.6.14}
+\contentsline {section}{\numberline {6.15}Subnetting Practice Exercise \#4}{50}{section.6.15}
+\contentsline {section}{\numberline {6.16}Subnetting Practice Exercise \#5}{50}{section.6.16}
+\contentsline {section}{\numberline {6.17}Classless Inter-Domain Routing (CIDR)}{50}{section.6.17}
+\contentsline {chapter}{\numberline {7}IPv6 Addressing}{51}{chapter.7}
+\contentsline {part}{II\hspace {1em}LAN Switching}{52}{part.2}
+\contentsline {chapter}{\numberline {8}Fundamentals of Ethernet}{53}{chapter.8}
+\contentsline {chapter}{\numberline {9}Basic Cisco Catalyst Switch Configuration}{54}{chapter.9}
+\contentsline {chapter}{\numberline {10}Virtual LANs (VLANs)}{55}{chapter.10}
+\contentsline {chapter}{\numberline {11}Trunking}{56}{chapter.11}
+\contentsline {chapter}{\numberline {12}Troubleshooting Switch Operation}{57}{chapter.12}
+\contentsline {chapter}{\numberline {13}Basic Switch Security}{58}{chapter.13}
+\contentsline {chapter}{\numberline {14}Voice VLANs}{59}{chapter.14}
+\contentsline {part}{III\hspace {1em}IP Routing}{60}{part.3}
+\contentsline {chapter}{\numberline {15}Basic Router Operation}{61}{chapter.15}
+\contentsline {chapter}{\numberline {16}Basic Router Configuration and Verification}{62}{chapter.16}
+\contentsline {chapter}{\numberline {17}Routing Fundamentals}{63}{chapter.17}
+\contentsline {chapter}{\numberline {18}Routing Information Protocol (RIP)}{64}{chapter.18}
+\contentsline {part}{IV\hspace {1em}Network Services}{65}{part.4}
+\contentsline {chapter}{\numberline {19}Dynamic Host Configuration Protocol (DHCP)}{66}{chapter.19}
+\contentsline {chapter}{\numberline {20}Network Address Translation (NAT)}{67}{chapter.20}
+\contentsline {chapter}{\numberline {21}Network Time Protocol (NTP)}{68}{chapter.21}
+\contentsline {part}{V\hspace {1em}Network Management}{69}{part.5}
+\contentsline {chapter}{\numberline {22}Network Management Protocols}{70}{chapter.22}
+\contentsline {chapter}{\numberline {23}Device Management}{71}{chapter.23}
+\contentsline {chapter}{\numberline {24}Troubleshooting with Cisco IOS Tools}{72}{chapter.24}

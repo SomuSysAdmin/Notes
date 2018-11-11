@@ -1,0 +1,241 @@
+\chapter{Basic Cisco Catalyst Switch Configuration}
+\section{Port Addressing}
+The addressing of ports on a Cisco Catalyst Switch follows the format:
+
+\vspace{-5pt}
+\begin{center}
+	\verb|interface-type Stack #/Card #/Port #|
+\end{center}
+\vspace{-5pt}
+
+\noindent
+Let us consider the \textbf{Catalyst 3750} switch. This switch isn't modular and thus can't have multiple cards, but it supports Stack-wise, which is a Cisco technology to combine multiple physical switches in a stack into a single logical switch. Thus, the middle number when referring to a particular interface (i.e., port on a physical switch) will \textbf{always be 0}. Thus, the Giga-bit port that's $16^{th}$ port on the $3^{rd}$ stack member of switches will be written as: \verb|GigabitEthernet 3/0/16|, or \textbf{g3/0/16} for short. 
+
+For a \textbf{Cisco 2960} switch, there's no option for Stack-wise, and hence we don't need the first number. Then, the name for the interface becomes \verb|GigabitEthernet 0/16| or \textbf{g0/16}.
+
+\section{Configuring a Management IP Address}
+We can connect to the switch physically via the console port, or through one of the interfaces using Ethernet. In case of the later, we have to set up a management IP address through which we can use telnet or SSH to control and configure the switch. 
+
+\subsection{View how we're connected to a Switch}
+To view how we're presently connected to a switch, we can use the \verb|show line| command: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1>show line
+   Tty Typ     Tx/Rx    A Modem  Roty AccO AccI   Uses   Noise  Overruns   Int
+*    0 CTY              -    -      -    -    -      0       0     0/0       -
+	 1 AUX   9600/9600  -    -      -    -    -      0       0     0/0       -
+	 2 VTY              -    -      -    -    -      1       0     0/0       -
+	 3 VTY              -    -      -    -    -      0       0     0/0       -
+	 4 VTY              -    -      -    -    -      0       0     0/0       -
+	 5 VTY              -    -      -    -    -      0       0     0/0       -
+	 6 VTY              -    -      -    -    -      0       0     0/0       -
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The \textbf{asterisk (*)} at the beginning of the line shows that it's the port currently being used. The \textbf{CTY} refers to a console port, which is the port we're using. If we were using telnet or SSH, i.e., log in remotely to the switch/router, then one of the \textbf{VTY} (\textit{Virtual Terminal}) would've been used. 
+
+\subsection{Privileged mode, auto-completion and showing possible commands}
+The \verb|>| sign at the end of the prompt signals that we're currently in \textit{user mode}. To change the configuratin on the equipment we need to be in \textit{Privileged mode}, which is indicated by a \verb|#| prompt. To enter the privileged mode, we use the command \verb|enable|. To leave the privileged mode, we use \verb|disable|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1>enable
+sw1#disable
+sw1>
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To go into privileged mode, we need not type the entire command. Cisco \textbf{IOS} (\textit{Internetwork Operating System}) can show all possible commands that can follow the current string on the present line on pressing the \verb|?| key. For example: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1>e?
+enable  ethernet  exit
+
+sw1>en?
+enable
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This also means that we don't need to type out the entire command. We can simply use short-cuts for the commands, which are the minimum number of letters in the word of a command that is unique. Thus, in the case of the \verb|enable|, the minimum characters required are 2 since there are 3 commands starting with 'e' but only 1 starting with 'en', i.e., \verb|enable|. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1>en
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Configuring the Terminal}
+While we may be in privileged mode, we still need to tell the switch that we want to configure from the terminal. For this, we use the command \verb|configure terminal|, or \textbf{conf t} for short. This would bring us into the \textbf{global config} mode:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw1(config)#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To exit the global configuration mode, we use the \verb|exit| command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#exit
+sw1#
+*Nov 11 21:36:07.353: %SYS-5-CONFIG_I: Configured from console by console
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Interface Configuration Mode}
+To set the management IP address we need to go to the interface configuration port. On a Cisco Switch, unlike on a PC/Laptop, every interface gets associated to the IP address which is of the network it's connected to. Layer-2 Switches are generally blind to the IP addresses since they don't make forwarding decisions on the basis of IP addresses, but this IP Address is required to be associated with the switch to uniquely identify the switch on the network for remote access through telnet/SSH. 
+
+By default, on the switch, all the ports belong to a specific \textbf{VLAN\textit{(Virtual LAN)}}. Thus, we can set the IP address of the \textit{default VLAN}, \textbf{vlan1}, to set up the management IP address of the switch. To enter the interface configuration for vlan1, we use: \verb|interface vlan1|, or simply \textbf{int vlan1} :
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#int vlan 1
+sw1(config-if)#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The prompt changed to \verb|(config-if)#| to show that we've now entered the \textit{Interface config mode}.
+
+\subsection{Adding a Management IP}
+Just like with a PC, we need to set up both the IP address as well as the Subnet Mask. Let us consider the switch needs to have the IP \textbf{192.168.1.11/24}. We can't enter the value in suffix notation. The equivalent subnet mask is \textit{255.255.255.0}. Thus, the command becomes:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#ip add 192.168.1.11 255.255.255.0
+sw1(config-if)#no shutdown
+sw1(config-if)#
+*Nov 11 21:51:57.295: %LINK-3-UPDOWN: Interface Vlan1, changed state to up
+*Nov 11 21:51:58.298: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to up
+sw1(config-if)#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Typically the interface \verb|vlan1| (i.e, the 1st virtual LAN) is turned on by default, but sometimes it may have been administratively shut-down, which we can fix using \verb|no shutdown| command, or for short \textbf{no shut}.
+
+\section{Configuring a Default Gateway}
+A default gateway is required for the switch to determine which path to take to exit it's own subnet and reach another network. While the IP address has to be set for an interface, the default gateway has to be set in global config mode:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#ip default-gateway 192.168.1.1
+\end{minted}
+\vspace{-10pt}
+
+\section{Setting Console and VTY Passwords}
+To set the password for the console port login, we need to enter its configuration, i.e., console line configuration, and then set the password. Let's say we want to set it to \textit{cisco}. We can do this by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-line)#password cisco
+sw1(config-line)#login
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The \verb|login| command enables the password check at login. Unless it's set, even if there's a valid password, the system won't ask for credentials while logging in. Further, to disable password check, we don't have to change/remove the password. we simply need to do \verb|no login|. The login command doesn't work unless there's a password set:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-line)#login
+% Login disabled on line 0, until 'password' is set
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Configuring a password for the VTY lines}
+We could set the password for each VTY line individually, but if we're setting them (or a subset of them) all to an identical config, we can use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#line vty 0 5
+sw1(config-line)#password cisco
+sw1(config-line)#login
+sw1(config-line)#end
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This is assuming we want to set the password for lines 0-5 and not 6 of the available VTY lines. Also notice that we jump levels till we end the configuration of the switch by using \verb|end| command. Unlike the \verb|exit| command, the \verb|end| command doesn't just jump up to the parent config level, but ends the configuration all together and takes us out of the configuration mode all together. 
+
+\section{Show Running Configuration}
+To see the current configuration we created (but not yet saved), i.e., the configuration that the device is currently using, we use the command: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh run
+Building configuration...
+
+Current configuration : 2911 bytes
+!
+! Last configuration change at 22:48:16 UTC Sun Nov 11 2018
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname sw1
+...
+!
+interface Vlan1
+ ip address 192.168.1.11 255.255.255.0
+!
+ip default-gateway 192.168.1.1
+ip forward-protocol nd
+!
+...
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ login
+line aux 0
+line vty 0 4
+ password cisco
+ login
+line vty 5
+ password cisco
+ login
+line vty 6
+ login
+!
+!
+end
+
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+At the very bottom we have the details for the console and the VTY lines. It's completely normal for IOS to break down the configuration for 0-6 into ranges (0-4,5,6), even though we configured them together at the same time. 
+
+\section{Checking for connectivity using Ping}
+The \verb|ping| command sends \textbf{ICMP (\textit{Internet Control Message Protocol})} packets to the destination device and waits for \textit{ICMP replies} from it to determine whether the host is up. It can help detect delays and packet drops, and whether the host is even connected i.e., reachable. We can use it by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+PC-1> ping 192.168.1.11
+84 bytes from 192.168.1.11 icmp_seq=1 ttl=255 time=3.973 ms
+84 bytes from 192.168.1.11 icmp_seq=2 ttl=255 time=3.969 ms
+84 bytes from 192.168.1.11 icmp_seq=3 ttl=255 time=5.951 ms
+84 bytes from 192.168.1.11 icmp_seq=4 ttl=255 time=3.472 ms
+84 bytes from 192.168.1.11 icmp_seq=5 ttl=255 time=10.913 ms
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Some variation of the ping command is available on all major OS (Operating Systems). 

@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZgt{}e?}
+\PYG{g+go}{enable  ethernet  exit}
+
+\PYG{g+go}{sw1\PYGZgt{}en?}
+\PYG{g+go}{enable}
+\end{Verbatim}

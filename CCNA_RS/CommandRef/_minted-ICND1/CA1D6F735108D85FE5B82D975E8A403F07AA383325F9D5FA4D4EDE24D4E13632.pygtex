@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config\PYGZhy{}if)\PYGZsh{}ip add 192.168.1.11 255.255.255.0}
+\PYG{g+go}{sw1(config\PYGZhy{}if)\PYGZsh{}no shutdown}
+\PYG{g+go}{sw1(config\PYGZhy{}if)\PYGZsh{}}
+\PYG{g+go}{*Nov 11 21:51:57.295: \PYGZpc{}LINK\PYGZhy{}3\PYGZhy{}UPDOWN: Interface Vlan1, changed state to up}
+\PYG{g+go}{*Nov 11 21:51:58.298: \PYGZpc{}LINEPROTO\PYGZhy{}5\PYGZhy{}UPDOWN: Line protocol on Interface Vlan1, changed state to up}
+\PYG{g+go}{sw1(config\PYGZhy{}if)\PYGZsh{}}
+\end{Verbatim}

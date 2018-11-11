@@ -1,0 +1,144 @@
+\BOOKMARK [-1][-]{part.1}{I Fundamentals of Networking}{}% 1
+\BOOKMARK [0][-]{chapter.1}{Network Reference Models and Protocols}{part.1}% 2
+\BOOKMARK [1][-]{section.1.1}{Introduction}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.2}{The OSI Model}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.2.1}{Terminology related to the OSI Model}{section.1.2}% 5
+\BOOKMARK [2][-]{subsection.1.2.2}{The 7 layers of the OSI Model}{section.1.2}% 6
+\BOOKMARK [1][-]{section.1.3}{TCP/IP Stack}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.4}{TCP/IP Protocol Suite}{chapter.1}% 8
+\BOOKMARK [2][-]{subsection.1.4.1}{Layer-3 \(Network/Internet Layer\) Protocols}{section.1.4}% 9
+\BOOKMARK [2][-]{subsection.1.4.2}{Layer-4 \(Transport Layer\) Protocols}{section.1.4}% 10
+\BOOKMARK [1][-]{section.1.5}{Domain Name System \(DNS\)}{chapter.1}% 11
+\BOOKMARK [2][-]{subsection.1.5.1}{Well-known Port}{section.1.5}% 12
+\BOOKMARK [2][-]{subsection.1.5.2}{Hierarchical DNS Structure}{section.1.5}% 13
+\BOOKMARK [2][-]{subsection.1.5.3}{DNS Record Types}{section.1.5}% 14
+\BOOKMARK [2][-]{subsection.1.5.4}{Dynamic DNS \(DDNS\)}{section.1.5}% 15
+\BOOKMARK [1][-]{section.1.6}{Ports and Protocols}{chapter.1}% 16
+\BOOKMARK [2][-]{subsection.1.6.1}{Communication using Ports}{section.1.6}% 17
+\BOOKMARK [2][-]{subsection.1.6.2}{List of some Well-Known ports}{section.1.6}% 18
+\BOOKMARK [2][-]{subsection.1.6.3}{FTP \(File Transfer Protocol\)}{section.1.6}% 19
+\BOOKMARK [2][-]{subsection.1.6.4}{SSH \(Secure SHell\)}{section.1.6}% 20
+\BOOKMARK [2][-]{subsection.1.6.5}{SMTP, IMAP and POP3}{section.1.6}% 21
+\BOOKMARK [2][-]{subsection.1.6.6}{DNS}{section.1.6}% 22
+\BOOKMARK [2][-]{subsection.1.6.7}{TFTP}{section.1.6}% 23
+\BOOKMARK [2][-]{subsection.1.6.8}{DHCP \(Dynamic Host Configuration Protocol\)}{section.1.6}% 24
+\BOOKMARK [2][-]{subsection.1.6.9}{HTTP, HTTPS}{section.1.6}% 25
+\BOOKMARK [2][-]{subsection.1.6.10}{NTP, SNTP}{section.1.6}% 26
+\BOOKMARK [2][-]{subsection.1.6.11}{LDAP}{section.1.6}% 27
+\BOOKMARK [2][-]{subsection.1.6.12}{rsh}{section.1.6}% 28
+\BOOKMARK [2][-]{subsection.1.6.13}{RealTime Streaming Protocol \(RTSP\)}{section.1.6}% 29
+\BOOKMARK [2][-]{subsection.1.6.14}{Microsoft's Remote Desktop Protocol \(RDP\)}{section.1.6}% 30
+\BOOKMARK [1][-]{section.1.7}{Protocol Data Units \(PDU\)}{chapter.1}% 31
+\BOOKMARK [0][-]{chapter.2}{Infrastructure Components}{part.1}% 32
+\BOOKMARK [1][-]{section.2.1}{Common Network Infrastructure Devices}{chapter.2}% 33
+\BOOKMARK [2][-]{subsection.2.1.1}{Router}{section.2.1}% 34
+\BOOKMARK [2][-]{subsection.2.1.2}{Wide Area Network \(WAN\)}{section.2.1}% 35
+\BOOKMARK [2][-]{subsection.2.1.3}{Virtual Private Network \(VPN\)}{section.2.1}% 36
+\BOOKMARK [2][-]{subsection.2.1.4}{End-user stations}{section.2.1}% 37
+\BOOKMARK [2][-]{subsection.2.1.5}{Wireless Access Points \(WAP\)}{section.2.1}% 38
+\BOOKMARK [2][-]{subsection.2.1.6}{Switch}{section.2.1}% 39
+\BOOKMARK [2][-]{subsection.2.1.7}{Intrusion Prevention System \(IPS\)}{section.2.1}% 40
+\BOOKMARK [2][-]{subsection.2.1.8}{Intrusion Detection System \(IDS\)}{section.2.1}% 41
+\BOOKMARK [2][-]{subsection.2.1.9}{Firewall}{section.2.1}% 42
+\BOOKMARK [2][-]{subsection.2.1.10}{Demilitarized Zone \(DMZ\)}{section.2.1}% 43
+\BOOKMARK [2][-]{subsection.2.1.11}{Firewall-Router}{section.2.1}% 44
+\BOOKMARK [2][-]{subsection.2.1.12}{Multilayer/Layer-3 Switch}{section.2.1}% 45
+\BOOKMARK [2][-]{subsection.2.1.13}{Cache-Engine}{section.2.1}% 46
+\BOOKMARK [2][-]{subsection.2.1.14}{Network Attached Storage \(NAS\)}{section.2.1}% 47
+\BOOKMARK [1][-]{section.2.2}{Firewalls}{chapter.2}% 48
+\BOOKMARK [2][-]{subsection.2.2.1}{Packet Filter}{section.2.2}% 49
+\BOOKMARK [2][-]{subsection.2.2.2}{Stateful Firewall}{section.2.2}% 50
+\BOOKMARK [2][-]{subsection.2.2.3}{Application Layer Firewall}{section.2.2}% 51
+\BOOKMARK [1][-]{section.2.3}{Wireless Access Points and Controllers}{chapter.2}% 52
+\BOOKMARK [2][-]{subsection.2.3.1}{Wireless Ad Hoc Networks}{section.2.3}% 53
+\BOOKMARK [2][-]{subsection.2.3.2}{Wireless Access Points \(WAP\)}{section.2.3}% 54
+\BOOKMARK [2][-]{subsection.2.3.3}{LightWeight Access Point Protocol \(LWAPP\)}{section.2.3}% 55
+\BOOKMARK [0][-]{chapter.3}{Network Architecture}{part.1}% 56
+\BOOKMARK [1][-]{section.3.1}{Star Topology}{chapter.3}% 57
+\BOOKMARK [1][-]{section.3.2}{Mesh Topology}{chapter.3}% 58
+\BOOKMARK [2][-]{subsection.3.2.1}{Comparison between Full and Partial Meshes}{section.3.2}% 59
+\BOOKMARK [1][-]{section.3.3}{Collapsed Core vs Three-Tier Architectures}{chapter.3}% 60
+\BOOKMARK [2][-]{subsection.3.3.1}{Three-Tier Architecture}{section.3.3}% 61
+\BOOKMARK [2][-]{subsection.3.3.2}{Collapsed Core Architecture}{section.3.3}% 62
+\BOOKMARK [0][-]{chapter.4}{Network Cabling}{part.1}% 63
+\BOOKMARK [1][-]{section.4.1}{Copper Cables}{chapter.4}% 64
+\BOOKMARK [2][-]{subsection.4.1.1}{Impedance of a Coaxial Cable}{section.4.1}% 65
+\BOOKMARK [2][-]{subsection.4.1.2}{Coaxial Cable Standards}{section.4.1}% 66
+\BOOKMARK [2][-]{subsection.4.1.3}{Twisted Pair Cables}{section.4.1}% 67
+\BOOKMARK [2][-]{subsection.4.1.4}{Categories of Twisted-Pair cables}{section.4.1}% 68
+\BOOKMARK [1][-]{section.4.2}{Fibre Cables}{chapter.4}% 69
+\BOOKMARK [2][-]{subsection.4.2.1}{Anatomy of a Fibre Optic cable}{section.4.2}% 70
+\BOOKMARK [2][-]{subsection.4.2.2}{Total Internal Refraction in Fibre Optic cable}{section.4.2}% 71
+\BOOKMARK [2][-]{subsection.4.2.3}{Single Mode Fibre \(SMF\)}{section.4.2}% 72
+\BOOKMARK [2][-]{subsection.4.2.4}{Multi Mode Fibre \(MMF\)}{section.4.2}% 73
+\BOOKMARK [2][-]{subsection.4.2.5}{Multimode Delay Distortion}{section.4.2}% 74
+\BOOKMARK [1][-]{section.4.3}{Copper Connectors}{chapter.4}% 75
+\BOOKMARK [2][-]{subsection.4.3.1}{Common Connectors for Coaxial Cables}{section.4.3}% 76
+\BOOKMARK [2][-]{subsection.4.3.2}{Common Connectors for Twisted-Pair Cables}{section.4.3}% 77
+\BOOKMARK [1][-]{section.4.4}{Fibre Connectors}{chapter.4}% 78
+\BOOKMARK [1][-]{section.4.5}{ETA/TIA 568 Standards}{chapter.4}% 79
+\BOOKMARK [0][-]{chapter.5}{Basic Troubleshooting}{part.1}% 80
+\BOOKMARK [1][-]{section.5.1}{Troubleshooting Fundamentals}{chapter.5}% 81
+\BOOKMARK [2][-]{subsection.5.1.1}{Top-down Troubleshooting}{section.5.1}% 82
+\BOOKMARK [2][-]{subsection.5.1.2}{Bottom-up Troubleshooting}{section.5.1}% 83
+\BOOKMARK [2][-]{subsection.5.1.3}{Divide and Conquer Troubleshooting}{section.5.1}% 84
+\BOOKMARK [2][-]{subsection.5.1.4}{Other approaches}{section.5.1}% 85
+\BOOKMARK [2][-]{subsection.5.1.5}{Swapping Components}{section.5.1}% 86
+\BOOKMARK [1][-]{section.5.2}{Cisco's Structured Troubleshooting Model}{chapter.5}% 87
+\BOOKMARK [2][-]{subsection.5.2.1}{Define the problem}{section.5.2}% 88
+\BOOKMARK [2][-]{subsection.5.2.2}{Collect Information about the problem}{section.5.2}% 89
+\BOOKMARK [2][-]{subsection.5.2.3}{Analyse the Information}{section.5.2}% 90
+\BOOKMARK [2][-]{subsection.5.2.4}{Eliminate Potential Causes}{section.5.2}% 91
+\BOOKMARK [2][-]{subsection.5.2.5}{Propose a Hypothesis}{section.5.2}% 92
+\BOOKMARK [2][-]{subsection.5.2.6}{Test the Hypothesis}{section.5.2}% 93
+\BOOKMARK [2][-]{subsection.5.2.7}{Solve and Document}{section.5.2}% 94
+\BOOKMARK [0][-]{chapter.6}{IPv4 Addressing}{part.1}% 95
+\BOOKMARK [1][-]{section.6.1}{Binary Numbering}{chapter.6}% 96
+\BOOKMARK [2][-]{subsection.6.1.1}{Binary to Decimal Conversion}{section.6.1}% 97
+\BOOKMARK [2][-]{subsection.6.1.2}{Decimal to Binary Conversion}{section.6.1}% 98
+\BOOKMARK [2][-]{subsection.6.1.3}{Exercises}{section.6.1}% 99
+\BOOKMARK [1][-]{section.6.2}{IPv4 Address Formatting}{chapter.6}% 100
+\BOOKMARK [2][-]{subsection.6.2.1}{Subnet Mask}{section.6.2}% 101
+\BOOKMARK [2][-]{subsection.6.2.2}{Prefix/Slash Notation of Subnet Mask}{section.6.2}% 102
+\BOOKMARK [2][-]{subsection.6.2.3}{Dotted Decimal Notation of Subnet Mask}{section.6.2}% 103
+\BOOKMARK [2][-]{subsection.6.2.4}{Calculating Network and Host ID}{section.6.2}% 104
+\BOOKMARK [1][-]{section.6.3}{Address Classes}{chapter.6}% 105
+\BOOKMARK [2][-]{subsection.6.3.1}{Loopback Addresses}{section.6.3}% 106
+\BOOKMARK [2][-]{subsection.6.3.2}{Assigning IP Addresses}{section.6.3}% 107
+\BOOKMARK [1][-]{section.6.4}{Private vs. Public IPv4 Addresses}{chapter.6}% 108
+\BOOKMARK [2][-]{subsection.6.4.1}{Automatic Private IP Addressing \(APIPA\)}{section.6.4}% 109
+\BOOKMARK [1][-]{section.6.5}{Unicast}{chapter.6}% 110
+\BOOKMARK [1][-]{section.6.6}{Broadcast}{chapter.6}% 111
+\BOOKMARK [1][-]{section.6.7}{IPv4 Multicast}{chapter.6}% 112
+\BOOKMARK [1][-]{section.6.8}{The Need for Subnetting}{chapter.6}% 113
+\BOOKMARK [1][-]{section.6.9}{Calculating Available Subnets}{chapter.6}% 114
+\BOOKMARK [1][-]{section.6.10}{Calculating Available Hosts}{chapter.6}% 115
+\BOOKMARK [1][-]{section.6.11}{Subnetting Practice Exercise \0431}{chapter.6}% 116
+\BOOKMARK [1][-]{section.6.12}{Subnetting Practice Exercise \0432}{chapter.6}% 117
+\BOOKMARK [1][-]{section.6.13}{Subnetting Practice Exercise \0433}{chapter.6}% 118
+\BOOKMARK [1][-]{section.6.14}{Calculating Usable Ranges of IPv4 Addresses}{chapter.6}% 119
+\BOOKMARK [1][-]{section.6.15}{Subnetting Practice Exercise \0434}{chapter.6}% 120
+\BOOKMARK [1][-]{section.6.16}{Subnetting Practice Exercise \0435}{chapter.6}% 121
+\BOOKMARK [1][-]{section.6.17}{Classless Inter-Domain Routing \(CIDR\)}{chapter.6}% 122
+\BOOKMARK [0][-]{chapter.7}{IPv6 Addressing}{part.1}% 123
+\BOOKMARK [-1][-]{part.2}{II LAN Switching}{}% 124
+\BOOKMARK [0][-]{chapter.8}{Fundamentals of Ethernet}{part.2}% 125
+\BOOKMARK [0][-]{chapter.9}{Basic Cisco Catalyst Switch Configuration}{part.2}% 126
+\BOOKMARK [0][-]{chapter.10}{Virtual LANs \(VLANs\)}{part.2}% 127
+\BOOKMARK [0][-]{chapter.11}{Trunking}{part.2}% 128
+\BOOKMARK [0][-]{chapter.12}{Troubleshooting Switch Operation}{part.2}% 129
+\BOOKMARK [0][-]{chapter.13}{Basic Switch Security}{part.2}% 130
+\BOOKMARK [0][-]{chapter.14}{Voice VLANs}{part.2}% 131
+\BOOKMARK [-1][-]{part.3}{III IP Routing}{}% 132
+\BOOKMARK [0][-]{chapter.15}{Basic Router Operation}{part.3}% 133
+\BOOKMARK [0][-]{chapter.16}{Basic Router Configuration and Verification}{part.3}% 134
+\BOOKMARK [0][-]{chapter.17}{Routing Fundamentals}{part.3}% 135
+\BOOKMARK [0][-]{chapter.18}{Routing Information Protocol \(RIP\)}{part.3}% 136
+\BOOKMARK [-1][-]{part.4}{IV Network Services}{}% 137
+\BOOKMARK [0][-]{chapter.19}{Dynamic Host Configuration Protocol \(DHCP\)}{part.4}% 138
+\BOOKMARK [0][-]{chapter.20}{Network Address Translation \(NAT\)}{part.4}% 139
+\BOOKMARK [0][-]{chapter.21}{Network Time Protocol \(NTP\)}{part.4}% 140
+\BOOKMARK [-1][-]{part.5}{V Network Management}{}% 141
+\BOOKMARK [0][-]{chapter.22}{Network Management Protocols}{part.5}% 142
+\BOOKMARK [0][-]{chapter.23}{Device Management}{part.5}% 143
+\BOOKMARK [0][-]{chapter.24}{Troubleshooting with Cisco IOS Tools}{part.5}% 144

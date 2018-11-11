@@ -1,0 +1,1623 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.10)  12 NOV 2018 00:28
+entering extended mode
+**./ICND1.tex
+(ICND1.tex
+LaTeX2e <2018-04-01> patch level 5
+(../format.tex
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\report.cls"
+Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size10.clo"
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) ("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inputenc.st
+y"
+Package: inputenc 2018/04/06 v1.3b Input encoding file
+\inpenc@prehook=\toks14
+\inpenc@posthook=\toks15
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\helvet.sty"
+Package: helvet 2005/04/12 PSNFSS-v9.2a (WaS) 
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.st
+y"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+))
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\fontenc.sty"
+Package: fontenc 2017/04/05 v2.0i Standard LaTeX package
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1enc.def"
+File: t1enc.def 2017/04/05 v2.0i Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+))
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry.
+sty"
+Package: geometry 2018/04/16 v5.8 Page Geometry
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.s
+ty"
+Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.
+sty"
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.
+sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count89
+\Gm@cntv=\count90
+\c@Gm@tempcnt=\count91
+\Gm@bindingoffset=\dimen103
+\Gm@wd@mp=\dimen104
+\Gm@odd@mp=\dimen105
+\Gm@even@mp=\dimen106
+\Gm@layoutwidth=\dimen107
+\Gm@layoutheight=\dimen108
+\Gm@layouthoffset=\dimen109
+\Gm@layoutvoffset=\dimen110
+\Gm@dimlist=\toks17
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry.
+cfg"))
+
+Package geometry Warning: Over-specification in `h'-direction.
+    `width' (483.69684pt) is ignored.
+
+
+Package geometry Warning: Over-specification in `v'-direction.
+    `height' (731.23582pt) is ignored.
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\minted\minted.sty"
+Package: minted 2017/07/19 v2.5 Yet another Pygments shim for LaTeX
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvoptions
+.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds
+.sty"
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\kvsetke
+ys.sty"
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\infware
+rr.sty"
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\etexcmd
+s.sty"
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ifluate
+x.sty"
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\fvextra\fvextra.st
+y"
+Package: fvextra 2017/07/08 v1.3.1 fvextra - extensions and patches for fancyvr
+b
+ ("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\etoolbox\etoolbox.
+sty"
+Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count92
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\fancyvrb\fancyvrb.
+sty"
+Package: fancyvrb 2018/11/01
+ Style option: `fancyvrb' v3.0 <2018/11/01> (tvz)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty"
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color
+.cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\pdfte
+x.def"
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+)
+\FV@CodeLineNo=\count93
+\FV@InFile=\read1
+\FV@TabBox=\box26
+\c@FancyVerbLine=\count94
+\FV@StepNumber=\count95
+\FV@OutFile=\write3
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\upquote\upquote.st
+y"
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\textcomp.sty"
+Package: textcomp 2017/04/05 v2.0i Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1enc.def"
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+Now handling font encoding TS1 ...
+... processing UTF-8 mapping file for font encoding TS1
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1enc.dfu"
+File: ts1enc.dfu 2018/04/05 v1.2c UTF-8 support for inputenc
+   defining Unicode char U+00A2 (decimal 162)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00A4 (decimal 164)
+   defining Unicode char U+00A5 (decimal 165)
+   defining Unicode char U+00A6 (decimal 166)
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00A8 (decimal 168)
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AC (decimal 172)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00AF (decimal 175)
+   defining Unicode char U+00B0 (decimal 176)
+   defining Unicode char U+00B1 (decimal 177)
+   defining Unicode char U+00B2 (decimal 178)
+   defining Unicode char U+00B3 (decimal 179)
+   defining Unicode char U+00B4 (decimal 180)
+   defining Unicode char U+00B5 (decimal 181)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+00B9 (decimal 185)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+00BC (decimal 188)
+   defining Unicode char U+00BD (decimal 189)
+   defining Unicode char U+00BE (decimal 190)
+   defining Unicode char U+00D7 (decimal 215)
+   defining Unicode char U+00F7 (decimal 247)
+   defining Unicode char U+0192 (decimal 402)
+   defining Unicode char U+02C7 (decimal 711)
+   defining Unicode char U+02D8 (decimal 728)
+   defining Unicode char U+02DD (decimal 733)
+   defining Unicode char U+0E3F (decimal 3647)
+   defining Unicode char U+2016 (decimal 8214)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+203B (decimal 8251)
+   defining Unicode char U+203D (decimal 8253)
+   defining Unicode char U+2044 (decimal 8260)
+   defining Unicode char U+204E (decimal 8270)
+   defining Unicode char U+2052 (decimal 8274)
+   defining Unicode char U+20A1 (decimal 8353)
+   defining Unicode char U+20A4 (decimal 8356)
+   defining Unicode char U+20A6 (decimal 8358)
+   defining Unicode char U+20A9 (decimal 8361)
+   defining Unicode char U+20AB (decimal 8363)
+   defining Unicode char U+20AC (decimal 8364)
+   defining Unicode char U+20B1 (decimal 8369)
+   defining Unicode char U+2103 (decimal 8451)
+   defining Unicode char U+2116 (decimal 8470)
+   defining Unicode char U+2117 (decimal 8471)
+   defining Unicode char U+211E (decimal 8478)
+   defining Unicode char U+2120 (decimal 8480)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2126 (decimal 8486)
+   defining Unicode char U+2127 (decimal 8487)
+   defining Unicode char U+212E (decimal 8494)
+   defining Unicode char U+2190 (decimal 8592)
+   defining Unicode char U+2191 (decimal 8593)
+   defining Unicode char U+2192 (decimal 8594)
+   defining Unicode char U+2193 (decimal 8595)
+   defining Unicode char U+2329 (decimal 9001)
+   defining Unicode char U+232A (decimal 9002)
+   defining Unicode char U+2422 (decimal 9250)
+   defining Unicode char U+25E6 (decimal 9702)
+   defining Unicode char U+25EF (decimal 9711)
+   defining Unicode char U+266A (decimal 9834)
+   defining Unicode char U+FEFF (decimal 65279)
+))
+LaTeX Info: Redefining \oldstylenums on input line 334.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
+Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
+Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
+Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
+Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
+Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
+Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
+Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
+Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
+Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
+Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
+Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
+Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
+Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
+Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
+Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
+))
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lineno\lineno.sty"
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count96
+\output=\toks18
+\linenoprevgraf=\count97
+\linenumbersep=\dimen111
+\linenumberwidth=\dimen112
+\c@linenumber=\count98
+\c@pagewiselinenumber=\count99
+\c@LN@truepage=\count100
+\c@internallinenumber=\count101
+\c@internallinenumbers=\count102
+\quotelinenumbersep=\dimen113
+\bframerule=\dimen114
+\bframesep=\dimen115
+\bframebox=\box27
+LaTeX Info: Redefining \\ on input line 3056.
+)
+\c@FV@TrueTabGroupLevel=\count103
+\c@FV@TrueTabCounter=\count104
+\FV@TabBox@Group=\box28
+\FV@TmpLength=\skip43
+\c@FV@HighlightLinesStart=\count105
+\c@FV@HighlightLinesStop=\count106
+\FV@LoopCount=\count107
+\FV@NCharsBox=\box29
+\FV@BreakIndent=\dimen116
+\FV@BreakIndentNChars=\count108
+\FV@BreakSymbolSepLeft=\dimen117
+\FV@BreakSymbolSepLeftNChars=\count109
+\FV@BreakSymbolSepRight=\dimen118
+\FV@BreakSymbolSepRightNChars=\count110
+\FV@BreakSymbolIndentLeft=\dimen119
+\FV@BreakSymbolIndentLeftNChars=\count111
+\FV@BreakSymbolIndentRight=\dimen120
+\FV@BreakSymbolIndentRightNChars=\count112
+\c@FancyVerbLineBreakLast=\count113
+\FV@LineBox=\box30
+\FV@LineIndentBox=\box31
+) ("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\calc.sty"
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count114
+\calc@Bcount=\count115
+\calc@Adimen=\dimen121
+\calc@Bdimen=\dimen122
+\calc@Askip=\skip44
+\calc@Bskip=\skip45
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count116
+\calc@Cskip=\skip46
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\shellesc.sty
+"
+Package: shellesc 2016/06/07 v0.02a unified shell escape interface for LaTeX
+Package shellesc Info: Unrestricted shell escape enabled on input line 67.
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\ifplatform\ifplatf
+orm.sty"
+Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\pdftexc
+mds.sty"
+Package: pdftexcmds 2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\catchfi
+le.sty"
+Package: catchfile 2016/05/16 v1.7 Catch the contents of a file (HO)
+))
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\xstring\xstring.st
+y"
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\xstring\xstring.
+tex"
+\@xs@message=\write4
+\integerpart=\count117
+\decimalpart=\count118
+)
+Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\framed\framed.sty"
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip47
+\fb@frw=\dimen123
+\fb@frh=\dimen124
+\FrameRule=\dimen125
+\FrameSep=\dimen126
+) ("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count119
+\float@exts=\toks19
+\float@box=\box32
+\@float@everytoks=\toks20
+\@floatcapt=\box33
+)
+\minted@appexistsfile=\read2
+\minted@bgbox=\box34
+\minted@code=\write5
+\c@minted@FancyVerbLineTemp=\count120
+\c@minted@pygmentizecounter=\count121
+\@float@every@listing=\toks21
+\c@listing=\count122
+)
+runsystem(if not exist _minted-ICND1 mkdir _minted-ICND1)...executed.
+
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\booktabs\booktabs.
+sty"
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen127
+\lightrulewidth=\dimen128
+\cmidrulewidth=\dimen129
+\belowrulesep=\dimen130
+\belowbottomsep=\dimen131
+\aboverulesep=\dimen132
+\abovetopsep=\dimen133
+\cmidrulesep=\dimen134
+\cmidrulekern=\dimen135
+\defaultaddspace=\dimen136
+\@cmidla=\count123
+\@cmidlb=\count124
+\@aboverulesep=\dimen137
+\@belowrulesep=\dimen138
+\@thisruleclass=\count125
+\@lastruleclass=\count126
+\@thisrulewidth=\dimen139
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\array.sty"
+Package: array 2018/04/30 v2.4h Tabular extension package (FMi)
+\col@sep=\dimen140
+\ar@mcellbox=\box35
+\extrarowheight=\dimen141
+\NC@list=\toks22
+\extratabsurround=\skip48
+\backup@length=\skip49
+\ar@cellbox=\box36
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\multirow\multirow.
+sty"
+Package: multirow 2018/08/03 v2.3 Span multiple rows of a table
+\multirow@colwidth=\skip50
+\multirow@cntb=\count127
+\multirow@dima=\skip51
+\bigstrutjot=\dimen142
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphicx.
+sty"
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphics.
+sty"
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\graph
+ics.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+)
+\Gin@req@height=\dimen143
+\Gin@req@width=\dimen144
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsmath.st
+y"
+Package: amsmath 2017/09/02 v2.17a AMS math features
+\@mathmargin=\skip52
+
+For additional information on amsmath, use the `?' option.
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amstext.st
+y"
+Package: amstext 2000/06/29 v2.01 AMS text
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
+"
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks23
+\ex@=\dimen145
+))
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
+"
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen146
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
+"
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count128
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count129
+\leftroot@=\count130
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count131
+\DOTSCASE@=\count132
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box37
+\strutbox@=\box38
+\big@size=\dimen147
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count133
+\c@MaxMatrixCols=\count134
+\dotsspace@=\muskip10
+\c@parentequation=\count135
+\dspbrk@lvl=\count136
+\tag@help=\toks24
+\row@=\count137
+\column@=\count138
+\maxfields@=\count139
+\andhelp@=\toks25
+\eqnshift@=\dimen148
+\alignsep@=\dimen149
+\tagshift@=\dimen150
+\tagwidth@=\dimen151
+\totwidth@=\dimen152
+\lineht@=\dimen153
+\@envbody=\toks26
+\multlinegap=\skip53
+\multlinetaggap=\skip54
+\mathdisplay@stack=\toks27
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\grffile.s
+ty"
+Package: grffile 2017/06/30 v1.18 Extended file name support for graphics (HO)
+Package grffile Info: Option `multidot' is set to `true'.
+Package grffile Info: Option `extendedchars' is set to `false'.
+Package grffile Info: Option `space' is set to `true'.
+Package grffile Info: \Gin@ii of package `graphicx' fixed on input line 494.
+)
+   defining Unicode char U+25CF (decimal 9679)
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\pmboxdraw
+.sty"
+Package: pmboxdraw 2016/05/16 v1.2 Poor man's box drawing characters (HO)
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\kvdefin
+ekeys.sty"
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+)
+Now handling font encoding pmboxdraw ...
+... processing UTF-8 mapping file for font encoding pmboxdraw
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\pmboxdraw
+enc.dfu"
+File: pmboxdrawenc.dfu 2016/05/16 v1.2 UTF-8 support for box drawing characters
+
+   defining Unicode char U+2500 (decimal 9472)
+   defining Unicode char U+2501 (decimal 9473)
+   defining Unicode char U+2502 (decimal 9474)
+   defining Unicode char U+2503 (decimal 9475)
+   defining Unicode char U+250C (decimal 9484)
+   defining Unicode char U+250D (decimal 9485)
+   defining Unicode char U+250E (decimal 9486)
+   defining Unicode char U+250F (decimal 9487)
+   defining Unicode char U+2510 (decimal 9488)
+   defining Unicode char U+2511 (decimal 9489)
+   defining Unicode char U+2512 (decimal 9490)
+   defining Unicode char U+2513 (decimal 9491)
+   defining Unicode char U+2514 (decimal 9492)
+   defining Unicode char U+2515 (decimal 9493)
+   defining Unicode char U+2516 (decimal 9494)
+   defining Unicode char U+2517 (decimal 9495)
+   defining Unicode char U+2518 (decimal 9496)
+   defining Unicode char U+2519 (decimal 9497)
+   defining Unicode char U+251A (decimal 9498)
+   defining Unicode char U+251B (decimal 9499)
+   defining Unicode char U+251C (decimal 9500)
+   defining Unicode char U+251D (decimal 9501)
+   defining Unicode char U+251E (decimal 9502)
+   defining Unicode char U+251F (decimal 9503)
+   defining Unicode char U+2520 (decimal 9504)
+   defining Unicode char U+2521 (decimal 9505)
+   defining Unicode char U+2522 (decimal 9506)
+   defining Unicode char U+2523 (decimal 9507)
+   defining Unicode char U+2524 (decimal 9508)
+   defining Unicode char U+252C (decimal 9516)
+   defining Unicode char U+252D (decimal 9517)
+   defining Unicode char U+252E (decimal 9518)
+   defining Unicode char U+252F (decimal 9519)
+   defining Unicode char U+2530 (decimal 9520)
+   defining Unicode char U+2531 (decimal 9521)
+   defining Unicode char U+2532 (decimal 9522)
+   defining Unicode char U+2533 (decimal 9523)
+   defining Unicode char U+2534 (decimal 9524)
+   defining Unicode char U+2535 (decimal 9525)
+   defining Unicode char U+2536 (decimal 9526)
+   defining Unicode char U+2537 (decimal 9527)
+   defining Unicode char U+2538 (decimal 9528)
+   defining Unicode char U+2539 (decimal 9529)
+   defining Unicode char U+253A (decimal 9530)
+   defining Unicode char U+253B (decimal 9531)
+   defining Unicode char U+253C (decimal 9532)
+   defining Unicode char U+253D (decimal 9533)
+   defining Unicode char U+253E (decimal 9534)
+   defining Unicode char U+253F (decimal 9535)
+   defining Unicode char U+2540 (decimal 9536)
+   defining Unicode char U+2541 (decimal 9537)
+   defining Unicode char U+2542 (decimal 9538)
+   defining Unicode char U+2543 (decimal 9539)
+   defining Unicode char U+2544 (decimal 9540)
+   defining Unicode char U+2545 (decimal 9541)
+   defining Unicode char U+2546 (decimal 9542)
+   defining Unicode char U+2547 (decimal 9543)
+   defining Unicode char U+2548 (decimal 9544)
+   defining Unicode char U+2549 (decimal 9545)
+   defining Unicode char U+254A (decimal 9546)
+   defining Unicode char U+254B (decimal 9547)
+   defining Unicode char U+2550 (decimal 9552)
+   defining Unicode char U+2551 (decimal 9553)
+   defining Unicode char U+2552 (decimal 9554)
+   defining Unicode char U+2553 (decimal 9555)
+   defining Unicode char U+2554 (decimal 9556)
+   defining Unicode char U+2555 (decimal 9557)
+   defining Unicode char U+2556 (decimal 9558)
+   defining Unicode char U+2557 (decimal 9559)
+   defining Unicode char U+2558 (decimal 9560)
+   defining Unicode char U+2559 (decimal 9561)
+   defining Unicode char U+255A (decimal 9562)
+   defining Unicode char U+255B (decimal 9563)
+   defining Unicode char U+255C (decimal 9564)
+   defining Unicode char U+255D (decimal 9565)
+   defining Unicode char U+255E (decimal 9566)
+   defining Unicode char U+255F (decimal 9567)
+   defining Unicode char U+2560 (decimal 9568)
+   defining Unicode char U+2561 (decimal 9569)
+   defining Unicode char U+2562 (decimal 9570)
+   defining Unicode char U+2563 (decimal 9571)
+   defining Unicode char U+2564 (decimal 9572)
+   defining Unicode char U+2565 (decimal 9573)
+   defining Unicode char U+2566 (decimal 9574)
+   defining Unicode char U+2567 (decimal 9575)
+   defining Unicode char U+2568 (decimal 9576)
+   defining Unicode char U+2569 (decimal 9577)
+   defining Unicode char U+256A (decimal 9578)
+   defining Unicode char U+256B (decimal 9579)
+   defining Unicode char U+256C (decimal 9580)
+   defining Unicode char U+2574 (decimal 9588)
+   defining Unicode char U+2575 (decimal 9589)
+   defining Unicode char U+2576 (decimal 9590)
+   defining Unicode char U+2577 (decimal 9591)
+   defining Unicode char U+2578 (decimal 9592)
+   defining Unicode char U+2579 (decimal 9593)
+   defining Unicode char U+257A (decimal 9594)
+   defining Unicode char U+257B (decimal 9595)
+   defining Unicode char U+257C (decimal 9596)
+   defining Unicode char U+257D (decimal 9597)
+   defining Unicode char U+257E (decimal 9598)
+   defining Unicode char U+257F (decimal 9599)
+   defining Unicode char U+2580 (decimal 9600)
+   defining Unicode char U+2581 (decimal 9601)
+   defining Unicode char U+2582 (decimal 9602)
+   defining Unicode char U+2583 (decimal 9603)
+   defining Unicode char U+2584 (decimal 9604)
+   defining Unicode char U+2585 (decimal 9605)
+   defining Unicode char U+2586 (decimal 9606)
+   defining Unicode char U+2587 (decimal 9607)
+   defining Unicode char U+2588 (decimal 9608)
+   defining Unicode char U+2589 (decimal 9609)
+   defining Unicode char U+258A (decimal 9610)
+   defining Unicode char U+258B (decimal 9611)
+   defining Unicode char U+258C (decimal 9612)
+   defining Unicode char U+258D (decimal 9613)
+   defining Unicode char U+258E (decimal 9614)
+   defining Unicode char U+258F (decimal 9615)
+   defining Unicode char U+2590 (decimal 9616)
+   defining Unicode char U+2591 (decimal 9617)
+   defining Unicode char U+2592 (decimal 9618)
+   defining Unicode char U+2593 (decimal 9619)
+   defining Unicode char U+2594 (decimal 9620)
+   defining Unicode char U+2595 (decimal 9621)
+   defining Unicode char U+2596 (decimal 9622)
+   defining Unicode char U+2597 (decimal 9623)
+   defining Unicode char U+2598 (decimal 9624)
+   defining Unicode char U+2599 (decimal 9625)
+   defining Unicode char U+259A (decimal 9626)
+   defining Unicode char U+259B (decimal 9627)
+   defining Unicode char U+259C (decimal 9628)
+   defining Unicode char U+259D (decimal 9629)
+   defining Unicode char U+259E (decimal 9630)
+   defining Unicode char U+259F (decimal 9631)
+)
+\pmbd@W=\dimen154
+\pmbd@H=\dimen155
+\pmbd@L=\dimen156
+\pmbd@Thin=\dimen157
+\pmbd@Thick=\dimen158
+\pmbd@Sep=\dimen159
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hyperref.
+sty"
+Package: hyperref 2018/09/30 v6.88a Hypertext links for LaTeX
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-
+hyperref.sty"
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-
+generic.sty"
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package hobsub Info: Skipping package `ifluatex' (already loaded).
+Package hobsub Info: Skipping package `ifvtex' (already loaded).
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package hobsub Info: Skipping package `etexcmds' (already loaded).
+Package hobsub Info: Skipping package `kvsetkeys' (already loaded).
+Package hobsub Info: Skipping package `kvdefinekeys' (already loaded).
+Package hobsub Info: Skipping package `pdftexcmds' (already loaded).
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\auxhook.s
+ty"
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+\@linkdim=\dimen160
+\Hy@linkcounter=\count140
+\Hy@pagecounter=\count141
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc.de
+f"
+File: pd1enc.def 2018/09/30 v6.88a Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+\Hy@SavedSpaceFactor=\count142
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperref.
+cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4535.
+Package hyperref Info: Link nesting OFF on input line 4540.
+Package hyperref Info: Hyper index ON on input line 4543.
+Package hyperref Info: Plain pages OFF on input line 4550.
+Package hyperref Info: Backreferencing OFF on input line 4555.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4788.
+\c@Hy@tempcnt=\count143
+ ("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5141.
+\XeTeXLinkMargin=\dimen161
+\Fld@menulength=\count144
+\Field@Width=\dimen162
+\Fld@charsize=\dimen163
+Package hyperref Info: Hyper figures OFF on input line 6396.
+Package hyperref Info: Link nesting OFF on input line 6401.
+Package hyperref Info: Hyper index ON on input line 6404.
+Package hyperref Info: backreferencing OFF on input line 6411.
+Package hyperref Info: Link coloring OFF on input line 6416.
+Package hyperref Info: Link coloring with OCG OFF on input line 6421.
+Package hyperref Info: PDF/A mode OFF on input line 6426.
+LaTeX Info: Redefining \ref on input line 6466.
+LaTeX Info: Redefining \pageref on input line 6470.
+\Hy@abspage=\count145
+\c@Item=\count146
+\c@Hfootnote=\count147
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hpdftex.d
+ef"
+File: hpdftex.def 2018/09/30 v6.88a Hyperref driver for pdfTeX
+\Fld@listcount=\count148
+\c@bookmark@seq@number=\count149
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunfile
+check.sty"
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip55
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 66.
+)
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\wrapfig\wrapfig.st
+y"
+\wrapoverhang=\dimen164
+\WF@size=\dimen165
+\c@WF@wrappedlines=\count150
+\WF@box=\box39
+\WF@everypar=\toks28
+Package: wrapfig 2003/01/31  v 3.6
+)
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > IC
+ND1.aex <nul: /p x=^%~$PATH:i>> ICND1.aex)...executed.
+
+runsystem(del ICND1.aex)...executed.
+
+ (ICND1.aux
+
+LaTeX Warning: Label `fig:coax_cable' multiply defined.
+
+
+LaTeX Warning: Label `fig:coax_cable' multiply defined.
+
+)
+\openout1 = `ICND1.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 3.
+ ("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for pmboxdraw/pmboxdraw/m/n on input line
+ 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 3.
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\t1phv.fd"
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
+)
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 9.49997pt on input line 3.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(108.405pt, 380.69788pt, 108.405pt)
+* v-part:(T,H,B)=(72.26999pt, 700.50687pt, 72.26999pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=380.69788pt
+* \textheight=700.50687pt
+* \oddsidemargin=36.13501pt
+* \evensidemargin=36.13501pt
+* \topmargin=-37.0pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-
+base.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\grfext.st
+y"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+)
+\AtBeginShipoutBox=\box40
+Package hyperref Info: Link coloring ON on input line 3.
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.s
+ty"
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gettitl
+estring.sty"
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count151
+)
+LaTeX Info: Redefining \ref on input line 3.
+LaTeX Info: Redefining \pageref on input line 3.
+LaTeX Info: Redefining \nameref on input line 3.
+ (ICND1.out) (ICND1.out)
+\@outlinefile=\write6
+\openout6 = `ICND1.out'.
+
+ (titlePage.tex
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 23.63593pt on input line 5.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 6.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 23.63593pt on input line 6.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 16.41594pt on input line 9.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 10.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 16.41594pt on input line 10.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 11.39996pt on input line 12.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 20.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 11.39996pt on input line 20.
+ [1
+
+{C:/Users/somup/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]) (ICND1.toc
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 2.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 9.49997pt on input line 2.
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.32 ...rline {1.6.11}LDAP}{15}{subsection.1.6.11}
+                                                   [1
+
+] [2] [3] [4] [5])
+\tf@toc=\write7
+\openout7 = `ICND1.toc'.
+
+
+("Mod1/1. Fundamentals of Networking.tex" [6]
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 19.70294pt on input line 1.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 19.70294pt on input line 1.
+ [7
+
+]
+("Mod1/chapters/1.1. Network Reference Models and Protocols.tex"
+Chapter 1.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 13.67995pt on input line 2.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 2.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 13.67995pt on input line 2.
+LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 6.
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 6.
+LaTeX Font Info:    Font shape `T1/phv/b/sl' will be
+(Font)              scaled to size 9.49997pt on input line 6.
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 6.
+LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
+(Font)              scaled to size 9.49997pt on input line 6.
+
+Overfull \hbox (0.12527pt too wide) in paragraph at lines 14--24
+[] 
+ []
+
+
+Overfull \hbox (2.6395pt too wide) in paragraph at lines 25--43
+[] 
+ []
+
+[8
+
+]
+<"Mod1/chapters/1.1.a OSI Stack".png, id=765, 363.3575pt x 349.305pt>
+File: "Mod1/chapters/1.1.a OSI Stack".png Graphic file (type png)
+<use "Mod1/chapters/1.1.a OSI Stack".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.a OSI Stack".png  used on input lin
+e 48.
+(pdftex.def)             Requested size: 190.34894pt x 182.99344pt.
+ [9 <./Mod1/chapters/1.1.a OSI Stack.png>]
+<"Mod1/chapters/1.1.b TCP-IP Stack".png, id=773, 620.3175pt x 371.3875pt>
+File: "Mod1/chapters/1.1.b TCP-IP Stack".png Graphic file (type png)
+<use "Mod1/chapters/1.1.b TCP-IP Stack".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.b TCP-IP Stack".png  used on input 
+line 91.
+(pdftex.def)             Requested size: 209.38498pt x 125.3577pt.
+ [10 <./Mod1/chapters/1.1.b TCP-IP Stack.png>]
+Overfull \hbox (6.88263pt too wide) in paragraph at lines 98--112
+[] 
+ []
+
+<"Mod1/chapters/1.1.c DoD Alternate Model".png, id=780, 615.29875pt x 374.39874
+pt>
+File: "Mod1/chapters/1.1.c DoD Alternate Model".png Graphic file (type png)
+<use "Mod1/chapters/1.1.c DoD Alternate Model".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.c DoD Alternate Model".png  used on
+ input line 118.
+(pdftex.def)             Requested size: 266.48735pt x 162.15373pt.
+[11 <./Mod1/chapters/1.1.c DoD Alternate Model.png>]
+<"Mod1/chapters/1.1.d ICMP example".png, id=787, 401.5pt x 456.70625pt>
+File: "Mod1/chapters/1.1.d ICMP example".png Graphic file (type png)
+<use "Mod1/chapters/1.1.d ICMP example".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.d ICMP example".png  used on input 
+line 140.
+(pdftex.def)             Requested size: 190.34894pt x 216.52655pt.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 152.
+
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+[12 <./Mod1/chapters/1.1.d ICMP example.png>]
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/default-pyg-prefix.pygstyle) (_minted-ICND1/default.pygstyle)
+(_minted-ICND1/5340F275D698B006E4553C033337BE5A07AA383325F9D5FA4D4EDE24D4E13632
+.pygtex
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 7.59998pt on input line 1.
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
+)
+LaTeX Font Info:    Try loading font information for TS1+phv on input line 179.
+
+
+("C:\Users\somup\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\ts1phv.fd"
+File: ts1phv.fd 2001/06/04 scalable font definitions for TS1/phv.
+)
+LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
+(Font)              scaled to size 9.49997pt on input line 179.
+[13]
+<"Mod1/chapters/1.1.e Sliding Window".png, id=806, 1078.0275pt x 529.98pt>
+File: "Mod1/chapters/1.1.e Sliding Window".png Graphic file (type png)
+<use "Mod1/chapters/1.1.e Sliding Window".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.e Sliding Window".png  used on inpu
+t line 192.
+(pdftex.def)             Requested size: 342.62576pt x 168.44063pt.
+<"Mod1/chapters/1.1.f DNS".png, id=807, 1026.83624pt x 530.98375pt>
+File: "Mod1/chapters/1.1.f DNS".png Graphic file (type png)
+<use "Mod1/chapters/1.1.f DNS".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.f DNS".png  used on input line 207.
+
+(pdftex.def)             Requested size: 342.62576pt x 177.16968pt.
+ [14 <./Mod1/chapters/1.1.e Sliding Window.png>]
+<"Mod1/chapters/1.1.g. Hierarchial DNS".png, id=815, 954.56625pt x 571.13374pt>
+
+File: "Mod1/chapters/1.1.g. Hierarchial DNS".png Graphic file (type png)
+<use "Mod1/chapters/1.1.g. Hierarchial DNS".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.g. Hierarchial DNS".png  used on in
+put line 227.
+(pdftex.def)             Requested size: 380.69788pt x 227.77841pt.
+ [15 <./Mod1/chapters/1.1.f DNS.png>]
+Overfull \hbox (1.72432pt too wide) in paragraph at lines 236--254
+[] 
+ []
+
+[16 <./Mod1/chapters/1.1.g. Hierarchial DNS.png>]
+<"Mod1/chapters/1.1.h Port Numbers".png, id=828, 777.90625pt x 351.3125pt>
+File: "Mod1/chapters/1.1.h Port Numbers".png Graphic file (type png)
+<use "Mod1/chapters/1.1.h Port Numbers".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.h Port Numbers".png  used on input 
+line 274.
+(pdftex.def)             Requested size: 342.62576pt x 154.73878pt.
+ [17 <./Mod1/chapters/1.1.h Port Numbers.png>]
+<"Mod1/chapters/1.1.i Well Known Ports".png, id=835, 1371.1225pt x 770.88pt>
+File: "Mod1/chapters/1.1.i Well Known Ports".png Graphic file (type png)
+<use "Mod1/chapters/1.1.i Well Known Ports".png>
+Package pdftex.def Info: "Mod1/chapters/1.1.i Well Known Ports".png  used on in
+put line 285.
+(pdftex.def)             Requested size: 380.69788pt x 214.03348pt.
+ [18 <./Mod1/chapters/1.1.i Well Known Ports.png>] [19])
+("Mod1/chapters/1.2. Infrastructure Components.tex" [20]
+Chapter 2.
+<"Mod1/chapters/1.2.a Common Network Devices".png, id=851, 1245.65375pt x 707.6
+4375pt>
+File: "Mod1/chapters/1.2.a Common Network Devices".png Graphic file (type png)
+<use "Mod1/chapters/1.2.a Common Network Devices".png>
+Package pdftex.def Info: "Mod1/chapters/1.2.a Common Network Devices".png  used
+ on input line 9.
+(pdftex.def)             Requested size: 380.69788pt x 216.26834pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.1 Router".jpg, id=852, 77.28876pt x 5
+2.195pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.1 Router".jpg Graphic file (type
+ jpg)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.1 Router".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.1 Router".jpg
+  used on input line 19.
+(pdftex.def)             Requested size: 38.0721pt x 25.71196pt.
+[21
+
+ <./Mod1/chapters/1.2.a Common Network Devices.png> <./Mod1/chapters/1.2.b Netw
+ork Icons/1.2.b.1 Router.jpg>]
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.2 WAN".png, id=859, 97.36375pt x 33.1
+2375pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.2 WAN".png Graphic file (type pn
+g)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.2 WAN".png>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.2 WAN".png  u
+sed on input line 29.
+(pdftex.def)             Requested size: 38.0721pt x 12.95206pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.3 End-user stations".jpg, id=861, 161
+.60374pt x 73.27374pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.3 End-user stations".jpg Graphic
+ file (type jpg)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.3 End-user stations".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.3 End-user st
+ations".jpg  used on input line 44.
+(pdftex.def)             Requested size: 76.13841pt x 34.5225pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.4 WAP".jpg, id=862, 102.3825pt x 57.2
+1375pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.4 WAP".jpg Graphic file (type jp
+g)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.4 WAP".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.4 WAP".jpg  u
+sed on input line 53.
+(pdftex.def)             Requested size: 38.0721pt x 21.27612pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.5 Switch".jpg, id=863, 102.3825pt x 5
+1.19125pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.5 Switch".jpg Graphic file (type
+ jpg)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.5 Switch".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.5 Switch".jpg
+  used on input line 62.
+(pdftex.def)             Requested size: 38.0721pt x 19.03653pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS".jpg, id=864, 61.22874pt x 68.2
+55pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS".jpg Graphic file (type jp
+g)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS".jpg  u
+sed on input line 71.
+(pdftex.def)             Requested size: 38.0721pt x 42.44159pt.
+ [22 <./Mod1/chapters/1.2.b Network Icons/1.2.b.2 WAN.png> <./Mod1/chapters/1.2
+.b Network Icons/1.2.b.3 End-user stations.jpg> <./Mod1/chapters/1.2.b Network 
+Icons/1.2.b.4 WAP.jpg> <./Mod1/chapters/1.2.b Network Icons/1.2.b.5 Switch.jpg>
+]
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS".jpg Graphic file (type jp
+g)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS".jpg  u
+sed on input line 80.
+(pdftex.def)             Requested size: 38.0721pt x 42.44159pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.7 Firewall".jpg, id=870, 31.11626pt x
+ 69.25874pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.7 Firewall".jpg Graphic file (ty
+pe jpg)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.7 Firewall".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.7 Firewall".j
+pg  used on input line 89.
+(pdftex.def)             Requested size: 15.22536pt x 33.88951pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.8 DMZ".png, id=872, 814.04124pt x 393
+.47pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.8 DMZ".png Graphic file (type pn
+g)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.8 DMZ".png>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.8 DMZ".png  u
+sed on input line 98.
+(pdftex.def)             Requested size: 266.48735pt x 128.80682pt.
+ [23 <./Mod1/chapters/1.2.b Network Icons/1.2.b.6 IPS.jpg> <./Mod1/chapters/1.2
+.b Network Icons/1.2.b.7 Firewall.jpg> <./Mod1/chapters/1.2.b Network Icons/1.2
+.b.8 DMZ.png>]
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.9 Firewall-Router".jpg, id=879, 77.28
+876pt x 62.2325pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.9 Firewall-Router".jpg Graphic f
+ile (type jpg)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.9 Firewall-Router".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.9 Firewall-Ro
+uter".jpg  used on input line 110.
+(pdftex.def)             Requested size: 38.0721pt x 30.65657pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.10 Layer-3 Switch".jpg, id=880, 65.24
+374pt x 65.24374pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.10 Layer-3 Switch".jpg Graphic f
+ile (type jpg)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.10 Layer-3 Switch".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.10 Layer-3 Sw
+itch".jpg  used on input line 119.
+(pdftex.def)             Requested size: 38.0721pt x 38.07236pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.11 Cache-engine".jpg, id=882, 91.3412
+5pt x 66.2475pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.11 Cache-engine".jpg Graphic fil
+e (type jpg)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.11 Cache-engine".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.11 Cache-engi
+ne".jpg  used on input line 128.
+(pdftex.def)             Requested size: 38.0721pt x 27.61249pt.
+<"Mod1/chapters/1.2.b Network Icons/1.2.b.12 NAS".jpg, id=883, 77.28876pt x 45.
+16875pt>
+File: "Mod1/chapters/1.2.b Network Icons/1.2.b.12 NAS".jpg Graphic file (type j
+pg)
+<use "Mod1/chapters/1.2.b Network Icons/1.2.b.12 NAS".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.2.b Network Icons/1.2.b.12 NAS".jpg  
+used on input line 137.
+(pdftex.def)             Requested size: 38.0721pt x 22.25072pt.
+<"Mod1/chapters/1.2.c Firewall".png, id=884, 1074.0125pt x 347.2975pt>
+File: "Mod1/chapters/1.2.c Firewall".png Graphic file (type png)
+<use "Mod1/chapters/1.2.c Firewall".png>
+Package pdftex.def Info: "Mod1/chapters/1.2.c Firewall".png  used on input line
+ 149.
+(pdftex.def)             Requested size: 266.48735pt x 86.17233pt.
+ [24 <./Mod1/chapters/1.2.b Network Icons/1.2.b.9 Firewall-Router.jpg> <./Mod1/
+chapters/1.2.b Network Icons/1.2.b.10 Layer-3 Switch.jpg> <./Mod1/chapters/1.2.
+b Network Icons/1.2.b.11 Cache-engine.jpg> <./Mod1/chapters/1.2.b Network Icons
+/1.2.b.12 NAS.jpg>] [25 <./Mod1/chapters/1.2.c Firewall.png>] [26]
+<"Mod1/chapters/1.2.d WAPC".png, id=900, 771.88374pt x 179.67125pt>
+File: "Mod1/chapters/1.2.d WAPC".png Graphic file (type png)
+<use "Mod1/chapters/1.2.d WAPC".png>
+Package pdftex.def Info: "Mod1/chapters/1.2.d WAPC".png  used on input line 239
+.
+(pdftex.def)             Requested size: 380.69788pt x 88.61539pt.
+)
+("Mod1/chapters/1.3. Network Architecture.tex" [27 <./Mod1/chapters/1.2.d WAPC.
+png>]
+Chapter 3.
+<"Mod1/chapters/1.3.a Star topology".png, id=907, 1148.29pt x 621.32124pt>
+File: "Mod1/chapters/1.3.a Star topology".png Graphic file (type png)
+<use "Mod1/chapters/1.3.a Star topology".png>
+Package pdftex.def Info: "Mod1/chapters/1.3.a Star topology".png  used on input
+ line 7.
+(pdftex.def)             Requested size: 266.48735pt x 144.19023pt.
+[28
+
+ <./Mod1/chapters/1.3.a Star topology.png>]
+<"Mod1/chapters/1.3.b Full Mesh".png, id=914, 1134.2375pt x 645.41125pt>
+File: "Mod1/chapters/1.3.b Full Mesh".png Graphic file (type png)
+<use "Mod1/chapters/1.3.b Full Mesh".png>
+Package pdftex.def Info: "Mod1/chapters/1.3.b Full Mesh".png  used on input lin
+e 27.
+(pdftex.def)             Requested size: 266.48735pt x 151.63226pt.
+<"Mod1/chapters/1.3.c Partial Mesh".png, id=915, 1138.2525pt x 649.42625pt>
+File: "Mod1/chapters/1.3.c Partial Mesh".png Graphic file (type png)
+<use "Mod1/chapters/1.3.c Partial Mesh".png>
+Package pdftex.def Info: "Mod1/chapters/1.3.c Partial Mesh".png  used on input 
+line 42.
+(pdftex.def)             Requested size: 266.48735pt x 152.04044pt.
+
+Overfull \hbox (1.15903pt too wide) in paragraph at lines 48--59
+[] 
+ []
+
+[29 <./Mod1/chapters/1.3.b Full Mesh.png> <./Mod1/chapters/1.3.c Partial Mesh.p
+ng>]
+<"Mod1/chapters/1.3.d 3TierArch".png, id=929, 962.59625pt x 656.4525pt>
+File: "Mod1/chapters/1.3.d 3TierArch".png Graphic file (type png)
+<use "Mod1/chapters/1.3.d 3TierArch".png>
+Package pdftex.def Info: "Mod1/chapters/1.3.d 3TierArch".png  used on input lin
+e 65.
+(pdftex.def)             Requested size: 323.5955pt x 220.67671pt.
+ [30 <./Mod1/chapters/1.3.d 3TierArch.png>]
+<"Mod1/chapters/1.3.e CollapsedCoreArch".png, id=938, 898.35625pt x 527.9725pt>
+
+File: "Mod1/chapters/1.3.e CollapsedCoreArch".png Graphic file (type png)
+<use "Mod1/chapters/1.3.e CollapsedCoreArch".png>
+Package pdftex.def Info: "Mod1/chapters/1.3.e CollapsedCoreArch".png  used on i
+nput line 97.
+(pdftex.def)             Requested size: 266.48735pt x 156.61255pt.
+
+Overfull \hbox (3.84756pt too wide) in paragraph at lines 93--100
+\T1/phv/b/n/10 lapsed Core layer\T1/phv/m/n/10 . There are still re-dun-dant co
+n-nec-tions be-tween the ac-cess layer switches,
+ []
+
+) ("Mod1/chapters/1.4. Network Cabling.tex" [31 <./Mod1/chapters/1.3.e Collapse
+dCoreArch.png>]
+Chapter 4.
+<"Mod1/chapters/1.4.a Coaxial Cable".png, id=947, 280.04625pt x 315.1775pt>
+File: "Mod1/chapters/1.4.a Coaxial Cable".png Graphic file (type png)
+<use "Mod1/chapters/1.4.a Coaxial Cable".png>
+Package pdftex.def Info: "Mod1/chapters/1.4.a Coaxial Cable".png  used on input
+ line 10.
+(pdftex.def)             Requested size: 133.24657pt x 149.96574pt.
+[32
+
+ <./Mod1/chapters/1.4.a Coaxial Cable.png>]
+<"Mod1/chapters/1.4.b TwistedPair Cable".png, id=956, 310.15875pt x 409.53pt>
+File: "Mod1/chapters/1.4.b TwistedPair Cable".png Graphic file (type png)
+<use "Mod1/chapters/1.4.b TwistedPair Cable".png>
+Package pdftex.def Info: "Mod1/chapters/1.4.b TwistedPair Cable".png  used on i
+nput line 41.
+(pdftex.def)             Requested size: 95.17447pt x 125.66571pt.
+
+Underfull \hbox (badness 2744) in paragraph at lines 42--42
+[]\T1/phv/m/n/10 Figure 4.2: [][]Twisted-Pair
+ []
+
+[33 <./Mod1/chapters/1.4.b TwistedPair Cable.png>]
+<"Mod1/chapters/1.4.c FibreConstruction".jpg, id=967, 358.33875pt x 114.4275pt>
+
+File: "Mod1/chapters/1.4.c FibreConstruction".jpg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.c FibreConstruction".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.4.c FibreConstruction".jpg  used on i
+nput line 82.
+(pdftex.def)             Requested size: 178.92845pt x 57.13678pt.
+ [34 <./Mod1/chapters/1.4.c FibreConstruction.jpg>]
+<"Mod1/chapters/1.4.d SingleMode Fibre".png, id=976, 562.1pt x 119.44624pt>
+File: "Mod1/chapters/1.4.d SingleMode Fibre".png Graphic file (type png)
+<use "Mod1/chapters/1.4.d SingleMode Fibre".png>
+Package pdftex.def Info: "Mod1/chapters/1.4.d SingleMode Fibre".png  used on in
+put line 102.
+(pdftex.def)             Requested size: 178.92845pt x 38.02126pt.
+<"Mod1/chapters/1.4.e MultiMode Fibre".png, id=977, 562.1pt x 119.44624pt>
+File: "Mod1/chapters/1.4.e MultiMode Fibre".png Graphic file (type png)
+<use "Mod1/chapters/1.4.e MultiMode Fibre".png>
+Package pdftex.def Info: "Mod1/chapters/1.4.e MultiMode Fibre".png  used on inp
+ut line 115.
+(pdftex.def)             Requested size: 178.92845pt x 38.02126pt.
+ [35 <./Mod1/chapters/1.4.d SingleMode Fibre.png> <./Mod1/chapters/1.4.e MultiM
+ode Fibre.png>]
+<"Mod1/chapters/1.4.f F-Connector".png, id=987, 250.9375pt x 160.6pt>
+File: "Mod1/chapters/1.4.f F-Connector".png Graphic file (type png)
+<use "Mod1/chapters/1.4.f F-Connector".png>
+Package pdftex.def Info: "Mod1/chapters/1.4.f F-Connector".png  used on input l
+ine 133.
+(pdftex.def)             Requested size: 45.68188pt x 29.23512pt.
+<"Mod1/chapters/1.4.g BNC-Connector".jpg, id=988, 301.125pt x 224.84pt>
+File: "Mod1/chapters/1.4.g BNC-Connector".jpg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.g BNC-Connector".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.4.g BNC-Connector".jpg  used on input
+ line 145.
+(pdftex.def)             Requested size: 45.68188pt x 34.10878pt.
+<"Mod1/chapters/1.4.h DB-9 Connector".jpg, id=989, 501.875pt x 501.875pt>
+File: "Mod1/chapters/1.4.h DB-9 Connector".jpg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.h DB-9 Connector".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.4.h DB-9 Connector".jpg  used on inpu
+t line 159.
+(pdftex.def)             Requested size: 45.68188pt x 45.67989pt.
+<"Mod1/chapters/1.4.i RJ-11".jpg, id=990, 760.8425pt x 668.4975pt>
+File: "Mod1/chapters/1.4.i RJ-11".jpg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.i RJ-11".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.4.i RJ-11".jpg  used on input line 17
+3.
+(pdftex.def)             Requested size: 45.68188pt x 40.12851pt.
+ [36 <./Mod1/chapters/1.4.f F-Connector.png> <./Mod1/chapters/1.4.g BNC-Connect
+or.jpg> <./Mod1/chapters/1.4.h DB-9 Connector.jpg> <./Mod1/chapters/1.4.i RJ-11
+.jpg>]
+<"Mod1/chapters/1.4.j RJ-45".jpeg, id=1005, 702.625pt x 599.23875pt>
+File: "Mod1/chapters/1.4.j RJ-45".jpeg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.j RJ-45".jpeg>
+Package pdftex.def Info: "Mod1/chapters/1.4.j RJ-45".jpeg  used on input line 1
+87.
+(pdftex.def)             Requested size: 45.68188pt x 38.95187pt.
+<"Mod1/chapters/1.4.k ST Connector".jpeg, id=1006, 271.0125pt x 187.70125pt>
+File: "Mod1/chapters/1.4.k ST Connector".jpeg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.k ST Connector".jpeg>
+Package pdftex.def Info: "Mod1/chapters/1.4.k ST Connector".jpeg  used on input
+ line 202.
+(pdftex.def)             Requested size: 45.68188pt x 31.63669pt.
+<"Mod1/chapters/1.4.l LC Connector".jpg, id=1007, 653.44125pt x 401.5pt>
+File: "Mod1/chapters/1.4.l LC Connector".jpg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.l LC Connector".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.4.l LC Connector".jpg  used on input 
+line 216.
+(pdftex.def)             Requested size: 45.68188pt x 28.06497pt.
+<"Mod1/chapters/1.4.m SC Connector".jpeg, id=1008, 179.67125pt x 155.58125pt>
+File: "Mod1/chapters/1.4.m SC Connector".jpeg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.m SC Connector".jpeg>
+Package pdftex.def Info: "Mod1/chapters/1.4.m SC Connector".jpeg  used on input
+ line 228.
+(pdftex.def)             Requested size: 45.68188pt x 39.55754pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 233--234
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 233--234
+
+ []
+
+<"Mod1/chapters/1.4.n MTRJ".jpg, id=1009, 236.885pt x 165.61874pt>
+File: "Mod1/chapters/1.4.n MTRJ".jpg Graphic file (type jpg)
+<use "Mod1/chapters/1.4.n MTRJ".jpg>
+Package pdftex.def Info: "Mod1/chapters/1.4.n MTRJ".jpg  used on input line 240
+.
+(pdftex.def)             Requested size: 45.68188pt x 31.93793pt.
+[37 <./Mod1/chapters/1.4.j RJ-45.jpeg> <./Mod1/chapters/1.4.k ST Connector.jpeg
+> <./Mod1/chapters/1.4.l LC Connector.jpg> <./Mod1/chapters/1.4.m SC Connector.
+jpeg> <./Mod1/chapters/1.4.n MTRJ.jpg>]
+<"Mod1/chapters/1.4.o T568A-T568B Pinout".png, id=1024, 489.32813pt x 231.86626
+pt>
+File: "Mod1/chapters/1.4.o T568A-T568B Pinout".png Graphic file (type png)
+<use "Mod1/chapters/1.4.o T568A-T568B Pinout".png>
+Package pdftex.def Info: "Mod1/chapters/1.4.o T568A-T568B Pinout".png  used on 
+input line 255.
+(pdftex.def)             Requested size: 380.69788pt x 180.395pt.
+)
+("Mod1/chapters/1.5. Basic Troubleshooting.tex" [38 <./Mod1/chapters/1.4.o T568
+A-T568B Pinout.png>]
+Chapter 5.
+[39
+
+] [40]) ("Mod1/chapters/1.6. IPv4 Addressing.tex" [41]
+Chapter 6.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 6.64998pt on input line 45.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 4.74998pt on input line 45.
+[42
+
+] [43] [44] [45]
+Overfull \hbox (10.6933pt too wide) in paragraph at lines 220--232
+ [][] 
+ []
+
+[46] [47]
+<"Mod1/chapters/1.6.a Unicast".png, id=1084, 1143.27126pt x 604.2575pt>
+File: "Mod1/chapters/1.6.a Unicast".png Graphic file (type png)
+<use "Mod1/chapters/1.6.a Unicast".png>
+Package pdftex.def Info: "Mod1/chapters/1.6.a Unicast".png  used on input line 
+296.
+(pdftex.def)             Requested size: 266.48735pt x 140.848pt.
+<"Mod1/chapters/1.6.b Broadcast".png, id=1085, 1142.2675pt x 601.24625pt>
+File: "Mod1/chapters/1.6.b Broadcast".png Graphic file (type png)
+<use "Mod1/chapters/1.6.b Broadcast".png>
+Package pdftex.def Info: "Mod1/chapters/1.6.b Broadcast".png  used on input lin
+e 310.
+(pdftex.def)             Requested size: 266.48735pt x 140.26537pt.
+ [48 <./Mod1/chapters/1.6.a Unicast.png> <./Mod1/chapters/1.6.b Broadcast.png>]
+<"Mod1/chapters/1.6.c Multicast".png, id=1095, 1216.545pt x 654.445pt>
+File: "Mod1/chapters/1.6.c Multicast".png Graphic file (type png)
+<use "Mod1/chapters/1.6.c Multicast".png>
+Package pdftex.def Info: "Mod1/chapters/1.6.c Multicast".png  used on input lin
+e 327.
+(pdftex.def)             Requested size: 266.48735pt x 143.34923pt.
+
+Overfull \hbox (0.5105pt too wide) in paragraph at lines 333--335
+\T1/phv/m/n/10 So now, the video server can send out one packet with the des-ti
+-na-tion ad-dress of [][]\T1/cmtt/m/n/10 239.1.1.1
+ []
+
+) ("Mod1/chapters/1.7. IPv6 Addressing.tex" [49 <./Mod1/chapters/1.6.c Multicas
+t.png>] [50]
+Chapter 7.
+)) ("Mod2/2. LAN Switching.tex" [51
+
+] [52
+
+]
+("Mod2/chapters/2.1. Fundamentals of Ethernet.tex"
+Chapter 8.
+) ("Mod2/chapters/2.2. Basic Cisco Catalyst Switch Configuration.tex" [53
+
+]
+Chapter 9.
+) ("Mod2/chapters/2.3. Virtual LANs (VLANs).tex" [54
+
+]
+Chapter 10.
+) ("Mod2/chapters/2.4. Trunking.tex" [55
+
+]
+Chapter 11.
+) ("Mod2/chapters/2.5. Troubleshooting Switch Operation.tex" [56
+
+]
+Chapter 12.
+) ("Mod2/chapters/2.6. Basic Switch Security.tex" [57
+
+]
+Chapter 13.
+) ("Mod2/chapters/2.7. Voice VLANs.tex" [58
+
+]
+Chapter 14.
+)) ("Mod3/3. IP Routing.tex" [59
+
+] [60
+
+]
+("Mod3/chapters/3.1. Basic Router Operation.tex"
+Chapter 15.
+) ("Mod3/chapters/3.2. Basic Router Configuration and Verification.tex"
+[61
+
+]
+Chapter 16.
+) ("Mod3/chapters/3.3. Routing Fundamentals.tex" [62
+
+]
+Chapter 17.
+) ("Mod3/chapters/3.4. Routing Information Protocol (RIP).tex" [63
+
+]
+Chapter 18.
+)) ("Mod4/4. Network Services.tex" [64
+
+] [65
+
+]
+("Mod4/chapters/4.1. Dynamic Host Configuration Protocol (DHCP).tex"
+Chapter 19.
+) ("Mod4/chapters/4.2. Network Address Translation (NAT).tex" [66
+
+]
+Chapter 20.
+) ("Mod4/chapters/4.3. Network Time Protocol (NTP).tex" [67
+
+]
+Chapter 21.
+)) ("Mod5/5. Network Management.tex" [68
+
+] [69
+
+]
+("Mod5/chapters/5.1. Network Management Protocols.tex"
+Chapter 22.
+) ("Mod5/chapters/5.2. Device Management.tex" [70
+
+]
+Chapter 23.
+) ("Mod5/chapters/5.3. Troubleshooting with Cisco IOS Tools.tex" [71
+
+]
+Chapter 24.
+))
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 14.
+ [72
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 14.
+ (ICND1.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 14.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 14.
+Package rerunfilecheck Info: File `ICND1.out' has not changed.
+(rerunfilecheck)             Checksum: EE91D6CE3F650BCD1F404155E915D97F;10856.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+runsystem(del ICND1.pyg)...executed.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 11633 strings out of 492970
+ 198367 string characters out of 3126593
+ 326133 words of memory out of 3000000
+ 14899 multiletter control sequences out of 15000+200000
+ 48664 words of font info for 50 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 46i,10n,41p,983b,429s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\somup\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\
+ectt0800.pk> <C:\Users\somup\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\
+ec\dpi600\ecrm0500.pk> <C:\Users\somup\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour
+\jknappen\ec\dpi600\ectt1000.pk>{C:/Users/somup/AppData/Local/Programs/MiKTeX 2
+.9/fonts/enc/dvips/base/8r.enc}<C:/Users/somup/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/somup/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/somup/AppDat
+a/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/
+somup/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pf
+b><C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmr7.pfb><C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb><C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/somup/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/somup/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/somup/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/somup/App
+Data/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on ICND1.pdf (73 pages, 6026751 bytes).
+PDF statistics:
+ 1401 PDF objects out of 1440 (max. 8388607)
+ 292 named destinations out of 1000 (max. 500000)
+ 1388 words of extra memory for PDF output out of 10000 (max. 10000000)
+

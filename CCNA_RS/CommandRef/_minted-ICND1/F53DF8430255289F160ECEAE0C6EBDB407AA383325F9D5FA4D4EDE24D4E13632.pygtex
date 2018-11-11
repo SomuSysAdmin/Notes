@@ -1,0 +1,44 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZsh{}sh run}
+\PYG{g+go}{Building configuration...}
+
+\PYG{g+go}{Current configuration : 2911 bytes}
+\PYG{g+go}{!}
+\PYG{g+go}{! Last configuration change at 22:48:16 UTC Sun Nov 11 2018}
+\PYG{g+go}{!}
+\PYG{g+go}{version 15.2}
+\PYG{g+go}{service timestamps debug datetime msec}
+\PYG{g+go}{service timestamps log datetime msec}
+\PYG{g+go}{no service password\PYGZhy{}encryption}
+\PYG{g+go}{service compress\PYGZhy{}config}
+\PYG{g+go}{!}
+\PYG{g+go}{hostname sw1}
+\PYG{g+go}{...}
+\PYG{g+go}{!}
+\PYG{g+go}{interface Vlan1}
+\PYG{g+go}{ ip address 192.168.1.11 255.255.255.0}
+\PYG{g+go}{!}
+\PYG{g+go}{ip default\PYGZhy{}gateway 192.168.1.1}
+\PYG{g+go}{ip forward\PYGZhy{}protocol nd}
+\PYG{g+go}{!}
+\PYG{g+go}{...}
+\PYG{g+go}{!}
+\PYG{g+go}{line con 0}
+\PYG{g+go}{ exec\PYGZhy{}timeout 0 0}
+\PYG{g+go}{ password cisco}
+\PYG{g+go}{ login}
+\PYG{g+go}{line aux 0}
+\PYG{g+go}{line vty 0 4}
+\PYG{g+go}{ password cisco}
+\PYG{g+go}{ login}
+\PYG{g+go}{line vty 5}
+\PYG{g+go}{ password cisco}
+\PYG{g+go}{ login}
+\PYG{g+go}{line vty 6}
+\PYG{g+go}{ login}
+\PYG{g+go}{!}
+\PYG{g+go}{!}
+\PYG{g+go}{end}
+
+\PYG{g+go}{sw1\PYGZsh{}}
+\end{Verbatim}

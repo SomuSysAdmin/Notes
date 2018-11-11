@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}password cisco}
+\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}login}
+\end{Verbatim}
