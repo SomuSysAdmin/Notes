@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}crypto key generate rsa}
+\PYG{g+go}{The name for the keys will be: sw1.somuvmnet.com}
+\PYG{g+go}{Choose the size of the key modulus in the range of 360 to 4096 for your}
+\PYG{g+go}{  General Purpose Keys. Choosing a key modulus greater than 512 may take}
+\PYG{g+go}{  a few minutes.}
+
+\PYG{g+go}{How many bits in the modulus [512]: 1024}
+\PYG{g+gp}{\PYGZpc{}} Generating \PYG{l+m}{1024} bit RSA keys, keys will be non\PYGZhy{}exportable...
+\PYG{g+go}{[OK] (elapsed time was 0 seconds)}
+
+\PYG{g+go}{sw1(config)\PYGZsh{}}
+\PYG{g+go}{*Nov 12 01:57:14.624: \PYGZpc{}SSH\PYGZhy{}5\PYGZhy{}ENABLED: SSH 1.99 has been enabled}
+\PYG{g+go}{sw1(config)\PYGZsh{}}
+\end{Verbatim}

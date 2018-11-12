@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZsh{}sh run}
+\PYG{g+go}{Building configuration...}
+
+\PYG{g+go}{Current configuration : 3169 bytes}
+\PYG{g+go}{!}
+\PYG{g+go}{! Last configuration change at 02:12:13 UTC Mon Nov 12 2018}
+\PYG{g+go}{!}
+\PYG{g+go}{version 15.2}
+\PYG{g+go}{...}
+\PYG{g+go}{hostname sw1}
+\PYG{g+go}{...}
+\PYG{g+go}{!}
+\PYG{g+go}{username cisco password 0 cisco}
+\PYG{g+go}{...}
+\PYG{g+go}{!}
+
+\PYG{g+go}{sw1\PYGZsh{}sh run | i username}
+\PYG{g+go}{username cisco password 0 cisco}
+\PYG{g+go}{sw1\PYGZsh{}}
+\end{Verbatim}

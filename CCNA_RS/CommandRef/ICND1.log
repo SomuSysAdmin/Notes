@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.10)  12 NOV 2018 05:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2018.11.10)  12 NOV 2018 10:36
 entering extended mode
 **./ICND1.tex
 (ICND1.tex
@@ -988,26 +988,26 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 2.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 9.49997pt on input line 2.
-)
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.27 ...Static MAC Address}{15}{subsection.1.11.1}
+                                                   [1
+
+])
 \tf@toc=\write7
 \openout7 = `ICND1.toc'.
 
 
-("ICND1/1. Switches/Switches.tex"pdfTeX warning (ext4): destination with the sa
-me identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \part
-         {ICND1 - Switches} [1
-
-]
+("ICND1/1. Switches/Switches.tex" [2]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 19.70294pt on input line 1.
- [2
+ [3
 
 ]
 ("chapters/1. Basic Cisco Catalyst Switch Configuration.tex"
@@ -1030,7 +1030,7 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 .pygtex
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 1.
- [3
+ [4
 
 ])
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
@@ -1061,7 +1061,7 @@ LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
 
 
 (_minted-ICND1/E40E2FA41993E50789B4071F5FF0F7FF07AA383325F9D5FA4D4EDE24D4E13632
-.pygtex) [4]
+.pygtex) [5]
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
 (Font)              Font shape `T1/phv/b/it' tried instead on input line 99.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
@@ -1090,7 +1090,7 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 
 
 (_minted-ICND1/238331D8F6C10B0CCF316695F2F7018D07AA383325F9D5FA4D4EDE24D4E13632
-.pygtex [5])
+.pygtex [6])
 \openout3 = `ICND1.pyg'.
 
 
@@ -1112,28 +1112,140 @@ File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 
 
 (_minted-ICND1/F53DF8430255289F160ECEAE0C6EBDB407AA383325F9D5FA4D4EDE24D4E13632
-.pygtex [6])
+.pygtex [7])
 \openout3 = `ICND1.pyg'.
 
 
 (_minted-ICND1/9CD9547FCBC4C823C66AE8F1F6E0DC9707AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/BCA68E7581D4F5D8DC011374279ECBFB07AA383325F9D5FA4D4EDE24D4E13632
+.pygtex [8])
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/459FA27FC1165ED6F19C1A806420D6EB07AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/CA3B392245ACB7C1EEAD398EDA925C4A07AA383325F9D5FA4D4EDE24D4E13632
+.pygtex [9])
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/71DF1E94C02BDFEA8606B2961FBE4CA407AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/BFA11DEE467EE91508E683D2B517CF3907AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/8218E76AA1A9381C70288A6F8A8377E307AA383325F9D5FA4D4EDE24D4E13632
+.pygtex [10])
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/3CC017932B4E7759080632CC5A1B5D2407AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/962D3FD0B3CD448D3398A53D4087017507AA383325F9D5FA4D4EDE24D4E13632
+.pygtex) [11]
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/1DDB454E8C5060E2829FC28B5532928F07AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/14FE524119C450C4AA16F88396C6D24C07AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/3A3F7C33653D21D4C5F25AF497B0578807AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/128FDEBE67F1965585E8BDB70E42BB7A07AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/955FB5830E6A0001C9B1E25EEF1C325307AA383325F9D5FA4D4EDE24D4E13632
+.pygtex) [12]
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/06E9B614603649EC68E622E6350437E107AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+Overfull \hbox (4.82867pt too wide) in paragraph at lines 537--538
+\T1/phv/m/n/10 To show the en-tirety of the run-ning con-fig-u-ra-tion, we use 
+the [][]\T1/cmtt/m/n/10 show running-configuration
+ []
+
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/149F5BA4BB8DAB69B15E1F51D81763C407AA383325F9D5FA4D4EDE24D4E13632
+.pygtex) [13]
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/B17C1647FB8ED105EC769EDE36D0E45507AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/FF17314E006829BB52E35DD980FA409F07AA383325F9D5FA4D4EDE24D4E13632
+.pygtex [14])
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/B84DCE7A4BCBA6A4BFC1A01B580782B807AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+
+(_minted-ICND1/754B20B2E6597E9D81D829A04520D96207AA383325F9D5FA4D4EDE24D4E13632
+.pygtex)
+\openout3 = `ICND1.pyg'.
+
+runsystem(pygmentize -l console -f latex -P commandprefix=PYG -F tokenmerge -o 
+_minted-ICND1/C4D83EE4FA592DD2BE83BE3DED5C202907AA383325F9D5FA4D4EDE24D4E13632.
+pygtex ICND1.pyg)...executed.
+
+
+(_minted-ICND1/C4D83EE4FA592DD2BE83BE3DED5C202907AA383325F9D5FA4D4EDE24D4E13632
 .pygtex))) ("ICND1/2. Routers/Routers.tex")
+runsystem(del _minted-ICND1\61470B945415DC0E7AC0BEA9093BCB5007AA383325F9D5FA4D4
+EDE24D4E13632.pygtex)...executed.
+
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 11.
- [7]
+ [15] [16]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 11.
  (ICND1.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 11.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 11.
 Package rerunfilecheck Info: File `ICND1.out' has not changed.
-(rerunfilecheck)             Checksum: 5ACCC5E4CEF2434933EC250FF3D80876;1132.
+(rerunfilecheck)             Checksum: 7CF7C2511B200951FD14CC14EBE92F1D;2223.
 runsystem(del ICND1.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 11141 strings out of 492970
- 184789 string characters out of 3126593
- 326318 words of memory out of 3000000
- 14725 multiletter control sequences out of 15000+200000
+ 11259 strings out of 492970
+ 193038 string characters out of 3126593
+ 330042 words of memory out of 3000000
+ 14759 multiletter control sequences out of 15000+200000
  46071 words of font info for 49 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  46i,9n,41p,855b,636s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1143,18 +1255,20 @@ ase/8r.enc} <C:\Users\somup\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\e
 c\dpi600\ectt0800.pk> <C:\Users\somup\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\
 jknappen\ec\dpi600\ecrm0500.pk> <C:\Users\somup\AppData\Local\MiKTeX\2.9\fonts\
 pk\ljfour\jknappen\ec\dpi600\ectt1000.pk><C:/Users/somup/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/somup/AppData/Lo
-cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/somu
-p/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
-:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmsy5.pfb><C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/hel
-vetic/uhvb8a.pfb><C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
-urw/helvetic/uhvbo8a.pfb><C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/urw/helvetic/uhvr8a.pfb><C:/Users/somup/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on ICND1.pdf (8 pages, 133365 bytes).
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/somup/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/som
+up/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
+C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
+/cmr10.pfb><C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb><C:/Users/somup/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/somup/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/somup/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Users/somup/AppData/Loca
+l/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/somup/AppDa
+ta/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on ICND1.pdf (17 pages, 183714 bytes).
 PDF statistics:
- 286 PDF objects out of 1000 (max. 8388607)
- 23 named destinations out of 1000 (max. 500000)
- 113 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 419 PDF objects out of 1000 (max. 8388607)
+ 46 named destinations out of 1000 (max. 500000)
+ 225 words of extra memory for PDF output out of 10000 (max. 10000000)
 

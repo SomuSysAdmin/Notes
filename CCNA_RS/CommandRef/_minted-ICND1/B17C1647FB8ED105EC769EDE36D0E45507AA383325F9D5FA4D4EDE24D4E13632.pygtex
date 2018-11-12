@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZsh{}sh run}
+\PYG{g+go}{Building configuration...}
+\PYG{g+go}{...}
+\PYG{g+go}{username cisco password 0 cisco}
+\PYG{g+go}{no aaa new\PYGZhy{}model}
+\PYG{g+go}{!}
+\PYG{g+go}{/vty}
+\PYG{g+go}{filtering...}
+\PYG{g+go}{line vty 0 4}
+\PYG{g+go}{ password cisco}
+\PYG{g+go}{ login local}
+\PYG{g+go}{ history size 50}
+\PYG{g+go}{ transport input telnet ssh}
+\PYG{g+go}{line vty 5}
+\PYG{g+go}{ password cisco}
+\PYG{g+go}{ login local}
+\PYG{g+go}{ history size 50}
+\PYG{g+go}{ transport input telnet ssh}
+\PYG{g+go}{!}
+\PYG{g+go}{end}
+
+\PYG{g+go}{sw1\PYGZsh{}}
+\end{Verbatim}

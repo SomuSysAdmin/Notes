@@ -239,3 +239,448 @@ PC-1> ping 192.168.1.11
 
 \noindent
 Some variation of the ping command is available on all major OS (Operating Systems). 
+
+\section{Enabling Telnet Access}
+Telnet is considered a non-secure method of accessing network equipment since data is sent in plain text and packet capture utils like wireshark can capture the traffic and get access to all the data. Thus \textbf{SSH (\textit{Secure Shell})} is considered a much better alternative. 
+
+\subsection{Show line details}
+To see the details of the VTY/CTY line, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh line vty 0
+   Tty Typ     Tx/Rx    A Modem  Roty AccO AccI   Uses   Noise  Overruns   Int
+     2 VTY              -    -      -    -    -      1       0     0/0       -
+
+Line 2, Location: "", Type: ""
+Length: 24 lines, Width: 80 columns
+Baud rate (TX/RX) is 9600/9600
+Status: Ready, No Exit Banner
+Capabilities: none
+Modem state: Ready
+Group codes:    0
+Special Chars: Escape  Hold  Stop  Start  Disconnect  Activation
+                ^^x    none   -     -       none
+Timeouts:      Idle EXEC    Idle Session   Modem Answer  Session   Dispatch
+               00:10:00        never                        none     not set
+                            Idle Session Disconnect Warning
+                              never
+                            Login-sequence User Response
+                             00:00:30
+                            Autoselect Initial Wait
+                              not set
+Modem type is unknown.
+Session limit is not set.
+Time since activation: never
+Editing is enabled.
+History is enabled, history size is 20.
+DNS resolution in show commands is enabled
+Full user help is disabled
+Allowed input transports are lat pad telnet rlogin nasi ssh.
+Allowed output transports are lat pad telnet rlogin nasi ssh.
+Preferred transport is lat.
+Shell: enabled
+Shell trace: off
+No output characters are padded
+No special data dispatching characters
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The two lines of special interest here are: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+Allowed input transports are lat pad telnet rlogin nasi ssh.
+Allowed output transports are lat pad telnet rlogin nasi ssh.
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The \textbf{Input Transport} refer to the methods via which we're allowed to login to the router whereas the \textit{output transports} are the methods we can use to login to another device from the router. To see all of the transports methods available we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw1(config)#line vty 0 6
+
+sw1(config-line)#transport input ?
+  all     All protocols
+  lat     DEC LAT protocol
+  nasi    NASI protocol
+  none    No protocols
+  pad     X.3 PAD
+  rlogin  Unix rlogin protocol
+  ssh     TCP/IP SSH protocol
+  telnet  TCP/IP Telnet protocol
+  udptn   UDPTN async via UDP protocol
+
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To only allow telnet and SSH, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-line)#transport input telnet ssh
+sw1(config-line)#end
+sw1#sh line vty 0
+...
+Allowed input transports are telnet ssh.
+Allowed output transports are lat pad telnet rlogin nasi ssh.
+...
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Logging in via telnet}
+To login via telnet from another device, and see which vty we're using, we use the command: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw2>telnet 192.168.1.11
+Trying 192.168.1.11 ... Open
+...
+sw1>sh line
+   Tty Typ     Tx/Rx    A Modem  Roty AccO AccI   Uses   Noise  Overruns   Int
+*    0 CTY              -    -      -    -    -      0       0     0/0       -
+     1 AUX   9600/9600  -    -      -    -    -      0       0     0/0       -
+*    2 VTY              -    -      -    -    -      2       0     0/0       -
+     3 VTY              -    -      -    -    -      0       0     0/0       -
+     4 VTY              -    -      -    -    -      0       0     0/0       -
+...
+sw1>
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Here we can see we are using VTY 2 for the telnet. 
+
+\subsection{Keyboard Shortcuts for Telnet}
+\noindent
+\begin{center}
+	\begin{tabular}{rl}
+		\toprule
+		\textbf{Short cut} &\textbf{Action} \\
+		\midrule
+		\verb|Ctrl + |\textbf{A}	&Jump to the start of the line\\
+		\verb|Ctrl + |\textbf{E}	&Jump to the end of the line\\
+		\verb|Ctrl + |\textbf{W}	&Delete previous word in the line\\
+		\verb|Ctrl + |\textbf{X}	&Delete all characters before cursor.\\
+		\verb|Ctrl + |\textbf{K}	&Delete all characters from cursor till end.\\
+		\textbf{$\uparrow$ Arrow}	&Delete all characters before cursor.\\
+		\textbf{$\downarrow$ Arrow}	&Delete all characters before cursor.\\
+		\verb|Esc + |\textbf{B}	&Move cursor back 1 word.\\
+		\verb|Esc + |\textbf{F}	&Move cursor forward 1 word.\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{History Buffer}
+The history buffer contains the last 20 commands used by default. This can be viewed with: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#show history
+  sh line
+  conf t
+  en
+  conf t
+  sh run
+  sh ver | i up
+  sh line status
+  sh line
+  sh controllers gigabitEthernet 0/0
+  sh cont g 0/0 tab
+  sh cont g 0/0 tabular
+  sh diag
+  sh line
+  sh line vty 0
+  conf t
+  sh line vty 0
+  sh ip int br
+  sh run
+  sh mem
+  sh history
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The size of the history buffer can be changed in the line configuration mode with:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw1(config)#line vty 0 6
+sw1(config-line)#history size ?
+  <0-256>  Size of history buffer
+
+sw1(config-line)#history size 50
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now the history buffer will store the last 50 commands. 
+
+\subsection{IP Interface Connection Overview}
+The \verb|show ip interface brief| command shows us the connection status of the interface, the IP address assigned to each interface and more. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     unassigned      YES unset  up                    up
+GigabitEthernet0/1     unassigned      YES unset  up                    up
+GigabitEthernet0/2     unassigned      YES unset  up                    up
+GigabitEthernet0/3     unassigned      YES unset  up                    up
+Vlan1                  192.168.1.11    YES manual up                    up
+\end{minted}
+\vspace{-10pt}
+
+\section{Enabling SSH Access}
+\textbf{Secure SHell (\textit{SSH})}, unlike Telnet requires both a user-name and a password for authentication. This user-name-password can live either on an external authentication server, or locally, i.e., in the memory of the router itself. In addition, the router also needs to know which domain it's a part of. 
+
+\subsection{Setting up User-name, password and domain name}
+
+The \verb|username| and \verb|password| commands take care of creating an username and password, and can be used together on the same line. The domain name is set using \verb|ip domain-name| command. These have to be set in the global config mode:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#username cisco password cisco
+sw1(config)#ip domain-name somuvmnet.com
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The domain name is used in the creation and self-signing of the digital certificate. A public-private key pair is used to enforce authentication. They can be generated using the \verb|crypto key generate rsa|. Note that the mod size has to be $\geq$ 768 bits for SSH 2. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#crypto key generate rsa
+The name for the keys will be: sw1.somuvmnet.com
+Choose the size of the key modulus in the range of 360 to 4096 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...
+[OK] (elapsed time was 0 seconds)
+
+sw1(config)#
+*Nov 12 01:57:14.624: %SSH-5-ENABLED: SSH 1.99 has been enabled
+sw1(config)#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now we have to choose to use SSH version 2, using: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#ip ssh version 2
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Finally we need to tell the device where to find the username and password combination. In this case, it's going to be the device memory itself. Hence, we use the \verb|login local| command in the \textit{line config mode}. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#line vty 0 6
+sw1(config-line)#login local
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Connecting via SSH}
+Depending on the OS, just like the \verb|ping| command, the input options may vary for the \verb|ssh| command, but the premise remains the same. The following is the method to do this on an IOS terminal: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw2#ssh -l cisco 192.168.1.11
+...
+Password:
+...
+sw1>exit
+
+[Connection to 192.168.1.11 closed by foreign host]
+sw2#
+\end{minted}
+\vspace{-10pt}
+
+\section{Viewing Version Information}
+The \verb|show version| or \verb|sh ver| command shows us some critical information about the device itself. This includes the version of the IOS that's being used by the hardware - a critical piece of information when reporting issues to Cisco's TAC (Technical Assistance Centre). 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw2#sh ver
+Cisco IOS Software, ... Version 15.2(20170321:233949)
+...
+sw2 uptime is 6 hours, 33 minutes
+...
+Cisco IOSv () processor (revision 1.0) with 984321K/62464K bytes of memory.
+...
+1 Virtual Ethernet interface
+4 Gigabit Ethernet interfaces
+...
+
+sw2#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The command also shows the uptime of the switch, i.e., how long it's been running. Further it shows teh total amount of RAM, which in this case is $984321 + 62464$ KB of memory, i.e., $=1046785 KB \approx 1GB$ of RAM. The number and types of interfaces is also displayed. 
+
+\section{Viewing Current Configuration}
+To show the entirety of the running configuration, we use the \verb|show running-configuration| command, or \verb|sh run| for short. There's also the option of seeing specific lines in the configuration by keyword searching using output filters. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh run
+Building configuration...
+
+Current configuration : 3169 bytes
+!
+! Last configuration change at 02:12:13 UTC Mon Nov 12 2018
+!
+version 15.2
+...
+hostname sw1
+...
+!
+username cisco password 0 cisco
+...
+!
+
+sw1#sh run | i username
+username cisco password 0 cisco
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The second command above uses the \verb|| i| filter that only shows lines including the matching keyword. There are several more criteria, some of which are: 
+
+\noindent
+\begin{center}
+	\begin{tabular}{rl}
+		\toprule
+		\textbf{Short cut} &\textbf{Action} \\
+		\midrule
+		\verb:<command> | i:	&Only show lines that \textbf{include} the keyword\\
+		\verb:<command> | e:	&Only show lines that \textbf{exclude} the keyword\\
+		\verb:<command> | b:	&\textbf{Begin} showing all lines from the first instance of the keyword\\
+		\verb:<command> | s:	&Only show the \textbf{section} containing the keyword\\
+		\verb:<command> | c:	&\textbf{Count} the number of lines matching the RegExp\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\noindent
+Just like a normal pager in Linux, the output of the show run command is searchable in the format \verb|/<keyword>| where upon typing the \textit{keyword} after the \verb|/| character and pressing enter, the screen jumps to the first line containing the keyword. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh run
+Building configuration...
+...
+username cisco password 0 cisco
+no aaa new-model
+!
+/vty
+filtering...
+line vty 0 4
+ password cisco
+ login local
+ history size 50
+ transport input telnet ssh
+line vty 5
+ password cisco
+ login local
+ history size 50
+ transport input telnet ssh
+!
+end
+
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\section{MAC Address (CAM) Table Examination}
+The primary objective of a Layer 2 Switch is to learn which MAC addresses live off of which port and storing them in a table called Content Addressable Memory (CAM) or MAC Address table. 
+
+Then, when it gets a packet destined for a certain MAC Address, it sends it along the corresponding port it looks up from the CAM table. If the address is unknown, it floods all the ports but the port from which the packet was received, in an effort to learn which port is associated with that MAC address and store it in the table, to aid in future lookups. 
+
+The contents of the MAC address can be viewed with the \verb|show mac address-table| command: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh mac address-table
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    0cee.bab5.5f00    DYNAMIC     Gi0/0
+   1    0cee.bacd.5000    DYNAMIC     Gi0/1
+   1    0cee.bacd.5001    DYNAMIC     Gi0/0
+Total Mac Addresses for this criterion: 3
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The reason there are multiple MAC addresses associated to a certain port is because that MAC address belongs to another switch through which multiple devices can be reachable. Since that switch connects us to those MAC addresses, i.e., is a direct path, the end-user MAC addresses are mapped to the port leading up to the switch. 
+
+While our MAC addresses can be obtained beyond switches, they can't be obtained for devices beyond a router. The dynamic entries in the MAC address table can be aged-out/timed-out if no traffic was seen from that port in a certain time (by default 5mins). To see the ageing time, we use: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#show mac address-table aging-time
+Global Aging Time:  300
+Vlan    Aging Time
+----    ----------
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+There can also be statically mapped MAC addresses that aren't learned but hard-coded into the switch. 
+
+\subsection{Adding a Static MAC Address}
+We can add a static MAC Address mapping using: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#mac address-table static a820.6332.0087 vlan 1 interface gi 0/3
+sw1(config)#end
+sw1#sh mac address-table
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+   1    0cee.bab5.5f00    DYNAMIC     Gi0/0
+   1    0cee.bacd.5000    DYNAMIC     Gi0/1
+   1    0cee.bacd.5001    DYNAMIC     Gi0/0
+   1    a820.6332.0087    STATIC      Gi0/3
+Total Mac Addresses for this criterion: 4
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This can be handy when we're troubleshooting and trying to ensure that the MAC address of a device has been learned off of the right port. 
+
+\section{Setting the Hostname}
+The hostname of a network device acts as the name of the device in the network, helping us easily identify the device. If we have multiple switches in a network, as is often the case, the hostname lets us quickly identify and distinguish the devices. We can change the hostname using: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw(config)#hostname sw1
+sw1(config)#end
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The current hostname is displayed as the first word before the prompt. 

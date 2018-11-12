@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw(config)\PYGZsh{}hostname sw1}
+\PYG{g+go}{sw1(config)\PYGZsh{}end}
+\end{Verbatim}

@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw2\PYGZgt{}telnet 192.168.1.11}
+\PYG{g+go}{Trying 192.168.1.11 ... Open}
+\PYG{g+go}{...}
+\PYG{g+go}{sw1\PYGZgt{}sh line}
+\PYG{g+go}{   Tty Typ     Tx/Rx    A Modem  Roty AccO AccI   Uses   Noise  Overruns   Int}
+\PYG{g+go}{*    0 CTY              \PYGZhy{}    \PYGZhy{}      \PYGZhy{}    \PYGZhy{}    \PYGZhy{}      0       0     0/0       \PYGZhy{}}
+\PYG{g+go}{     1 AUX   9600/9600  \PYGZhy{}    \PYGZhy{}      \PYGZhy{}    \PYGZhy{}    \PYGZhy{}      0       0     0/0       \PYGZhy{}}
+\PYG{g+go}{*    2 VTY              \PYGZhy{}    \PYGZhy{}      \PYGZhy{}    \PYGZhy{}    \PYGZhy{}      2       0     0/0       \PYGZhy{}}
+\PYG{g+go}{     3 VTY              \PYGZhy{}    \PYGZhy{}      \PYGZhy{}    \PYGZhy{}    \PYGZhy{}      0       0     0/0       \PYGZhy{}}
+\PYG{g+go}{     4 VTY              \PYGZhy{}    \PYGZhy{}      \PYGZhy{}    \PYGZhy{}    \PYGZhy{}      0       0     0/0       \PYGZhy{}}
+\PYG{g+go}{...}
+\PYG{g+go}{sw1\PYGZgt{}}
+\end{Verbatim}

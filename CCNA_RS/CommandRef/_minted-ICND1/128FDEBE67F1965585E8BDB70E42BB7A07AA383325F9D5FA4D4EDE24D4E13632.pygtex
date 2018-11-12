@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}line vty 0 6}
+\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}login local}
+\end{Verbatim}

@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZsh{}conf t}
+\PYG{g+go}{Enter configuration commands, one per line.  End with CNTL/Z.}
+\PYG{g+go}{sw1(config)\PYGZsh{}line vty 0 6}
+
+\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}transport input ?}
+\PYG{g+go}{  all     All protocols}
+\PYG{g+go}{  lat     DEC LAT protocol}
+\PYG{g+go}{  nasi    NASI protocol}
+\PYG{g+go}{  none    No protocols}
+\PYG{g+go}{  pad     X.3 PAD}
+\PYG{g+go}{  rlogin  Unix rlogin protocol}
+\PYG{g+go}{  ssh     TCP/IP SSH protocol}
+\PYG{g+go}{  telnet  TCP/IP Telnet protocol}
+\PYG{g+go}{  udptn   UDPTN async via UDP protocol}
+\end{Verbatim}

@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}username cisco password cisco}
+\PYG{g+go}{sw1(config)\PYGZsh{}ip domain\PYGZhy{}name somuvmnet.com}
+\end{Verbatim}

@@ -12,3 +12,17 @@
 \BOOKMARK [2][-]{subsection.1.4.1}{Configuring a password for the VTY lines}{section.1.4}% 12
 \BOOKMARK [1][-]{section.1.5}{Show Running Configuration}{chapter.1}% 13
 \BOOKMARK [1][-]{section.1.6}{Checking for connectivity using Ping}{chapter.1}% 14
+\BOOKMARK [1][-]{section.1.7}{Enabling Telnet Access}{chapter.1}% 15
+\BOOKMARK [2][-]{subsection.1.7.1}{Show line details}{section.1.7}% 16
+\BOOKMARK [2][-]{subsection.1.7.2}{Logging in via telnet}{section.1.7}% 17
+\BOOKMARK [2][-]{subsection.1.7.3}{Keyboard Shortcuts for Telnet}{section.1.7}% 18
+\BOOKMARK [2][-]{subsection.1.7.4}{History Buffer}{section.1.7}% 19
+\BOOKMARK [2][-]{subsection.1.7.5}{IP Interface Connection Overview}{section.1.7}% 20
+\BOOKMARK [1][-]{section.1.8}{Enabling SSH Access}{chapter.1}% 21
+\BOOKMARK [2][-]{subsection.1.8.1}{Setting up User-name, password and domain name}{section.1.8}% 22
+\BOOKMARK [2][-]{subsection.1.8.2}{Connecting via SSH}{section.1.8}% 23
+\BOOKMARK [1][-]{section.1.9}{Viewing Version Information}{chapter.1}% 24
+\BOOKMARK [1][-]{section.1.10}{Viewing Current Configuration}{chapter.1}% 25
+\BOOKMARK [1][-]{section.1.11}{MAC Address \(CAM\) Table Examination}{chapter.1}% 26
+\BOOKMARK [2][-]{subsection.1.11.1}{Adding a Static MAC Address}{section.1.11}% 27
+\BOOKMARK [1][-]{section.1.12}{Setting the Hostname}{chapter.1}% 28

@@ -1,14 +1,28 @@
-\contentsline {part}{I\hspace {1em}ICND1 - Switches}{2}{part.1}
-\contentsline {chapter}{\numberline {1}Basic Cisco Catalyst Switch Configuration}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}Port Addressing}{3}{section.1.1}
-\contentsline {section}{\numberline {1.2}Configuring a Management IP Address}{3}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}View how we're connected to a Switch}{3}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}Privileged mode, auto-completion and showing possible commands}{4}{subsection.1.2.2}
-\contentsline {subsection}{\numberline {1.2.3}Configuring the Terminal}{4}{subsection.1.2.3}
-\contentsline {subsection}{\numberline {1.2.4}Interface Configuration Mode}{5}{subsection.1.2.4}
-\contentsline {subsection}{\numberline {1.2.5}Adding a Management IP}{5}{subsection.1.2.5}
-\contentsline {section}{\numberline {1.3}Configuring a Default Gateway}{5}{section.1.3}
-\contentsline {section}{\numberline {1.4}Setting Console and VTY Passwords}{5}{section.1.4}
-\contentsline {subsection}{\numberline {1.4.1}Configuring a password for the VTY lines}{6}{subsection.1.4.1}
-\contentsline {section}{\numberline {1.5}Show Running Configuration}{6}{section.1.5}
-\contentsline {section}{\numberline {1.6}Checking for connectivity using Ping}{7}{section.1.6}
+\contentsline {part}{I\hspace {1em}ICND1 - Switches}{3}{part.1}
+\contentsline {chapter}{\numberline {1}Basic Cisco Catalyst Switch Configuration}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}Port Addressing}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}Configuring a Management IP Address}{4}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}View how we're connected to a Switch}{4}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Privileged mode, auto-completion and showing possible commands}{5}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Configuring the Terminal}{5}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}Interface Configuration Mode}{6}{subsection.1.2.4}
+\contentsline {subsection}{\numberline {1.2.5}Adding a Management IP}{6}{subsection.1.2.5}
+\contentsline {section}{\numberline {1.3}Configuring a Default Gateway}{6}{section.1.3}
+\contentsline {section}{\numberline {1.4}Setting Console and VTY Passwords}{6}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Configuring a password for the VTY lines}{7}{subsection.1.4.1}
+\contentsline {section}{\numberline {1.5}Show Running Configuration}{7}{section.1.5}
+\contentsline {section}{\numberline {1.6}Checking for connectivity using Ping}{8}{section.1.6}
+\contentsline {section}{\numberline {1.7}Enabling Telnet Access}{8}{section.1.7}
+\contentsline {subsection}{\numberline {1.7.1}Show line details}{9}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {1.7.2}Logging in via telnet}{10}{subsection.1.7.2}
+\contentsline {subsection}{\numberline {1.7.3}Keyboard Shortcuts for Telnet}{10}{subsection.1.7.3}
+\contentsline {subsection}{\numberline {1.7.4}History Buffer}{10}{subsection.1.7.4}
+\contentsline {subsection}{\numberline {1.7.5}IP Interface Connection Overview}{11}{subsection.1.7.5}
+\contentsline {section}{\numberline {1.8}Enabling SSH Access}{11}{section.1.8}
+\contentsline {subsection}{\numberline {1.8.1}Setting up User-name, password and domain name}{12}{subsection.1.8.1}
+\contentsline {subsection}{\numberline {1.8.2}Connecting via SSH}{12}{subsection.1.8.2}
+\contentsline {section}{\numberline {1.9}Viewing Version Information}{13}{section.1.9}
+\contentsline {section}{\numberline {1.10}Viewing Current Configuration}{13}{section.1.10}
+\contentsline {section}{\numberline {1.11}MAC Address (CAM) Table Examination}{14}{section.1.11}
+\contentsline {subsection}{\numberline {1.11.1}Adding a Static MAC Address}{15}{subsection.1.11.1}
+\contentsline {section}{\numberline {1.12}Setting the Hostname}{15}{section.1.12}

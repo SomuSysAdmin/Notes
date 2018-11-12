@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}transport input telnet ssh}
+\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}end}
+\PYG{g+go}{sw1\PYGZsh{}sh line vty 0}
+\PYG{g+go}{...}
+\PYG{g+go}{Allowed input transports are telnet ssh.}
+\PYG{g+go}{Allowed output transports are lat pad telnet rlogin nasi ssh.}
+\PYG{g+go}{...}
+\end{Verbatim}

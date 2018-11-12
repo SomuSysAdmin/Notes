@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZsh{}show history}
+\PYG{g+go}{  sh line}
+\PYG{g+go}{  conf t}
+\PYG{g+go}{  en}
+\PYG{g+go}{  conf t}
+\PYG{g+go}{  sh run}
+\PYG{g+go}{  sh ver | i up}
+\PYG{g+go}{  sh line status}
+\PYG{g+go}{  sh line}
+\PYG{g+go}{  sh controllers gigabitEthernet 0/0}
+\PYG{g+go}{  sh cont g 0/0 tab}
+\PYG{g+go}{  sh cont g 0/0 tabular}
+\PYG{g+go}{  sh diag}
+\PYG{g+go}{  sh line}
+\PYG{g+go}{  sh line vty 0}
+\PYG{g+go}{  conf t}
+\PYG{g+go}{  sh line vty 0}
+\PYG{g+go}{  sh ip int br}
+\PYG{g+go}{  sh run}
+\PYG{g+go}{  sh mem}
+\PYG{g+go}{  sh history}
+\PYG{g+go}{sw1\PYGZsh{}}
+\end{Verbatim}

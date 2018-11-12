@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZsh{}conf t}
+\PYG{g+go}{Enter configuration commands, one per line.  End with CNTL/Z.}
+\PYG{g+go}{sw1(config)\PYGZsh{}line vty 0 6}
+\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}history size ?}
+\PYG{g+go}{  \PYGZlt{}0\PYGZhy{}256\PYGZgt{}  Size of history buffer}
+
+\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}history size 50}
+\end{Verbatim}
