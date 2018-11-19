@@ -48,7 +48,72 @@ So, data will go from the \textbf{ingress port} in VLAN$_{100}$, across the \tex
 This kind of a configuration where a router is connected to a switch to manage data across VLANs is called \textit{router on a stick} or \textbf{router on a trunk} connection. Some of the new Catalyst switches are Multilayer/Layer-3 Switches which don't need a router to perform the routing between VLANs. 
 
 \section{VLAN Creation}
+\subsection{Show existing VLANs}
+To see a brief overview of the existing VLANs, we use the \verb|show vlan brief| command: 
 
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh vlan brief
 
-\section{Adding ports to a VLAN}
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/0, Gi0/1, Gi0/2, Gi0/3
+1002 fddi-default                     act/unsup
+1003 token-ring-default               act/unsup
+1004 fddinet-default                  act/unsup
+1005 trnet-default                    act/unsup
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The fddi, token ring VLANs can be ignored. The main VLAN is the default, VLAN$_1$. 
+
+\subsection{Creating a new VLAN}
+Let us say we want a couple of new VLANs - VLAN$_{100}$ for the accounts department and VLAn$_{200}$ for the sales department in an office. Just like the interface configuration mode, we also have a VLAN configuration mode. The command used to name a VLAN is \verb|name|. We name the two VLANs using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#vlan 100
+sw1(config-vlan)#name ACCT
+sw1(config-vlan)#exit
+sw1(config)#vlan 200
+sw1(config-vlan)#name SALES
+sw1(config-vlan)#end
+sw1#sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/0, Gi0/1, Gi0/2, Gi0/3
+100  ACCT                             active
+200  SALES                            active
+...
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We see that the VLANs have been created and now we can assign ports to it.
+
+\subsection{Deleting a VLAN}
+To delete a VLAN, we use the command \verb|no vlan| followed by the VLAN number:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#vlan 300
+sw1(config-vlan)#name TEST
+sw1(config-vlan)#end
+sw1#sh vlan br | i TEST
+300  TEST                             active
+sw1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw1(config)#no vlan 300
+sw1(config)#end
+sw1#sh vlan br | i TEST
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now, we may assume that the VLANs have been wiped, however, the information about VLANs are stored in a separate section of the memory, called the \textit{flash}. We can view its contents using \verb|show flash|. In it, we have a file called \verb|vlan.dat|. To truly erase all the VLANs, we need to use the \verb|delete flash:vlan.dat| command. 
+
+\section{Assigning Ports to a VLAN}
 
