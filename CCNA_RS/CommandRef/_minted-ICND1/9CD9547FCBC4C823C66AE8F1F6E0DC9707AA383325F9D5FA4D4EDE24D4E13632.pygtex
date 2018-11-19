@@ -1,8 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{PC\PYGZhy{}1\PYGZgt{} ping 192.168.1.11}
-\PYG{g+go}{84 bytes from 192.168.1.11 icmp\PYGZus{}seq=1 ttl=255 time=3.973 ms}
-\PYG{g+go}{84 bytes from 192.168.1.11 icmp\PYGZus{}seq=2 ttl=255 time=3.969 ms}
-\PYG{g+go}{84 bytes from 192.168.1.11 icmp\PYGZus{}seq=3 ttl=255 time=5.951 ms}
-\PYG{g+go}{84 bytes from 192.168.1.11 icmp\PYGZus{}seq=4 ttl=255 time=3.472 ms}
-\PYG{g+go}{84 bytes from 192.168.1.11 icmp\PYGZus{}seq=5 ttl=255 time=10.913 ms}
-\end{Verbatim}

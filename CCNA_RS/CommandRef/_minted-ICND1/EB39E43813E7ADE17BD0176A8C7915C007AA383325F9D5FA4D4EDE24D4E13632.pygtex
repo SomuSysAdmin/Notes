@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1\PYGZsh{}conf t}
-\PYG{g+go}{Enter configuration commands, one per line.  End with CNTL/Z.}
-\PYG{g+go}{sw1(config)\PYGZsh{}}
-\end{Verbatim}

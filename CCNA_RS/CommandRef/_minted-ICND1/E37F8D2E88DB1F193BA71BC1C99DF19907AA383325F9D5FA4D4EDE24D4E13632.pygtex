@@ -1,3 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1(config)\PYGZsh{}ip default\PYGZhy{}gateway 192.168.1.1}
-\end{Verbatim}

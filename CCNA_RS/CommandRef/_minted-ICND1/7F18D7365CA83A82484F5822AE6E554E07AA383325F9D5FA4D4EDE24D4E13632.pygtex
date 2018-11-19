@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1\PYGZsh{}sh run | i cisco}
-\PYG{g+go}{enable password cisco}
-\end{Verbatim}

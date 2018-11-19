@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1(config)\PYGZsh{}serv password\PYGZhy{}encryption}
-\PYG{g+go}{sw1(config)\PYGZsh{}username somu privilege 15 password cisco}
-\PYG{g+go}{sw1(config)\PYGZsh{}end}
-\PYG{g+go}{sw1\PYGZsh{}sh run | i somu}
-\PYG{g+go}{username somu privilege 15 password 7 05080F1C2243}
-\end{Verbatim}

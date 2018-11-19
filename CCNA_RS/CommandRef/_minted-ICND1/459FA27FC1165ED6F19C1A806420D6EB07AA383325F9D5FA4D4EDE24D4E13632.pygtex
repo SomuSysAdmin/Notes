@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{Allowed input transports are lat pad telnet rlogin nasi ssh.}
-\PYG{g+go}{Allowed output transports are lat pad telnet rlogin nasi ssh.}
-\end{Verbatim}

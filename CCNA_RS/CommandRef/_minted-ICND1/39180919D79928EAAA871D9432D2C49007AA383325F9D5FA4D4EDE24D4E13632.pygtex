@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1\PYGZsh{}wr}
-\PYG{g+go}{Building configuration...}
-\PYG{g+go}{Compressed configuration from 2781 bytes to 1574 bytes[OK]}
-\PYG{g+go}{sw1\PYGZsh{}}
-\PYG{g+go}{*Nov 19 08:25:12.887: \PYGZpc{}GRUB\PYGZhy{}5\PYGZhy{}CONFIG\PYGZus{}WRITING: GRUB configuration is being updated on disk. Please wait...}
-\PYG{g+go}{*Nov 19 08:25:13.693: \PYGZpc{}GRUB\PYGZhy{}5\PYGZhy{}CONFIG\PYGZus{}WRITTEN: GRUB configuration was written to disk successfully.}
-\PYG{g+go}{sw1\PYGZsh{}}
-\end{Verbatim}

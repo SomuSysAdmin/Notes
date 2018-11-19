@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1(config)\PYGZsh{}exit}
-\PYG{g+go}{sw1\PYGZsh{}}
-\PYG{g+go}{*Nov 11 21:36:07.353: \PYGZpc{}SYS\PYGZhy{}5\PYGZhy{}CONFIG\PYGZus{}I: Configured from console by console}
-\PYG{g+go}{sw1\PYGZsh{}}
-\end{Verbatim}

@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}login}
-\PYG{g+gp}{\PYGZpc{}} Login disabled on line \PYG{l+m}{0}, \PYG{k}{until} \PYG{l+s+s1}{\PYGZsq{}password\PYGZsq{}} is \PYG{n+nb}{set}
-\end{Verbatim}

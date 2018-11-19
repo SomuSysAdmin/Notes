@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1(config\PYGZhy{}if)\PYGZsh{}duplex ?}
-\PYG{g+go}{  auto  Enable AUTO duplex configuration}
-\PYG{g+go}{  full  Force full duplex operation}
-\PYG{g+go}{  half  Force half\PYGZhy{}duplex operation}
-\end{Verbatim}

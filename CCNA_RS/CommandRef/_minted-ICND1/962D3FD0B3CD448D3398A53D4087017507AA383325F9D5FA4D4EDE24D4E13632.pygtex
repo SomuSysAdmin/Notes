@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1\PYGZsh{}sh ip int brief}
-\PYG{g+go}{Interface              IP\PYGZhy{}Address      OK? Method Status                Protocol}
-\PYG{g+go}{GigabitEthernet0/0     unassigned      YES unset  up                    up}
-\PYG{g+go}{GigabitEthernet0/1     unassigned      YES unset  up                    up}
-\PYG{g+go}{GigabitEthernet0/2     unassigned      YES unset  up                    up}
-\PYG{g+go}{GigabitEthernet0/3     unassigned      YES unset  up                    up}
-\PYG{g+go}{Vlan1                  192.168.1.11    YES manual up                    up}
-\end{Verbatim}

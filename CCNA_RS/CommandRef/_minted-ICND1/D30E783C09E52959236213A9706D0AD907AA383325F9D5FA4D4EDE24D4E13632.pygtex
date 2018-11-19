@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1(config)\PYGZsh{}line vty 0 5}
-\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}password cisco}
-\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}login}
-\PYG{g+go}{sw1(config\PYGZhy{}line)\PYGZsh{}end}
-\PYG{g+go}{sw1\PYGZsh{}}
-\end{Verbatim}

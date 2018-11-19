@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1(config)\PYGZsh{}username somu algorithm\PYGZhy{}type scrypt secret cisco}
-\PYG{g+go}{sw1(config)\PYGZsh{}end}
-\PYG{g+go}{sw1\PYGZsh{}sh run | i somu}
-\PYG{g+go}{username somu secret 9 \PYGZdl{}9\PYGZdl{}JFpvgWWbMj8jr2\PYGZdl{}cK3k0VWA1xMpGD5Ky6Vj4URxXGgtX4jkyML86D4vuuQ}
-\end{Verbatim}

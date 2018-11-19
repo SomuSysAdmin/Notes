@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1\PYGZgt{}enable}
-\PYG{g+go}{sw1\PYGZsh{}disable}
-\PYG{g+go}{sw1\PYGZgt{}}
-\end{Verbatim}

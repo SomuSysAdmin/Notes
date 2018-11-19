@@ -1,9 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1(config)\PYGZsh{}enable secret ?}
-\PYG{g+go}{  0      Specifies an UNENCRYPTED password will follow}
-\PYG{g+go}{  5      Specifies a MD5 HASHED secret will follow}
-\PYG{g+go}{  8      Specifies a PBKDF2 HASHED secret will follow}
-\PYG{g+go}{  9      Specifies a SCRYPT HASHED secret will follow}
-\PYG{g+go}{  LINE   The UNENCRYPTED (cleartext) \PYGZsq{}enable\PYGZsq{} secret}
-\PYG{g+go}{  level  Set exec level password}
-\end{Verbatim}

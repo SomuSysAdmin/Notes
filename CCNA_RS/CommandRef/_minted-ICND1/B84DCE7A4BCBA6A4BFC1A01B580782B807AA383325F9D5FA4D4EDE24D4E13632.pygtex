@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+go}{sw1\PYGZsh{}show mac address\PYGZhy{}table aging\PYGZhy{}time}
-\PYG{g+go}{Global Aging Time:  300}
-\PYG{g+go}{Vlan    Aging Time}
-\PYG{g+go}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}    \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
-\end{Verbatim}
