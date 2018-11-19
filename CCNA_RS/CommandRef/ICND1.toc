@@ -48,6 +48,8 @@
 \contentsline {chapter}{\numberline {3}Trunking}{26}{chapter.3}
 \contentsline {section}{\numberline {3.1}Trunking : Introduction}{26}{section.3.1}
 \contentsline {section}{\numberline {3.2}Trunking Theory}{26}{section.3.2}
-\contentsline {section}{\numberline {3.3}Trunking Modes}{26}{section.3.3}
-\contentsline {section}{\numberline {3.4}Creating Trunks}{26}{section.3.4}
-\contentsline {section}{\numberline {3.5}VLAN pruning}{26}{section.3.5}
+\contentsline {subsection}{\numberline {3.2.1}Marking Frames for VLANs}{27}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Native VLAN}{27}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}Trunking Modes}{28}{section.3.3}
+\contentsline {section}{\numberline {3.4}Creating Trunks}{28}{section.3.4}
+\contentsline {section}{\numberline {3.5}VLAN pruning}{28}{section.3.5}

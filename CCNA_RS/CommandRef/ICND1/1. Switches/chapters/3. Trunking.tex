@@ -4,7 +4,43 @@
 Since we don't want to mix the traffic between the VLANs, and since they're in different subnets, if we have to send traffic between multiple switches in our network, it might seem like we need separate interfaces to carry the traffic for each VLAN, but that's not the case, since we can use trunk ports. Trunk interfaces allow us to send the data for multiple VLANs over a single connection. 
 
 \section{Trunking Theory}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"ICND1/1. Switches/chapters/2.2.b With VLANs"}
+	\caption{Using Access Ports}
+\end{figure}
 
+\noindent
+Using trunks, we can combine the data flowing over both wires between switches, and between the switch and the router. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"ICND1/1. Switches/chapters/3.2.a Trunking"}
+	\caption{Using Trunk Ports}
+	\label{fig:3.2.a}
+\end{figure}
+
+\noindent
+This raises a question of how the switches determine what VLAN the frame belongs to. This is done by '\textit{tagging}' each frame (with a number) when it travels through the trunk as belonging to a certain VLAN. 
+
+If a frame originating from the Accounting VLAN on the 2nd floor wants to go to the PC on the 1st floor, then the switch on the 2nd floor will tag the frame and when the switch on floor 1 gets it, it'll see that it's destined for the Accounts VLAN and send the frame to the appropriate port. 
+
+In case of inter-VLAN communication, the originating switch tags the frame for the accounts VLAN while travelling to the router. The router then receives the frame on one sub-interface (\textbf{logical interface}) and sends it out through another sub-interface. When the router forwards the packet to the Sales VLAN, it'll change the tagging to that of Sales VLAN and send it back up the trunk, to the appropriate port for the Sales PC. 
+
+\subsection{Marking Frames for VLANs}
+For VLAN usage, 4 Bytes of data are added to the frame in accordance to the IEEE 802.1q frame format. Among these 4 bytes, 12 bits identify the particular VLAN a packet belongs to.  3 bits set the priority or \textbf{Quality of Service} for that frame. These 4B are: 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{"ICND1/1. Switches/chapters/3.2.b VLAN Frame"}
+	\caption{802.1q Frame}
+	\label{fig:3.2.b}
+\end{figure}
+
+\subsection{Native VLAN}
+The frames for a Native VLAN aren't tagged. This is the only VLAN that sends untagged data, and the native VLAN can be configured for a switch. Of course, this means that the native VLAN on both switches need to be the same, i.e., they must agree which VLAN will send untagged data. 
+
+If one switch has native VLAN set to \textit{VLAN$_{100}$} while a switch on the other end of the connection has the native VLAN set to \textit{VLAN$_{200}$},  then when the first switch will send data destined for \textit{VLAN$_{100}$}, the second switch will accidentally forward it to the wrong VLAN, i.e., \textit{VLAN$_{200}$}. 
 
 \section{Trunking Modes}
 
