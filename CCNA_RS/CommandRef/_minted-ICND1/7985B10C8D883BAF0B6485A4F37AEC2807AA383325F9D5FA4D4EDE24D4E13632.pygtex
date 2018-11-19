@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZsh{}copy running\PYGZhy{}config startup\PYGZhy{}config}
+\PYG{g+go}{Destination filename [startup\PYGZhy{}config]?}
+\PYG{g+go}{Building configuration...}
+\PYG{g+go}{Compressed configuration from 2781 bytes to 1574 bytes[OK]}
+\PYG{g+go}{*Nov 19 08:21:24.796: \PYGZpc{}GRUB\PYGZhy{}5\PYGZhy{}CONFIG\PYGZus{}WRITING: GRUB configuration is being updated on disk. Please wait...}
+\PYG{g+go}{*Nov 19 08:21:25.631: \PYGZpc{}GRUB\PYGZhy{}5\PYGZhy{}CONFIG\PYGZus{}WRITTEN: GRUB configuration was written to disk successfully.}
+\PYG{g+go}{sw1\PYGZsh{}}
+\end{Verbatim}

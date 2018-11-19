@@ -963,3 +963,36 @@ Note that both speed and duplex settings can be set to auto-negotiate. This mean
 If we consider an RJ45 connector, the pins 1,2,3 \& 5 are used for Ethernet. Here, two wires each are used for transmit and receive. In case we connected two switches using a straight-through Ethernet cable, the transmit wires on both sides will be connected, instead of the transmit wires on one side connecting to the receive wires on the other, leading to a failure of communication. 
 
 If we enable \textbf{MDI-X} it allows the switch to auto-detect which wires should be used for transmit and which for receive. To turn it on, we use the \verb|mdix auto| command. This only is available, of course, only if the switch itself supports it. 
+
+\section{Saving the Configuration}
+The running configuration isn't stored in a non-volatile memory, i.e., the changes don't survive a power-cycle. To make the changes permanent, we need to copy them to the NVRAM, by saving them as the \textbf{startup-configuration}. For this we use the command : \verb|copy run star|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#copy running-config startup-config
+Destination filename [startup-config]?
+Building configuration...
+Compressed configuration from 2781 bytes to 1574 bytes[OK]
+*Nov 19 08:21:24.796: %GRUB-5-CONFIG_WRITING: GRUB configuration is being updated on disk. Please wait...
+*Nov 19 08:21:25.631: %GRUB-5-CONFIG_WRITTEN: GRUB configuration was written to disk successfully.
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+In older versions of IOS, there was a \verb|write memory| command that did the same thing. We may still be able to use the \verb|write mem| command, (\verb|wr| for short):
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#wr
+Building configuration...
+Compressed configuration from 2781 bytes to 1574 bytes[OK]
+sw1#
+*Nov 19 08:25:12.887: %GRUB-5-CONFIG_WRITING: GRUB configuration is being updated on disk. Please wait...
+*Nov 19 08:25:13.693: %GRUB-5-CONFIG_WRITTEN: GRUB configuration was written to disk successfully.
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Cisco however, may get rid of the \verb|wr| command in the future, and hence it's suggested to use the \verb|copy run star| command.

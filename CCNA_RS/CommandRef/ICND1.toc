@@ -35,3 +35,4 @@
 \contentsline {section}{\numberline {1.16}Creating a Banner}{19}{section.1.16}
 \contentsline {section}{\numberline {1.17}Specifying Port Speed and Duplex}{20}{section.1.17}
 \contentsline {subsection}{\numberline {1.17.1}MDI-X (Medium Dependent Interface Crossover)}{20}{subsection.1.17.1}
+\contentsline {section}{\numberline {1.18}Saving the Configuration}{20}{section.1.18}
