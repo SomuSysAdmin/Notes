@@ -1,0 +1,54 @@
+\chapter{Virtual LANs (VLANs)}
+
+\section{Virtual LANs (VLANs) : Introduction}
+When interconnecting devices on a switch, we may want some of those devices to be on different logical networks or subnets. This is done by assigning them to a different \textbf{VLAN (\textit{Virtual Local Area Network})}. 
+
+For example, in an office building, there may be a dedicated VLAN for each department, i.e., a VLAN for the accounts team and one for the sales team so that the data for one department doesn't flow through the network of another team. We can assign different switch-ports to different VLANs. When we want traffic to flow between those VLANs, a router has to be used to route traffic from one subnet to another. 
+
+\section{VLAN Theory}
+Let us consider a case where we have two floors in an office which has 2 departments: Sales and Accounting. Since we don't want traffic to intermix, we need separate switches on each floor on each department. Given that we have 2 floors with 2 department each, the total number of switches is 4. For a bigger office, with more floors and department each, we'd need many more devices. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"ICND1/1. Switches/chapters/2.2.a Without VLANs"}
+	\caption{Without VLANs}
+	\label{fig:2}
+\end{figure}
+
+\noindent
+Further, for a new department to be added, a new switch has to be installed on each floor for that department. A solution to this problem is given by the introduction of VLANs. While the devices are connected to the same physical network, they devices themselves are connected to different logical networks. Thus, instantly the total number of switches required falls dramatically. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"ICND1/1. Switches/chapters/2.2.b With VLANs"}
+	\caption{With VLANs}
+	\label{fig:2.2.b}
+\end{figure}
+
+\noindent
+In either of the above cases, however, when data has to pass between floors, for example, when routing data between the Accounts and Sales subnets/broadcast domains/VLANs, there has to be one port dedicated on every switch and the router for each VLAN. However, if we use trunking, then these multiple ports can be combined into a single physical port that can carry data for multiple VLANs, while still maintaining separation. 
+
+The primary reason we may want different VLANs for different networks is because it allows us to divide the broadcast domains, which means that performance is instantly increased. Further, devices won't be able to perform a packet capture of unknown broadcast/multicast/unicast packets.
+
+\subsection{Packet Flow between VLANs}
+Let us consider the situation in diagram \ref{fig:2.2.c}. We have PC$_1$ connected to VLAN$_{100}$, and PC$_2$ connected to VLAN$_{200}$, while the router is connected to the switch on a separate port, outside both VLANs, as a trunk (i.e., can carry data for multiple VLANs). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{"ICND1/1. Switches/chapters/2.2.c Router on a stick"}
+	\caption{Routing between VLANs}
+	\label{fig:2.2.c}
+\end{figure}
+
+\noindent
+When data has to go from VLAN$_{100}$ to VLAN$_{200}$, they can't directly pass since they're on both different subnets in different VLANs. Thus, a router is required to convey traffic from one VLAN to another. 
+
+So, data will go from the \textbf{ingress port} in VLAN$_{100}$, across the \textit{switching fabric}, i.e., switching back-plane to the router through the trunk port. The router will discover that this packet is destined for the network of VLAN$_{200}$ (\verb|192.168.1.0/24|), back across the trunk and then the switching fabric to reach the \textbf{egress port} in VLAN$_{200}$. 
+
+This kind of a configuration where a router is connected to a switch to manage data across VLANs is called \textit{router on a stick} or \textbf{router on a trunk} connection. Some of the new Catalyst switches are Multilayer/Layer-3 Switches which don't need a router to perform the routing between VLANs. 
+
+\section{VLAN Creation}
+
+
+\section{Adding ports to a VLAN}
+
