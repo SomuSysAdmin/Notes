@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}enable secret somu}
+\PYG{g+go}{sw1(config)\PYGZsh{}end}
+\PYG{g+go}{sw1\PYGZsh{}sh run | i enable}
+\PYG{g+go}{enable secret 5 \PYGZdl{}1\PYGZdl{}/Rxb\PYGZdl{}NofwEzG6FNEc2v9TiU1VA1}
+\PYG{g+go}{enable password cisco}
+\end{Verbatim}

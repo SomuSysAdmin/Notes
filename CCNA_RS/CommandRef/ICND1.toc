@@ -26,3 +26,4 @@
 \contentsline {section}{\numberline {1.11}MAC Address (CAM) Table Examination}{14}{section.1.11}
 \contentsline {subsection}{\numberline {1.11.1}Adding a Static MAC Address}{15}{subsection.1.11.1}
 \contentsline {section}{\numberline {1.12}Setting the Hostname}{15}{section.1.12}
+\contentsline {section}{\numberline {1.13}Setting the Enable Password}{16}{section.1.13}

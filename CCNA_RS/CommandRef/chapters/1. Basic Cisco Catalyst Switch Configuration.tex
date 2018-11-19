@@ -683,4 +683,94 @@ sw1(config)#end
 \vspace{-10pt}
 
 \noindent
-The current hostname is displayed as the first word before the prompt. 
+The current hostname is displayed as the first word before the prompt.
+
+\section{Setting the Enable Password} 
+Since the \verb|Enable| command lets us configure the switch, we should set a password on it. We can do this using the \verb|enable password| command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#enable password cisco
+sw1(config)#end
+sw1#
+*Nov 19 05:37:32.191: %SYS-5-CONFIG_I: Configured from console by console
+sw1#disable
+sw1>enable
+Password:
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This creates a password that's stored as clear-text in the running config. Anyone who can view the running config will be able to see it:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh run | i cisco
+enable password cisco
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To change this, we can store an encrypted password hash, using the \verb|enable secret| command. This has several options in terms of encryption algorithms: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#enable secret ?
+  0      Specifies an UNENCRYPTED password will follow
+  5      Specifies a MD5 HASHED secret will follow
+  8      Specifies a PBKDF2 HASHED secret will follow
+  9      Specifies a SCRYPT HASHED secret will follow
+  LINE   The UNENCRYPTED (cleartext) 'enable' secret
+  level  Set exec level password
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+For example, the MD5 (Message Digest 5) algorithm when applied on a word will give us a 128-bit hash value, also called a \textit{digest}. For example, the MD5 digest of 'cat' is '\verb|D077F244DEF8A70E5EA758BD8352FCD8|'. When someone enters the password, the switch runs the MD5 hashing algorithm on it to get it's hash. If the digest matches that already stored in the memory for the password, then the user is granted access. There's no way to get the password directly from the hash, since the hash is like a fingerprint of the password instead of a scrambled up version of the password itself. We can use the \verb|enable secret| command (which uses MD5 as the default algorithm) as: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#enable secret somu
+sw1(config)#end
+sw1#sh run | i enable
+enable secret 5 $1$/Rxb$NofwEzG6FNEc2v9TiU1VA1
+enable password cisco
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The \verb|5| before the hash \verb|$1$/Rxb$NofwEzG6FNEc2v9TiU1VA1| tells us that it's a MD5 digest. There are other algorithms available as well:
+
+\noindent
+\begin{center}
+	\begin{tabular}{rrm{0.73\textwidth}}
+		\toprule
+		\textbf{Type} &\textbf{Algorithm} &\textbf{Description} \\
+		\midrule
+		\textit{5} &\textbf{MD5}	& Default algorithm; produces 128bit hash; lesser security than the hashes below.\\
+		\midrule
+		\textit{8} &\textbf{PBKDF2}	&Uses a variant of \textbf{Password Based Key Derivation Function 2 (\textit{PBKDF2})}, that itself uses \textbf{SHA-256 (Secure Hashing Algorithm - 256)} to generate a 256-bit hash; more secure than MD5.\\
+		\midrule
+		\textit{9} &\textbf{SCRYPT}	&Pronounced "S-Crypt"; Like PBKDF2, but requires even more computational resources to crack. \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\noindent
+To change the algorithm type while setting the secret we can use \verb|enable algorithm-type| : 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#enable algorithm-type ?
+  md5     Encode the password using the MD5 algorithm
+  scrypt  Encode the password using the SCRYPT hashing algorithm
+  sha256  Encode the password using the PBKDF2 hashing algorithm
+
+sw1(config)#enable algorithm-type sha256 secret cisco
+sw1(config)#end
+sw1#sh run | i enable
+enable secret 8 $8$srB.hFoYl8uTbI$.h2H8Ux2Ie4F/qDgysbS43/RWT1aapN4rlNIA3/0YUc
+\end{minted}
+\vspace{-10pt}
+

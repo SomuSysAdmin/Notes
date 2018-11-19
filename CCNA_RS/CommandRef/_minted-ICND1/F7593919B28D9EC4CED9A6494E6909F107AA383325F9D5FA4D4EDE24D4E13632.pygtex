@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}enable password cisco}
+\PYG{g+go}{sw1(config)\PYGZsh{}end}
+\PYG{g+go}{sw1\PYGZsh{}}
+\PYG{g+go}{*Nov 19 05:37:32.191: \PYGZpc{}SYS\PYGZhy{}5\PYGZhy{}CONFIG\PYGZus{}I: Configured from console by console}
+\PYG{g+go}{sw1\PYGZsh{}disable}
+\PYG{g+go}{sw1\PYGZgt{}enable}
+\PYG{g+go}{Password:}
+\PYG{g+go}{sw1\PYGZsh{}}
+\end{Verbatim}
