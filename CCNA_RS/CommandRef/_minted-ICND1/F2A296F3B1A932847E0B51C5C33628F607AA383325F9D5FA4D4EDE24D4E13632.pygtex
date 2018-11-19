@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}banner ?}
+\PYG{g+go}{  LINE            c banner\PYGZhy{}text c, where \PYGZsq{}c\PYGZsq{} is a delimiting character}
+\PYG{g+go}{  config\PYGZhy{}save     Set message for saving configuration}
+\PYG{g+go}{  exec            Set EXEC process creation banner}
+\PYG{g+go}{  incoming        Set incoming terminal line banner}
+\PYG{g+go}{  login           Set login banner}
+\PYG{g+go}{  motd            Set Message of the Day banner}
+\PYG{g+go}{  prompt\PYGZhy{}timeout  Set Message for login authentication timeout}
+\PYG{g+go}{  slip\PYGZhy{}ppp        Set Message for SLIP/PPP}
+\end{Verbatim}

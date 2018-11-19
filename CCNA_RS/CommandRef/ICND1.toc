@@ -32,3 +32,4 @@
 \contentsline {subsection}{\numberline {1.15.1}User Privileges}{18}{subsection.1.15.1}
 \contentsline {subsection}{\numberline {1.15.2}Storing password hashes for login}{18}{subsection.1.15.2}
 \contentsline {subsection}{\numberline {1.15.3}Removing a user}{18}{subsection.1.15.3}
+\contentsline {section}{\numberline {1.16}Creating a Banner}{19}{section.1.16}

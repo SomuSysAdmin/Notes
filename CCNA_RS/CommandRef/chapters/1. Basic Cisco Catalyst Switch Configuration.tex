@@ -870,3 +870,62 @@ sw1(config)#no username somu
 This operation will remove all username related configurations with same name.Do you want to continue? [confirm]
 sw1(config)#
 \end{minted}
+
+\section{Creating a Banner}
+A \textbf{banner} is a section of text displayed during a specific action, such as during login. There can be several types of banners: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#banner ?
+  LINE            c banner-text c, where 'c' is a delimiting character
+  config-save     Set message for saving configuration
+  exec            Set EXEC process creation banner
+  incoming        Set incoming terminal line banner
+  login           Set login banner
+  motd            Set Message of the Day banner
+  prompt-timeout  Set Message for login authentication timeout
+  slip-ppp        Set Message for SLIP/PPP
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The banner is added by using the \verb|banner| command, followed by the type of banner (shown in the list above) and finally, the \textbf{delimiter}. This delimiter signals the start and end of the banner to IOS and thus, has to be a character that doesn't appear in the banner. We can set the banner with: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#banner login `
+Enter TEXT message.  End with the character '`'.
++-------------------------+
+| sw1 :      [ Swtich 1 ] +------------>
+| Authorized Access Only! +--------------->
++-------------------------+
+`
+sw1(config)#end
+sw1#sh run | b banner login
+banner login ^C
++-------------------------+
+| sw1 :      [ Swtich 1 ] +------------>
+| Authorized Access Only! +--------------->
++-------------------------+
+^C
+!
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+During the login sessions, the banner will look like: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1 con0 is now available
+Press RETURN to get started.
+
++-------------------------+
+| sw1 :      [ Swtich 1 ] +------------>
+| Authorized Access Only! +--------------->
++-------------------------+
+
+User Access Verification
+Password:
+\end{minted}
+\vspace{-10pt}
