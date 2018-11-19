@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}int g 0/1}
+\PYG{g+go}{sw1(config\PYGZhy{}if)\PYGZsh{}speed ?}
+\PYG{g+go}{  10    Force 10 Mbps operation}
+\PYG{g+go}{  100   Force 100 Mbps operation}
+\PYG{g+go}{  1000  Force 1000 Mbps operation}
+\PYG{g+go}{  auto  Enable AUTO speed configuration}
+\end{Verbatim}

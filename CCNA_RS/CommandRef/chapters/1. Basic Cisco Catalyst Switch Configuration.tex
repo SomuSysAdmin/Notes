@@ -929,3 +929,37 @@ User Access Verification
 Password:
 \end{minted}
 \vspace{-10pt}
+
+\section{Specifying Port Speed and Duplex}
+The speed and duplex settings are critical to ensure that data is sent and received properly, and are set per interface. Depending on the interface, the speed is used to set the transmit (Tx) and Receive (Rx) rates. The typical speed settings available are: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#int g 0/1
+sw1(config-if)#speed ?
+  10    Force 10 Mbps operation
+  100   Force 100 Mbps operation
+  1000  Force 1000 Mbps operation
+  auto  Enable AUTO speed configuration
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Duplex determines whether data can be sent and received at the same time. \textbf{Full-duplex} means that data can be both sent and received at the same time, while \textbf{half-duplex} means data can only be sent or received at a time. The half-duplex mode allows \textbf{CSMA/CD (Carrier Sense Multiple Access/Collision Detection)} to work, which isn't required in full-duplex. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#duplex ?
+  auto  Enable AUTO duplex configuration
+  full  Force full duplex operation
+  half  Force half-duplex operation
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Note that both speed and duplex settings can be set to auto-negotiate. This means the two ends of the link automatically determine the best settings. However, people may choose to hard-code the speed and duplex settings in case auto-negotiation fails. Typically, if we administer devices on both sides of the link, then we choose to hard-code the settings. However, if the end user device such as a laptop is connected, then we may use auto since we don't know what settings these devices are configured with. 
+
+\subsection{MDI-X (Medium Dependent Interface Crossover)}
+If we consider an RJ45 connector, the pins 1,2,3 \& 5 are used for Ethernet. Here, two wires each are used for transmit and receive. In case we connected two switches using a straight-through Ethernet cable, the transmit wires on both sides will be connected, instead of the transmit wires on one side connecting to the receive wires on the other, leading to a failure of communication. 
+
+If we enable \textbf{MDI-X} it allows the switch to auto-detect which wires should be used for transmit and which for receive. To turn it on, we use the \verb|mdix auto| command. This only is available, of course, only if the switch itself supports it. 

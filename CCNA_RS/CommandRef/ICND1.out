@@ -33,3 +33,5 @@
 \BOOKMARK [2][-]{subsection.1.15.2}{Storing password hashes for login}{section.1.15}% 33
 \BOOKMARK [2][-]{subsection.1.15.3}{Removing a user}{section.1.15}% 34
 \BOOKMARK [1][-]{section.1.16}{Creating a Banner}{chapter.1}% 35
+\BOOKMARK [1][-]{section.1.17}{Specifying Port Speed and Duplex}{chapter.1}% 36
+\BOOKMARK [2][-]{subsection.1.17.1}{MDI-X \(Medium Dependent Interface Crossover\)}{section.1.17}% 37
