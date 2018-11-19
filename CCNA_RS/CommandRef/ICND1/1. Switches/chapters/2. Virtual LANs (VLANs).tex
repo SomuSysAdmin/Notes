@@ -116,4 +116,30 @@ sw1#
 Now, we may assume that the VLANs have been wiped, however, the information about VLANs are stored in a separate section of the memory, called the \textit{flash}. We can view its contents using \verb|show flash|. In it, we have a file called \verb|vlan.dat|. To truly erase all the VLANs, we need to use the \verb|delete flash:vlan.dat| command. 
 
 \section{Assigning Ports to a VLAN}
+When a port is dedicated to a single VLAN, it's called an \textbf{access} port. Contrastingly, there can be \textbf{trunk} ports carrying data over multiple VLANs over a single interface. To assign a port to a VLAN, we need to declare it as an access port using the \verb|switchport access| command. Let us consider we want to add the interface \textit{gi0/0} to VLAN 100. We use:
 
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#int gi0/0
+sw1(config-if)#switchport access vlan 100
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To put a range of interfaces all in the same VLAN, we use the \textit{interface range} configuration mode instead of teh \textit{interface} config mode. To put all ports between Gi0/1 and Gi0/3 in VLAN 300, we use: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#interface range gi0/1 - 2
+sw1(config-if-range)#switchport access vlan 200
+sw1(config-if-range)#end
+sw1#sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/3
+100  ACCT                             active    Gi0/0
+200  SALES                            active    Gi0/1, Gi0/2
+...
+\end{minted}
+\vspace{-10pt}
