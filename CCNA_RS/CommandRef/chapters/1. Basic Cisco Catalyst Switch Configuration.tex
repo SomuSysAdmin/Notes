@@ -774,3 +774,19 @@ enable secret 8 $8$srB.hFoYl8uTbI$.h2H8Ux2Ie4F/qDgysbS43/RWT1aapN4rlNIA3/0YUc
 \end{minted}
 \vspace{-10pt}
 
+\section{Setting the exec-timeout}
+The default behaviour of the switch is to log out the user after a certain period of inactivity, so that no one gains access if an admin forgets to logout. This can be defined through the \verb|exec-timeout| command, followed by the number of minutes and seconds before time-out:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw1(config)#line con 0
+sw1(config-line)#exec-timeout 5 30
+
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The above sets the execution time-out period to 5m 30s. To remove it, we can use either \verb|no exec-timeout| or \verb|exec-timeout 0 0|.
+
