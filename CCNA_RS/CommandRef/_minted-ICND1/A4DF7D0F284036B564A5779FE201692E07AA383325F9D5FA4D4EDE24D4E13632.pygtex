@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1(config)\PYGZsh{}no username somu}
+\PYG{g+go}{This operation will remove all username related configurations with same name.Do you want to continue? [confirm]}
+\PYG{g+go}{sw1(config)\PYGZsh{}}
+\end{Verbatim}

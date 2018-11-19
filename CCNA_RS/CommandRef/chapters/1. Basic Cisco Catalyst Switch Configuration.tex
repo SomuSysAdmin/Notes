@@ -790,3 +790,83 @@ sw1(config-line)#exec-timeout 5 30
 \noindent
 The above sets the execution time-out period to 5m 30s. To remove it, we can use either \verb|no exec-timeout| or \verb|exec-timeout 0 0|.
 
+\section{Encrypting Passwords on Switches}
+If we do a \verb|show run| after \verb|password| command, the password for logging in will be stored in clear text just like in the case of \verb|enable password| command. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh run | s line con
+line con 0
+ exec-timeout 0 0
+ password cisco
+ login
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To store an encrypted version of the password (i.e., \textbf{not} a hash), we can use \textit{password encryption service}. We do this using the \verb|service password-encryption| command: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#service password-encryption
+sw1(config)#end
+sw1#sh run | s line con
+line con 0
+ exec-timeout 0 0
+ password 7 070C285F4D06
+ login
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\subsection{User Privileges}
+Cisco's IOS allows us to set granular access to commands using the privilege levels associated with a username. There can typically be 0-15 privilege levels. However, we typically only use two values: \textbf{0: Normal user} and \textbf{15: Administrator}. We can create a new user with a set privilege level using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#username somu privilege 15 password cisco
+sw1(config)#end
+sw1#sh run | i somu
+username somu privilege 15 password 0 cisco
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Again, if we want the password to be encrypted, we use: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#serv password-encryption
+sw1(config)#username somu privilege 15 password cisco
+sw1(config)#end
+sw1#sh run | i somu
+username somu privilege 15 password 7 05080F1C2243
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+These use level 7 encryption, which is very easy to decrypt. Hence, a better method is to use the \verb|secret| command which uses hashing just like in the case of the \verb|enable secret| command. 
+
+\subsection{Storing password hashes for login}
+If we want to use an encrypted password for login or change the algorithm type used for login, we need to have a username. The command allows us to change the algorithm type as well as set an encrypted password by: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#username somu algorithm-type scrypt secret cisco
+sw1(config)#end
+sw1#sh run | i somu
+username somu secret 9 $9$JFpvgWWbMj8jr2$cK3k0VWA1xMpGD5Ky6Vj4URxXGgtX4jkyML86D4vuuQ
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Removing a user}
+To remove a user, we simply need to use the \verb|no username| command: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#no username somu
+This operation will remove all username related configurations with same name.Do you want to continue? [confirm]
+sw1(config)#
+\end{minted}

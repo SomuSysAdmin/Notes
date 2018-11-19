@@ -28,3 +28,7 @@
 \BOOKMARK [1][-]{section.1.12}{Setting the Hostname}{chapter.1}% 28
 \BOOKMARK [1][-]{section.1.13}{Setting the Enable Password}{chapter.1}% 29
 \BOOKMARK [1][-]{section.1.14}{Setting the exec-timeout}{chapter.1}% 30
+\BOOKMARK [1][-]{section.1.15}{Encrypting Passwords on Switches}{chapter.1}% 31
+\BOOKMARK [2][-]{subsection.1.15.1}{User Privileges}{section.1.15}% 32
+\BOOKMARK [2][-]{subsection.1.15.2}{Storing password hashes for login}{section.1.15}% 33
+\BOOKMARK [2][-]{subsection.1.15.3}{Removing a user}{section.1.15}% 34

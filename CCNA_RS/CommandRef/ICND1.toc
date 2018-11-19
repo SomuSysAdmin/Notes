@@ -28,3 +28,7 @@
 \contentsline {section}{\numberline {1.12}Setting the Hostname}{15}{section.1.12}
 \contentsline {section}{\numberline {1.13}Setting the Enable Password}{16}{section.1.13}
 \contentsline {section}{\numberline {1.14}Setting the exec-timeout}{17}{section.1.14}
+\contentsline {section}{\numberline {1.15}Encrypting Passwords on Switches}{17}{section.1.15}
+\contentsline {subsection}{\numberline {1.15.1}User Privileges}{18}{subsection.1.15.1}
+\contentsline {subsection}{\numberline {1.15.2}Storing password hashes for login}{18}{subsection.1.15.2}
+\contentsline {subsection}{\numberline {1.15.3}Removing a user}{18}{subsection.1.15.3}

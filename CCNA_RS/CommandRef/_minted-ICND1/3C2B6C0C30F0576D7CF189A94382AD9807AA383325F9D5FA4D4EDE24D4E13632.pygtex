@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+go}{sw1\PYGZsh{}sh run | s line con}
+\PYG{g+go}{line con 0}
+\PYG{g+go}{ exec\PYGZhy{}timeout 0 0}
+\PYG{g+go}{ password cisco}
+\PYG{g+go}{ login}
+\PYG{g+go}{sw1\PYGZsh{}}
+\end{Verbatim}
