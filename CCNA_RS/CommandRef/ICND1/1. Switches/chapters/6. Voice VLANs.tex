@@ -1,0 +1,121 @@
+\chapter{Voice VLANs}
+\section{Voice VLANs: Introduction}
+Many Cisco IP phones are built with a RJ-45 Ethernet port that allows us to connect our computers to the desk phone, so that we don't need two separate cables to carry our voice and computer's data:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{"ICND1/1. Switches/chapters/6.1.a IP phone"}
+\caption{Cisco IP Phone Ports}
+\label{fig:6.1.a}
+\end{figure}
+\vspace{-10pt}
+
+\noindent
+In the above diagram, port 3 connects the PC to the IP phone and port 2 is connected to the switch via an Ethernet cable. Thus, the data from the computer and the voice are kept on separate VLANs. The port on the switch to which this cable from the phone (port \#2) connects thus acts similar to a trunk port, where data from multiple VLANs are carried over the same cable. 
+
+This port on the switch is however, different from a trunk port and is a special type of port called a \textbf{Multiple VLAN access port}, an access port that supports 2 VLANs (if and only when one of those VLANs is a voice VLAN). 
+
+\section{Voice VLAN Theory}
+There's 3 ways in which we can set up the port on the switch that connects to an IP phone: 
+\vspace{-10pt}
+\begin{itemize}
+\item A traditional, Single VLAN Access Port, 
+\item A Multi-VLAN Access port, or 
+\item A Trunk port. 
+\end{itemize}
+
+\noindent
+In a Single VLAN Access port, both data and voice are carried over the same VLAN. In case of Multi-VLAN Access ports, two separate VLANs are passed on the same cable to the switch - one for data and one for voice from IP phone. Finally, it's also possible to have the IP phone connected to the switch via a \verb|802.1q| Trunk port. 
+
+\subsection{Single VLAN Access port}
+This is the least preferred method among the three options. It uses a normal access port on the switch. A single VLAN carries both the voice and the data from the PC. This is not good for security due to the lack of separation. This means that laptops on the network might be able to eavesdrop on the traffic for voice. Additionally, it's better for Quality of Service(QoS) because the data traffic won't starve the voice traffic and vice versa. 
+
+It might however become necessary to use an access port for special cases like software-based IP phones on laptops and/or 3rd party applications. Another case may be use for a Cisco Jabber client that uses a soft-phone. In this configuration, it's still possible to improve the QoS by using \textbf{IEEE 802.1p} markings. Using this, we can ask the IP phone to tag traffic with a priority value going in to the switch. If our switch knows to look for the priority marking, it can then give a higher priority to the voice traffic when needed since it's for a real-time application. 
+
+\subsection{Multi-VLAN Access port}
+This is a special kind of access port which supports 2 VLANs instead of one - but only when one of the VLANs is a voice VLAN. The Cisco IP phone uses a Cisco Proprietary protocol called the \textbf{CDP (\textit{Cisco Discovery Protocol})} to learn from the switch which VLAN it belongs to, via \textit{CDP messages}. This however, isn't compatible with the industry variant of CDP called \textbf{LLDP-MED}. 
+
+The frames themselves look a lot like \textbf{dot1q} trunk frames. The frames will also have a priority value which for voice is higher than data (typically). The voice frames will get tagged but the data frames, much like the frames for a native VLAN  will still pass through untagged. 
+
+\subsection{Trunk port}
+We may have to connect IP phones to trunk ports on a switch in special cases like older Cisco IP phones, or cases where we have to use the \textbf{Link Layer Discovery Protocol (\textit{LLDP})} instead of CDP, which is used by devices to announce/advertise their neighbours, identity and capabilities. This is compatible with both CDP and LLDP given that's it's a true \textit{dot1q} trunk. 
+
+Since it's a trunk however, data for all the VLANs will flow through it, which is not desirable since it reduces separation. Thus, we need to prune all un-needed VLANs till the data for the PC and the voice from the IP phone are the only traffic on this trunk port. 
+
+\section{Voice VLAN Configuration}
+\subsection{Seting up a Single VLAN access port}
+We can set up a single VLAN access port by first setting a switch-port to access mode, and then choosing the appropriate VLAN for it:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport mode access
+sw1(config-if)#switchport access vlan 300
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now to ensure that the voice traffic is given priority, we have to set up \textbf{IEEE 802.1p} marking for priority:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport voice vlan dot1p
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now the switch-port knows that whenever any traffic comes in with a \textbf{dot1p} marking, it's part of our voice VLAN and a priority value/marking can be embedded inside those tag bytes. Now given that our maximum frame size on Ethernet (for non-jumbo frames) can be $1518$ bytes with 1500B of data and 18B of Layer 2 header, the additional 4B for the dot1p marking would typically be discarded by the switch as a \textit{giant}. However, the switch can be trained to accept these frames, each of $1518+4 = 1522$B, called \textbf{baby giants} by enabling \textit{dot1p}. 
+
+\subsection{Setting up a Multi-VLAN access port}
+Now we can have two separate VLANs: an data VLAN and a voice VLAN on the same port without trunking. Hence, the mode of the port still has to be set as an access port: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport mode access
+sw1(config-if)#switchport access vlan 300
+sw1(config-if)#switchport voice vlan 400
+% Voice VLAN does not exist. Creating vlan 400
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Notice we can create VLANs on the fly like this and then name them later. Now, CDPv2 (CDP \textit{version 2}) will tell the IP phone that the VLAN for voice is 400 and for data (from the PC) is 300. \textbf{CDPv2} also tells the phone it's subnet, the subnet mask and the default gateway when it sends a DHCP request at boot. Typically another DHCP request is also sent, called a \textbf{DHCP option 150} request that the phone uses to get the IP address of a \textbf{TFTP (\textit{Trivial File Transfer Protocol})} server from which it can download all its configuration. 
+
+\subsection{Setting up a Trunk Port for voice}
+In case we're not running CDP but something like \textbf{LLDP-MED (\textit{Link Layer Discovery Protocol for Media Endpoint Devices})}, we need to set this port up as a dot1q trunk (ISL won't work with this). First, we set up the switch-port as a trunk and then assign the data VLAN as the native VLAN. In our case, it'd be VLAN 300: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport trunk encapsulation dot1q
+sw1(config-if)#switchport mode trunk
+sw1(config-if)#switchport trunk native vlan 300
+sw1(config-if)#switchport voice vlan 400
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We finished off by setting the voice VLAN to 400. While this configuration by itself would still work, we need to prune off unnecessary VLANs for security and performance. We do this by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport trunk allowed vlan 300,400
+sw1(config-if)#end
+sw1#sh int g0/1 switchport
+Name: Gi0/1
+Switchport: Enabled
+Administrative Mode: trunk
+Operational Mode: trunk
+Administrative Trunking Encapsulation: dot1q
+Operational Trunking Encapsulation: dot1q
+Negotiation of Trunking: On
+Access Mode VLAN: 1 (default)
+Trunking Native Mode VLAN: 300 (DATA)
+Administrative Native VLAN tagging: enabled
+Voice VLAN: 400 (VOICE)
+...
+Trunking VLANs Enabled: 300,400
+...
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now we can see that the trunk is properly set up to allow either CDP or LLDP-MED to configure the IP phone as well as carry both the data and voice. 

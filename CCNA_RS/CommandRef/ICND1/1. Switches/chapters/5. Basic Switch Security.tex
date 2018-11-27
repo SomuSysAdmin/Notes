@@ -1,0 +1,369 @@
+\chapter{Basic Switch Security}
+\section{Physical Security}
+Instead of a single layer of security, Cisco recommends overlapping layers of security. Physical threats include dropping/damaging devices and/or network components. This is handled best with extensive employee training. There may also be electrical threats such as not being properly grounded while installing a card on a device and consequently damaging the equipment with static shocks. There may even be unstable voltage spikes/thunderstorms. This again is handled best by employee training and uninterrupted power supplies ensuring the equipment doesn't shut down unexpectedly. Then, to protect equipment against malicious users and/or prevent device theft, strategies such as biometric locks to grant access to the network cabinet, etc. may be considered. Finally there's also environmental hazards, such as a HVAC/air conditioning system that causes problems with the equipment by straying too far from their operating temperature. In such cases, it's beneficial to have monitoring systems to automatically detect and/or fix the issue. 
+
+\section{Switch Port Security}
+\subsection{MAC Flooding Attach}
+A malicious user may flood the port of a switch with spoofed MAC addresses using some software, thus filling up the CAM table of the switch with bogus MAC addresses. After this point, when a new device has to be reached, since the CAM table is already filled, the switch begins operating like a hub and broadcasts every packet it receives across all the other ports but the receive port. This allows the attacker to capture packets flowing across the switch. This can be prevented with \textbf{Port Security}.
+
+\subsection{Port Security}
+With port security, we can ensure that we don't have too many MAC addresses or any disallowed MAC addresses connected off a specific port. The port security feature can also allow things like limiting a single port to just 1 MAC addresses so that users can't connect their own switch to split the internet connection. The pre-requisite for port security is that the port has to be a static access port and not any dynamic/static trunk port. This is done using the \verb|switchport mode access| command. Then we simply use the command \verb|switchport port-security|: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#sw mo access
+sw1(config-if)#sw port-sec
+\end{minted}
+\vspace{-10pt}
+
+\subsubsection{Port Security Setup}
+\vspace{-10pt}
+Now we can set the maximum permitted number of MAC addresses that can be learnt by this port and also set up disallowed MAC addresses on this port. We can set the maximum number of MAC addresses by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#sw port-sec ?
+  aging        Port-security aging commands
+  mac-address  Secure mac address
+  maximum      Max secure addresses
+  violation    Security violation mode
+  <cr>
+
+sw1(config-if)#sw port-sec max ?
+  <1-4097>  Maximum addresses
+  
+sw1(config-if)#sw port-sec max 2  
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This makes it so that the switch can only learn 2 MAC addresses from that port. We can now let these be the first two MAC addresses learnt on the port or statically set the MAC address. In case we want the two addresses to be specified statically, we use: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#sw port-sec mac-address ?
+  H.H.H      48 bit mac address
+  forbidden  Configure mac address as forbidden on this interface
+  sticky     Configure dynamic secure addresses as sticky
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Thus, we simply need to issue the command replacing the \verb|?| with a MAC address and run the command twice. But running the command for each MAC address isn't scalable and hence we have the option for sticky learning, where the first two MAC addresses will be the only ones that are allowed. These, however, will only reside in the running-configuration and will be reset with a reload. We can also set up forbidden MAC addresses. To make them persistent past reboots, we need to execute a \verb|copy run star| command to save the settings to disk. 
+
+\subsubsection{Port Security Violation}
+\vspace{-10pt}
+There are three options available to us when a port-security violation occurs, which are: \textbf{protect}, \textbf{restrict} and \textbf{shutdown}:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#sw port-sec violation ?
+  protect   Security violation protect mode
+  restrict  Security violation restrict mode
+  shutdown  Security violation shutdown mode
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+While both \textit{protect} and \textit{restrict} mode allow genuine traffic from allowed MAC addresses to flow, the last option, \textit{shutdown} shuts down the port due to the security violation. The action of each mode is explained in the table below:
+
+\vspace{-10pt}
+\begin{center}
+	\begin{tabular}{rm{0.81\textwidth}}
+	\toprule
+	\textbf{Mode} &\textbf{Explanation}\\
+	\midrule
+	\textbf{Protect}	&It simply drops all frames from a non-allowed MAC address while the traffic from allowed ports flows through unaffected.\\
+	\textbf{Restirct}	&Just like protect it lets traffic from allowed MAC addresses pass through while dropping frames from those MAC addresses that are not allowed, but at the same time, it increases a counter called the \textbf{Security Violation counter} each time a violation occurs.\\
+	\textbf{Shutdown}	&When a security violation occurs it shuts down the port and puts the interface in a \textbf{Error Disabled} state, since it's detected that malicious activities are being performed. Further, it sends an SNMP trap if \textbf{SNMP (\textit{Simple Network Management Protocol})} is configured on the switch.\\
+	\bottomrule
+	\end{tabular}
+\end{center}
+\vspace{-10pt}
+\noindent
+When a port is shut-down due to a port-security violation, the first line of the show interface command shows:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh int g0/1
+GigabitEthernet0/1 is down, line protocol is down (err-disabled)
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To bring back an interface into a connected state, if the underlying problem has been sorted, then a simple \verb|shut| followed by \verb|no shut| has to be done on the interface to bring it back up to operational status:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#int g0/1
+sw1(config-if)#shut
+sw1(config-if)#no shut
+*Nov 27 03:28:01.322: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+*Nov 27 03:28:04.454: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to up
+*Nov 27 03:28:05.456: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+sw1(config-if)#end
+sw1#sh int g0/1
+GigabitEthernet0/1 is up, line protocol is up (connected)
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This however leads to a lot of administrative burden, and the ports can be configured to automatically come back up after violations, using \textbf{Error Disabled Port Automatic Recovery}. This setting has to be configured globally and allows any port on the switch to try to come back up once the condition causing the port to be in \textit{Error-Disabled} has been resolved. 
+
+There's a lot of reasons why a port might go into the \textit{Error-Disabled} state. The options of how to disable and what to do after disabling are configured using the \verb|errdiabled| command: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#errdisable ?
+  detect        Error disable detection
+  flap-setting  Error disable flap detection setting
+  recovery      Error disable recovery
+
+sw1(config)#errdisable recovery ?
+  cause     Enable error disable recovery for application
+  interval  Error disable recovery timer value
+
+sw1(config)#errdisable recovery cause ?
+  all                   Enable timer to recover from all error causes
+  arp-inspection        Enable timer to recover from arp inspection error
+                        disable state
+  bpduguard             Enable timer to recover from BPDU Guard error
+  channel-misconfig     Enable timer to recover from channel misconfig error
+                        (STP)
+  dhcp-rate-limit       Enable timer to recover from dhcp-rate-limit error
+  dtp-flap              Enable timer to recover from dtp-flap error
+  gbic-invalid          Enable timer to recover from invalid GBIC error
+  inline-power          Enable timer to recover from inline-power error
+  l2ptguard             Enable timer to recover from l2protocol-tunnel error
+  link-flap             Enable timer to recover from link-flap error
+  link-monitor-failure  Enable timer to recover from link monitoring failure
+  loopback              Enable timer to recover from loopback error
+  mac-limit             Enable timer to recover from mac limit disable state
+  oam-remote-failure    Enable timer to recover from OAM detected remote
+                        failure
+  pagp-flap             Enable timer to recover from pagp-flap error
+  port-mode-failure     Enable timer to recover from port mode change failure
+  pppoe-ia-rate-limit   Enable timer to recover from PPPoE IA rate-limit error
+  psecure-violation     Enable timer to recover from psecure violation error
+  psp                   Enable timer to recover from psp
+  security-violation    Enable timer to recover from 802.1x violation error
+  sfp-config-mismatch   Enable timer to recover from SFP config mismatch error
+  storm-control         Enable timer to recover from storm-control error
+  udld                  Enable timer to recover from udld error
+  unicast-flood         Enable timer to recover from unicast flood error
+  vmps                  Enable timer to recover from vmps shutdown error
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Since our cause for disabling the port is a violation of the port security, we use the option \verb|psecure-violation|. Thus, to enable the auto-resuscitation of a error disabled port, we just need to use the command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#errdisable recovery cause psecure-violation
+sw1(config)#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now the system will try to bring the port back up at regular intervals, which is by default 300 seconds, i.e., 5 mins. This can be changed using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#errdisable recovery interval 30
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We can also see which conditions are set to automatically come out of \textit{error-disable} using: \verb|show errdisable recovery| command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh errdisable recovery
+ErrDisable Reason            Timer Status
+-----------------            --------------
+arp-inspection               Disabled
+bpduguard                    Disabled
+channel-misconfig (STP)      Disabled
+dhcp-rate-limit              Disabled
+dtp-flap                     Disabled
+gbic-invalid                 Disabled
+inline-power                 Disabled
+l2ptguard                    Disabled
+link-flap                    Disabled
+mac-limit                    Disabled
+link-monitor-failure         Disabled
+loopback                     Disabled
+oam-remote-failure           Disabled
+pagp-flap                    Disabled
+port-mode-failure            Disabled
+pppoe-ia-rate-limit          Disabled
+psecure-violation            Enabled
+security-violation           Disabled
+sfp-config-mismatch          Disabled
+storm-control                Disabled
+udld                         Disabled
+unicast-flood                Disabled
+vmps                         Disabled
+psp                          Disabled
+dual-active-recovery         Disabled
+evc-lite input mapping fa    Disabled
+Recovery command: "clear     Disabled
+
+Timer interval: 30 seconds
+
+Interfaces that will be enabled at the next timeout:
+\end{minted}
+\vspace{-10pt}
+
+\subsubsection{Port Security specific Verification Commands}
+To see which ports have port security enabled we use the \verb|show port-security| command, which shows us how many MAC addresses are allowed, how many that port currently knows and in case of \textit{restricted mode}, the number of times the security violation has occurred :
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh port-sec
+Secure Port  MaxSecureAddr  CurrentAddr  SecurityViolation  Security Action
+                (Count)       (Count)          (Count)
+---------------------------------------------------------------------------
+      Gi0/1              2            2                  0         Shutdown
+---------------------------------------------------------------------------
+Total Addresses in System (excluding one mac per port)     : 1
+Max Addresses limit in System (excluding one mac per port) : 4096
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We use the \verb|shwo port-security addresses| command to see which MAC addresses are currently allowed on the port:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh port-sec addr
+               Secure Mac Address Table
+-----------------------------------------------------------------------------
+Vlan    Mac Address       Type                          Ports   Remaining Age
+                                                                   (mins)
+----    -----------       ----                          -----   -------------
+   1    0050.7966.6802    SecureSticky                  Gi0/1        -
+   1    0c73.a08e.5400    SecureSticky                  Gi0/1        -
+-----------------------------------------------------------------------------
+Total Addresses in System (excluding one mac per port)     : 1
+Max Addresses limit in System (excluding one mac per port) : 4096
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We use \verb|show port-security interface <interfaceNum>| command to see the details of a port that has port-security enabled:
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh port-sec int g0/1
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Shutdown
+Aging Time                 : 0 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 2
+Total MAC Addresses        : 2
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 2
+Last Source Address:Vlan   : 0c73.a08e.5400:1
+Security Violation Count   : 0
+\end{minted}
+\vspace{-10pt}
+
+\section{Shutting down Unused Ports}
+A best-practice for networking equipment is to administratively shut-down unused ports. This may be to prevent unauthorized users from plugging in to an unused/un-configured port to launch attacks. Further, it also disables anyone from using any RJ-45 connector on the wall to plug-in to the network and intercept packets. Let us consider the topology below:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{"ICND1/1. Switches/chapters/5.3.a Man in the middle"}
+\caption{Man in the Middle attack}
+\label{fig:5.3.a}
+\end{figure}
+\vspace{-10pt}
+
+\noindent
+Let us consider the computer marked \textit{user} has  default gateway of \verb|10.1.1.1|, i.e., the edge router. It passes through a switch, \textbf{sw1} to which another malicious user is also connected with an IP of \verb|10.1.1.22| and a MAC address of \verb|BBBB.BBBB.BBBB|. Also note that the MAC Address of the Edge router is \verb|AAAA.AAAA.AAAA|. 
+
+Now, if \textit{user} wants to send some data through the \textit{edge} router, it's gonna have to first send an ARP request to get the MAC address of the machine with the IP \verb|10.1.1.1|. This would pass through switch \textit{sw1} and reach \textit{edge}, and ideally generate an ARP reply from \textit{edge} with it's MAC address, \verb|AAAA.AAAA.AAAA| that the switch \textit{sw1} will store in its CAM table. 
+
+The \textit{malicious} user has gained access through the network via an unused port on \textit{sw1}. If \textit{malicious user} knows the IP address of the \textit{user}, it can send an un-solicited ARP reply, also called a gratuitous ARP stating that the IP address \verb|10.1.1.1| of the \textit{edge} router is actually assigned to a host with the MAC address \verb|BBBB.BBBB.BBBB|. 
+
+Now, \textit{user} will believe that the gateway is \textit{malicious user} and send all outgoing packets to it, which the malicious user can relay to the \textit{edge} router. At the same time, \textit{malicious user} can now intercept every packet destined from the \textit{user} to the \textit{edge} router. 
+
+\subsection{Shutting down all ports on a switch}
+The recommendation to prevent man-in-the-middle attacks, etc. from succeeding is to administratively shut-down all the ports on a switch out-of-the-box and then perform a \verb|no shut| on them as and when needed. All of the ports on the switch can be shut down together by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     unassigned      YES unset  up                    up
+GigabitEthernet0/1     unassigned      YES unset  up                    up
+GigabitEthernet0/2     unassigned      YES unset  up                    up
+GigabitEthernet0/3     unassigned      YES unset  up                    up
+Vlan1                  10.1.1.5        YES manual up                    up
+sw1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw1(config)#int range g0/0 - 3
+sw1(config-if-range)#shut
+*Nov 27 05:25:07.098: %LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to administratively down
+*Nov 27 05:25:07.143: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+*Nov 27 05:25:07.186: %LINK-5-CHANGED: Interface GigabitEthernet0/2, changed state to administratively down
+*Nov 27 05:25:07.230: %LINK-5-CHANGED: Interface GigabitEthernet0/3, changed state to administratively down
+*Nov 27 05:25:08.104: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to down
+*Nov 27 05:25:08.145: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+*Nov 27 05:25:08.186: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to down
+*Nov 27 05:25:08.234: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/3, changed state to down
+sw1(config-if-range)#exit
+sw1(config)#int g0/0
+sw1(config-if)#no shut
+sw1(config-if)#end
+sw1#
+*Nov 27 05:25:36.362: %LINK-3-UPDOWN: Interface GigabitEthernet0/0, changed state to up
+*Nov 27 05:25:37.364: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+sw1#sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     unassigned      YES unset  up                    up
+GigabitEthernet0/1     unassigned      YES unset  administratively down down
+GigabitEthernet0/2     unassigned      YES unset  administratively down down
+GigabitEthernet0/3     unassigned      YES unset  administratively down down
+Vlan1                  10.1.1.5        YES manual up                    up
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now, we can individually bring up the required interfaces if and when required. 
+
+\section{Putting Unused Ports in an Unused VLAN}
+Another approach to better secure our switches is to put unused ports in an unused VLAN, which ensures that the port is in a whole other subnet that has no ability to intercept data from any of our useful/production subnets, including the one containing the management IP of our switch. Now if anyone is able to gain access to a port that isn't administratively shut down, they still can get to any of our production traffic. For this purpose, we create a \textbf{Null VLAN} and give it a memorable number like \textit{999}:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#vlan 999
+sw1(config-vlan)#name NULL_VLAN
+sw1(config-vlan)#end
+sw1#sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     unassigned      YES unset  up                    up
+GigabitEthernet0/1     unassigned      YES unset  administratively down down
+GigabitEthernet0/2     unassigned      YES unset  administratively down down
+GigabitEthernet0/3     unassigned      YES unset  administratively down down
+Vlan1                  10.1.1.5        YES manual up                    up
+sw1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw1(config)#int ran g0/1 - 3
+sw1(config-if-range)#sw acc vlan 999
+sw1(config-if-range)#end
+sw1#sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/0
+999  NULL_VLAN                        active    Gi0/1, Gi0/2, Gi0/3
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now, if and when we need those ports, we can individually move those ports to a production VLAN. 

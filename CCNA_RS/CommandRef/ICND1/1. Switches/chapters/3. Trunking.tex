@@ -43,11 +43,373 @@ The frames for a Native VLAN aren't tagged. This is the only VLAN that sends unt
 If one switch has native VLAN set to \textit{VLAN$_{100}$} while a switch on the other end of the connection has the native VLAN set to \textit{VLAN$_{200}$},  then when the first switch will send data destined for \textit{VLAN$_{100}$}, the second switch will accidentally forward it to the wrong VLAN, i.e., \textit{VLAN$_{200}$}. 
 
 \section{Trunking Modes}
+When two switches are interconnected with a trunk, there are different trunking modes that they may be arranged in. They are: 
 
+\noindent
+\begin{center}
+	\begin{tabular}{rm{0.73\textwidth}}
+		\toprule
+		\textbf{Mode} &\textbf{Description} \\
+		\midrule
+		\textbf{Access}	&Forces a port to act as an Access port (i.e., unless it's for a voice VLAN, it will bear traffic for a single VLAN)\\
+		\textbf{Trunk}	&Forces a port to act as a Trunk port\\
+		\textbf{Dynamic Desirable}	&Initiates the negotiation of a trunk by sending the required \textbf{DTP} frames\\
+		\textbf{Dynamic Auto}	&Passively waits for the remote switch to start negotiating a trunk formation.\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{Formation of a Trunk}
+A trunk is formed via negotiation of the two switch ports at the end of a link through the \textbf{Dynamic Trunking Protocol (\textit{DTP})}, which is Cisco's proprietary protocol for this purpose. When a switch port set to \textbf{Dynamic Desirable} or \textbf{Dynamic Auto} mode receives a DTP frame, it will form a trunk. However, only a \textbf{Dynamic Desirable} or \textbf{Trunk} switch port can send the necessary DTP frames for trunk negotiation. Thus, we get the following table for trunk formations:
+
+\noindent
+\begin{center}
+	\begin{tabular}{rrl}
+		\toprule
+		\textbf{Switch 1 Mode} &\textbf{Switch 2 Mode}&\textbf{Trunk Formation} \\
+		\midrule
+		Access &\textit{ANY} &\textbf{No}\\
+		Trunk &Dynamic Desirable &\textit{Yes}\\
+		Trunk &Dynamic Auto &\textit{Yes}\\
+		Trunk &Trunk &\textit{Yes}\\
+		Dynamic Desirable &Dynamic Desirable &\textit{Yes}\\
+		Dynamic Desirable &Dynamic Auto &\textit{Yes}\\
+		Dynamic Auto &Dynamic Auto &\textbf{\textit{No}}\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\noindent
+In case of Access modes, no matter what kind of frames the port receives, it'll ignore them since it's been hard-coded to be an access port. When there's a switch in trunk mode on one side, and a switch port in dynamic mode on the other side, they will form a trunk since both/one side respectively will send the DTP frames. In case of Trunk/Trunk configuration, both ports are independently told to form a trunk and hence both will send DTP frames and form a trunk. 
+
+In the case of Dynamic desirable ports on both sides, a trunk will form since one or both sides will receive the DTP frames from the partner and form a trunk. Similarly when there's dynamic auto on one side and dynamic desirable on the other, the later will send the DTP frames for trunk formation and the former will accept, thus forming a trunk. But when there's switch ports with \textit{dynamic auto} trunk mode on both side, neither will start the negotiation for trunk formation, although they're willing to form a trunk. Due to this, a trunk \textbf{won't be formed}. 
 
 \section{Creating Trunks}
+\subsection{Finding out the current trunk mode of a switch port}
+The \verb|show interfaces <interfaceName> switchport| command shows us the VLAN/Trunk details of a switch port, which can be written as \verb|sh int <interfaceNumber> sw| for short: 
 
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#show interfaces g0/0 switchport
+Name: Gi0/0
+Switchport: Enabled
+Administrative Mode: dynamic auto
+Operational Mode: static access
+Administrative Trunking Encapsulation: negotiate
+Operational Trunking Encapsulation: native
+Negotiation of Trunking: On
+Access Mode VLAN: 1 (default)
+Trunking Native Mode VLAN: 1 (default)
+Administrative Native VLAN tagging: enabled
+Voice VLAN: none
+Administrative private-vlan host-association: none
+Administrative private-vlan mapping: none
+Administrative private-vlan trunk native VLAN: none
+Administrative private-vlan trunk Native VLAN tagging: enabled
+Administrative private-vlan trunk encapsulation: dot1q
+Administrative private-vlan trunk normal VLANs: none
+Administrative private-vlan trunk associations: none
+Administrative private-vlan trunk mappings: none
+Operational private-vlan: none
+Trunking VLANs Enabled: ALL
+Pruning VLANs Enabled: 2-1001
+Capture Mode Disabled
+Capture VLANs Allowed: ALL
+
+Protected: false
+Appliance trust: none
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+In the above section, line \#4 \verb|Administrative Mode: dynamic auto| tells us that it's set to dynamic auto trunking mode, but the next line, \verb|Operational Mode: static access| tells us that since the other side hasn't sent the required DTP frames, it's acting as an access port. 
+
+Let us consider we have 3 switches, sw1, sw2 and sw3 arranged in the following topology. Each interface starting with \verb|gi| is a \verb|gigabitEthernet| port:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.57\linewidth]{"ICND1/1. Switches/chapters/3.4.a Trunk Topology"}
+	\caption{Trunk Topology}
+	\label{fig:3.4.a}
+\end{figure}
+
+\noindent
+Let us consider we first want to set up the trunks between the switches \textit{sw1} and \textit{sw2}, and another trunk between the switches \textit{sw1} and \textit{sw3}. The interface we're currently inspecting in figure \ref{fig:3.4.a} is \verb|gi0/0| on \textit{sw1}, i.e., the one connecting to \verb|gi0/0| on \textit{sw2}. 
+
+We also see on line \#6 that if a trunk is formed, the trunking encapsulation will be negotiated, due to: \verb|Administrative Trunking Encapsulation: negotiate|. We might want to hard-code it to \textbf{dot1q}. 
+
+Finally, if a trunk were to be formed, the native VLAN (the one that carries frames that are untagged) will be set to VLAN1 due to line \#10 : \verb|Trunking Native Mode VLAN: 1 (default)|. We should also know how to change this behaviour. 
+
+\subsection{Showing currently existing Trunks}
+The trunks that exist on all the interfaces currently can be seen with \verb|show interfaces trunk|, or \verb|sh int tr| for short. Since there are none currently, the result looks like: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#show interfaces trunk
+sw1#
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+When there are existing trunks, it looks like:
+
+\vspace{-15pt}
+\begin{minted}{console}
+
+\end{minted}
+
+\subsection{Chaning Switch port's trunking settings}
+To change the trunk formation settings of a switch port, we use the \verb|switchport trunk| command in the interface configuration mode. It has several parameters that we can control: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport trunk ?
+  allowed        Set allowed VLAN characteristics when interface is in trunking
+                 mode
+  encapsulation  Set trunking encapsulation when interface is in trunking mode
+  native         Set trunking native characteristics when interface is in
+                 trunking mode
+  pruning        Set pruning VLAN characteristics when interface is in trunking
+                 mode
+\end{minted}
+\vspace{-10pt}
+
+\subsubsection{Changing Trunk Encapsulation}
+The trunk encapsulation determines the format in which the trunk negotiation is performed. This has the possible values of: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport trunk encapsulation ?
+  dot1q      Interface uses only 802.1q trunking encapsulation when trunking
+  isl        Interface uses only ISL trunking encapsulation when trunking
+  negotiate  Device will negotiate trunking encapsulation with peer on
+             interface
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+\textbf{ISL} is a proprietary encapsulation by Cisco that Cisco itself doesn't recommend any more. \textbf{dot1q} is the standard we want to use and \textit{negotiate} will have the switch port negotiate and set up the encapsulation based on the partner's encapsulation settings. 
+
+We can set it to \textit{dot1q} by using the \verb|switchport trunk encapsulation dot1q| command, or \verb|sw tr en dot| for short:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#sw tr e dot
+sw1(config-if)#
+\end{minted}
+\vspace{-10pt}
+
+\subsubsection{Changing the native VLAN}
+The native VLAN can also be changed in a similar fashion using the \verb|switchport trunk native vlan| command (\verb|sw tr nat vlan| for short):
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#sw tr n vlan 100
+sw1(config-if)#
+\end{minted}
+\vspace{-10pt}
+
+\subsubsection{Changing the switchport trunking mode}
+We can change the current \textit{dynamic auto} trunking mode to \textbf{dynamic desirable} using the \verb|switchport mode dynamic desirable| command (\verb|sw m dy des| for short):
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport mode ?
+  access        Set trunking mode to ACCESS unconditionally
+  dot1q-tunnel  set trunking mode to TUNNEL unconditionally
+  dynamic       Set trunking mode to dynamically negotiate access or trunk mode
+  private-vlan  Set private-vlan mode
+  trunk         Set trunking mode to TRUNK unconditionally
+
+sw1(config-if)#switchport mode dynamic ?
+  auto       Set trunking mode dynamic negotiation parameter to AUTO
+  desirable  Set trunking mode dynamic negotiation parameter to DESIRABLE
+
+sw1(config-if)#switchport mode dynamic desirable
+sw1(config-if)#
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Trunk settings mismatch}
+The effect of incompatibility of trunk settings on both sides of the link is immediate errors. As such, the moment we set the trunk's native VLAN on sw1's \verb|gi0/0| to \textbf{VLAN100} while the one on sw2's \verb|gi0/0| is still set to the default of \textbf{VLAN1}, we get: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config-if)#switchport mode dynamic desirable
+sw1(config-if)#
+*Nov 21 07:53:56.502: %SPANTREE-2-RECV_PVID_ERR: Received BPDU with inconsistent peer vlan id 1 on GigabitEthernet0/0 VLAN100.
+*Nov 21 07:53:56.504: %SPANTREE-2-BLOCK_PVID_PEER: Blocking GigabitEthernet0/0 on VLAN0001. Inconsistent peer vlan.
+*Nov 21 07:53:56.505: %SPANTREE-2-BLOCK_PVID_LOCAL: Blocking GigabitEthernet0/0 on VLAN0100. Inconsistent local vlan.
+*Nov 21 07:54:25.670: %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on GigabitEthernet0/0 (100), with sw2 GigabitEthernet0/0 (1).
+*Nov 21 07:55:18.671: %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on GigabitEthernet0/0 (100), with sw2 GigabitEthernet0/0 (1).
+...
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This can be changed by setting up the partner's (\verb|sw2 gi0/0|) trunk config appropriately and match the native VLAN. On sw2, we have: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw2#sh int trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       auto             n-802.1q       trunking      1
+...
+sw2#
+*Nov 21 08:03:44.500: %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on GigabitEthernet0/0 (1), with sw1.somuvmnet.com GigabitEthernet0/0 (100).
+sw2#sh int g0/0 sw
+Name: Gi0/0
+Switchport: Enabled
+Administrative Mode: dynamic auto
+Operational Mode: trunk
+Administrative Trunking Encapsulation: negotiate
+Operational Trunking Encapsulation: dot1q
+Negotiation of Trunking: On
+Access Mode VLAN: 1 (default)
+Trunking Native Mode VLAN: 1 (default)
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We see that a trunk has formed, but there's a VLAN mismatch. We match the settings with: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw2(config)#int g0/0
+sw2(config-if)#sw t en dot
+sw2(config-if)#sw t nat v 100
+sw2(config-if)#end
+sw2#sh int tr
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       auto             802.1q         trunking      100
+...
+sw2#
+*Nov 21 08:08:07.859: %SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking GigabitEthernet0/0 on VLAN0001. Port consistency restored.
+sw2#
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Hard-coded Trunk mode}
+Let us quickly configure \textit{sw3} with the following: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw3(config)#int g0/0
+sw3(config-if)#sw mo dyn auto
+sw3(config-if)#sw tr encap dot
+sw3(config-if)#sw tr native vlan 200
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+So, the trunk mode is set to \textbf{dynamic auto}, encapsulation to \textbf{dot1q} and the native VLAN to 200. Now, when we create a similar profile in \textit{sw1} but set the mode to \textbf{trunk} instead of a dynamic type, and execute the \verb|sh int tr|, we get:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh int tr
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       desirable        802.1q         trunking      100
+Gi0/1       on               802.1q         trunking      200
+
+Port        Vlans allowed on trunk
+Gi0/0       1-4094
+Gi0/1       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/0       1,100,200
+Gi0/1       1,100,200
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/0       1,100,200
+Gi0/1       1,100,200
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Note that the mode for \verb|sw1 gi0/1| states \textbf{on} instead of \textit{auto/desirable}. This indicates that the DTP frames are being sent by this particular interface to form a trunk and it's a static trunking. 
 
 \section{VLAN pruning}
+By default, all VLANs are allowed over all trunks. This can be bad for security, given that all unknown broadcast, multicast and unicast traffic is sent over trunks. Thus, it'd enable malicious attackers to snoop on the traffic flowing through the trunk. Further, limiting VLANs reduces bandwidth utilization on the trunk and thus helps from a \textbf{Quality of Service (\textit{QoS})} perspective. 
 
+\subsection{Showing VLANs allowed on a trunk}
+To see the particular VLANs allowed on a trunk, we use the \verb|show interfaces <int#> trunk|. To see allowed VLANs for all trunks, we use the normal version, \verb|sh int tr|:
 
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh interfaces g0/0 trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       desirable        802.1q         trunking      100
+
+Port        Vlans allowed on trunk
+Gi0/0       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/0       1,100,200
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/0       1,100,200
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We can see that over Gi0/0, all VLANs are allowed (VLANs 1-4094).
+
+\subsection{Allowing only certain VLANs over a certain trunk}
+Let us consider in the last example, sw1 only wants the VLAN$_{100}$ over the interface \verb|Gi0/0| and the VLAN$_{200}$ over the interface \verb|Gi0/1|. To allow a VLAN over a switch port, we use: \verb|switchport trunk allowed vlan <vlan numbers: 1,2,3...>| in the interface config mode.
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#int g0/0
+sw1(config-if)#sw tr allowed vlan 1,100
+sw1(config-if)#end
+sw1#sh int g0/0 tr
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       desirable        802.1q         trunking      100
+
+Port        Vlans allowed on trunk
+Gi0/0       1,100
+
+Port        Vlans allowed and active in management domain
+Gi0/0       1,100
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/0       1,100
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+In the case we only wanted VLAN 100 to be banned, we could've used the command: \verb|sw tr allowed vlan except 100|.
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1(config)#int g0/1
+sw1(config-if)#sw tr allowed vlan except 100
+sw1(config-if)#end
+sw1#sh interfaces trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       desirable        802.1q         trunking      100
+Gi0/1       on               802.1q         trunking      200
+
+Port        Vlans allowed on trunk
+Gi0/0       100
+Gi0/1       1-99,101-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/0       100
+Gi0/1       1,200
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/0       100
+Gi0/1       1
+\end{minted}
+\vspace{-10pt}

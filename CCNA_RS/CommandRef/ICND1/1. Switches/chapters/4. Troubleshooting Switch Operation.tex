@@ -1,0 +1,331 @@
+\chapter{Troubleshooting Switch Operation}
+\section{Isolating the Issue}
+Let us consider in the following topology, there's a PC connected to one switch and a server connected to the other, and they can't connect to each other, or the speed is very slow. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{"ICND1/1. Switches/chapters/4.1.a Switching topology"}
+\caption{Switching Topology}
+\label{fig:4.1.a}
+\end{figure}
+\vspace{-10pt}
+
+\noindent
+The first step would be to isolate the issue. Some of the possible steps may be: 
+\vspace{-10pt}
+\begin{itemize}
+\item Since the end devices can't ping each other, try pinging one switch from the other.
+\item If the switches are close by, try swapping the network cable
+\item To eliminate possible issues with the port, try changing to another port on each switch.
+\item Check the switch configuration for speed/duplex errors
+\item Try swapping the switch itself.
+\end{itemize}
+
+\noindent
+\subsection{Pinging to test network connectivity}
+One of the first steps to check the connectivity between two devices is to \textbf{ping} one device from another. The \verb|ping| command sends ICMP echo packets and waits for ICMP echo replies from the partner to establish connectivity. The ping command can be used by:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#ping 192.168.1.12
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.12, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 7/8/12 ms
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Each \textbf{!} or \textit{bang} indicates that a ping was successful, i.e., an echo reply was received for an echo. In case the reply packet gets lost/dropped, the output would be a \textbf{.} or \textit{dot}. Thus, a connection that suffers from 40\% packet loss \textit{might} look like: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#ping 192.168.1.12
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.12, timeout is 2 seconds:
+!..!!
+Success rate is 60 percent (3/5), round-trip min/avg/max = 5/9/16 ms
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+It also tells us about the round-trip time. In this case, the minimum was \textit{5ms} while the average was \textit{9ms}. Generally, anything under \textbf{10ms} is considered a fine, but substantially higher ones would indicate \textit{delays}/\textbf{latency}. 
+
+\subsection{Extended Ping and Ping timeout due to ARP}
+\vspace{-10pt}
+Sometimes, we may have the first packet time-out, but the rest succeed. This may be because at the time of the fist ping, the MAC address of the destination host was unknown to the switch and it had to learn the MAC address by using \textbf{ARP(\textit{Address Resolution Protocol})}. 
+
+Since our switch doesn't know the MAC address for the machine with the IP, it can't fill the destination address in the ICMP echo's layer 2 frame. Thus, the switch will first send a broadcast ARP packet since it wants to know the MAC address of machine with the IP \verb|192.168.1.15|. Only the machine with this IP would respond, and our switch can store the MAC address corresponding to it in its MAC address table. The delay in this may cause the first ping to time-out. Successively, a ping is only sent to the right MAC address and we get a reply. 
+
+We can actually test this with an extended ping, which is a ping command without any parameters. First, we need to clear the ARP Cache, which is where the known MAC addresses are stored and mapped to IP addresses, unlike the MAC/CAM table, which only maps which MAC addresses can be reached via which interface. Thus, the MAC address table stores Layer 2 information while the ARP table/cache stores Layer 3 mappings. The ARP cache can be cleared with the \verb|clear arp-cache| command, and can be viewed with a \verb|show arp| command. 
+
+Once cleared, we can use the extended ping to reduce the timeout to 1 second, which is enough time for the ping to fail the first time due to ARP still working:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#clear arp-cache
+sw1#sh arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  192.168.1.11            -   0c73.a0bb.8001  ARPA   Vlan1
+sw1#ping
+Protocol [ip]:
+Target IP address: 192.168.1.12
+Repeat count [5]:
+Datagram size [100]:
+Timeout in seconds [2]: 1
+Extended commands [n]:
+Sweep range of sizes [n]:
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.12, timeout is 1 seconds:
+.!!!!
+Success rate is 80 percent (4/5), round-trip min/avg/max = 6/7/9 ms
+sw1#sh arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  192.168.1.11            -   0c73.a0bb.8001  ARPA   Vlan1
+Internet  192.168.1.12            0   0c73.a075.8001  ARPA   Vlan1
+sw1#ping 192.168.1.12 timeout 1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.12, timeout is 1 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 8/10/15 ms
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+In the above case, we can see that once the \textit{ARP Cache} has been cleared and the ping command is used with a time-out of only 1 second, the first ping fails, after which the ARP table gets an entry for the pinged IP, and all subsequent pings succeed. 
+
+\noindent
+\textbf{NOTE:} The \verb|clear arp-cache| command may simply send an ARP broadcast at the end of clearing the cache to get the new MAC addresses for the connected devices, which means instead of clearing the table, the age of the MAC address would only be shown as 0min. To prevent this for the above demonstration, the interface(s) were administratively shut down before clearing the cache, and then brought back up. 
+
+\section{Checking Interface Status}
+The \verb|show interfaces| command by itself would show me the detailed information about every single interface available, but we generally want to focus on a particular interface, the name of which we can provide as the parameter to get information about only that specific interface:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh int g0/0
+GigabitEthernet0/0 is up, line protocol is up (connected)
+  Hardware is iGbE, address is 0c73.a0bb.f700 (bia 0c73.a0bb.f700)
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Auto Duplex, Auto Speed, link type is auto, media type is unknown media type
+  output flow-control is unsupported, input flow-control is unsupported
+  Full-duplex, Auto-speed, link type is auto, media type is RJ45
+  input flow-control is off, output flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:00, output 00:00:02, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/0 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     3686 packets input, 241522 bytes, 0 no buffer
+     Received 3609 broadcasts (3609 multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 3609 multicast, 0 pause input
+     715 packets output, 92171 bytes, 0 underruns
+     0 output errors, 0 collisions, 3 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The first line of the output can be interpreted says: \verb|GigabitEthernet0/0 is up|, which indicates that the layer 1 of the interface is up. This means that a \textbf{carrier detect} signal is being received from the far end of this link. The next part, \verb| line protocol is up (connected)| is the data link layer status, and it means layer 2 is up as well, which is why it says that the interface is connected. This is the case when \textit{keep-alive}s are being received in the link layer. When an interface is operational, we see that it's in an \textbf{up/up} state, but it can be in several others:
+
+\vspace{-10pt}
+\begin{center}
+	\begin{tabular}{rlm{0.42\textwidth}}
+		\toprule
+		\textbf{Interface} &\textbf{Line protocol} &\textbf{Meaning} \\
+		\midrule
+		\textbf{Up} &\textbf{Up(connected)} &Up and Functional\\
+		\midrule
+		\textbf{Up} &\textbf{Down} &Connection Issue (Layer 2 keep-alives not being received).\\
+		\midrule
+		\textbf{Down} &\textbf{Down(notconnect)} &Cable isn't connected to at least one switch or the far end switch port has been administratively shut down.\\
+		\midrule
+		\textbf{Down} &\textbf{Down} &Layer 1 hardware/interface issue.\\
+		\midrule
+		\textbf{Administratively Down} &\textbf{Down} &Interface set to down state by admin, perhaps for security reasons because the port is unused.\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{Show interfaces status}
+The \verb|show interfaces status| command is very useful since it shows us whether that interface is connected, which VLAN it belongs to, or if it's a trunk, and most notably, the speed and duplex settings on the interface as well as the media type used, for all available interfaces:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh int status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/0                        connected    trunk      a-full   auto RJ45
+Gi0/1                        connected    1          a-full   auto RJ45
+Gi0/2                        connected    1          a-full   auto RJ45
+Gi0/3                        connected    1          a-full   auto RJ45
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+In the case above, we can see that both the duplex and the speed settings have been set to auto-negotiation. Auto-negotiation can however, sometimes cause unexpected problems. Let us set up sw2 with a hard-coded 100Mbps speed on the trunk port and hard-coded full duplex settings. First when we try to do it, we get:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw2(config)#int g0/0
+sw2(config-if)#duplex full
+Autoneg enabled. Duplex cannot be set
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+It says that we can't manually set the duplex/speed settings since the auto-negotiation is turned on. Thus, we need to turn off auto-negotiation on \textbf{sw2} using \verb|no negotiation auto| and then change the duplex and speed settings:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw2(config-if)#no neg auto
+sw2(config-if)#speed 100
+sw2(config-if)#duplex full
+sw2(config-if)#end
+sw2#
+*Nov 26 06:38:17.399: %SYS-5-CONFIG_I: Configured from console by console
+sw2#sh int status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/0                        connected    trunk        full    100 RJ45
+Gi0/1                        connected    1          a-full   auto RJ45
+Gi0/2                        connected    1          a-full   auto RJ45
+Gi0/3                        connected    1          a-full   auto RJ45
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Back on \textbf{sw1}, we still have the port set to auto-negotiation:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh int g0/0 status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/0                        connected    trunk      a-full   auto RJ45
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Given that one side is set to full-duplex, and the other side to auto, it's reasonable to expect that the auto-negotiation will resolve to set full duplex on \textit{sw1}, but that's not the case. When one side is hard coded to full duplex, it \textit{might not} participate in auto-negotiation (at least in older versions of IOS). 
+
+Under such circumstances, the switch with the auto-negotiation settings turned on will fall back to half-duplex, shown as \verb|a-half| because the other side is hard-coded to full duplex and didn't participate in auto-negotiation. When this happens, collisions will increase, and users will complain about slowness. Thus, traffic will still flow, but with severely degraded performance.
+
+\section{Checking for Interface Errors}
+Interface errors may appear for a variety of Layer 1 or 2 issues. Layer 2 issues are typically misconfiguration. In copper cabling, some typical causes are wrong cable type, damaged cables, etc. In case of fibre optic cables, there's a \textbf{minimum bend ratio} that has to be maintained to prevent light from leaking into the cladding from the core. Some of the types of errors we see are:
+
+\vspace{-10pt}
+\begin{center}
+	\begin{tabular}{rm{0.75\textwidth}}
+		\toprule
+		\textbf{Runts} &A frame that has a smaller size than the medium's minimum frame size (ex. 64B on Ethernet network) and has a bad CRC.\\
+		\textbf{Giants} &A frame that has a larger size than the medium's maximum frame size (ex. 1518B on an non-jumbo Ethernet network) and has a bad CRC.\\
+		\textbf{Input Error} &Sum of all interface errors (runts, giants, no buffer, CRC, frame, overrun and ignore) \\
+		\textbf{Output Error} &Total number of errors that caused a failure in the transmission of packets.\\
+		\textbf{Collisions} &Total number of collisions (ex. in Ethernet networks working in half-duplex mode)\\
+		\textbf{Late Collisions} &Number of times a collision occurred \textbf{late} in the transmission, i.e., number of collisions after the medium's \textbf{slot time}, i.e., a transmission that occurred after the Tx NIC had completed transmitting.\\
+		\textbf{CRC} &Number of times the CRC value at the receiving end didn't match the CRC value at the transmitting end.\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+\vspace{-10pt}
+\noindent
+\textbf{Slot Time:} It is the minimum amount of time required to wait for the medium to be free of transmissions (and hence of collisions). Let us consider an Ethernet cable. It has a maximum transmission distance of about 100m. Let us call the time taken by a single bit (i.e., an electronic pulse) to travel this distance the Propagation time (T$_p$). Then the slot time (T$_s$) can be any time greater than twice the propagation time $T_s > 2T_p$. 
+
+A late collision is any collision that occurs after a NIC has completed transmitting. Thus, to prevent them, we have to wait for all transmission to stop on the shared network medium segment before retransmitting. We also have to allow for any/all replies to the original segment to pass through the network. Hence the value of $2T_p$. 
+
+Such collisions shouldn't even be possible, and hence, these frames aren't retransmitted, and are left to the mercy of the higher level protocols to detect a collision and retransmit. Late collisions occur because of duplex mismatches, when an Ethernet cable exceeds its length limits, defective hardware such as incorrect cabling is used, non-compliant number of hubs are used in the network, or a \textbf{NIC (\textit{Network Interface Card})} malfunctions.
+
+Since a switch operating in a full-duplex manner effectively has no collision domain, there isn't any chances of collisions occurring. Hence, 10Gig ports which can't work in half-duplex have no slot time and don't have any collision errors. The typical value for slot times are: 
+
+\vspace{-10pt}
+\begin{center}
+\begin{tabular}{rrl}
+\toprule
+\textbf{Speed} &\textbf{Slot Time} &\textbf{Time Interval}\\
+\midrule
+\textbf{10} Mbit/s	&512 bit times	&51.2 microseconds\\
+\textbf{100} Mbit/s	&512 bit times	&5.12 microseconds\\
+\textbf{1} Gbit/s	&4096 bit times	&4.096 microseconds\\
+\textbf{2.5} Gbit/s	&(onward)		&no half-duplex operation\\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{-10pt}
+\noindent
+A \textbf{bit time} is the time taken by the NIC to eject a bit onto the wire. A point to be noted is that there aren't even any 1Gig interfaces capable of operating in half-duplex. Hence, for all practical purposes, all devices operating on a speed of 1Gbps or greater always operate in full-duplex. 
+
+\noindent
+\textbf{CRC:} A \textbf{CRC \textit{(Cyclical Redundancy Check)}} is a type of \textbf{FCS (\textit{Frame Check Sequence})}, a mathematical operation much like hashing that's done on the contents of a frame that is calculated at both ends of the link. If they match, we are sure that the frame hasn't degraded in transit. If they don't, the packet is useless and retransmission is required. 
+
+\subsection{Duplex Mismatch}
+As described previously, a duplex mismatch can cause late collisions. This is because one side of the network thinks it's communicating on a medium in full duplex and doesn't run CSMA/CD or wait for retransmission after collisions, while the other does.  This means when the half duplex side detects a collision, it starts jamming but the full duplex side remains clueless and continues transmission as usual. 
+
+At the end of the wait period (for retransmission), i.e., after the slot time has passed, when late collisions can occur, the half duplex side still sees the full duplex end transmitting, causing further collisions. Thus, the half-duplex side will see an increase in the number of late collisions. 
+
+The full duplex side doesn't even realize that collisions have occurred, and thinks the jamming signal from the collision is a response to it's transmission and generates a lot of CRC errors. Thus, the tell-tale of a duplex mismatch is late collisions on one end and CRC errors on the other.  
+
+\section{Checking a Port's VLAN Membership}
+Since VLANs separate different subnets, if the two devices are on both sides of an interface are on different VLANs, they won't be able to communicate. We can see which ports are assigned to which VLAN using the \verb|sh vlan br| command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/1, Gi0/2, Gi0/3
+1002 fddi-default                     act/unsup
+1003 token-ring-default               act/unsup
+1004 fddinet-default                  act/unsup
+1005 trnet-default                    act/unsup
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Notice that it only shows access ports, since trunk ports may carry data for multiple VLANs. Another issue is when a VLAN is deleted (ex. \verb|no vlan 100|) and then later reused, they initially don't belong to any VLAN, and thus will be isolated and unable to carry traffic. Thus the recommendation is to always reassign ports on a VLAN before deleting the VLAN itself. 
+
+\section{Checking a Trunk's Status}
+To start troubleshooting trunks on switches, one of the most useful commands is the \verb|show interface trunk| command: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+sw1#sh int trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/0       desirable        802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Gi0/0       1
+
+Port        Vlans allowed and active in management domain
+Gi0/0       1
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/0       1
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Some possible issues with trunks may be:
+\vspace{-10pt}
+\begin{itemize}
+\item Mismatch in trunk mode (dynamic auto/dynamic auto, etc.)
+\item Mismatch in encapsulation
+\item Mismatch in native VLAN.
+\end{itemize}
+
+\noindent
+The last item in the list, a mismatch in the \textit{Native VLAN} may cause \textbf{VLAN hopping}, which at best makes the traffic flow impossible (since it's impossible to communicate between different subnets without a router to translate IPs) and at worst may be a vulnerable point of attack and a security risk. 
