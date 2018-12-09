@@ -1,97 +1,152 @@
-\contentsline {part}{I\hspace {1em}ICND1 - Switches}{5}{part.1}
-\contentsline {chapter}{\numberline {1}Basic Cisco Catalyst Switch Configuration}{6}{chapter.1}
-\contentsline {section}{\numberline {1.1}Port Addressing}{6}{section.1.1}
-\contentsline {section}{\numberline {1.2}Configuring a Management IP Address}{6}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}View how we're connected to a Switch}{6}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}Privileged mode, auto-completion and showing possible commands}{7}{subsection.1.2.2}
-\contentsline {subsection}{\numberline {1.2.3}Configuring the Terminal}{7}{subsection.1.2.3}
-\contentsline {subsection}{\numberline {1.2.4}Interface Configuration Mode}{8}{subsection.1.2.4}
-\contentsline {subsection}{\numberline {1.2.5}Adding a Management IP}{8}{subsection.1.2.5}
-\contentsline {section}{\numberline {1.3}Configuring a Default Gateway}{8}{section.1.3}
-\contentsline {section}{\numberline {1.4}Setting Console and VTY Passwords}{8}{section.1.4}
-\contentsline {subsection}{\numberline {1.4.1}Configuring a password for the VTY lines}{9}{subsection.1.4.1}
-\contentsline {section}{\numberline {1.5}Show Running Configuration}{9}{section.1.5}
-\contentsline {section}{\numberline {1.6}Checking for connectivity using Ping}{10}{section.1.6}
-\contentsline {section}{\numberline {1.7}Enabling Telnet Access}{10}{section.1.7}
-\contentsline {subsection}{\numberline {1.7.1}Show line details}{11}{subsection.1.7.1}
-\contentsline {subsection}{\numberline {1.7.2}Logging in via telnet}{12}{subsection.1.7.2}
-\contentsline {subsection}{\numberline {1.7.3}Keyboard Shortcuts for Telnet}{12}{subsection.1.7.3}
-\contentsline {subsection}{\numberline {1.7.4}History Buffer}{12}{subsection.1.7.4}
-\contentsline {subsection}{\numberline {1.7.5}IP Interface Connection Overview}{13}{subsection.1.7.5}
-\contentsline {section}{\numberline {1.8}Enabling SSH Access}{13}{section.1.8}
-\contentsline {subsection}{\numberline {1.8.1}Setting up User-name, password and domain name}{14}{subsection.1.8.1}
-\contentsline {subsection}{\numberline {1.8.2}Connecting via SSH}{14}{subsection.1.8.2}
-\contentsline {section}{\numberline {1.9}Viewing Version Information}{15}{section.1.9}
-\contentsline {section}{\numberline {1.10}Viewing Current Configuration}{15}{section.1.10}
-\contentsline {section}{\numberline {1.11}MAC Address (CAM) Table Examination}{16}{section.1.11}
-\contentsline {subsection}{\numberline {1.11.1}Adding a Static MAC Address}{17}{subsection.1.11.1}
-\contentsline {section}{\numberline {1.12}Setting the Hostname}{17}{section.1.12}
-\contentsline {section}{\numberline {1.13}Setting the Enable Password}{18}{section.1.13}
-\contentsline {section}{\numberline {1.14}Setting the exec-timeout}{19}{section.1.14}
-\contentsline {section}{\numberline {1.15}Encrypting Passwords on Switches}{19}{section.1.15}
-\contentsline {subsection}{\numberline {1.15.1}User Privileges}{20}{subsection.1.15.1}
-\contentsline {subsection}{\numberline {1.15.2}Storing password hashes for login}{20}{subsection.1.15.2}
-\contentsline {subsection}{\numberline {1.15.3}Removing a user}{20}{subsection.1.15.3}
-\contentsline {section}{\numberline {1.16}Creating a Banner}{21}{section.1.16}
-\contentsline {section}{\numberline {1.17}Specifying Port Speed and Duplex}{22}{section.1.17}
-\contentsline {subsection}{\numberline {1.17.1}MDI-X (Medium Dependent Interface Crossover)}{22}{subsection.1.17.1}
-\contentsline {section}{\numberline {1.18}Saving the Configuration}{22}{section.1.18}
-\contentsline {chapter}{\numberline {2}Virtual LANs (VLANs)}{24}{chapter.2}
-\contentsline {section}{\numberline {2.1}Virtual LANs (VLANs) : Introduction}{24}{section.2.1}
-\contentsline {section}{\numberline {2.2}VLAN Theory}{24}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Packet Flow between VLANs}{25}{subsection.2.2.1}
-\contentsline {section}{\numberline {2.3}VLAN Creation}{26}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Show existing VLANs}{26}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Creating a new VLAN}{26}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Deleting a VLAN}{27}{subsection.2.3.3}
-\contentsline {section}{\numberline {2.4}Assigning Ports to a VLAN}{27}{section.2.4}
-\contentsline {chapter}{\numberline {3}Trunking}{28}{chapter.3}
-\contentsline {section}{\numberline {3.1}Trunking : Introduction}{28}{section.3.1}
-\contentsline {section}{\numberline {3.2}Trunking Theory}{28}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Marking Frames for VLANs}{29}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Native VLAN}{29}{subsection.3.2.2}
-\contentsline {section}{\numberline {3.3}Trunking Modes}{30}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Formation of a Trunk}{30}{subsection.3.3.1}
-\contentsline {section}{\numberline {3.4}Creating Trunks}{31}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Finding out the current trunk mode of a switch port}{31}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Showing currently existing Trunks}{32}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Chaning Switch port's trunking settings}{32}{subsection.3.4.3}
-\contentsline {subsubsection}{Changing Trunk Encapsulation}{32}{section*.2}
-\contentsline {subsubsection}{Changing the native VLAN}{33}{section*.3}
-\contentsline {subsubsection}{Changing the switchport trunking mode}{33}{section*.4}
-\contentsline {subsection}{\numberline {3.4.4}Trunk settings mismatch}{33}{subsection.3.4.4}
-\contentsline {subsection}{\numberline {3.4.5}Hard-coded Trunk mode}{34}{subsection.3.4.5}
-\contentsline {section}{\numberline {3.5}VLAN pruning}{35}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Showing VLANs allowed on a trunk}{35}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Allowing only certain VLANs over a certain trunk}{36}{subsection.3.5.2}
-\contentsline {chapter}{\numberline {4}Troubleshooting Switch Operation}{37}{chapter.4}
-\contentsline {section}{\numberline {4.1}Isolating the Issue}{37}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Pinging to test network connectivity}{37}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Extended Ping and Ping timeout due to ARP}{38}{subsection.4.1.2}
-\contentsline {section}{\numberline {4.2}Checking Interface Status}{39}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Show interfaces status}{40}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}Checking for Interface Errors}{41}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Duplex Mismatch}{42}{subsection.4.3.1}
-\contentsline {section}{\numberline {4.4}Checking a Port's VLAN Membership}{43}{section.4.4}
-\contentsline {section}{\numberline {4.5}Checking a Trunk's Status}{43}{section.4.5}
-\contentsline {chapter}{\numberline {5}Basic Switch Security}{44}{chapter.5}
-\contentsline {section}{\numberline {5.1}Physical Security}{44}{section.5.1}
-\contentsline {section}{\numberline {5.2}Switch Port Security}{44}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}MAC Flooding Attach}{44}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Port Security}{44}{subsection.5.2.2}
-\contentsline {subsubsection}{Port Security Setup}{45}{section*.5}
-\contentsline {subsubsection}{Port Security Violation}{45}{section*.6}
-\contentsline {subsubsection}{Port Security specific Verification Commands}{48}{section*.7}
-\contentsline {section}{\numberline {5.3}Shutting down Unused Ports}{49}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Shutting down all ports on a switch}{49}{subsection.5.3.1}
-\contentsline {section}{\numberline {5.4}Putting Unused Ports in an Unused VLAN}{50}{section.5.4}
-\contentsline {chapter}{\numberline {6}Voice VLANs}{52}{chapter.6}
-\contentsline {section}{\numberline {6.1}Voice VLANs: Introduction}{52}{section.6.1}
-\contentsline {section}{\numberline {6.2}Voice VLAN Theory}{52}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}Single VLAN Access port}{53}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}Multi-VLAN Access port}{53}{subsection.6.2.2}
-\contentsline {subsection}{\numberline {6.2.3}Trunk port}{53}{subsection.6.2.3}
-\contentsline {section}{\numberline {6.3}Voice VLAN Configuration}{54}{section.6.3}
-\contentsline {subsection}{\numberline {6.3.1}Seting up a Single VLAN access port}{54}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {6.3.2}Setting up a Multi-VLAN access port}{54}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {6.3.3}Setting up a Trunk Port for voice}{54}{subsection.6.3.3}
+\contentsline {part}{I\hspace {1em}ICND1 - Switches}{6}{part.1}
+\contentsline {chapter}{\numberline {1}Basic Cisco Catalyst Switch Configuration}{7}{chapter.1}
+\contentsline {section}{\numberline {1.1}Port Addressing}{7}{section.1.1}
+\contentsline {section}{\numberline {1.2}Configuring a Management IP Address}{7}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}View how we're connected to a Switch}{7}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Privileged mode, auto-completion and showing possible commands}{8}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Configuring the Terminal}{8}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}Interface Configuration Mode}{9}{subsection.1.2.4}
+\contentsline {subsection}{\numberline {1.2.5}Adding a Management IP}{9}{subsection.1.2.5}
+\contentsline {section}{\numberline {1.3}Configuring a Default Gateway}{9}{section.1.3}
+\contentsline {section}{\numberline {1.4}Setting Console and VTY Passwords}{9}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Configuring a password for the VTY lines}{10}{subsection.1.4.1}
+\contentsline {section}{\numberline {1.5}Show Running Configuration}{10}{section.1.5}
+\contentsline {section}{\numberline {1.6}Checking for connectivity using Ping}{11}{section.1.6}
+\contentsline {section}{\numberline {1.7}Enabling Telnet Access}{11}{section.1.7}
+\contentsline {subsection}{\numberline {1.7.1}Show line details}{12}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {1.7.2}Logging in via telnet}{13}{subsection.1.7.2}
+\contentsline {subsection}{\numberline {1.7.3}Keyboard Shortcuts for Telnet}{13}{subsection.1.7.3}
+\contentsline {subsection}{\numberline {1.7.4}History Buffer}{13}{subsection.1.7.4}
+\contentsline {subsection}{\numberline {1.7.5}IP Interface Connection Overview}{14}{subsection.1.7.5}
+\contentsline {section}{\numberline {1.8}Enabling SSH Access}{14}{section.1.8}
+\contentsline {subsection}{\numberline {1.8.1}Setting up User-name, password and domain name}{15}{subsection.1.8.1}
+\contentsline {subsection}{\numberline {1.8.2}Connecting via SSH}{15}{subsection.1.8.2}
+\contentsline {section}{\numberline {1.9}Viewing Version Information}{16}{section.1.9}
+\contentsline {section}{\numberline {1.10}Viewing Current Configuration}{16}{section.1.10}
+\contentsline {section}{\numberline {1.11}MAC Address (CAM) Table Examination}{17}{section.1.11}
+\contentsline {subsection}{\numberline {1.11.1}Adding a Static MAC Address}{18}{subsection.1.11.1}
+\contentsline {section}{\numberline {1.12}Setting the Hostname}{18}{section.1.12}
+\contentsline {section}{\numberline {1.13}Setting the Enable Password}{19}{section.1.13}
+\contentsline {section}{\numberline {1.14}Setting the exec-timeout}{20}{section.1.14}
+\contentsline {section}{\numberline {1.15}Encrypting Passwords on Switches}{20}{section.1.15}
+\contentsline {subsection}{\numberline {1.15.1}User Privileges}{21}{subsection.1.15.1}
+\contentsline {subsection}{\numberline {1.15.2}Storing password hashes for login}{21}{subsection.1.15.2}
+\contentsline {subsection}{\numberline {1.15.3}Removing a user}{21}{subsection.1.15.3}
+\contentsline {section}{\numberline {1.16}Creating a Banner}{22}{section.1.16}
+\contentsline {section}{\numberline {1.17}Specifying Port Speed and Duplex}{23}{section.1.17}
+\contentsline {subsection}{\numberline {1.17.1}MDI-X (Medium Dependent Interface Crossover)}{23}{subsection.1.17.1}
+\contentsline {section}{\numberline {1.18}Saving the Configuration}{23}{section.1.18}
+\contentsline {chapter}{\numberline {2}Virtual LANs (VLANs)}{25}{chapter.2}
+\contentsline {section}{\numberline {2.1}Virtual LANs (VLANs) : Introduction}{25}{section.2.1}
+\contentsline {section}{\numberline {2.2}VLAN Theory}{25}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Packet Flow between VLANs}{26}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}VLAN Creation}{27}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Show existing VLANs}{27}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Creating a new VLAN}{27}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Deleting a VLAN}{28}{subsection.2.3.3}
+\contentsline {section}{\numberline {2.4}Assigning Ports to a VLAN}{28}{section.2.4}
+\contentsline {chapter}{\numberline {3}Trunking}{29}{chapter.3}
+\contentsline {section}{\numberline {3.1}Trunking : Introduction}{29}{section.3.1}
+\contentsline {section}{\numberline {3.2}Trunking Theory}{29}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Marking Frames for VLANs}{30}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Native VLAN}{30}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}Trunking Modes}{31}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Formation of a Trunk}{31}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}Creating Trunks}{32}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Finding out the current trunk mode of a switch port}{32}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Showing currently existing Trunks}{33}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Chaning Switch port's trunking settings}{33}{subsection.3.4.3}
+\contentsline {subsubsection}{Changing Trunk Encapsulation}{33}{section*.2}
+\contentsline {subsubsection}{Changing the native VLAN}{34}{section*.3}
+\contentsline {subsubsection}{Changing the switchport trunking mode}{34}{section*.4}
+\contentsline {subsection}{\numberline {3.4.4}Trunk settings mismatch}{34}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}Hard-coded Trunk mode}{35}{subsection.3.4.5}
+\contentsline {section}{\numberline {3.5}VLAN pruning}{36}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Showing VLANs allowed on a trunk}{36}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Allowing only certain VLANs over a certain trunk}{37}{subsection.3.5.2}
+\contentsline {chapter}{\numberline {4}Troubleshooting Switch Operation}{38}{chapter.4}
+\contentsline {section}{\numberline {4.1}Isolating the Issue}{38}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Pinging to test network connectivity}{38}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Extended Ping and Ping timeout due to ARP}{39}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}Checking Interface Status}{40}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Show interfaces status}{41}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}Checking for Interface Errors}{42}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Duplex Mismatch}{43}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}Checking a Port's VLAN Membership}{44}{section.4.4}
+\contentsline {section}{\numberline {4.5}Checking a Trunk's Status}{44}{section.4.5}
+\contentsline {chapter}{\numberline {5}Basic Switch Security}{45}{chapter.5}
+\contentsline {section}{\numberline {5.1}Physical Security}{45}{section.5.1}
+\contentsline {section}{\numberline {5.2}Switch Port Security}{45}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}MAC Flooding Attach}{45}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Port Security}{45}{subsection.5.2.2}
+\contentsline {subsubsection}{Port Security Setup}{46}{section*.5}
+\contentsline {subsubsection}{Port Security Violation}{46}{section*.6}
+\contentsline {subsubsection}{Port Security specific Verification Commands}{49}{section*.7}
+\contentsline {section}{\numberline {5.3}Shutting down Unused Ports}{50}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Shutting down all ports on a switch}{50}{subsection.5.3.1}
+\contentsline {section}{\numberline {5.4}Putting Unused Ports in an Unused VLAN}{51}{section.5.4}
+\contentsline {chapter}{\numberline {6}Voice VLANs}{53}{chapter.6}
+\contentsline {section}{\numberline {6.1}Voice VLANs: Introduction}{53}{section.6.1}
+\contentsline {section}{\numberline {6.2}Voice VLAN Theory}{53}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Single VLAN Access port}{54}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Multi-VLAN Access port}{54}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}Trunk port}{54}{subsection.6.2.3}
+\contentsline {section}{\numberline {6.3}Voice VLAN Configuration}{55}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Seting up a Single VLAN access port}{55}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}Setting up a Multi-VLAN access port}{55}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}Setting up a Trunk Port for voice}{55}{subsection.6.3.3}
+\contentsline {part}{II\hspace {1em}ICND1 - Routers}{57}{part.2}
+\contentsline {chapter}{\numberline {7}Basic Router Operation}{58}{chapter.7}
+\contentsline {section}{\numberline {7.1}Packet flow through a Routed Network}{58}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Layer 3 Packet flow}{58}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}Layer 2 Packet Flow}{59}{subsection.7.1.2}
+\contentsline {section}{\numberline {7.2}Sources of Route Information}{59}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}IP Routing Table codes}{60}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}Administrative Distance}{61}{subsection.7.2.2}
+\contentsline {section}{\numberline {7.3}IP Routing Table}{61}{section.7.3}
+\contentsline {section}{\numberline {7.4}Packet Forwarding}{62}{section.7.4}
+\contentsline {subsection}{\numberline {7.4.1}Process Switching}{62}{subsection.7.4.1}
+\contentsline {subsection}{\numberline {7.4.2}Fast Switching}{62}{subsection.7.4.2}
+\contentsline {subsection}{\numberline {7.4.3}Cisco Express Forwarding (CEF)}{63}{subsection.7.4.3}
+\contentsline {chapter}{\numberline {8}Basic Router Configuration and Verification}{64}{chapter.8}
+\contentsline {section}{\numberline {8.1}Router LEDs}{64}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}GigabitEthernet port LED}{64}{subsection.8.1.1}
+\contentsline {section}{\numberline {8.2}Assigning an IPv4 Address to an interface}{65}{section.8.2}
+\contentsline {section}{\numberline {8.3}Assigning an IPv6 Address to an interface}{65}{section.8.3}
+\contentsline {section}{\numberline {8.4}Basic Router Configuration}{67}{section.8.4}
+\contentsline {subsection}{\numberline {8.4.1}Logging Synchronous}{68}{subsection.8.4.1}
+\contentsline {subsection}{\numberline {8.4.2}Running show commands from Configuration mode}{68}{subsection.8.4.2}
+\contentsline {subsection}{\numberline {8.4.3}Interface Description}{69}{subsection.8.4.3}
+\contentsline {chapter}{\numberline {9}Routing Fundamentals}{70}{chapter.9}
+\contentsline {section}{\numberline {9.1}Configuring Static Routes for IPv4}{70}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}Static Network Route Configuration}{70}{subsection.9.1.1}
+\contentsline {subsubsection}{Static Routing with Exit Interface}{71}{section*.8}
+\contentsline {subsubsection}{Static Routing with Next Hop IP Address}{72}{section*.9}
+\contentsline {subsection}{\numberline {9.1.2}Configuring a Static Host Route}{72}{subsection.9.1.2}
+\contentsline {subsection}{\numberline {9.1.3}Keeping a route permanently in the Routing table}{74}{subsection.9.1.3}
+\contentsline {subsection}{\numberline {9.1.4}Static Default Route Configuration}{74}{subsection.9.1.4}
+\contentsline {subsection}{\numberline {9.1.5}Floating Static Route}{75}{subsection.9.1.5}
+\contentsline {section}{\numberline {9.2}Configuring Static Routes for IPv6}{76}{section.9.2}
+\contentsline {subsection}{\numberline {9.2.1}IPv6 Static Network Routes}{77}{subsection.9.2.1}
+\contentsline {subsubsection}{IPv6 Static Routing with Exit Serial Interface}{77}{section*.10}
+\contentsline {subsubsection}{IPv6 Static Routing with Next Hop Address}{77}{section*.11}
+\contentsline {subsubsection}{IPv6 Static Routing with Link Local Address}{78}{section*.12}
+\contentsline {subsection}{\numberline {9.2.2}IPv6 Static Host Route}{78}{subsection.9.2.2}
+\contentsline {subsection}{\numberline {9.2.3}IPv6 Static Default Route}{79}{subsection.9.2.3}
+\contentsline {subsection}{\numberline {9.2.4}IPv6 Floating Static Route}{79}{subsection.9.2.4}
+\contentsline {section}{\numberline {9.3}Overview of Routing Protocols}{79}{section.9.3}
+\contentsline {subsection}{\numberline {9.3.1}Scalability}{79}{subsection.9.3.1}
+\contentsline {subsection}{\numberline {9.3.2}Vendor Interoperability and Familiarity}{80}{subsection.9.3.2}
+\contentsline {subsection}{\numberline {9.3.3}Convergence time}{80}{subsection.9.3.3}
+\contentsline {subsection}{\numberline {9.3.4}Summarization}{80}{subsection.9.3.4}
+\contentsline {subsection}{\numberline {9.3.5}Interior or Exterior Gateway Protocol}{81}{subsection.9.3.5}
+\contentsline {subsection}{\numberline {9.3.6}Protocol Classification}{81}{subsection.9.3.6}
+\contentsline {subsubsection}{Distance-Vector Routing Protocols}{81}{section*.13}
+\contentsline {subsubsection}{Link State Routing Protocols}{81}{section*.14}
+\contentsline {subsubsection}{Path Vector Routing Protocol}{82}{section*.15}
+\contentsline {section}{\numberline {9.4}Administrative Distance}{82}{section.9.4}
+\contentsline {section}{\numberline {9.5}Split Horizon}{82}{section.9.5}
+\contentsline {section}{\numberline {9.6}Metric}{82}{section.9.6}
+\contentsline {section}{\numberline {9.7}Next Hop Address}{82}{section.9.7}
+\contentsline {section}{\numberline {9.8}Passive Interfaces}{82}{section.9.8}
+\contentsline {chapter}{\numberline {10}Routing Information Protocol (RIP)}{83}{chapter.10}

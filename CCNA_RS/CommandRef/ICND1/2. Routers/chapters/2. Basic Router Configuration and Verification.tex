@@ -1,1 +1,348 @@
 \chapter{Basic Router Configuration and Verification}
+\section{Router LEDs}
+A lot of info about the status of the router is conveyed via the LEDs at the front and the back of the router. While these vary by model of the router, some of the common router LED indicators are:
+\vspace{-10pt}
+\noindent
+\begin{center}
+	\begin{tabular}{m{0.2\textwidth}rm{0.56\textwidth}}
+		\toprule
+		\textbf{LED Label} &\textbf{Status} &\textbf{Explanation} \\
+		\midrule
+		\textbf{Sys} (System) &Solid &The router is up \& operational. \\
+		&Blinking &The router is booting. \\
+		&Off &The router is either turned off or there's a problem with the system board. \\
+		\midrule
+		\textbf{Act} (Activity) &Solid/Blinking &The router is currently routing traffic. \\
+		&Off &No packets are currently flowing through the router. \\
+		\midrule
+		\textbf{PoE} (Power over Ethernet) &Solid &Power over Ethernet is provided to devices that need it such as Cisco IP phones. \\
+		&Amber &IP Phone power is turned off. \\
+		\midrule
+		\textbf{RPS} (Redundant Power Supply) &Solid &The router is currently being powered by an external redundant power supply. \\
+		&Off &Redundant power supply isn't being used. \\
+		\midrule
+		\textbf{PS} (Power Supply) &Solid &The router is currently being powered by the internal power supply. \\
+		&Amber &The router isn't powered by the main power supply. \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+\noindent
+In addition to these LEDs on the front panel, there's also LEDs on the back panel of the router, which are largely dependent upon which modules are installed. However, there are some common LEDs which are present in the rear panel: 
+
+\subsection{GigabitEthernet port LED}
+The \textbf{Speed LED } (left) of the GigabitEthernet port is configured to blink in a certain pattern to indicated the speed. These are: 
+
+\vspace{-10pt}
+\noindent
+\begin{center}
+	\begin{tabular}{rl}
+		\toprule
+		\textbf{Pattern} &\textbf{Speed} \\
+		\midrule
+		Blink + Pause &10Mbps, i.e., Ethernet Speed\\
+		2x Blink + Pause &100Mbps, i.e., FastEthernet Speed\\
+		3x Blink + Pause &1000Mbps, i.e., GigabitEthernet Speed\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+\noindent
+There's also the Link LED that's going to be solid green if FastEthernet or GigabitEthernet speeds are established, and off if either there's no link or the speed is 10Mbps. 
+
+\section{Assigning an IPv4 Address to an interface}
+We can assign an IPv4 address to an interface the same way we added one to \textit{VLAN1} to set the management IP address on a switch, through the interface configuration mode:
+
+\vspace{-15pt}
+\begin{minted}{console}
+r2#sh ip int br g0/3
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/3         unassigned      YES NVRAM  administratively down down
+r2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+r2(config)#int g0/3
+r2(config-if)#ip addr 172.16.5.1 255.255.255.0
+r2(config-if)#no shut
+*Dec  3 03:02:56.193: %LINK-3-UPDOWN: Interface GigabitEthernet0/3, changed state to up
+*Dec  3 03:02:57.196: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/3, changed state to up
+r2(config-if)#end
+r2#sh ip int br g0/3
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/3         172.16.5.1      YES manual up                    up
+\end{minted}
+\vspace{-10pt}
+
+\section{Assigning an IPv6 Address to an interface}
+Before assigning an IPv6 Address to an interface, we should first ensure that IPv6 unicast routing is enabled on the router. We do this from the global configuration mode, using \verb|ipv6 unicast-routing|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+r2#conf term
+Enter configuration commands, one per line.  End with CNTL/Z.
+r2(config)#ipv6 unicast-routing
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+When it comes to the \verb|show| commands, the IPv6 equivalents are almost identical to the \verb|IPv4| commands. So, instead of using \verb|sh ip int br| we'd use \verb|show ipv6 interface brief|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+r2#sh ipv6 int br
+GigabitEthernet0/0     [up/up]
+    unassigned
+GigabitEthernet0/1     [up/up]
+    unassigned
+GigabitEthernet0/2     [up/up]
+    unassigned
+GigabitEthernet0/3     [up/up]
+    unassigned
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This shows that we currently don't have any IPv6 addresses assigned to any of the interfaces. 
+However, just by enabling IPv6 on an interface, we can auto-assign it a IPv6 link local address:
+
+\vspace{-15pt}
+\begin{minted}{console}
+r2#sh ipv6 int br g0/3
+GigabitEthernet0/3     [up/up]
+    unassigned
+r2#sh ipv6 int g0/3
+r2#
+r2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+r2(config)#int g0/3
+r2(config-if)#ipv6 enable
+r2(config-if)#end
+r2#sh ipv6 int g0/3
+GigabitEthernet0/3 is up, line protocol is up
+  IPv6 is enabled, link-local address is FE80::ED7:78FF:FE5D:FC03
+  No Virtual link-local address(es):
+  No global unicast address is configured
+  Joined group address(es):
+    FF02::1
+    FF02::2
+    FF02::1:FF5D:FC03
+  MTU is 1500 bytes
+  ICMP error messages limited to one every 100 milliseconds
+  ICMP redirects are enabled
+  ICMP unreachables are sent
+  ND DAD is enabled, number of DAD attempts: 1
+  ND reachable time is 30000 milliseconds (using 30000)
+  ND advertised reachable time is 0 (unspecified)
+  ND advertised retransmit interval is 0 (unspecified)
+  ND router advertisements are sent every 200 seconds
+  ND router advertisements live for 1800 seconds
+  ND advertised default router preference is Medium
+  Hosts use stateless autoconfig for addresses.
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The IPv6 link-local address automatically created using the MAC address of the interface is \verb|FE80::ED7:78FF:FE5D:FC03|. So now, even without specifically assigning an IPv6 address the interface can communicate with a neighbour using the local link. Additionally, we've also automatically joined a couple of multicast groups: \verb|FF02::1| which is the \textbf{all-nodes} multicast address, as well as \verb|FF02::2| which is the \textbf{all-routers} multicast group address. 
+
+However, we don't have to manually enable ipv6 on an interface when assigning an actual IPv6 address to an interface, but use \verb|ipv6 address <ipv6Addr>/<subnet-bits>| to assign the IPv6 address. Notice that IPv6 address assignment supports the \textit{slash notation} unlike IPv4 address assignment:
+
+\vspace{-15pt}
+\begin{minted}{console}
+r2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+r2(config)#int g0/3
+r2(config-if)#ipv6 address 2000::4/64
+r2(config-if)#end
+r2#sh ipv6 int g0/3
+GigabitEthernet0/3 is up, line protocol is up
+  IPv6 is enabled, link-local address is FE80::ED7:78FF:FE5D:FC03
+  No Virtual link-local address(es):
+  Global unicast address(es):
+    2000::4, subnet is 2000::/64
+  Joined group address(es):
+    FF02::1
+    FF02::2
+    FF02::1:FF00:4
+    FF02::1:FF5D:FC03
+  MTU is 1500 bytes
+...
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We can see that the IPv6 address \verb|2000::4, subnet is 2000::/64| has been assigned to the interface. We can also see the IPv6 addresses using \verb|show ipv6 interfaces brief|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+r2#sh ipv6 int br
+GigabitEthernet0/0     [up/up]
+    unassigned
+GigabitEthernet0/1     [up/up]
+    unassigned
+GigabitEthernet0/2     [up/up]
+    unassigned
+GigabitEthernet0/3     [up/up]
+    FE80::ED7:78FF:FE5D:FC03
+    2000::4
+\end{minted}
+
+\section{Basic Router Configuration}
+This section illustrates a brief overview of the commands involved in setting up a brand new router that has no configuration. When we first boot the router, it has a default hostname of \verb|router| and we get the non-privileged prompt:
+
+\vspace{-15pt}
+\begin{minted}{console}
+Router>
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+First, we'd like to set up the hostname and disable \textbf{IP domain lookup}:
+
+\vspace{-15pt}
+\begin{minted}{console}
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R1
+R1(config)#no ip domain lookup
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The IP domain lookup is a feature that assumes everything that's written at the command prompt in a non-config environment is a DNS lookup. This means that if there's ever a typo in a command, for example, a show command, the router incorrectly assumes that the input is a domain (DNS) lookup. Quite a bit of time waste can be saved by thus turning off the ip domain lookup feature:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1#end
+Translating "end"...domain server (255.255.255.255)
+ (255.255.255.255)
+Translating "end"...domain server (255.255.255.255)
+
+% Bad IP address or host name
+% Unknown command or computer name, or unable to find computer address
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#no ip domain-lookup
+R1(config)#end
+R1#end
+Translating "end"
+
+Translating "end"
+
+% Bad IP address or host name
+% Unknown command or computer name, or unable to find computer address
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Logging Synchronous}
+Next, we want to disable the time-out of our connection since this is a \textbf{Lab environment} and set a password. Finally, we'd also like to set up synchronous logging. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#line con 0
+R1(config-line)#exec-timeout 0
+R1(config-line)#password cisco
+R1(config-line)#login
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Many times, while we're still typing a command, we get an output from the router, messing up our command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config-if)#end
+R1#sho
+*Dec  3 04:07:51.554: %SYS-5-CONFIG_I: Configured from console by consolew run
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+With synchronous logging, this is no longer a problem, since we get a fresh line with what we entered \textit{after} the log message from the router. This has to be enabled from the line configuration mode: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#line con 0
+R1(config-line)#logging synchronous
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+This stops our input from being garbled and intermixing with the router's output. 
+
+\subsection{Running show commands from Configuration mode}
+Let us assume a case where we set the ip address of an interface g0/0 and we want to verify it before assigning it to a VLAN. Normally, we'd first complete the IP assignment, exit configuration mode, check the assignment with the \verb|sh ip int br| command, re-enter the \textit{global} and then the \textit{interface} configuration mode, and then finally set the VLAN. The hassle of exiting and re-entering the configuration mode can be avoided using the \verb|do show| commands.
+
+Whenever we want to run a show command in configuration mode, we use the \verb|do show| command instead of the \verb|show| variant we'd have used in privileged mode:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#int g0/0
+R1(config-if)#do show ip int br g0/0
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         unassigned      YES unset  administratively down down
+R1(config-if)#ip add 192.168.1.1 255.255.255.0
+R1(config-if)#do show ip int br g0/0
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES manual administratively down down
+R1(config-if)#no shut
+*Dec  3 04:23:07.690: %LINK-3-UPDOWN: Interface GigabitEthernet0/0, changed state to up
+*Dec  3 04:23:08.689: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+R1(config-if)#do show ip int br g0/0
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES manual up                    up
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Interface Description}
+Now we assign the IPv4 and IPv6 addresses. Before we can start using IPv6 addressing, we have to turn on IPv6 unicast addressing globally. 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config-if)#ip addr 192.168.1.1 255.255.255.0
+R1(config-if)#exit
+R1(config)#ipv6 unicast-routing
+R1(config)#int g0/0
+R1(config-if)#ipv6 address 2000::4/64
+R1(config-if)#do show ip int br g0/0
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES manual up                    up
+R1(config-if)#do show ipv6 int br g0/0
+GigabitEthernet0/0     [up/up]
+    FE80::EC1:8FFF:FE5A:C100
+    2000::4
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+We can also add a description for each interface so that when we're viewing the running configuration we have a description for each interface directly in the running config. For example, if we want to mark the present interface as a 'connection to R2', we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config-if)#description Connection to R2
+R1(config-if)#do show int g0/0
+GigabitEthernet0/0 is up, line protocol is up
+  Hardware is iGbE, address is 0cc1.8f5a.c100 (bia 0cc1.8f5a.c100)
+  Description: Connection to R2
+...
+R1(config-if)#do sh run | s GigabitEthernet0/0
+interface GigabitEthernet0/0
+ description Connection to R2
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address 2000::4/64
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Finally we save the current config by saving it to the starting config:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1#copy run start
+Destination filename [startup-config]?
+Building configuration...
+[OK]
+R1#
+*Dec  3 04:39:17.972: %GRUB-5-CONFIG_WRITING: GRUB configuration is being updated on disk. Please wait...
+*Dec  3 04:39:18.914: %GRUB-5-CONFIG_WRITTEN: GRUB configuration was written to disk successfully.
+\end{minted}
+\vspace{-10pt}

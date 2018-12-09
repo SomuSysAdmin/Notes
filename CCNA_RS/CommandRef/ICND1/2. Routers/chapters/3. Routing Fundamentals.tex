@@ -1,1 +1,591 @@
 \chapter{Routing Fundamentals}
+\section{Configuring Static Routes for IPv4}
+There are 4 different kinds of Static routes:
+
+\vspace{-10pt}
+\noindent
+\begin{center}
+	\begin{tabular}{lm{0.7\textwidth}}
+		\toprule
+		\textbf{Type} &\textbf{Description} \\
+		\midrule
+		\textbf{Static Network Route}	&This kind of a static route points to a network address, and is also known as a \textbf{network prefix}. This can be specified by either specifying the next hop ip address or the egress port.\\
+		\textbf{Static Host Route}		&Similar to static network routes, this is a static route defined for a single host and thus points to a specific ip address a 32-bit subnet mask. \\
+		\textbf{Static Default Route}	&This is the static route that acts as the default route or a route that the router uses when the it doesn't have more specific (or any) routing information about how to reach a certain network (i.e., \textbf{gateway of last resort}). \\
+		\textbf{Floating Static Route}	&A static route whose Administrative Distance (AD) is set higher than the AD of a dynamic routing protocol that knows a different route to the same destination, thus making the static route less attractive and letting it act as a backup route.\\		
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{Static Network Route Configuration}
+Let us consider in the topology below, the only networks known by each router are the ones directly connected to. As such, R1 doesn't know how to reach \textit{sw2} and \textit{sw3}. If we provide static routes for the \verb|198.51.100.0/24| and the \verb|203.0.113.0/24| networks, both switches will be reachable from R1. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{"ICND1/2. Routers/chapters/3.1.a Sample Topology"}
+\caption{Sample Topology}
+\label{fig:9.1.a}
+\end{figure}
+\vspace{-10pt}
+
+\noindent
+Right now the routes known to \textbf{R1} are:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1#sh ip route
+...
+      10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+C        10.0.0.0/30 is directly connected, GigabitEthernet0/2
+L        10.0.0.1/32 is directly connected, GigabitEthernet0/2
+C        10.0.0.4/30 is directly connected, GigabitEthernet0/1
+L        10.0.0.5/32 is directly connected, GigabitEthernet0/1
+      192.0.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.0.2.0/24 is directly connected, GigabitEthernet0/0
+L        192.0.2.1/32 is directly connected, GigabitEthernet0/0
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+So, when we try to ping either \textit{sw2} or \textit{sw3}, it fails, because the router \textbf{R1} don't know how to reach the networks: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1#ping 198.51.100.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 198.51.100.2, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+R1#ping 203.0.113.2 
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 203.0.113.2, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+To make them reachable, we have to tell the R1 router how to get to the \verb|198.51.100.0/24| and \verb|203.0/113.0/24| networks respectively.
+
+\subsubsection{Static Routing with Exit Interface}
+We can tell the router which interface to send the traffic for a certain destination network on. It'll then perform an ARP broadcast request on that interface, get the IP addresses and MAC addresses for every device in the subnet of that interface and finally, send the packet using the destination MAC address of the appropriate device in the frame. To configure the static routing for the \verb|198.51.100.0/24| using the exit interface \verb|GigabitEthernet0/0|, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ip route 198.51.100.0 255.255.255.0 10.0.0.2
+R1(config)#end
+R1#ping 198.51.100.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 198.51.100.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 6/16/25 ms
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The above of course, assumes that R2 knows how to route the ICMP Echo replies from sw2 back to R1. Typically we specify the egress interface only in the case of serial interfaces, because a serial interface is a point-to-point interface, and thus there's only one possible device that's on the other end of the link. 
+
+When used with any type of Ethernet interface, since the MAC address of the destination device (\textbf{R2}) isn't known, R1 sends an ARP broadcast through this interface and queries each device on the network for their MAC addresses, thus unnecessarily growing the size of it's ARP cache/table. 
+
+An even more disastrous situation occurs when the egress port is the pathway to the gateway of last resort, i.e., the interface is used for all unknown traffic. In such cases, the ARP table can grow so large and the traffic may grow so high due to repeated ARPs, that it may cause the router to reload (\textit{reboot}). Hence only a next hop IP should be specified for networks connected via Ethernet interfaces. 
+
+\subsubsection{Static Routing with Next Hop IP Address}
+Instead of using the exit interface, we can also create static routes for both networks and hosts by specifying the next hop IP address, i.e., the name of the router that knows the path to the destination network. The next hop should of course be reachable via an associated interface. To be able to reach sw3 in the \verb|203.0.113.0/24| network from R1, we use: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ip route 203.0.113.0 255.255.255.0 10.0.0.6
+R1(config)#end
+R1#
+*Dec  4 04:58:46.964: %SYS-5-CONFIG_I: Configured from console by console
+R1#ping 203.0.113.2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 203.0.113.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 13/15/20 ms
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The consequent static routes added to be able to reach the two networks can be seen marked '\textbf{S}' in the routing table:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1#sh ip route | b Gateway
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+C        10.0.0.0/30 is directly connected, GigabitEthernet0/2
+L        10.0.0.1/32 is directly connected, GigabitEthernet0/2
+C        10.0.0.4/30 is directly connected, GigabitEthernet0/1
+L        10.0.0.5/32 is directly connected, GigabitEthernet0/1
+      192.0.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.0.2.0/24 is directly connected, GigabitEthernet0/0
+L        192.0.2.1/32 is directly connected, GigabitEthernet0/0
+S     198.51.100.0/24 [1/0] via 10.0.0.2
+S     203.0.113.0/24 [1/0] via 10.0.0.6
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Configuring a Static Host Route}
+Let us consider the topology below. Here, we have two possible pathways to the \verb|203.0.113.0/24| network: one via \textbf{R1} and another via \textbf{R2}. Let's say that we want to reach the \textit{Server} (\verb|203.0.113.100|), via R2, but all other traffic from R1 should pass through R3. 
+
+In such a case, we'd need to configure a couple of static routes - one to reach the server from R1 and another for all other traffic to reach the \verb|203.0.113.0/24| network via R3. The latter will be a normal, static network route. After that we have to create another static host route for the server. A static host route is created with the same command, but since it's for a single host and not a network, the subnet mask has to change to 32-bit, i.e, \textit{/32} or \verb|255.255.255.255|.
+
+\noindent
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{"ICND1/2. Routers/chapters/3.1.b Static Host Routing"}
+\caption{Static Host Routing topology}
+\label{fig:9.1.b}
+\end{figure}
+
+\noindent
+We can set up the network route using \verb|ip route 203.0.113.0 255.255.255.0 10.0.0.6| and then verify that the correct route is being used using the \verb|traceroute| command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ip route 203.0.113.0 255.255.255.0 10.0.0.6
+R1(config)#end
+R1#ping 203.0.113.3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 203.0.113.3, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 11/15/21 ms
+R1#traceroute 203.0.113.3
+Type escape sequence to abort.
+Tracing the route to 203.0.113.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.0.0.6 9 msec 11 msec 7 msec
+  2 203.0.113.3 12 msec *  15 msec
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now we can create a dedicated pathway for traffic to the server using the static host route. We use the command \verb|ip route 203.0.113.100 255.255.255.255 10.0.0.2| to create this route, since the IP of R2 is \verb|10.0.0.2|:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ip route 203.0.113.100 255.255.255.255 10.0.0.2
+R1(config)#end
+R1#ping 203.0.113.100
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 203.0.113.100, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 16/20/29 ms
+R1#traceroute 203.0.113.100
+Type escape sequence to abort.
+Tracing the route to 203.0.113.100
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.0.0.2 11 msec 9 msec 7 msec
+  2 203.0.113.100 13 msec 12 msec 18 msec
+R1#traceroute 203.0.113.3  
+Type escape sequence to abort.
+Tracing the route to 203.0.113.3
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.0.0.6 9 msec 10 msec 7 msec
+  2 203.0.113.3 12 msec *  18 msec
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+As seen in the lines \textit{14-19} above, the normal traffic still passes through \verb|10.0.0.6|, the IP for \textbf{R3} but the traffic to \textit{Server} goes through \textbf{R2}. The routing table now looks like:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1#sh ip route | b Gateway
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+C        10.0.0.0/30 is directly connected, GigabitEthernet0/2
+L        10.0.0.1/32 is directly connected, GigabitEthernet0/2
+C        10.0.0.4/30 is directly connected, GigabitEthernet0/1
+L        10.0.0.5/32 is directly connected, GigabitEthernet0/1
+      192.0.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.0.2.0/24 is directly connected, GigabitEthernet0/0
+L        192.0.2.1/32 is directly connected, GigabitEthernet0/0
+      203.0.113.0/24 is variably subnetted, 2 subnets, 2 masks
+S        203.0.113.0/24 [1/0] via 10.0.0.6
+S        203.0.113.100/32 [1/0] via 10.0.0.2
+\end{minted}
+\vspace{-10pt}
+
+\subsection{Keeping a route permanently in the Routing table}
+In the previous section, if the interface \textbf{R2 Gi0/0} were to go down, i.e., the router \textbf{R2} was no longer available, then the static host route to the \textit{server} via R2 would also be automatically removed from the routing table, and the only route to the \textit{server} would be through \textbf{R3}. However, there is a way to keep these static routes even when an interface/router fails, by including the keyword \textbf{permanent}. The entire command would then become: 
+
+\vspace{-10pt}
+\begin{center}
+\verb|ip route 203.0.113.100 255.255.255.255 10.0.0.2 permanent|
+\end{center}
+
+\subsection{Static Default Route Configuration}
+For the configuration of a default route, let us consider the following topology. Here, there's a router at the head-quarters of an office, marked \textbf{HQ} and another router at a branch, called \textbf{BR1}. There's a switch that connects others devices to BR1, but the only way/route out of the network or out to the internet for BR1 is via the \textbf{HQ} router: 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{"ICND1/2. Routers/chapters/3.1.c Static Default Route"}
+\caption{Static Default Route Topology}
+\label{fig:9.1.c}
+\end{figure}
+
+\noindent
+If the device isn't local, packets from \textbf{BR1} have to go through HQ to get there. Thus, we instead of configuring lots of static routes for all the other routers in the company (i.e., every router connected to \textbf{HQ}) or trying to \textit{learn} (i.e., store) all of the routes in the BGP routing tables of the internet, we can simplify the configuration by making the router \textbf{HQ} the default gateway for BR1. 
+
+This is similar to when a host PC on a network gets the network info from a DHCP server and connects to its gateway router. It only sends all the relevant packets that are outside the local network to the gateway to route appropriately. The address for the default route is always \textbf{0.0.0.0/0}. Thus, we can set up a route for it using:
+
+\vspace{-15pt}
+\begin{minted}{console}
+BR1#ping 203.0.113.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 203.0.113.1, timeout is 2 seconds:
+..
+Success rate is 0 percent (0/2)
+BR1#conf t 
+Enter configuration commands, one per line.  End with CNTL/Z.
+BR1(config)#ip route 0.0.0.0 0.0.0.0 10.0.0.1
+BR1(config)#end
+BR1#ping 203.0.113.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 203.0.113.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 5/5/7 ms
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+As seen above the pings to the IP \verb|203.0.113.1| which is outside the address space of the local links of \textbf{BR1} succeed once the \textbf{HQ} router has been configured as the default gateway. This is also called the \textbf{gateway of last resort} and the IP routing table now looks like:
+
+\vspace{-15pt}
+\begin{minted}{console}
+BR1#sh ip route 
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is 10.0.0.1 to network 0.0.0.0
+
+S*    0.0.0.0/0 [1/0] via 10.0.0.1
+      10.0.0.0/8 is variably subnetted, 4 subnets, 3 masks
+C        10.0.0.0/30 is directly connected, GigabitEthernet0/1
+L        10.0.0.2/32 is directly connected, GigabitEthernet0/1
+C        10.1.1.0/24 is directly connected, GigabitEthernet0/0
+L        10.1.1.1/32 is directly connected, GigabitEthernet0/0
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+The \verb|*| after \verb|S| in the line \verb|S*    0.0.0.0/0 [1/0] via 10.0.0.1| tells us that not only is this a statically configured route but also the route to all other networks in the rest of the world. This is called the \textbf{Candidate Default} route. 
+
+\subsection{Floating Static Route}
+Let us consider the following scenario, where the Router R1 has two paths to the internet, one through R2 and another through R3. Let us also consider we're running \textbf{Routing Information Protocol (\textit{RIP})} and a dynamic route to the internet was obtained via R3. As a backup, we want to set a static route through R2, but we don't want it to be used unless the route through R3 is down. We can do this by setting a greater \textbf{AD (\textit{Administrative Distance})} that the path obtained through RIP. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{"ICND1/2. Routers/chapters/3.1.d Floating Static Route"}
+\caption{Floating Static Route}
+\label{fig:9.1.d}
+\end{figure}
+
+\noindent
+By default RIP has an AD of \textbf{120} and thus we can make our static route less desirable vy setting any value greater than 120. Thus, we can create our floating static route by: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ip route 203.0.113.0 255.255.255.0 10.0.0.6 125
+R1(config)#end
+R1#sh ip route | b Gateway
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+C        10.0.0.0/30 is directly connected, GigabitEthernet0/0
+L        10.0.0.1/32 is directly connected, GigabitEthernet0/0
+C        10.0.0.4/30 is directly connected, GigabitEthernet0/1
+L        10.0.0.5/32 is directly connected, GigabitEthernet0/1
+      192.0.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.0.2.0/24 is directly connected, GigabitEthernet0/2
+L        192.0.2.1/32 is directly connected, GigabitEthernet0/2
+S     203.0.113.0/24 [120/0] via 10.0.0.2
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Notice that the floating route isn't displayed in the routing table because a better route to the destination network is known via RIP. Thus, only the best known route to a network is displayed in the IP routing table. However, if the best route, i.e., the one through R2 were to go down, for example, during a link failure, a new static route will be applied which will be our floating route: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#int g0/0
+R1(config-if)#shut
+R1(config-if)#end
+*Dec  4 11:58:59.430: %SYS-5-CONFIG_I: Configured from console by console
+*Dec  4 11:58:59.809: %LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to administratively down
+*Dec  4 11:59:00.809: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to down
+R1#sh ip route | b Gateway
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.0.0.4/30 is directly connected, GigabitEthernet0/1
+L        10.0.0.5/32 is directly connected, GigabitEthernet0/1
+      192.0.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.0.2.0/24 is directly connected, GigabitEthernet0/2
+L        192.0.2.1/32 is directly connected, GigabitEthernet0/2
+S     203.0.113.0/24 [125/0] via 10.0.0.6
+\end{minted}
+
+\section{Configuring Static Routes for IPv6}
+Similar to the last section, we'll set up the IPv6 static routes for the \verb|2004::/64| network via \textbf{R2} and for the \verb|2005::/64| network via \textbf{R3}. Note that unlike IPv4, IPv6 addresses don't need a subnet mask in dotted notation and work fine with the \textit{CIDR-style} subnet mask bit-lengths. 
+
+We have the two networks \verb|2004::/64| and \verb|2005::/64| hanging off of routers \textbf{R2} and \textbf{R3} respectively, which are both connected to \textbf{R1}. The topology looks like:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{"ICND1/2. Routers/chapters/3.2.a IPv6 Static Network Route"}
+\caption{IPv6 Static Network Route}
+\label{fig:9.2.a}
+\end{figure}
+
+\subsection{IPv6 Static Network Routes}
+\subsubsection{IPv6 Static Routing with Exit Serial Interface}
+Just like in the case of IPv4 routing, the exit interface should only be used with serial interfaces since otherwise there's a chance of overflowing the ARP table, especially when the exit interface also leads to the default gateway. The set-up procedure is quite similar to the IPv4 static routing with an exit interface: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ipv6 route 2004::/64 s0/2
+R1(config)#do sh ipv6 route | s 2004
+S   2004::/64 [1/0]
+     via GigabitEthernet0/2, directly connected
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+If the above were to be used with an Ethernet interface, it wouldn't work at all. This is because Ethernet is a multi-access network and not a point-to-point connection. Plus, IPv6 doesn't have broadcast, but all nodes multicast. While for all practical purposes this may be the same, the Address Resolution Protocol will still fail due to the lack of broadcast - which is why \textbf{IPv6 doesn't use ARP}. To make it work, we need to include the next hop IP address \textit{anyway} and use: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#no ipv6 route 2004::/64 g0/2
+R1(config)#ipv6 route 2004::/64 g0/2 2002::2
+R1(config)#end
+R1#ping 2004::1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2004::1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/3/8 ms
+R1#traceroute 2004::1
+Type escape sequence to abort.
+Tracing the route to 2004::1
+
+  1 2002::2 8 msec 5 msec 8 msec
+\end{minted}
+\vspace{-10pt}
+
+\subsubsection{IPv6 Static Routing with Next Hop Address}
+Again, this is quite straightforward, just like in IPv4. The only thing that changes is the format of the IP address which adheres to the IPv6 address formatting:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ipv6 route 2005::/64 2003::2
+R1(config)#do sh ipv6 route | s 2005
+S   2005::/64 [1/0]
+     via 2003::2
+R1(config)#do ping 2005::1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2005::1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 2/3/6 ms
+\end{minted}
+\vspace{-10pt}
+
+\subsubsection{IPv6 Static Routing with Link Local Address}
+All interfaces running IPv6, of course get a \textit{link-local} address in addition to any other IPv6 address we may assign to it. To set the link-local address as the IPv6 address, we need to specify which interface it's connected to as well. This is because a link-local address is \textit{only guaranteed to be unique on the local link}. This mean it would violate no IPv6 rules if the same link-local address may show up across different links. The link local address for \textbf{R2 g0/1} can be obtained using: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R2#sh ipv6 int br
+GigabitEthernet0/0     [up/up]
+    FE80::EC1:8FFF:FEC5:C700
+    2004::1
+GigabitEthernet0/1     [up/up]
+    FE80::EC1:8FFF:FEC5:C701
+    2002::2
+GigabitEthernet0/2     [administratively down/down]
+    unassigned
+GigabitEthernet0/3     [administratively down/down]
+    unassigned
+R2#sh int desc
+Interface                      Status         Protocol Description
+Gi0/0                          up             up       
+Gi0/1                          up             up       Connects to R1
+Gi0/2                          admin down     down     
+Gi0/3                          admin down     down     
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Now, we can use it to specify the static route on \textbf{R1}:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ipv6 route 2004::/64 FE80::EC1:8FFF:FEC5:C701     
+% Interface has to be specified for a link-local nexthop
+R1(config)#ipv6 route 2004::/64 g0/2 FE80::EC1:8FFF:FEC5:C701
+R1(config)#do ping 2004::1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2004::1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 3/4/5 ms
+\end{minted}
+\vspace{-10pt}
+
+\subsection{IPv6 Static Host Route}
+Similar to the example in the IPv4 Static Host Route section, if we want the traffic for a single host on a network (\textit{server}) to go through \textbf{R2} but the rest to go through \textbf{R3}, then we first have to set up the IPv6 static network route through R3 and then the IPv6 static host route through \textbf{R2}. Let us consider we have the following IPs: 
+
+\vspace{-10pt}\noindent
+\begin{center}
+	\begin{tabular}{rl}
+		\toprule
+		\textbf{Device} &\textbf{IPv6 Address} \\
+		\midrule
+		\textbf{R1 Egress-->R2} 	&2002::1\\
+		\textbf{R1-->R2 Ingress} 	&2002::2\\
+		\textbf{R2 Egress-->Switch to server} &2004::1\\
+		\textbf{R1 Egress-->R3} 	&2003::1\\
+		\textbf{R1-->R3 Ingress} 	&2003::2\\
+		\textbf{R3 Egress-->Switch to Server} &2004::2\\
+		\textbf{Server} 			&2004::100\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\noindent
+A host static route in IPv6 will have a \textbf{128-bit} subnet mask length to indicate it's the host's IPv6 address and not a network IPv6 Address. To set up the static routes, we use: 
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ipv6 route 2004::/64 2003::2
+R1(config)#ipv6 route 2004::100/128 2002::2
+\end{minted}
+\vspace{-10pt}
+
+\subsection{IPv6 Static Default Route}
+To set up the default route, the IPv4 address of \verb|0.0.0.0/0| becomes \textbf{::/0} in IPv6. To set it up by associating it with an exit interface via serial link, we use:
+
+\vspace{-15pt}
+\begin{minted}{console}
+BR1(config)#ipv6 route ::/0 s1/0
+\end{minted}
+\vspace{-10pt}
+
+\subsection{IPv6 Floating Static Route}
+For an IPv6 floating route, we simply change the IPv4 address to the IPv6 address assigned in the command. Everything else remain the same. For example, if we consider \verb|2006::/64| to be the address of the destination network, and our backup route goes through \verb|2002::2|, with the alternate route obtained via RIP (\textit{AD=120}), and our AD for the static route is \textit{125}, then the command becomes:
+
+\vspace{-15pt}
+\begin{minted}{console}
+R1(config)#ipv6 route 2006::/64 2002::2 125
+\end{minted}
+\vspace{-10pt}
+
+\section{Overview of Routing Protocols}
+There are several criteria that determine which routing protocol we should use. Some of these are:
+
+\subsection{Scalability}
+For tiny networks, we can get away with (and in fact, it's economical to) use static routes. For small-medium scale networks, RIP, OSPF, EIGRP and BGP - all perform well. However, when it comes to larger networks, RIP may not be such a good choice for a protocol due to it's metric of \textbf{hop count}. The hop count is defined as the \textit{number of routers that need to be crossed to reach a destination network}. \textbf{RIP} has a limit of 15-hops. This of course makes in unusable for anything that requires more routers to be connected. 
+
+\textbf{OSPF} and \textbf{EIGRP} contrastingly, can run very large enterprise-scale networks. \textbf{BGP} is the protocol that \textit{runs the internet}. It is designed to interconnect multiple \textbf{Autonomous Systems (\textit{AS})}, where an AS is a network under a single administrative control. Thus, a network in an enterprise is considered an AS. Similarly, the network of the ISPs are their AS. BGP routes between these Autonomous Systems. 
+
+\subsection{Vendor Interoperability and Familiarity}
+For many years, before 2013, EIGRP was a Cisco proprietary protocol, which meant other vendors didn't have it, and it couldn't be used where products from other vendors were used. This changed after Cisco made EIGRP available to all. Thus, using EIGRP is no longer an obstacle in a multi-vendor environment. Thus, the hardware has to be able to support the desired routing protocol. 
+
+Another important factor in choosing the routing protocol is the familiarity of the IT support staff with the protocol to be used. Thus, engineers who're more used to OSPF can tune it better than EIGRP for the network at hand. 
+
+\subsection{Convergence time}
+The Convergence time of a dynamic routing protocol is the amount of time a protocol takes to re-route traffic when a network failure occurs. Let us consider that the primary path determined by a protocol is \textbf{R1$\rightarrow$R3$\rightarrow$R4}, with an alternate path available through \textbf{R1$\rightarrow$R2$\rightarrow$R4}. Then, if the primary router \textbf{R3} has a link failure, then the time taken by the protocol to switch over to the alternate path through \textbf{R2} is called the convergence time. Typically, OSPF and EIGRP have convergence time of just a few seconds, but protocols such as RIP and BGP can have a convergence time in the order of a minutes. 
+
+\subsection{Summarization}
+This is a feature of routing protocols that allow multiple routes to be \textit{summarized}, i.e., represented with a single summary route. Let us consider a router \textbf{R1} that has routes for 4 different subnets: \verb|10.0.0.0/24| \verb|10.0.1.0/24|, \verb|10.0.2.0/24| and \verb|10.0.3.0/24|. These 4 networks all have a common arrangement of bits for their network bits till the 3rd octet, and thus can be represented by:
+
+\vspace{-10pt}
+\noindent
+\begin{center}
+	\begin{tabular}{rrrrrrrrr}
+		\toprule
+		\textbf{3rd Octet Value} &128 &64 &32 &16 &8 &4 &2 &1 \\
+		\midrule
+		\textbf{0} &0&0&0&0&0&0&\textit{0}&\textit{0} \\
+		\textbf{1} &0&0&0&0&0&0&\textit{0}&\textit{1} \\
+		\textbf{2} &0&0&0&0&0&0&\textit{1}&\textit{0} \\
+		\textbf{3} &0&0&0&0&0&0&\textit{1}&\textit{1} \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+\vspace{-5pt}
+
+\noindent
+As we can see, there's absolutely no difference up until the 22nd bit of the addresses. Thus we can represent all four networks as a single summary address of \textbf{10.0.0.0/22}, obtained by taking all the common bits in the network address and then making the host bits zeroes. This can not only reduce the size of our routing table, but can also help by reducing the load on the router given that it doesn't have to run, for example, the Dijkstra's Algorithm on a smaller number of routes. 
+
+\subsection{Interior or Exterior Gateway Protocol} 
+An important distinction must be made between Interior and Exterior Gateway Protocols. An \textbf{Interior Gateway Protocol (\textit{IGP})} is designed to run within an Autonomous System while an \textbf{Exterior Gateway Protocol (\textit{EGP})} is designed to run between Autonomous Systems. 
+
+So, within an Autonomous System like a company, we'll run an IGP like RIP, OSPF, EIGRP or IS-IS (Intermediate System to Intermediate System). The link between companies and their ISPs are however going to be communicating via an EGP - and BGP is practically the most common one. While there is an option of running BGP \textit{within} an AS, typically it's used as an EGP between Autonomous Systems. 
+
+\subsection{Protocol Classification}
+We have three main categories of classifying routing protocols: 
+
+\vspace{-10pt}
+\begin{itemize}
+\item Distance Vector
+\item Link State
+\item Path Vector
+\end{itemize}
+\vspace{-10pt}
+
+\subsubsection{Distance-Vector Routing Protocols}
+A Distance Vector routing protocol periodically sends a full copy of its routing table to its directly connected neighbours, regardless of network changes. Thus, a copy is still sent even if no changes have occurred. Routing Information Protocol (RIP) is an example of a Distance Vector protocol. 
+
+The data-structure of a distance-vector protocol stores two values: a distance and a vector. Thus, there's got to be a metric to tell us how far away a network is, which in the case of RIP is the \textbf{hop-count}. The \textit{vector} is the direction or path that leads us to the destination network. This can be the exit interface or next-hop IP address, etc. Other than knowing the distance and the direction/vector, a distance-vector protocol doesn't ever have a map-of-the-terrain or an over-arching/comprehensive view of the network.
+
+\textbf{EIGRP} is a form of an advanced distance-vector routing protocol that's not limited by the those of a normal distance-vector routing protocol. For example, it can send triggered updates, i.e., send an update to the adjacent neighbours when a network change occurs instead of unnecessarily sending updates periodically (e.g., every 30 secs) like RIP does. 
+
+\subsubsection{Link State Routing Protocols}
+A link-state routing protocol, unlike distance-vector routing protocols, have a comprehensive view of the network. Much like a car's navigation systems/Google Maps, it knows all the nodes in the network and how they're interconnected. It can assign different values/weights/costs to different paths based on different criteria, such as bandwidth and then runs an algorithm such as \textbf{Dijkstra's Shortest Path} algorithm in case of \textbf{OSPF}, to determine the best route to a destination network. Similarly, \textbf{IS-IS} is also a link-state routing protocol. 
+
+\subsubsection{Path Vector Routing Protocol}
+A Path-Vector routing protocol stores information about the exact path that packets will take to reach the destination network. \textbf{BGP} is a path-vector routing protocol and the BGP table contains a list of Autonomous Systems that we have to enter to get to the destination network and together they formulate the exact path.
+
+\section{Administrative Distance}
+The \textbf{Administrative Distance (\textit{AD})} is the trustworthiness/believability of a route. Lower values are better, i.e., more trustworthy. The AD for different methods of learning a route vary. This means that some routing protocols have lower ADs, i.e., higher believability, and are thus preferred over others. Thus, we get the following table: 
+
+\vspace{-10pt}
+\begin{center}
+	\begin{tabular}{rl}
+		\toprule
+		\textbf{Route Source} &\textbf{Administrative Distance (AD)} \\
+		\midrule
+		\textbf{Directly Connected} &0\\
+		\textbf{Static Route} 	&1\\
+		\textbf{EIGRP} 			&90\\
+		\textbf{OSPF} 			&110\\
+		\textbf{RIP} 			&120\\
+		\textbf{External EIGRP}	&170\\
+		\textbf{Unknown} 		&255\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+\vspace{-5pt}
+
+\noindent
+\textbf{External EIGRP} - External EIGRP is the case when a route has been learnt by EIGRP from an external source. This is the case when an OSPF-learnt route is \textit{redistributed} into EIGRP. 
+
+\section{Split Horizon}
+Some routing protocols such as RIP and EIGRP follow the \textbf{split horizon rule}. This states that a router will not advertise a route out on the interface through which it learnt the route in the first place. 
+
+\section{Metric}
+
+
+\section{Next Hop Address}
+
+
+\section{Passive Interfaces}

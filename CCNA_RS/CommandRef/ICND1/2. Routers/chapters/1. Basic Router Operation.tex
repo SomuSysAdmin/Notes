@@ -1,1 +1,193 @@
 \chapter{Basic Router Operation}
+\section{Packet flow through a Routed Network}
+Let us consider the case below where the user/client (\verb~192.168.1.2 | AAAA.AAAA.AAAA~) wants to communicate with the server (\verb~192.168.2.2 | BBBB.BBBB.BBBB~). The packet goes through several devices: sw1, R1, sw2, R2 and sw3 to reach the server. The transmission can be broken down into two layers of operation: Layer 3 and Layer 2. 
+
+\vspace{-5pt}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{"ICND1/2. Routers/chapters/1.1.a. Packet Flow"}
+\caption{Packet Flow}
+\label{fig:7.1.a}
+\end{figure}
+\vspace{-10pt}
+
+\subsection{Layer 3 Packet flow}
+At \textbf{Layer 3}, the \textit{user} forms a packet with the source IP of itself, and the destination IP of the server (which is known to it). \textit{Throughout the transmission the source and destination IPs remain \textbf{unchanged}}. For the communication to occur, the packet flows through three networks: \verb|192.168.1.0/24| network, the \verb|10.1.1.0/24| network and finally, the \verb|192.168.2.0/24| network. Since a router separates one broadcast domain/subnet from another, there's two routers required: \textbf{R1} that links \verb|192.168.1.0/24| and \verb|10.1.1.0/24| networks, and \textbf{R2} that facilitates communication between \verb|10.1.1.0/24| and \verb|192.168.2.0/24| networks. 
+
+In the beginning, the user sends the packet to it's gateway, R1. Since switches can't \textit{see}, i.e., make forwarding decisions on the basis of IPs / switch packets in layer 3, they act more or less like direct links. Once R1 receives the packet, it searches for the destination network in its \textbf{routing table}, which is a table of interface to network mappings. It sees that the \verb|192.168.2.0/24| network isn't directly connected to it, but is reachable via the \verb|10.1.1.0/24| network, called the \textbf{next hop}. Now it searches its routing table for the \verb|10.1.1.0/24| network, which is connected via the interface \textbf{Gi0/1}. This now becomes the egress port and the packet is sent out, \textbf{unchanged} to \textbf{R2} which has \textbf{R2 Gi0/0} connected to \textbf{R1 Gi0/1} via sw2. 
+
+When the ingress port of \textbf{R2 Gi0/0} gets the inbound packet destined for \verb|192.168.2.0/24|, it searches its own routing table for the destination network, which is directly connected to it via \textbf{R2 Gi0/2}. So, it sends out the packet through the egress port and the packet reaches the Server. 
+
+\subsection{Layer 2 Packet Flow}
+Unlike the operation in layer 3, the source and destination \textit{MAC addresses are re-written every time there's a change in the subnet}. This means that the user has to first send an \textbf{ARP request} to get the MAC address of R1's ingress port of \textbf{R1 Gi0/0}, which is it's gateway. The ARP packet reaches \textit{sw1}, which forwards the ARP broadcast on all other ports but its ingress port. Router R1 replies with its MAC address, \verb|1111.1111.1111|, which gets stored in the \textbf{ARP cache} of user so that it can remember the MAC address instead of ARP-ing again. Thus, the user sends out a frame with the source MAC address of \verb|AAAA.AAAA.AAAA| and destination MAC of \verb|1111.1111.1111|. Sw1 meanwhile, makes entries for both \textit{user} and \textit{R1} in its CAM table. 
+
+When the frame reaches the ingress port on \textbf{R1 Gi0/0} with MAC \verb|1111.1111.1111|, the router finds out that the packet has to be sent out to another network, where the source MAC of \verb|AAAA.AAAA.AAAA| is \textit{un-knowable} by the devices on the network. Thus, it replaces the source MAC with the MAC address of it's own egress port (\verb|2222.2222.2222|), and sends out the packet to the MAC address \verb|3333.3333.3333| of \textbf{R2 Gi0/0}. 
+
+Finally at R3, the source MAC is changed to \verb|4444.4444.4444|, the egress \textbf{R2 Gi0/2} port's MAC and the destination MAC is set to that of the server (\verb|BBBB.BBBB.BBBB|), known to R2 (via ARP broadcast). Thus the packet reaches from the user to the server without either knowing the other's MAC address, since they're re-written by the routers at each step. 
+
+\section{Sources of Route Information}
+There can be several sources of routing information. The subnets can be directly connected via an interface, There can be static routes that are hard-coded, dynamic routes learnt via a configured dynamic routing protocol or the default route to a \textit{gateway of last resort}, when the pathway to network is unknown. 
+
+\vspace{-10pt}
+\noindent
+\begin{center}
+	\begin{tabular}{rm{0.8\textwidth}}
+		\toprule
+		\textbf{Type} &\textbf{Description} \\
+		\midrule
+		\textbf{Connected} &The network (ex. \verb|192.168.2.0/24|) of the IP address assigned to an interface (ex. \verb|192.168.2.5/24|).\\
+		\textbf{Static} &Administratively i.e., manually configured route to a network. Doesn't scale very well for large number of routes.\\
+		\textbf{Dynamic} &Typically used in larger network, these routes are \textit{learnt} by the use of one or more dynamic routing protocols. \\
+		\textbf{Default} &When the network is unknown, we use this route which typically leads to a \textit{gateway of last resort}. This can be for all unknown networks (\verb|0.0.0.0/0|) and may lead to the internet.\\		
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\noindent
+The existing routes known to a route, i.e., the IP routing table can be seen by using the \verb|show ip route| command:
+
+\vspace{-15pt}
+\begin{minted}{console}
+r2#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.1.1.0/24 is directly connected, GigabitEthernet0/0
+L        10.1.1.2/32 is directly connected, GigabitEthernet0/0
+      172.16.0.0/16 is variably subnetted, 2 subnets, 2 masks
+C        172.16.1.0/24 is directly connected, GigabitEthernet0/2
+L        172.16.1.1/32 is directly connected, GigabitEthernet0/2
+S     192.168.1.0/24 [1/0] via 10.1.1.1
+      192.168.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.2.0/24 is directly connected, GigabitEthernet0/1
+L        192.168.2.1/32 is directly connected, GigabitEthernet0/1
+\end{minted}
+\vspace{-10pt}
+
+\subsection{IP Routing Table codes}
+The code in a routing table describes how the route was learnt. It may be C, L, S, O, etc. The meaning of some of them is:
+
+\vspace{-10pt}
+\noindent
+\begin{center}
+	\begin{tabular}{clm{0.53\textwidth}}
+		\toprule
+		\textbf{Code} &\textbf{Meaning} &\textbf{Description} \\
+		\midrule
+		\textbf{C} &\textit{Directly Connected network} &The network noted is connected directly via an interface.\\
+		\textbf{L} &\textit{Local Interface} &This is the IP address configured on an interface on the router. The subnet mask length is set to \verb|/32| to indicate that this isn't a network that's connected but a single IP for the interface.\\
+		\textbf{S} &\textit{Static Route} &This is a route that was administratively set. This may also be the gateway of last resort if the destination network is \verb|0.0.0.0/0|, i.e., all unknown networks.\\
+		\textbf{O} &\textit{OSPF-Learnt Route} &A route acquired by the use of the \textbf{Open Shortest Path First (\textit{OSPF})} dynamic routing protocol. These dynamic routing entries are automatically updated based on changing network conditions. If a link goes down, the associated entry for the connected network will dynamically disappear since the network is no longer reachable. \\
+		\textbf{D} &\textit{EIGRP-Learnt Route} &A route learnt by using the \textbf{Enhanced Interior Gateway Routing Protocol (\textit{EIGRP})}, which is another dynamic routing protocol.\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\subsection{Administrative Distance}
+In case multiple routes are learnt to a network via multiple routing protocols, such as one learnt via OSPF and another via EIGRP, then the clash is resolved (and the route chosen) on the basis of the \textbf{Administrative Distance (\textit{AD})} of the available routes. The AD is the \textit{believability} of each route with lower values being more believable than higher ones. 
+
+The Administrative distances for each route is linked with how it was learnt. Note that Static routes have a default AD of \textbf{1}. This is so that statically configured routes are given a higher preference than dynamic routes, but it can be changed by administrators to have a value greater than that presented by a dynamic routing protocol, such that the static route acts as a backup route. The default values for administrative distances of some types of these route sources are: 
+
+\vspace{-10pt}
+\noindent
+\begin{center}
+	\begin{tabular}{rlm{0.7\textwidth}}
+		\toprule
+		\textbf{Route Source} &\textbf{AD} &\textbf{Explanation} \\
+		\midrule
+		\textbf{Connected (\textit{C})} &0 &Most believable since the network is directly connected.\\
+		\textbf{Static (\textit{S})} &1 &Set to such a high value to override any dynamically learned routes by default.\\
+		\textbf{eBGP} &20 &Route advertisement from another \textit{BGP-speaking} \textbf{Autonomous System (\textit{AS})} obtained via \textbf{eBGP (\textit{external Border Gateway Protocol})}.\\
+		\textbf{EIGRP} &90 &\\
+		\textbf{OSPF} &110 &\\
+		\textbf{RIP} &120 &\textbf{Routing Information Protocol (\textit{RIP})}.\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\section{IP Routing Table}
+A router makes all forwarding decisions based on the contents of its IP routing table. This can be seen with \verb|show ip route|, which shows all routes injected into the table. Typical contents are:
+
+\vspace{-15pt}
+\begin{minted}{console}
+r1#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.1.1.0/24 is directly connected, GigabitEthernet0/0
+L        10.1.1.1/32 is directly connected, GigabitEthernet0/0
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/24 is directly connected, GigabitEthernet0/1
+L        192.168.1.1/32 is directly connected, GigabitEthernet0/1
+S     192.168.2.0/24 [1/0] via 10.1.1.2
+\end{minted}
+\vspace{-10pt}
+
+\noindent
+Notice that some routes have a \verb|[1/0]| after their IP network address. The first number is the \textbf{AD (\textit{Administrative Distance})} which sets the believability of the route and the second number is the \textbf{metric} used by a dynamic routing protocol, that acts like a cost associated to using that route to connect to a remote network. Since this is a statically configured route, the metric has been set to (\textbf{0}). 
+
+In case of multiple routes to the same network via different routes is discovered by the same routing protocol (e.g., OSPF), then the one with the lower cost, i.e., lower metric will be used. Different dynamic routing protocols use different ways of calculating the metric. Thus, EIGRP may have a metric in millions while RIP has an equivalent metric of a single digit for the same route. Thus, \textbf{metrics must never be compared between different routing protocols}. 
+
+Another important piece of information from routing tables is the next hop network that connects us to another network. For example, in this case, the static route has been configured such that the network \verb|192.168.2.0/24| is reached via the interface connected to the network \verb|10.1.1.2|. 
+
+\section{Packet Forwarding}
+The packet forwarding options in a router determine how the packets are routed from the ingress port of the router to the egress port in terms of architecture. Other than those listed below, there can be more such as \textit{Optimum switching, silicon switching}, etc. In all these cases, the term \textit{switching} refers to the packet switching or layer 3 routing of the packets from the ingress to the egress port of the router. 
+
+\subsection{Process Switching}
+With \textbf{Process Switching}, the processor of the router gets involved in every packet switching decision. The router's architecture can be broadly divided into two sections: the \textbf{control plane} and the \textbf{data plane}. A third plane is sometimes referred to in literature called the \textit{management plane} which is used when we telnet/ssh into the router, but in this case, we're only going to consider the first two. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{"ICND1/2. Routers/chapters/7.4.a Process Switching"}
+\caption{Process Switching}
+\label{fig:7.4.a}
+\end{figure}
+\vspace{-10pt}
+\noindent
+Th \textbf{data plane} is where the traffic flows through the router and the elements of the  \textbf{control plane} controls the \textit{behind-the-scene} tasks required to control the flow through the data plane. The CPU can operate in both planes. However, if the \textit{CPU is used in every single packet forwarding decision}, as is the case in process switching, then it can be overwhelmed, thus causing performance degradation. This is the oldest approach to packet forwarding. 
+
+\subsection{Fast Switching}
+This method is considerably faster than \textit{process switching}. Here, a new component called the \textbf{route cache} is utilized to store and remember the packet forwarding decisions made by the CPU for known networks. In this case, the CPU is involved in packet forwarding decisions only the first time when an unknown network is detected:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{"ICND1/2. Routers/chapters/7.4.b Fast Switching"}
+\caption{Fast Switching}
+\label{fig:7.4.b}
+\end{figure}
+\vspace{-10pt}
+\noindent
+When a packet for a network we haven't yet route to is detected and the router doesn't know where it should forward the packet, it asks the CPU to look in the routing table. Once the CPU has resolved the egress port, the information is stored in the \textit{route cache} and the data is sent out the egress port. From then onwards, the route cache is consulted instead of the CPU to find the appropriate egress port. This reduces the load on the CPU, improving performance. Eventually the data in the route cache, of course, times out. 
+
+\subsection{Cisco Express Forwarding (CEF)}
+Among the three, \textbf{Cisco Express Forwarding (\textit{CEF})} is the most efficient and fastest, and hence the one we should be using. With CEF, we don't have to involve the CPU even once in the packet forwarding decisions. Instead, the processor pro-actively fills up the \textbf{Forwarding Information Base (\textit{FIB})} - a construct to store the layer 3 routing info learnt from the routing table. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{"ICND1/2. Routers/chapters/7.4.c Cisco Express Forwarding"}
+\caption{Cisco Express Forwarding (CEF)}
+\label{fig:7.4.c}
+\end{figure}
+\vspace{-10pt}
+\noindent
+The FIB is essentially the routing table information stored in a high-speed memory containing a very efficient table structure. This however, is only the Layer 3 information. We also need layer 2 information to quickly form a frame, which is stored in the \textbf{adjacency table}.  For example, the FIB lets the router know that to go to \textit{network A} we need to go to this \textit{next hop ip address, B}. Then the adjacency table gives us the layer 2 info to reach \textit{IP B} - such as the interface name, encapsulation and destination MAC address. The FIB and the adjacency table together form the CEF system. CEF also updates itself with changes in the network automatically. 
