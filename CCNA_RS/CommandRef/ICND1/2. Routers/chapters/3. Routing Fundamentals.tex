@@ -580,12 +580,95 @@ The \textbf{Administrative Distance (\textit{AD})} is the trustworthiness/believ
 \textbf{External EIGRP} - External EIGRP is the case when a route has been learnt by EIGRP from an external source. This is the case when an OSPF-learnt route is \textit{redistributed} into EIGRP. 
 
 \section{Split Horizon}
-Some routing protocols such as RIP and EIGRP follow the \textbf{split horizon rule}. This states that a router will not advertise a route out on the interface through which it learnt the route in the first place. 
+Let us consider the following network in the topology below. The first two entries in the routing table of each router are for the networks that are directly connected to the interfaces. Let us also consider they're using some kind of dynamic routing protocol to exchange routes with their neighbours. \textbf{R1} will tell \textit{R2} and \textit{R3} about the \verb|172.16.1.0/24| network, \textbf{R2} will tell \textit{R3} about the \verb|10.1.1.0/30| network and \textit{R1} about the \verb|10.1.4.0/30| network and finally, \textbf{R3} will tell \textit{R2} and \textit{R1} about the \verb|192.168.1.0/24| network. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{"ICND1/2. Routers/chapters/3.3.a Split Horizon"}
+\caption{Split Horizon Rule}
+\label{fig:9.5.a}
+\end{figure}
+\vspace{-10pt}
+
+\noindent
+At this point, all routers know about all routes in the network. However, some routing protocols such as RIP and EIGRP advertise their current routing table to the neighbours. Let us consider that \textbf{R2} advertises the \verb|172.16.1.0/24| network on both its interfaces. This is useful for \textit{R3} since it allows \textit{R3} to learn about the \verb|10.1.1.0/30| network. However, the route for \verb|172.16.1.0/24| was itself learnt from \textit{R2}.
+
+Originally, \textbf{R2} learnt about the \verb|172.16.1.0/24| network from \textit{R1} via interface \textbf{Gi0/0}. Now if the route is advertised by R3 on port \textbf{R2 Gi0/1}, \textbf{R2} will update its routing table to show that the \verb|172.16.1.0/24| network is reachable from \textbf{R2 Gi0/1} instead of \textbf{R2 Gi0/0} - which is wrong! Thus, these protocols follow the \textbf{split horizon rule}. This states that a router will not advertise a route out on the interface through which it learnt the route in the first place. Thus this rule prevents routing loops and corruption of IP Routing tables.  
 
 \section{Metric}
+Let us consider the following topology, where \textbf{R1} communicates to \textbf{R3} using OSPF and \textbf{R2} uses EIGRP as the IP routing protocol to speak to \textbf{R3}. The \textbf{metric} is an important factor when working in a network with multiple routing protocols. A metric is a measurement, that's IP routing protocol specific, of how far a destination network/host (i.e., node) is from a router. 
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{"ICND1/2. Routers/chapters/3.6.a Metric"}
+\caption{Metric}
+\label{fig:9.6.a}
+\end{figure}
+\vspace{-10pt}
+
+\noindent
+Different routing protocols use varying network parameters to calculate their metric. For example, the following table shows the different parameters used by OSPF and EIGRP to calculate their metrics: 
+
+\vspace{-10pt}
+\begin{center}
+	\begin{tabular}{rm{0.71\textwidth}}
+		\toprule
+		\textbf{IP Routing Protocol} &\textbf{Criteria/Parameters for Metric Calculation} \\
+		\midrule
+		\textbf{OSPF}	&Bandwidth.\\
+		\textbf{EIGRP}	&Bandwidth and Delay. Can also consider reliability, load and \textbf{MTU (\textit{Maximum Transmission Unit})} size.\\
+		\bottomrule
+	\end{tabular}
+\end{center}
+\vspace{-5pt}
+
+\noindent
+Given that the parameters for the calculation of the metric for each protocol is different as well as the methodology for the calculation is also very different, the metrics can't be compared between protocols, but only within a protocol. 
 
 \section{Next Hop Address}
+A lot of routing protocols keep track of the \textbf{next-hop address}. This is the next router to which the current router needs to send the packet so that the packet can reach the intended destination. Both the routing table and the individual protocols keep track of some information about the route, such as metric, AD and next-hop IP. To view the information in the routing table when dynamically generated routes are present, we need only use the \verb|show ip route| command and check the entries for \verb|O, D|, etc. 
 
+The command to see the routing information for \textbf{OSPF} is \verb|show ip ospf rib|, which gives us a look at the \textbf{RIB (\textit{Routing Information Base})}. In it we can see that each network known to OSPF will have an associated next-hop IP address. 
+
+The equivalent command for EIGRP's routing information is \verb|show ip eigrp topology|, which also stores the next-hop IP. Most modern Cisco routers will use \textbf{Cisco Express Forwarding (\textit{CEF})} to store the routing information in a \textbf{FIB (\textit{Forwarding Information Base})} instead of involving the processor to lookup routes. The FIB stores the Layer 3 information in a highly efficient manner promoting quick lookups for routes. 
+
+CEF also has an adjacency table to store Layer 2 adjacency information, i.e., \textit{next-hop} information, which include the egress interface to reach that next hop and the Layer 2 header for the MAC address of the header. We can view the CEF table using \verb|show ip cef| which shows us both the next hop as well as the egress interface. The adjacency table can be viewed with the \verb|show adjacency| command. 
+
+\subsection{Using ARP to get the MAC address}
+Even though the router knows about the next hop's IP address, it still needs the MAC address of the ingress interface on the far end of the link so that it can form the proper Layer 2 header. To find this, it sends an \textbf{ARP (\textit{Address Resolution Protocol})} broadcast, asking for the MAC address of the next hop. Only the device with a matching IP address (contained in the ARP broadcast) replies with its MAC address, which the router then stores in its ARP Cache. The ARP cache can be viewed with the command \verb|show ip arp|. 
 
 \section{Passive Interfaces}
+\subsection{Network Command and Wildcard Mask}
+Whenever we're trying to configure a dynamic routing protocol, we usually have to use the \textbf{network} command/statement in router configuration mode (IPv4) . This statement defines on which network the routing protocols will be working on, and thus defines a list of interfaces that will be participating in the routing process. For OSPF/EIGRP, etc., we also have to include a \textbf{wild-card mask}. Let us consider the topology below, where we have to configure router \textbf{R1}:  
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{"ICND1/2. Routers/chapters/9.8.a Passive Interfaces"}
+\caption{Passive Interfaces}
+\label{fig:9.8.a}
+\end{figure}
+\vspace{-10pt}
+
+\noindent
+The network statement will define the \verb|192.168.1.0/24| network to which \verb|192.168.1.1| (the interface's IP)  belongs and the wild-card mask will be \verb|0.0.0.255|. The wild-card mask is calculated by subtracting (per octet basis) the subnet mask from \verb|255.255.255.255|. Thus, the wild-card mask for the 24-bit subnet is \verb|0.0.0.255|. The purpose of the network command is to:
+
+\vspace{-10pt}
+\noindent
+\begin{itemize}
+\item Define which interfaces will be listening for the dynamic routing protocol,
+\item Define which interfaces will be advertising the routes, and 
+\item Define which networks/subnets will be advertised out. 
+\end{itemize}
+
+\vspace{-5pt}
+\noindent
+Invariably, the only networks that'll be advertised are those that the interfaces belong to, i.e., the networks obtained from the IP address of an interface and the wild card mask for the protocol. Thus, the wild card mask is used to define which interfaces in the network we want to advertise and which we don't. 
+
+\subsection{Need for Passive Interfaces}
+In the case of dynamic routing protocols, the routers form adjacency or become neighbours and start interchanging routing information. This is done by the use of \textbf{hello packets}. Each of the interfaces that are participating in the routing process (as defined by the network statement) will be sending out these \textit{hello messages}. 
+
+In the topology above, the hello messages sent out on the \textbf{Gi0/0} interfaces of both routers: \textbf{R1} and \textbf{R2} are useless since they don't have another router on their network/subnet to utilize the hello messages because these two are end-user networks. But in protocols like OSPF and EIGRP, the hello messages are sent out on all participating interfaces by default. Further, it might be a security risk, since this means unauthorized devices may try to utilize them. So, we need to let these interfaces still participate in the routing process so that their networks can be advertised to the neighbours, but we don't want them to send out hello messages. 
+
+So, if we want the \verb|172.16.1.0/24| network to be advertised from R1\textbf{R1} to \textbf{R2}, but we also don't want outgoing hello packets on \textbf{R1 Gi0/0}, then we can turn that interface into a \textbf{passive interface}. To do so, we use the \verb|passive-interface Gi0/0| in router configuration mode. 
+
+If the router has many interfaces that are connected to end-user device/networks, then the \verb|passive-interface default| command. This makes the router stop sending hello messages on all the interfaces. Now, to actually send hello messages to the neighbours, we can create exceptions. For example, we'd use \verb|no passive-interface Gi0/0| to send hello messages to \textbf{R2}. 

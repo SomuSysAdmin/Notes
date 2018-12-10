@@ -146,7 +146,10 @@
 \contentsline {subsubsection}{Path Vector Routing Protocol}{82}{section*.15}
 \contentsline {section}{\numberline {9.4}Administrative Distance}{82}{section.9.4}
 \contentsline {section}{\numberline {9.5}Split Horizon}{82}{section.9.5}
-\contentsline {section}{\numberline {9.6}Metric}{82}{section.9.6}
-\contentsline {section}{\numberline {9.7}Next Hop Address}{82}{section.9.7}
-\contentsline {section}{\numberline {9.8}Passive Interfaces}{82}{section.9.8}
-\contentsline {chapter}{\numberline {10}Routing Information Protocol (RIP)}{83}{chapter.10}
+\contentsline {section}{\numberline {9.6}Metric}{83}{section.9.6}
+\contentsline {section}{\numberline {9.7}Next Hop Address}{83}{section.9.7}
+\contentsline {subsection}{\numberline {9.7.1}Using ARP to get the MAC address}{84}{subsection.9.7.1}
+\contentsline {section}{\numberline {9.8}Passive Interfaces}{84}{section.9.8}
+\contentsline {subsection}{\numberline {9.8.1}Network Command and Wildcard Mask}{84}{subsection.9.8.1}
+\contentsline {subsection}{\numberline {9.8.2}Need for Passive Interfaces}{85}{subsection.9.8.2}
+\contentsline {chapter}{\numberline {10}Routing Information Protocol (RIP)}{86}{chapter.10}
