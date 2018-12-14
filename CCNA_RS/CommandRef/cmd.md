@@ -146,6 +146,123 @@ The non-publicly routable and inside IP addresses here are called **Inside Local
 It's also possible to have _Outside local_ addresses, but that's not commonly used and requires DNS modifications.
 
 ## Port Address Translation (PAT)
-Many times, especially on home networks, the users don't have the luxury of multiple static global IP addresses. In such cases, the router WAN interface on the router gets the global IP and can also map specific ports to internal local IP addresses to have the data flow to multiple devices using a single external global IP. The PAT enabled router does this by paying attention to the port numbers on the router to which the internal devices communicate.
+Many times, especially on home networks, the users don't have the luxury of multiple static global IP addresses. In such cases, the router WAN interface on the router gets the global IP and can also map specific ports to internal local IP addresses to have the data flow to multiple devices using a single external global IP. The PAT enabled router does this by paying attention to the port numbers on the router to which the internal devices communicate. Thus multiple internal IP addresses share a single pulicly routable IP address.
 
-The combination of an IP address and a port number is called a **socket**. Thus, even though the IP address might not be unique while the data flows from the external server, the destination socket is always unique. 
+The combination of an IP address and a port number is called a **socket**. Thus, even though the IP address might not be unique while the data flows from the external server, the destination socket is always unique. The edge router will still use the same external IP to send data for multiple internal device, but will use unique port numbers to differentiate them, thus creating unique sockets for each for the server(s) to respond to. The Port Address Translation table will look like:
+
+```
+Inside + Local IP   Inside + Global IP
+=================   ==================
+10.1.1.1:1025       192.0.2.100:1025
+10.1.1.2:1050       192.0.2.100:1050
+```
+
+## Port Mapping/Forwarding
+This feature allows a router to selectively forward incoming packets based on their destination port number to a specific host inside the network. Thus if we have a UNIX server we need to connect to via telnet and a web-server on the same network, we can set up port mapping such that all incoming traffic on port 23 to the router goes to the UNIX server's internal IP on port 23 and all traffic on port 80 goes to the web-server's internal IP on port 80.
+
+# Static NAT configuration
+In the image below, since the host 10.1.1.100 doesn't have a publicly routable (global) IP, the packets from it can't cross R1 normally, since the replies wouldn't have a valid source IP out on the internet, and the servers won't know where to reply. So, we can configure **R1** to use static NAT to mark the outgoing packets with a separate **inside global** IP (_not the IP address of the WAN interface, but from a separate global IP pool_).
+
+First we define which interface is _inside_ the network and which is _outside_ our network. In this case, **R1 Gi0/1** is inside the network and is connected to the host `10.1.1.100`, while **R1 Gi0/0** is the WAN port on the router with the IP `4.4.4.4`, provided by the ISP. We can configure the inside and outside NAT interfaces using:
+
+```
+R1(config)#int g0/1
+R1(config-if)#ip nat inside
+R1(config-if)#int g0/0
+R1(config-if)#ip nat outside
+R1(config-if)#exit
+```
+
+Now, to perform the actual static interface mapping, we need to map the internal local IP `10.1.1.100` to an internal global IP, for ex., `4.4.4.2`. We do this, and check using:
+```
+R1(config)#ip nat inside source static 10.1.1.100 4.4.4.2
+R1(config)#do sh ip nat translations
+Pro Inside global      Inside local       Outside local      Outside global
+--- 4.4.4.2            10.1.1.100         ---                ---
+```
+
+Now, we can ping the server on the internet `3.3.3.3` from the local internal host `10.1.1.100`:
+```
+Client> ping 3.3.3.3
+3.3.3.3 icmp_seq=1 timeout
+3.3.3.3 icmp_seq=2 timeout
+84 bytes from 3.3.3.3 icmp_seq=3 ttl=62 time=6.947 ms
+84 bytes from 3.3.3.3 icmp_seq=4 ttl=62 time=9.425 ms
+84 bytes from 3.3.3.3 icmp_seq=5 ttl=62 time=7.924 ms
+```
+
+We can check the translation on **R1** using:
+```
+R1#sh ip nat translations
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 4.4.4.2:23005     10.1.1.100:23005   3.3.3.3:23005      3.3.3.3:23005
+icmp 4.4.4.2:23261     10.1.1.100:23261   3.3.3.3:23261      3.3.3.3:23261
+icmp 4.4.4.2:23517     10.1.1.100:23517   3.3.3.3:23517      3.3.3.3:23517
+--- 4.4.4.2            10.1.1.100         ---                ---
+```
+
+We can also see that the protocol used was ICMP (used for _ping_).
+
+# Dynamic NAT configuration
+The method of mapping specific inside local IP addresses statically to outside global IP address doesn't scale well. Instead, we could assign a pool of outside global IP addresses that the router assigns to an inside local IP address when needed. This is called dynamic NAT. To set it up, we first need to define the inside and outside interfaces:
+
+```
+R1(config)#int g0/1
+R1(config-if)#ip nat inside
+R1(config-if)#int g0/0
+R1(config-if)#ip nat outside
+```
+
+Now we have to define the IP addresses inside the network (inside local addresses), using **Access Control Lists (_ACL_)**. Typically ACLs are used to allow/deny traffic, but in this case, it's going to be used to recognize traffic. The hosts have to be identified with a **wild-card mask**.
+
+```
+R1(config)#access-list 1 permit 10.1.1.0 0.0.0.255
+```
+
+Once this is done, we have to define the inside global IP address pool. Here, `POOL` is the name of the address pool, `4.4.4.2` the starting IP address of the range and `4.4.4.3` the ending IP address of the range.
+
+```
+R1(config)#ip nat pool POOL 4.4.4.2 4.4.4.3 netmask 255.255.255.0
+```
+
+Now, we have an ACL that defines the inside local IPs and a pool that defines the inside Global IPs. So, we just have to tie these together. We can do so using:
+
+```
+R1(config)#ip nat inside source list 1 pool POOL
+```
+
+Now we should be able to ping the outside global server from both the clients:
+
+```
+cl1> ping 3.3.3.3
+3.3.3.3 icmp_seq=1 timeout
+3.3.3.3 icmp_seq=2 timeout
+84 bytes from 3.3.3.3 icmp_seq=3 ttl=62 time=15.864 ms
+84 bytes from 3.3.3.3 icmp_seq=4 ttl=62 time=11.414 ms
+84 bytes from 3.3.3.3 icmp_seq=5 ttl=62 time=16.374 ms
+
+cl2> ping 3.3.3.3
+84 bytes from 3.3.3.3 icmp_seq=1 ttl=62 time=37.204 ms
+84 bytes from 3.3.3.3 icmp_seq=2 ttl=62 time=14.384 ms
+84 bytes from 3.3.3.3 icmp_seq=3 ttl=62 time=12.899 ms
+84 bytes from 3.3.3.3 icmp_seq=4 ttl=62 time=12.403 ms
+84 bytes from 3.3.3.3 icmp_seq=5 ttl=62 time=15.406 ms
+```
+
+Now, if we check the translations table, we can see:
+```
+R1#sh ip nat trans
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 4.4.4.2:5107      10.1.1.101:5107    3.3.3.3:5107       3.3.3.3:5107
+icmp 4.4.4.2:5619      10.1.1.101:5619    3.3.3.3:5619       3.3.3.3:5619
+icmp 4.4.4.2:6131      10.1.1.101:6131    3.3.3.3:6131       3.3.3.3:6131
+icmp 4.4.4.2:6387      10.1.1.101:6387    3.3.3.3:6387       3.3.3.3:6387
+icmp 4.4.4.2:6643      10.1.1.101:6643    3.3.3.3:6643       3.3.3.3:6643
+--- 4.4.4.2            10.1.1.101         ---                ---
+icmp 4.4.4.3:7667      10.1.1.102:7667    3.3.3.3:7667       3.3.3.3:7667
+icmp 4.4.4.3:7923      10.1.1.102:7923    3.3.3.3:7923       3.3.3.3:7923
+icmp 4.4.4.3:8179      10.1.1.102:8179    3.3.3.3:8179       3.3.3.3:8179
+icmp 4.4.4.3:8435      10.1.1.102:8435    3.3.3.3:8435       3.3.3.3:8435
+icmp 4.4.4.3:8691      10.1.1.102:8691    3.3.3.3:8691       3.3.3.3:8691
+--- 4.4.4.3            10.1.1.102         ---                ---
+```
