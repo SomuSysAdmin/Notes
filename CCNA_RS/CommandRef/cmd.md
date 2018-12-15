@@ -690,3 +690,23 @@ If all devices on the network are running CDP and they're interconnected and we'
 
 # Device management
 # Understanding a Router's Boot Sequence
+## Power On Self Test
+Just like ohter Operating Systems, the first thing the router does after powering on is the **Power On Self Test (_POST_)** and runs diagnostics on each component of its systems to ensure that everything works properly. The program for POST is stored in the system's ROM and acts like BIOS/UEFI does for modern operating systems.
+
+## Executing Bootstrap Code
+Once POST is completed, the router executes the bootstrap code that locates and executes the Cisco IOS software. Once done, the IOS instance takes the place of the bootstrap code, which isn't executed till the next boot/reboot.
+
+## Cisco IOS Software
+After the bootstrap code is execute, as stated in the previous section, the bootstrap code locates the Cisco IOS image. The storage is generally `flash:`, although this might not necessarily be the case, depending on how much storage speace is left in the flash memory. Thus, sometimes it might be necessary to boot from a remote TFTP server.
+
+## Load Cisco IOS software
+The Operating System for Cisco devices, IOS, is then loaded into the memory, i.e., RAM. The IOS software itself supports different feature sets. Once the IOS instance is loaded, the next step is to look for the default/start up configuration.
+
+## Locate the start-up Configuration.
+The configuration for a router is stored in the **NVRAM (_Non Volatile Random Access Memory_)**. If a configuration file can't be found, then the router may launch its setup utility, a program that behaves like a wizard, asks us questions to get some critical information and then forms a base configuration. Otherwise, it may also try to perform an auto-install, by looking for a router config on the connected TFTP server.  
+
+##  Loading the start-up configuration
+Once the configuration is located, it's loaded into the RAM. This forms the running configuration and any changes made to the active router with a running configuration is stored in the running configuration.
+
+## Executing configuration
+Finally, once the entire running configuration is loaded on the memory, the the running configuratin is executed and actions like bringing up interfaces occurs in this phase. 
