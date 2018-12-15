@@ -266,3 +266,135 @@ icmp 4.4.4.3:8435      10.1.1.102:8435    3.3.3.3:8435       3.3.3.3:8435
 icmp 4.4.4.3:8691      10.1.1.102:8691    3.3.3.3:8691       3.3.3.3:8691
 --- 4.4.4.3            10.1.1.102         ---                ---
 ```
+
+# Port Address Translatin / NAT Overloading
+In some cases, especially in home networks, we may not have multiple global IPs available to form a pool. The single IP assigned to us by the ISP may be the only global IP, in which case we have to use PAT, where the IP address and the port number from the clients are used to form a unique socket to communicate with outside destination networks.
+
+The limit to this method is the 16-bit size for the port number, thus allowing us only about 65000 flows for every inside global IP address. PAT is used when we have more inside local addresses than inside global addresses, and thus can support multiple inside global addresses.
+
+Similar to dynamic NATing, we need to create an ACL to identify the inside addresses, after which we specify which outside interface will be used. However, if we were to stop here, only a single inside IP address would be allowed to NAT. Instead, we have to use the keyword **overload** to enable PAT.
+
+```
+R1(config)#ip nat inside source list 1 int g0/0 overload
+```
+
+After this, the NAT translation table will have a single inside global ip of `4.4.4.4`, but unique sockets. The table will look like:
+
+```
+R1#sh ip nat trans
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 4.4.4.4:42606     10.1.1.101:42606   3.3.3.3:42606      3.3.3.3:42606
+icmp 4.4.4.4:43118     10.1.1.101:43118   3.3.3.3:43118      3.3.3.3:43118
+icmp 4.4.4.4:43630     10.1.1.101:43630   3.3.3.3:43630      3.3.3.3:43630
+icmp 4.4.4.4:43886     10.1.1.101:43886   3.3.3.3:43886      3.3.3.3:43886
+icmp 4.4.4.4:44142     10.1.1.101:44142   3.3.3.3:44142      3.3.3.3:44142
+icmp 4.4.4.4:44910     10.1.1.102:44910   3.3.3.3:44910      3.3.3.3:44910
+icmp 4.4.4.4:45166     10.1.1.102:45166   3.3.3.3:45166      3.3.3.3:45166
+icmp 4.4.4.4:45422     10.1.1.102:45422   3.3.3.3:45422      3.3.3.3:45422
+icmp 4.4.4.4:45678     10.1.1.102:45678   3.3.3.3:45678      3.3.3.3:45678
+icmp 4.4.4.4:45934     10.1.1.102:45934   3.3.3.3:45934      3.3.3.3:45934
+```
+
+# NTP
+**Network Time Protocol (_NTP_)** allows servers, routers, switches, etc. to synchronize their clocks. This helps us ensure that all events logged, perhaps in a syslog server, are all timestamped accurately and hence occured in the right order as displayed in the logs. This also helps us to co-relate events that occured simultaneously, like two devices failing.
+
+It is also necessary since the validity of the digital certificates is heavily depedent upon time since they have expiration dates. If a Cisco router is set up to act as a Cisco Communications Manager Express router, where Cisco IP phones register, it's essential to have the right time since the phones themselves get their time from the router.
+
+For all of these reason, we use NTP.
+* It uses UDP to communicate on port 123 by default.
+* Uses a **stratum level** that's acts like **AD** for routing protocols. It acts as a measure of the believability of a time source.  For example, highly accurate atomic clocks on the internet have a stratum level of **1**. If our router learns the time from it, it'll have a stratum level of _2_. If a switch learns from that router, it'll have a stratum level of _3_ and so on.
+* Typically we set up NTP so that one of our devices gets the time from the internet and then acts as the NTP server for other devices on the network.
+
+## NTP Configuration and Verification
+Let us consider in the diagram, that NTP is an internet based NTP server, from which our router R1 gets the time and then shares it with the switch sw1 and router R2. First we have to set the time in NTP server since we're only pretending this is the internet based time authority. We do this using the `clock set` command:
+
+```
+NTP#clock set 10:02:00 15 Dec 2018
+*Dec 15 10:02:00.001: %SYS-6-CLOCKUPDATE: System clock has been updated from 04:31:46 UTC Sat Dec 15 2018 to 10:02:00 UTC Sat Dec 15 2018, configured from console by console.
+```
+The default config assumes **UTC/GMT** is our time zone. To change the time zone, we have to do it from the global config mode. For this, we have to set up our own time zone with the difference in time specified. For example, we can set the timezone to IST (_UTC+5:30_) with the command:
+
+```
+NTP(config)#clock timezone IST 5 30
+Dec 15 04:41:47.092: %SYS-6-CLOCKUPDATE: System clock has been updated from 04:41:47 UTC Sat Dec 15 2018 to 10:11:47 IST Sat Dec 15 2018, configured from console by console.
+```
+
+Now we can configure the router to act as the NTP master clock and specifying a stratum number (ex. _5_) - which just like ADs, have a higher priority/believability for lower numbers. _This step is only required after setting the time manually_.
+
+```
+NTP(config)#ntp master 5
+```
+
+## Loopback Interfaces
+Generally, whenever we assign an IP address to a physical interface, if the interface's link goes down, so does the interface itself and the IP associated with it. What this means is, if we have an interface Gi0/0 that has a cable failure, then the interface will go down and the IP address assigned to it, for example, `192.168.0.1` will no longer be reachable. This is all well and good for connectivity management, but for protocols like NTP, it's critical that the IP address is available even when an interface's link may be lost. This is because we generally have redundant paths/links/routes through which a device is connected.
+
+Consider the network below. It has two routers connected through two different links. If we have to telnet from R1 to R2, we can choose either of R2's interfaces. Let us assume `192.168.1.2` is our interface of choice, and not the one connected to the redundant link `192.168.2.2`. Now, if the link between **R1 Gi0/0** and **R2 Gi0/0**, i.e., the one between `192.168.1.1` and `192.168.1.2` were to go down, we'd be unable to ping `192.168.1.2` even though **R2 Gi0/1** and **R2 Gi0/1** still connect the routers.
+
+A loopback interface is a set of special **virtual/logical interfaces that always stay up** unless we administratively shut them down. This means even in case of link failure, we don't risk losing connectivity. This is because the link will stay up and hence any dynamic routing protocol that's set to advertise the loopback network, will send an alternate path to the device in case of primary link failure. Loopback interfaces typically have a subnet mask length of 32 bits to signify they're the only device on the network and we can set up a loopback interface using:
+
+```
+NTP(config)#int loopback ?
+  <0-2147483647>  Loopback interface number
+
+NTP(config)#int loopback 1
+Dec 15 05:16:40.294: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback1, changed state to up
+NTP(config-if)#ip addr 1.1.1.1 255.255.255.255
+NTP(config-if)#do sh ip int br | i Loop       
+Loopback1                  1.1.1.1         YES manual up                    up      
+```
+
+In the above case, if we had a loopback address, for ex., `1.1.1.1` on **R1** and `1.1.1.2` on **R2**, we could've still pinged R2 from R1 despite the link failure on Gi0/0 on R1 and R2.
+
+## Pointing a device to a NTP Source
+Let us assume that each router has it's own loopback address, with **NTP** having `1.1.1.1/32`, **R1** having `2.2.2.2/32` and **R2** having `3.3.3.3/32` as their loopback interfaces. The systems are also running RIPv2 with all routes advertised on all interfaces so that all routes, including the routes to the loopback interfaces are known by all the devices. So, we can finally point **NTP** as the NTP source for R2.
+
+We have to first tell R1 to use `NTP` as the NTP server, and then also choose the appropriate time-zone. Let us consider that R1 follows IST.
+
+```
+R1(config)#ntp server 1.1.1.1
+R1(config)#clock timezone IST 5 30
+*Dec 15 06:26:19.710: %SYS-6-CLOCKUPDATE: System clock has been updated from 06:26:19 UTC Sat Dec 15 2018 to 11:56:19 IST Sat Dec 15 2018, configured from console by console.
+```
+
+Let us consider that the server **R2** follows EST, that also has daylight savings time. So, we also have to allow the router to follow DST when required. We want to point it to our local NTP server, which is **R1** on `2.2.2.2`.
+
+```
+R1(config)#ntp server 2.2.2.2
+R1(config)#clock timezone EST -5
+*Dec 15 06:26:19.710: %SYS-6-CLOCKUPDATE: System clock has been updated from 06:26:19 UTC Sat Dec 15 2018 to 01:29:03 EST Sat Dec 15 2018, configured from console by console.
+R2(config)#clock summer-time EDT recurring
+*Dec 15 06:29:03.857: %SYS-6-CLOCKUPDATE: System clock has been updated from 01:29:03 EST Sat Dec 15 2018 to 01:29:03 EST Sat Dec 15 2018, configured from console by console.
+```
+
+NTP can take several minutes in the real world to synchronize the clocks between the devices. We can now see the current device time using `show clock`:
+
+```
+R2#show clock
+*01:31:30.048 EST Sat Dec 15 2018
+```
+
+We can see the NTP settings using:
+
+```
+R2#sh ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+ ~2.2.2.2         1.1.1.1          6     20     64     0  0.000   0.000 15937.
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+```
+
+We can find the NTP settings of the current device using:
+
+```
+R1#sh ntp status
+Clock is synchronized, stratum 6, reference is 1.1.1.1        
+nominal freq is 1000.0003 Hz, actual freq is 999.5003 Hz, precision is 2**14
+ntp uptime is 109600 (1/100 of seconds), resolution is 1001
+reference time is DFBF20BA.C7C9596C (12:12:02.780 IST Sat Dec 15 2018)
+clock offset is 127.0765 msec, root delay is 11.04 msec
+root dispersion is 7976.26 msec, peer dispersion is 1938.24 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000499999 s/s
+system poll interval is 64, last update was 147 sec ago.
+```
+
+# Network management
