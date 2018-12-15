@@ -397,4 +397,296 @@ loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000499999 s/s
 system poll interval is 64, last update was 147 sec ago.
 ```
 
-# Network management
+# Network Management
+
+# Cisco Discovery Protocol (_CDP_)
+**Cisco Discovery Protocol (_CDP_)** is a Cisco proprietary Layer 2 protocol that is invaluable for monitoring and troubleshooting the network. Because of its layer 2 operation, it doesn't even need the devices to have IP addresses configured. It allows us to get information about its adjacent neighbours (i.e., directly connected devices) that speak CDP.
+
+In the following topology, if we were to use the `show cdp neighbours` command on sw1, we'd see:
+* R1
+* sw2
+* IP phone
+
+But, we wouldn't see the Cisco Unified Communications Manager (CUCM) Server, even though it _does run CDP_ becuase it's not directly connected. The Laptop, however, wouldn't typically show up even if it were directly connected, since it won't have CDP running.
+
+### MAC address Unicast, Broadcast and Multicast
+We already know that the broadcast MAC address for any network/subnet will always be `FFFF.FFFF.FFFF`. However, there's a way to determine if the packet is a unicast or a multicast packet at layer 2 as well. This can be done by breaking down the first byte of the data in binary and checking if the **Least Significant Bit (_LSB_)** is _1_. If so, it's a multicast MAC address; if not, it's a unicast MAC address.
+
+### CDP Operation
+CDC sends advertisements on the multicast MAC address of `01-00-0c-cc-cc-cc`, to which the adjacent routers and switches belong. These devices can thus learn the advertisements. The CDP advertisements allows the neighbours to know in-depth information about the devices.
+
+```
+sw2#sh cdp neighbors
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone,
+                  D - Remote, C - CVTA, M - Two-port Mac Relay
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+sw1              Gig 0/0           171             R S I            Gig 0/0
+sw3              Gig 0/2           177             R S I            Gig 0/2
+sw3              Gig 0/1           170             R S I            Gig 0/1
+
+Total cdp entries displayed : 3
+```
+
+We can get even more indepth information using:
+
+```
+sw2#sh cdp neighbors detail
+-------------------------
+Device ID: sw1
+Entry address(es):
+Platform: Cisco ,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet0/0,  Port ID (outgoing port): GigabitEthernet0/0
+Holdtime : 139 sec
+
+Version :
+Cisco IOS Software, vios_l2 Software (vios_l2-ADVENTERPRISEK9-M), Experimental Version 15.2(20170321:233949) [mmen 101]
+Copyright (c) 1986-2017 by Cisco Systems, Inc.
+Compiled Wed 22-Mar-17 08:38 by mmen
+
+advertisement version: 2
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+
+-------------------------
+Device ID: sw3
+Entry address(es):
+Platform: Cisco ,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet0/2,  Port ID (outgoing port): GigabitEthernet0/2
+Holdtime : 145 sec
+
+Version :
+Cisco IOS Software, vios_l2 Software (vios_l2-ADVENTERPRISEK9-M), Experimental Version 15.2(20170321:233949) [mmen 101]
+Copyright (c) 1986-2017 by Cisco Systems, Inc.
+Compiled Wed 22-Mar-17 08:38 by mmen
+
+advertisement version: 2
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+
+-------------------------
+Device ID: sw3
+Entry address(es):
+Platform: Cisco ,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet0/1,  Port ID (outgoing port): GigabitEthernet0/1
+Holdtime : 138 sec
+
+Version :
+Cisco IOS Software, vios_l2 Software (vios_l2-ADVENTERPRISEK9-M), Experimental Version 15.2(20170321:233949) [mmen 101]
+Copyright (c) 1986-2017 by Cisco Systems, Inc.
+Compiled Wed 22-Mar-17 08:38 by mmen
+
+advertisement version: 2
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+
+
+Total cdp entries displayed : 3
+```
+
+To get information about just a _single_ neighbour, we use:
+
+```
+sw2#sh cdp entry sw3
+-------------------------
+Device ID: sw3
+Entry address(es):
+Platform: Cisco ,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet0/2,  Port ID (outgoing port): GigabitEthernet0/2
+Holdtime : 148 sec
+
+Version :
+Cisco IOS Software, vios_l2 Software (vios_l2-ADVENTERPRISEK9-M), Experimental Version 15.2(20170321:233949) [mmen 101]
+Copyright (c) 1986-2017 by Cisco Systems, Inc.
+Compiled Wed 22-Mar-17 08:38 by mmen
+
+advertisement version: 2
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+
+-------------------------
+Device ID: sw3
+Entry address(es):
+Platform: Cisco ,  Capabilities: Router Switch IGMP
+Interface: GigabitEthernet0/1,  Port ID (outgoing port): GigabitEthernet0/1
+Holdtime : 148 sec
+
+Version :
+Cisco IOS Software, vios_l2 Software (vios_l2-ADVENTERPRISEK9-M), Experimental Version 15.2(20170321:233949) [mmen 101]
+Copyright (c) 1986-2017 by Cisco Systems, Inc.
+Compiled Wed 22-Mar-17 08:38 by mmen
+
+advertisement version: 2
+VTP Management Domain: ''
+Native VLAN: 1
+Duplex: full
+```
+
+The CDP settings on the machine can be checked with the `show cdp` command. The _holdtime_ is the time after which if we haven't heard back from a host, we consider them disconnected.
+```
+sw2#sh cdp
+Global CDP information:
+        Sending CDP packets every 60 seconds
+        Sending a holdtime value of 180 seconds
+        Sending CDPv2 advertisements is  enabled
+```
+
+We can also get the CDP settings for a single interface using:
+
+```
+sw2#sh cdp int g0/1
+GigabitEthernet0/1 is up, line protocol is up
+  Encapsulation ARPA
+  Sending CDP packets every 60 seconds
+  Holdtime is 180 seconds
+```
+
+The CDP configurations are available in global configuration mode:
+
+```
+sw2(config)#cdp ?
+  advertise-v2     CDP sends version-2 advertisements
+  filter-tlv-list  Apply tlv-list globally
+  holdtime         Specify the holdtime (in sec) to be sent in packets
+  run              Enable CDP
+  timer            Specify the rate at which CDP packets are sent (in sec)
+  tlv              Enable exchange of specific tlv information
+  tlv-list         Configure tlv-list
+```
+
+CDP can be turned off and on again, by:
+
+```
+sw2(config)#no cdp run
+sw2(config)#cdp run
+```
+
+On some interfaces, we may be connected to another organization and might not want to send such indepth details about our own device. In such cases, we should turn the CDP off for that interface connecting to the 3rd party, using:
+
+```
+sw2(config-if)#no cdp enable
+```
+
+# Link Layer Discovery Protocol (_LLDP_)
+LLDP (_802.1AB_) is an industry standard protocol that does a very similar job to CDP, but it's available for non-Cisco products. It lets us see information about our Layer 2 adjacent, i.e., physically connected devices. The **TLV (_Type-Length-Value_)** information contained within LLDP is more than that in CDP, thus making it more robust! Unlike CDP however, it doesn't have a fixed multicast address for advertisements. Instead, admins have to look out for the Organizationally Unique Identifier (OUI) of `01-80-c2`.
+
+Unlike CDP, LLDP is generally not enabled by default on Cisco gear. To enable it, we use `lldp run` in global configuration mode.
+Just like CDP, we can go into interface configuration modes and turn LLDP off for specific interfaces while still running it globally. To check the status of LLDP, and start it we use:
+
+```
+sw2(config)#do sh lldp
+% LLDP is not enabled
+sw2(config)#lldp run
+sw2(config-if)#do sh lldp
+
+Global LLDP Information:
+    Status: ACTIVE
+    LLDP advertisements are sent every 30 seconds
+    LLDP hold time advertised is 120 seconds
+    LLDP interface reinitialisation delay is 2 seconds
+```
+
+To turn off LLDP on a specific interface, we have to go into that interface's configuration mode and then choose to either turn of the transmission, receive or both for LLDP.
+
+```
+sw2(config-if)#int gi 0/1
+sw2(config-if)#no lldp ?
+  med-tlv-select  Selection of LLDP MED TLVs to send
+  receive         Enable LLDP reception on interface
+  tlv-select      Selection of LLDP TLVs to send
+  transmit        Enable LLDP transmission on interface
+sw2(config-if)#no lldp transmit
+sw2(config-if)#no lldp receive
+```
+
+  We can also choose which parameters to advertise or not in the global config:
+
+```
+sw2(config)#lldp tlv-select ?
+  4-wire-power-management  Cisco 4-wire Power via MDI TLV
+  mac-phy-cfg              IEEE 802.3 MAC/Phy Configuration/status TLV
+  management-address       Management Address TLV
+  port-description         Port Description TLV
+  port-vlan                Port VLAN ID TLV
+  power-management         IEEE 802.3 DTE Power via MDI TLV
+  system-capabilities      System Capabilities TLV
+  system-description       System Description TLV
+  system-name              System Name TLV
+```
+
+We can view the LLDP details using:
+
+```
+sw2#sh lldp neighbors
+Capability codes:
+    (R) Router, (B) Bridge, (T) Telephone, (C) DOCSIS Cable Device
+    (W) WLAN Access Point, (P) Repeater, (S) Station, (O) Other
+
+Device ID           Local Intf     Hold-time  Capability      Port ID
+sw3                 Gi0/2          120        R               Gi0/2
+sw1                 Gi0/0          120        R               Gi0/0
+
+Total entries displayed: 2
+```
+
+To get a more detailed view, we use:
+
+```
+sw2#sh lldp neighbors detail
+------------------------------------------------
+Local Intf: Gi0/2
+Chassis id: 0cee.ba83.0000
+Port id: Gi0/2
+Port Description: GigabitEthernet0/2
+System Name: sw3
+
+System Description:
+Cisco IOS Software, vios_l2 Software (vios_l2-ADVENTERPRISEK9-M), Experimental Version 15.2(20170321:233949) [mmen 101]
+Copyright (c) 1986-2017 by Cisco Systems, Inc.
+Compiled Wed 22-Mar-17 08:38 by mmen
+
+Time remaining: 103 seconds
+System Capabilities: B,R
+Enabled Capabilities: R
+Management Addresses - not advertised
+Auto Negotiation - not supported
+Physical media capabilities - not advertised
+Media Attachment Unit type - not advertised
+Vlan ID: - not advertised
+
+------------------------------------------------
+Local Intf: Gi0/0
+Chassis id: 0cee.ba36.5b00
+Port id: Gi0/0
+Port Description: GigabitEthernet0/0
+System Name: sw1
+
+System Description:
+Cisco IOS Software, vios_l2 Software (vios_l2-ADVENTERPRISEK9-M), Experimental Version 15.2(20170321:233949) [mmen 101]
+Copyright (c) 1986-2017 by Cisco Systems, Inc.
+Compiled Wed 22-Mar-17 08:38 by mmen
+
+Time remaining: 90 seconds
+System Capabilities: B,R
+Enabled Capabilities: R
+Management Addresses - not advertised
+Auto Negotiation - not supported
+Physical media capabilities - not advertised
+Media Attachment Unit type - not advertised
+Vlan ID: - not advertised
+
+
+Total entries displayed: 2
+```
+
+# Using CDP and LLDP to map a network
+If all devices on the network are running CDP and they're interconnected and we're able to log in to each one, then we can use CDP to manually map out the entire network. This is only practical for small/medium sized networks, however, since larger networks would just have too many nodes for manual mapping. In such cases, a dedicated software to map out the network would be required.
+
+
+# Device management
+# Understanding a Router's Boot Sequence
