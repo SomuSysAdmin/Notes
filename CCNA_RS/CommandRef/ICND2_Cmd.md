@@ -243,11 +243,31 @@ A Spanning Tree is a **logical loop free topology**. This is done by making one 
 ## Root Bridge
 In any Spanning Tree topology, there can be only **one root bridge** (or switch) and the bridge with the lowest **Bridge ID (_BID_)** is elected to be the root bridge. The Bridge ID is a combination of a bridge priority, a value we can set and the MAC address. The bridge priority is a value between 0 and 61440, with a default bridge priority of 32768. If we lower the bridge priority, we influence that particular switch to become the root. If we don't change the bridge priority, however, the bridge with the lowest MAC address gets to be the root. In the topology below, switch B gets to be the root bridge since `000 < 001` (first 3 digits of each MAC address). To determine which ports will be blocking and which ports will be forwarding, we need to understand the different port states for a spanning tree.
 
-**Root Port** - A root port is a port on a _non-root bridge_ that's closest to the root bridge with resect to cost. In the topology, switch A will have the root port since the bridge it self isn't the root bridge. Both ports are FastEthernet ports, but Fa 1/0/1 has been configured to run at 100 Mbps while the port Fa 1/0/2 has been configured to run at 10 Mbps. If we consult the table below, we'll see that the cost associated to a port speed of 10 Mbps is `100` while that associated with 100 Mbps is `19`. Thus, it costs less for the traffic to be flowing out of Fa 1/0/1 in this case, and it's marked as the root port.
+**Root Port** - A root port is a port on a _non-root bridge_ that's closest to the root bridge with resect to cost. In the topology, switch A will have the root port since the bridge it self isn't the root bridge. Both ports are FastEthernet ports, but Fa 1/0/1 has been configured to run at 100 Mbps while the port Fa 1/0/2 has been configured to run at 10 Mbps. If we consult the table below, we'll see that the cost associated to a port speed of 10 Mbps is `100` while that associated with 100 Mbps is `19`. Thus, it costs less for the traffic to be flowing out of Fa 1/0/1 in this case, and it's marked as the root port. Every non-root bridge has its own root port. Since you can't get closer to the bridge than being on the bridge, every port on the bridge is a designated port.
 
 **Designated Port** - There's a designated port on every network segment. It is the port on the network segment that is closest to the root bridge in terms of the cost. Thus, both **sw1 Gi0/0** and **sw2 Gi0/1** are designated ports.
 
-**Non-Designated Port** - Such a port is also called a **blocking port**.
-**Disabled Port** - A port that is administratively shut down.
+**Non-Designated Port** - Such a port is also called a **blocking port**. Any remaining port that's not a root port/designated port/Disabled port become blocking ports. Thus **Fa 1/0/2** is a non-designated port. Now, we have a loop-free topology. Thus, we're not going to have a layer 2 topological loop since no data will flow in/out of **sw1 Fa1/0/2**.
 
-Any remaining port that's not a root port/designated port/Disabled port become blocking ports. Thus **Fa 1/0/2** is a non-designated port. Now, we have a loop-free topology. Thus, we're not going to have a layer 2 topological loop since no data will flow in/out of **sw1 Fa1/0/2**. 
+**Disabled Port** - A port that is administratively shut down. STP won't bring it back up.
+
+## Port priority
+Each port has a priority assigned to it, a default value of **128** and a value that's generally equal to 2+interface number, that together form the **port ID**. In case of clashes for the root port, the one with the lower port ID wins. Thus, if **Gi0/0** will have a port priority of 128, and it's port ID will be 128.(0+2) = 128.2. Thus, if we want to prefer one port over another, we need only assign it a lower value for the port priority for it to be given preference.
+
+Consider the topology below, where two switches are connected by two different links. If two links/network segment have the exact same cost, we have to look at their **port identifier on the sender's side** (i.e., _the end closer to the root bridge_) to determine which one is going to be connected to a root port.
+
+In the topology below, Switch A is the root bridge, and thus, one of the two ports on Switch B has to be the root port for Switch B. So, there's a tie between the two links connecting to switch B since both links are GigabitEthernet links, and each have a cost of _4_. So, we have to view the interface on the sender's side, i.e., Switch A. The top link has a interface ID of **Gi1/0/3** and the other one **Gi1/0/4**. So, now we have to look at port IDs to break the tie. Given both ports have default priorities of _128_, Gi1/0/3 has a port priority of 128.(3+2) = 128.5 and Gi1/0/4 has a port ID of 128.(4+2) = 128.6. Hence, **Gi1/0/3** gets to be the root port.
+
+Since both ports on root bridge A are designated ports, the only port left is the blocking port.
+
+# STP Practice Exercise
+Consider the topology below. Switches A and B have the lowest bridge priority and thus one of them get to be the root bridge. The MAC address of switch A is lower (`000d < 0018`) and so, it's the root bridge. Now, we calculate the root ports.
+* For switch B, it's **Sw-B Te1/0/1** since it only has a cost of 2 due to the 10Gig interface.
+* For switch D, it's **Sw-D Gi1/0/1** since Gi1/0/2 has a total cost of 4+2 = 6.
+* Switch C has two options: **Sw-C Gi1/0/10** or **Sw-C Gi1/0/11**. So, we look at the far end since they're closer to the Bridge Switch. The two ports are **Sw-A Gi1/0/3** and **Sw-A Gi1/0/4**, with port IDs _128.(3+2)=128.5_ and _128.(4+2)=128.6_. Thus the lower port ID wins and **Sw-C Gi1/0/10** is the root port for Switch C.
+
+Now we calculate the Designated ports:
+* All ports on Switch A are designated ports since it's the root bridge. Now we only have two more network segments left to consider.
+* For the link between Switch B and C, Switch B's port has a cost of 2 to reach bridge and Switch C's port has a cost of 4 to reach the bridge. Hence, **Sw-B Gi1/0/7** is the designated port.
+* For the link between switch B and D, **Sw-B Gi1/0/5** is the designated port since it's closer to the bridge.
+* _All remaining ports are non-designated/blocking ports_.
