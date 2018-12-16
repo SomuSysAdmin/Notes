@@ -62,3 +62,162 @@ VTPv3 extended the VLAN number allowed to be advertised over VTP, specifically b
 If VTP pruning is enabled for a trunk, then VTP can dynamically prune off unneeded VLANs - for example, where a switch doesn't have any devices connected to a particular VLAN, it doesn't need the advertisements for it, and the unneeded VLAN need not be maintained on it.
 
 # VTP configuration
+In the topology below, let us consider that we want sw1 and sw2 to be in server mode while sw3 is in client mode. We put them in the correct mode using the `vtp mode` command:
+
+```
+sw1(config)#vtp mode server
+Device mode already VTP Server for VLANS.
+
+sw2(config)#vtp mode server
+Device mode already VTP Server for VLANS.
+
+sw3(config)#vtp mode client
+Setting device to VTP Client mode for VLANS.
+```
+
+We can now set the VTP domain name on sw1:
+
+```
+sw1(config)#vtp domain VTPDEMO
+Changing VTP domain name from NULL to VTPDEMO
+*Dec 16 11:51:28.876: %SW_VLAN-6-VTP_DOMAIN_NAME_CHG: VTP domain name changed to VTPDEMO.
+```
+
+Now we can also set the VTP domain password, turn on VTP pruning and hardcode the version:
+
+```
+sw1(config)#vtp password S3cret
+Setting device VTP password to S3cret
+sw1(config)#vtp pruning
+Pruning switched on
+sw1(config)#vtp version 2
+```
+
+To see the status of VTP, we use:
+
+```
+sw1#sh vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 2
+VTP Domain Name                 : VTPDEMO
+VTP Pruning Mode                : Enabled
+VTP Traps Generation            : Disabled
+Device ID                       : 0c79.bbbb.8000
+Configuration last modified by 0.0.0.0 at 12-16-18 11:58:11
+Local updater ID is 0.0.0.0 (no valid interface found)
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Server
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 5
+Configuration Revision            : 2
+MD5 digest                        : 0xCF 0x9A 0x90 0x1B 0xD2 0x0F 0xBE 0x80
+                                    0xE0 0x70 0xA8 0x03 0x4C 0x9C 0x24 0x3E
+```
+
+We now have to create an identical VTP configuration on every VTP server switch. Finally, we set the VTP client switches with the same VTP domain name and password. Now, if we try to create a new VLAN on a client mode switch, we get:
+
+```
+sw3(config)#vlan 500
+VTP VLAN configuration not allowed when device is in CLIENT mode.
+```
+
+Now, let's create a new VLAN 999 on a VTP server, sw1:
+```
+sw1(config)#vlan 999
+sw1(config-vlan)#name VLAN_NULL
+```
+
+Now, when we check, the VLAN will be created on all 3 switches:
+
+```
+sw1#sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/2, Gi0/3
+999  VLAN_NULL                        active    
+1002 fddi-default                     act/unsup
+1003 trcrf-default                    act/unsup
+1004 fddinet-default                  act/unsup
+1005 trbrf-default                    act/unsup
+
+sw2#sh vlan br | i NULL
+999  VLAN_NULL                        active    
+
+sw3#sh vlan br | i NULL
+999  VLAN_NULL                        active    
+```
+
+We'll now be able to see that the current configuration revision number has increased.
+```
+sw1#sh vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 2
+VTP Domain Name                 : VTPDEMO
+VTP Pruning Mode                : Enabled
+VTP Traps Generation            : Disabled
+Device ID                       : 0c79.bbbb.8000
+Configuration last modified by 0.0.0.0 at 12-16-18 12:13:46
+Local updater ID is 0.0.0.0 (no valid interface found)
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Server
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 6
+Configuration Revision            : 3
+MD5 digest                        : 0x12 0x62 0x13 0x7C 0x4D 0x3B 0x2E 0xB0
+                                    0x98 0xC9 0x99 0xD1 0xA3 0x10 0xC9 0xE7
+```
+
+## Resetting the VTP CRN to 0
+Let us assume that for some reason, sw2 gets disconnected. Now, we log on to it, and perform a bunch of changes to the VLANs. Now, it'll have a substantially higher CRN than sw1 and sw3. If we were to connect the switch directly back to the network, since the VTP domain name and VTP password is the same, it'll override the present VTP database as the CRN is higher! To prevent this from happening we have to reset the CRN. We do this by setting the VTP mode to _transparent_ first and then switching back to server.
+
+```
+sw1(config)#do sh vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 2
+VTP Domain Name                 : VTPDEMO
+VTP Pruning Mode                : Enabled
+VTP Traps Generation            : Disabled
+Device ID                       : 0c79.bbbb.8000
+Configuration last modified by 0.0.0.0 at 12-16-18 12:26:57
+Local updater ID is 0.0.0.0 (no valid interface found)
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Server
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 7
+Configuration Revision            : 4
+MD5 digest                        : 0xC8 0xCF 0x24 0x62 0x9D 0xAB 0xBC 0xA4
+                                    0x69 0xCD 0x64 0xD6 0xA8 0x23 0x26 0xDB
+sw1(config)#vtp mode transparent
+Setting device to VTP Transparent mode for VLANS.
+sw1(config)#vtp mode server
+Setting device to VTP Server mode for VLANS.
+sw1(config)#do sh vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 2
+VTP Domain Name                 : VTPDEMO
+VTP Pruning Mode                : Enabled
+VTP Traps Generation            : Disabled
+Device ID                       : 0c79.bbbb.8000
+Configuration last modified by 0.0.0.0 at 12-16-18 12:26:57
+Local updater ID is 0.0.0.0 (no valid interface found)
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Server
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 7
+Configuration Revision            : 0
+MD5 digest                        : 0xC8 0xCF 0x24 0x62 0x9D 0xAB 0xBC 0xA4
+                                    0x69 0xCD 0x64 0xD6 0xA8 0x23 0x26 0xDB
+```
+Some people like to be extra-certain that their production VLAN database won't be corrupted/wiped and hence like to delete their `vlan.dat` file from the flash, although this isn't necessary since the CRN is set to 0 on sw2. Now when we connect the switch back to the network, the CRN=2 version of the file that sw1 and sw3 follow will be re-written on the switch.
+
+# Spanning Tree Protocol
+We like to have redundancy in our networks and it's good to have multiple links between devices. However, in a switched network, this may become dangerous. This possibility is mitigated using the **Spanning Tree Protocol (_STP_)**. 
