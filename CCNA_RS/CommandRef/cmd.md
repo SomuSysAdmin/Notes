@@ -709,4 +709,233 @@ The configuration for a router is stored in the **NVRAM (_Non Volatile Random Ac
 Once the configuration is located, it's loaded into the RAM. This forms the running configuration and any changes made to the active router with a running configuration is stored in the running configuration.
 
 ## Executing configuration
-Finally, once the entire running configuration is loaded on the memory, the the running configuratin is executed and actions like bringing up interfaces occurs in this phase. 
+Finally, once the entire running configuration is loaded on the memory, the running configuration is executed and actions like bringing up interfaces occur in this phase.
+
+# Differentiating between Boot Options
+## ROM Monitor mode
+This is the very basic OS functionality built into the router, like emergency mode for Linux. Some troubleshooting and password recovery is possible in this mode, but in this mode, the router doesn't act like or have the functionality of a router.
+
+## Boot into first IOS image in Flash
+This case might be required when there are multiple versions of IOS in the flash memory. Typically however, we can choose which IOS version to use.
+
+## Getting instructions to load image from configuration stored in the NVRAM
+In this mode, we can specify which image in the flash of the router we want to boot from.
+
+## Configuration register
+Which of the above modes we boot in depends upon the configuration register. The config register is a 16-bit value. Among these, our main target is the first 4 bits, the 4 LSBs, which are called the _boot field_. The value of the config register is written in hexadecimal and the first Hex bit and the associated modes are:
+
+```
+Config Reg Val      Description
+================    ============================================================
+0x0                 Boot in ROM Monitor Mode
+0x1                 Boot to first flash image
+0x2 - 0xF           Boot to a specific flash image by getting config from NVRAM.
+```
+
+A common value of the boot register is `0x2102`, or `0010 0001 0000 0010` in binary. Since the last four (_right-most_) bits in the config register (210 **2**) is `0010` or `0x2`, we know that the router will boot to a specific flash image by loading instructions from the config NVRAM. The config command in NVRAM is `boot system` command. If it can't find the command, it then tries to boot from the first Cisco IOS image in the flash. If the image isn't found either, then it tries to download an IOS image from a TFTP server in the network. If no image is found on the TFTP server, or the TFTP server isn't found, then after 6 unsuccessful attempts to boot, it falls back to ROM Monitor mode. The value of the configuration register can be found at the end of the `show version` command:
+
+```
+R1#sh ver | i 0x
+Configuration register is 0x2102
+```
+
+If a particular image is chosen to boot from, then it's visible in the running configuration:
+
+```
+R1#sh run | i boot system
+boot system flash:c2900-universalk9-mz.SPA.150-1.M1.bin
+```
+
+We can have multiple levels of boot system commands to have higher fault tolerance, such that if one image isn't found, the next one is used.
+
+## Booting into ROM Monitor mode
+The prerequisite for booting into ROM Monitor mode is to set the **Least Significant Bit (_LSB_)** of the configuration register to a 0. So, if our existing config register value is _0x210 2_, we have to set it to _0x210 **0**_. We can do this from the global configuration using:
+
+```
+R1(config)#config-register 0x2100
+Set kernel CONFREG to 0x2100
+R1(config)#end
+R1#sh ver | i 0x
+Configuration register is 0x2102 (will be 0x2100 at next reload)
+```
+
+The next reload will bring us to the ROM Monitor mode. The command to restart/reload a Cisco IOS device is simply `reload`.
+
+## ROM Monitor mode
+The config register is very useful for not only setting the boot mode, but also setting the _baud rate_ for console connections, etc. The **confreg** utility is a _wizard-like_ tool that assists us in setting the right value of the `confreg` for our needs in ROM Monitor. Once we're done changing the settings, we can reload the router using the `reset` command in the ROM Monitor mode.
+
+# Working with Cisco IOS files
+Cisco Router/Switches both use the **Integrated File System (_IFS_)**. There are several locations in this filesystem that we can use, such as a TFTP server for IOS images for transfer to flash during upgrades, flash for storing the IOS images for boot, NVRAM to store the configuration, etc. The available file systems can be seen with:
+
+```
+R1#show file systems
+File Systems:
+
+     Size(b)     Free(b)      Type  Flags  Prefixes
+*   2142715904    2029989888      disk     rw   flash0: flash:
+           -           -      disk     rw   flash1:
+           -           -      disk     rw   flash2:
+           -           -      disk     rw   flash3:
+           -           -    opaque     rw   system:
+           -           -    opaque     rw   tmpsys:
+        262144        257716     nvram     rw   nvram:
+           -           -    opaque     rw   null:
+           -           -    opaque     ro   tar:
+           -           -   network     rw   tftp:
+           -           -    opaque     wo   syslog:
+           -           -   network     rw   rcp:
+           -           -   network     rw   http:
+           -           -   network     rw   ftp:
+           -           -   network     rw   scp:
+           -           -   network     rw   https:
+           -           -    opaque     ro   cns:
+```
+
+## Viewing file system contents
+The navigation commands are a mixture of _DOS_, _Linux_ and some commands unique to IOS. To view the contents of a directory, we use the `dir <dirName>:` command:
+
+```
+R1#dir nvram:
+Directory of nvram:/
+
+  253  -rw-        1299                    <no date>  startup-config
+  254  ----           5                    <no date>  private-config
+    1  ----          31                    <no date>  udi
+    2  ----          35                    <no date>  persistent-data
+    3  -rw-           0                    <no date>  ifIndex-table
+
+262144 bytes total (257716 bytes free)
+R1#dir flash:
+Directory of flash0:/
+
+    1  drw-           0  Jan 30 2013 00:00:00 +00:00  boot
+  264  drw-           0  Oct 14 2013 00:00:00 +00:00  config
+  267  -rw-   107590528  Mar 22 2017 00:00:00 +00:00  vios_l2-adventerprisek9-m
+  268  -rw-      524288  Dec 16 2018 00:25:08 +00:00  nvram
+  269  -rw-          79  Dec 16 2018 00:42:54 +00:00  e1000_bia.txt
+
+2142715904 bytes total (2029989888 bytes free)
+```
+ Another way to view the contents (recursively) of certain locations, such as the flash is to use the `show` command:
+
+```
+
+R1#show flash:
+-#- --length-- -----date/time------ path
+...
+264          0 Oct 14 2013 00:00:00 config
+265        371 Oct 14 2013 00:00:00 config/vios
+267  107590528 Mar 22 2017 00:00:00 vios_l2-adventerprisek9-m
+268     524288 Dec 16 2018 00:25:08 nvram
+269         79 Dec 16 2018 00:42:54 e1000_bia.txt
+
+2029989888 bytes available (112726016 bytes used)
+```
+
+The command to create a directory is `mkdir`:
+```
+R1#mkdir OUTPUT
+Create directory filename [OUTPUT]? y
+```
+
+Just like UNIX/Linux, the way to tell if an entry is a file/directory is to check the permissions flags. If it starts with **d** such as in **drwx**, it's a directory. To enter a directory, we use the `cd` command. We can go to the new directory and check our location using:
+
+```
+R1#cd OUTPUT
+R1#pwd
+flash0:/OUTPUT/
+```
+
+## Saving output to a file
+If we wanted to store the contents of an output to a file and then view it, we can _redirect_ the output to a file and then read the file using the `more` command. We can also delete a file using the `delete` command.
+
+```
+R1#sh ip int br | redirect flash0:/OUTPUT/int_br
+R1#more int_br
+R1#delete int_br
+```
+
+A directory can be removed with `rmdir` command. Files can also be copied using the `copy <source> <dest>` command.
+
+# Cisco IOS Images
+The name of the IOS files themselves tell us a lot about the OS. For example, in the IOS file name:
+
+> c3725-adventerprisek9-mz.124-15.T14.bin
+
+We know that the image is for a Cisco 3725 (`c3725-`) Router, and has an Advanced Enterprise (`adventerprise`) feature set. The next part, `-mz` has a special meaning. The `m` indicates that the image will run in the RAM of the router and the `z` indicates that it's a compressed image. Finally, the last section is the image verision, where, `124-15.T14` indicates version **12.4(15)T14**. Finally, the `.bin` file extension indicates this is a binary executable.
+
+## Upgrading IOS
+Before starting the upgrade, we should first check if we can reach the TFTP server by pinging it, and then if we can, we should also check if we have enough space in flash to store the `.bin` image. we can then start the copy operation using:
+
+```
+R1#copy tftp: flash:
+```
+
+The system will now ask for the IP address of the TFTP server. Once done, the file is copied to our indicated location. Finally to ensure that this is the image that's used to boot from now on, we go to global config mode and use the `boot system` command on the new image, while also _negating_ or removing the boot command for the old image:
+
+```
+R1(config)#boot system flash:c3725-adventerprisek9-mz.124-15.T14.bin
+R1(config)# no boot system flash:c3500-adventerprisek9-mz.122-3.T2.bin
+```
+
+Now, we can check the config using `sh run` and then if the right image is set in the `boot system` config, we can save the running config as the startup config (`copy run start`) and then reboot (`reload`). We should now boot into the new IOS image.
+
+# Cisco IOS Licenses
+On buying a router/license Cisco provides a *Software Claim Certificate*, on which we can find a **Product Authorization Key (PAK)**. Then we have several options to get the actual license file. We can use the Cisco license manager, or the Cisco License Registration Portal and download the appropriate license file. To see which licenses we have installed on an ISR2 (ISR 2nd Gen) Router, we can use the `show license` command.
+
+# Password Recovery
+To reset the password, we must have access to the physical device since we need to flip the switch to turn it off and on again. Now, during the boot sequence, we have to issue the **Break** command to enter the ROM monitor mode. The exact way of issuing the break command varies from platform to platform. We'll now be brought to the ROM monitor promopt.
+
+The method to bypass the password verification is to first set the configuration register to **0x2142** such that the router completely ignores the startup-configuration the next time it boots. This means there's no password set during the next boot, along with any other configuration. What we want to do is go to enable/privilege mode and then copy the startup-config to the running config and then issue a `enable secret` command to overwrite the password. This is why the physical security of the router/switch is so important, because we can force a password bypass if we have physical access to the device.
+
+During the ROM monitor mode, we set the configuration register to **0x2142** using the `confreg` command:
+```
+rRouter>en
+Router#copy start run
+Destination filename [running-config]?
+% Login disabled on line 2, until 'password' is set
+% Login disabled on line 3, until 'password' is set
+% Login disabled on line 4, until 'password' is set
+% Login disabled on line 5, until 'password' is set
+% Login disabled on line 6, until 'password' is set
+2717 bytes copied in 0.252 secs (10782 bytes/sec)ommon 2 > confreg 0x2142
+rommon 3 > reset
+```
+
+Once the router reboots, we use:
+
+```
+Router>en
+Router#copy start run
+Destination filename [running-config]?
+2717 bytes copied in 0.252 secs (10782 bytes/sec)
+```
+
+The only thing different about accessing the router this way is that it doesn't automatically bring up the interfaces that should've normally been up. Now we just need to change the password and then change the config register value back to what it was for a normal boot:
+
+```
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#enable secret cisco
+Router(config)#config-register 0x2102
+Set kernel CONFREG to 0x2102
+```
+
+Finally, we copy running config to startup config and then reload!
+
+```
+Router#copy run start
+Destination filename [startup-config]?
+Building configuration...
+Compressed configuration from 2761 bytes to 1354 bytes[OK]
+Router#
+*Dec 16 02:43:21.723: %GRUB-5-CONFIG_WRITING: GRUB configuration is being updated on disk. Please wait...
+*Dec 16 02:43:22.513: %GRUB-5-CONFIG_WRITTEN: GRUB configuration was written to disk successfully.
+Router#reload
+Proceed with reload? [confirm]
+
+*Dec 16 02:44:06.162: %SYS-5-RELOAD: Reload requested by console. Reload Reason: Reload command.
+```
+
+# Troubleshooting with Cisco IOS Tools
+# Checking connectivity with Ping
