@@ -939,3 +939,164 @@ Proceed with reload? [confirm]
 
 # Troubleshooting with Cisco IOS Tools
 # Checking connectivity with Ping
+Let us consider a router **R1** with the interface IP `192.168.0.1` and a loopback IP `1.1.1.1`. It may be the case that we're able to ping the destination Router **R4** (`4.4.4.4`) from R1 but not beyond. In such cases, we may use the extended ping options.
+
+## Source
+In the above case, once pinging from `192.168.0.1` succeeds, we may try pinging from R1 with `1.1.1.1` loopback as the source.
+If this fails, but the pinging from the other interface succeeds, it might indicate routing issues between the interfaces.
+
+## Repeat
+While trying to isolate layer 1 issues, such as equipment cabling or ports, a **sustained ping** can be very useful. Thus, we'll know the moment a ping succeeds instead of changing something and then pinging again to see if it works. So, we can use something like `ping 4.4.4.4 repeat 99999` and once we want to stop the pings, we just need to use the keycombo **Ctrl+Shift+6**. This keycombo will also work to stop `traceroute`.
+
+## Load Generator
+Ping can also be used as a simplistic load generator, which we can use to _emulate_ heavy traffic on the line. For this, we need to send large data packets approaching our MTU size, (`1500B`), ping as fast as we can and then repeat for a while. Here, the success is irrelevant since we're just trying to generate some load on the network. The command, in this case, will be:
+
+```
+ping 4.4.4.4 size 1500 timeout 0 repeat 99999
+```
+
+## Finding out the MTU of an interface on the far end
+When the size of a packet exceeds the **Maximum Transmission Unit (_MTU_)** size of the interfaces on either side of the network, then the packets have to be broken down or _fragmented_ to send the data correctly. Let us consider the topology below, where **Edge** is our edge router and **SP** is the router for our ISP. If we don't know the MTU of the interface **SP Gi0/0** then we can use the ping command to find out, by asking it to refuse to fragment packets, by setting the **df** (_don't fragment_) bit inside the packet's header. Now, all we need to do is sweep a range of packet sizes to find the MTU value.
+
+Let us consider we want to sweep with varying packet sizes from 1400B to 1500B (101 packets). The extended ping command should look like:
+
+```
+Edge#ping
+Protocol [ip]:
+Target IP address: 10.1.1.2
+Repeat count [5]: 1
+Datagram size [100]:
+Timeout in seconds [2]:
+Extended commands [n]: y
+Ingress ping [n]:
+Source address or interface:
+Type of service [0]:
+Set DF bit in IP header? [no]: y
+Validate reply data? [no]:
+Data pattern [0x0000ABCD]:
+Loose, Strict, Record, Timestamp, Verbose[none]:
+Sweep range of sizes [n]: y
+Sweep min size [36]: 1400
+Sweep max size [18024]: 1500
+Sweep interval [1]:
+Type escape sequence to abort.
+Sending 101, [1400..1500]-byte ICMP Echos to 10.1.1.2, timeout is 2 seconds:
+Packet sent with the DF bit set
+!!!!!!!!!!!!!!!!!!!!!!!!!!............................................
+...............................
+Success rate is 25 percent (26/101), round-trip min/avg/max = 4/4/11 ms
+```
+We can see that packet transmission was successful till the 26th packet. Given packet 1 was for 1400B, 2 for 1401B, and so on, the last packet to be successfully transmitted was the 26th packet = 1425B, which must be the MTU on R2. We can see this is true:
+
+```
+SP#sh int g0/0 | i MTU
+  MTU 1425 bytes, BW 1000000 Kbit/sec, DLY 10 usec,
+```
+
+# Traceroute
+When the `traceroute` command is given an IP address, it sends out **3** UDP packets destined for that IP address, but with a _made-up_ port number that'll never respond. Now, the command keeps sending UDP packets out from the originating router for the destination host with increasing **TTL (_Time to Live_)** values. Everytime a packet crosses a router, the TTL value is decreased by _1_.  When it reaches _0_, the router responds with an ICMP message stating that the packet _timed-out_.
+
+So, traceroute first sends 3 packets for the destination host with TTL=1. It reaches the gateway, the TTL is decreased to 0 and a ICMP reply is sent from the gateway. When traceroute receives the reply, it gets to know that the first hop's (gateway) IP address. The 3 packets are sent to show the consistency (or lack thereof) of the route in terms of round-trip times. Next, it increases the TTL=2, sends it out for the destination host again. Now, the gateway again decreases the TTL, but since it's 2-1=1, it passes it along to the next hop towards the destination, which then decreases the TTL to 0 and replies to traceroute with a ICMP reply, thus revealing its IP address.
+
+Finally, when the destination host gets the packet, it can't find the _made-up port_ and thus has to reply back with a message stating that they can't communicate. The traceroute understands that the destination has been reached, notes the IP address of the destination, number of hops and round trip times and terminates. Sometimes however, some devices have settings preventing them from replying with ICMP to tighten security. Under such circumstances, traceroute just print a `*`. This also happens when the node is unreachable, since the packet gets lost and there is no reply. So, traceroute has to assume that the router's just configured not to reply, increase the TTL and continue on till a certain number of hops have been attempted.
+
+```
+R2#traceroute 203.0.113.2
+Type escape sequence to abort.
+Tracing the route to 203.0.113.2
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.0.0.1 9 msec 10 msec 5 msec
+  2 10.0.0.6 11 msec 9 msec 9 msec
+  3 203.0.113.2 23 msec 10 msec 3 msec
+R2#traceroute 203.0.113.5
+Type escape sequence to abort.
+Tracing the route to 203.0.113.5
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.0.0.1 7 msec 7 msec 8 msec
+  2 10.0.0.6 6 msec 11 msec 11 msec
+  3  *  *  *
+  4  *  *
+```
+The second case is when the destination doesn't even exist, but the router can't confirm that since it's just that a router (or a series of routers) just have their ICMP replies turned off, so it keeps going till we manually shut it down.
+
+Thus traceroute can help us speed up our troubleshooting by helping us find which is the last reachable host and then checking the link on that host to it's next hop should tell us where the problem seems to lie.
+
+# Using the Terminal Monitor feature
+While working on the terminal, periodically we get updates. This may be notifications/log entries everytime a new neighbour is discovered by OSPF, or errors (such as duplex mismatch), or even debug outputs. Sometimes, while waiting for a certain output on the prompt, we might not get it. This might be due to the fact that we're connected via telnet and not the console. Using the terminal monitor feature, we can get access to these messages. Simply typing `terminal monitor` in the telnet session will allow us to see the messages sent to the console. The method to turn this off is by using the `terminal no monitor` command. **Note** that the command is **not** _no terminal monitor_.
+
+## Debug commands
+There are several debug commands in the configurations that allow us to get a notification every time some action occurs. This might be getting a route via RIPv2/OSPF, or an error, etc. All debug commands can be accessed from the privileged mode, and _not_ the configuration mode.
+
+```
+R3#debug ip rip
+RIP protocol debugging is on
+R3#
+*Dec 16 04:52:48.444: RIP: sending v1 update to 255.255.255.255 via GigabitEthernet0/1 (10.0.0.6)
+*Dec 16 04:52:48.445: RIP: build update entries
+*Dec 16 04:52:48.446:   network 203.0.113.0 metric 1
+R3#
+*Dec 16 04:53:02.841: RIP: received v1 update from 10.0.0.5 on GigabitEthernet0/1
+*Dec 16 04:53:02.842:      10.0.0.0 in 1 hops
+*Dec 16 04:53:02.842:      192.0.2.0 in 1 hops
+*Dec 16 04:53:02.843:      198.51.100.0 in 2 hops
+R3#
+*Dec 16 04:53:08.169: RIP: sending v1 update to 255.255.255.255 via GigabitEthernet0/0 (203.0.113.1)
+*Dec 16 04:53:08.170: RIP: build update entries
+*Dec 16 04:53:08.170:   network 10.0.0.0 metric 1
+*Dec 16 04:53:08.174:   network 192.0.2.0 metric 2
+*Dec 16 04:53:08.174:   network 198.51.100.0 metric 3
+R3#no debug all
+All possible debugging has been turned off
+```
+
+### Warning about Debug Commands
+Debug commands, by nature, create a certain amount of additional traffic. Thus, it's important to ask ourselves how much traffic a specific command will generate _before_ issuing the command. This is because even Cisco states that the debug command can be highly dangerous if used improperly and may cause the device to reload (reboot). Thus, it's always advisable to check the processor/memory usage stats before using debug command to ensure the device can _take it_.
+
+The command to check CPU usage is:
+
+```
+R3#show processes cpu
+CPU utilization for five seconds: 11%/0%; one minute: 11%; five minutes: 19%
+ PID Runtime(ms)     Invoked      uSecs   5Sec   1Min   5Min TTY Process
+   1           6           8        750  0.00%  0.00%  0.00%   0 Chunk Manager    
+   2          68          77        883  0.00%  0.01%  0.00%   0 Load Meter       
+   3        3924         157      24993  1.12%  0.31%  0.66%   0 Exec             
+   4           1           1       1000  0.00%  0.00%  0.00%   0 RO Notify Timers
+   5        1483          90      16477  0.00%  0.26%  0.23%   0 Check heaps      
+   6          48          15       3200  0.00%  0.01%  0.00%   0 Pool Manager     
+   7           0           1          0  0.00%  0.00%  0.00%   0 DiscardQ Backgro
+   8           2           2       1000  0.00%  0.00%  0.00%   0 Timers           
+   9           4          12        333  0.00%  0.00%  0.00%   0 WATCH_AFS        
+  10           1           1       1000  0.00%  0.00%  0.00%   0 Crash writer     
+  11           3           1       3000  0.00%  0.00%  0.00%   0 Exception contro
+```
+
+To check memory usage, the command becomes:
+```
+R3#show processes memory sorted
+Processor Pool Total:  590945152 Used:   63267680 Free:  527677472
+      I/O Pool Total:   63963136 Used:   52715808 Free:   11247328
+
+ PID TTY  Allocated      Freed    Holding    Getbufs    Retbufs Process
+   0   0  124776488   13952192  104591800          0          0 *Init*          
+ 338   0    1407048      23536    1396600          0          0 EEM Server      
+ 120   0     488424      72400     408840          0          0 CDP Protocol    
+   0   0          0          0     394848          0          0 *MallocLite*    
+ 320   0     290720       4992     302936     100548          0 EEM ED Syslog   
+  38   0     266240       1664     277576          0          0 RF SCTPthread   
+ 321   0     213216       4992     225432      67468          0 EEM ED Generic  
+ 278   0     167984        160     193032          0          0 Crypto IKEv2    
+   1   0     166680          0     179888          0          0 Chunk Manager   
+  99   0     378576     211896     154184          0          0 mDNS            
+ 286   0     442760     371024      97024          0          0 Crypto CA       
+ 239   0      58104          0      91312          0          0 Media Services P
+ 250   0      77568        240      90536          0          0 HTTP Process    
+   3   0      92384      53672      87832          0          0 Exec            
+ 272   0      71096        240      86064          0          0 Crypto WUI      
+   6   0     469112     469112      80224     459837     459837 Pool Manager    
+  61   0      65992          0      79200          0          0 IF-MGR control p
+ 133   0      49400          0      74608          0          0 IPAM Manager    
+ 104   0      54520        416      67312          0          0 VRRS Main thread
+```
+
+Finally, the command to immediately stop all debug commands is `no debug all`.
