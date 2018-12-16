@@ -1099,4 +1099,8 @@ Processor Pool Total:  590945152 Used:   63267680 Free:  527677472
  104   0      54520        416      67312          0          0 VRRS Main thread
 ```
 
-Finally, the command to immediately stop all debug commands is `no debug all`.
+### Stopping all debugging
+Finally, the command to immediately stop all debug commands is `no debug all`, or `undebug all`. A handy shortcut for this command is `u all`.
+
+# Troubleshooting case study
+> {Required OSPF}
