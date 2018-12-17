@@ -813,4 +813,14 @@ Portfast Edge BPDU Guard Default        is enabled
 ...
 ```
 
-After a port has entered a _error-disabled_ state, to bring it back up to normal status, we first want to ensure that we resolve whatever caused it to go error disabled, i.e., in this case, unplug the switch which sent an BPDU into an BPDUGuarded port, we can just bounce the state to make it operational. 
+After a port has entered a _error-disabled_ state, to bring it back up to normal status, we first want to ensure that we resolve whatever caused it to go error disabled, i.e., in this case, unplug the switch which sent an BPDU into an BPDUGuarded port, we can just bounce the state to make it operational.
+
+# EtherChannel
+Let us consider a switch that has a lot of high-bandwidth connections coming it that it needs to communicate with another switch. Here, since all the data is being passed from a single interface, that interface itself can become a bottle-neck. Even if we connected the two switches using multiple interfaces, STP would just turn one of the links into a _blocked port_ and let traffic flow through one of the ports while the other one is as good as unplugged! This can be a terrible wastage of an interface's bandwidth. **EtherChannel** is a technology that allows us to combine the bandwidth of the ports by combining multiple physical ports into a single logical port. The advantages of EtherChannel are:
+* It allows higher bandwidth between switches
+* Provides load-balancing between the switches
+* Maintains redundancy and is still useful after one of the links fail.
+
+From the perspective of STP/RSTP, the EtherChannel bundle thus created appears as a single (logical) interface with the combined bandwidth of the two ports used, called a _port-channel interface_. The IEEE 802.3AD standard was created _after_ Cisco came up with this, but Cisco still supports both, so we're safe in a multi-vendor environment.
+
+The individual physical links in an EtherChannel aren't used in a round-robin fashion but instead, the link to use is determined by some load-balancing algorithm. 
