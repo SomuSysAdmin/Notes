@@ -768,3 +768,49 @@ Gi0/0               Desg FWD 4         128.1    P2p
 Gi0/1               Desg FWD 4         128.2    P2p
 Gi0/2               Desg FWD 4         128.3    P2p Edge
 ```
+
+# PortFast
+Normally, due to STP, there is about a 30sec delay when an end-user device is connected to a port on a switch, because the switch has no way of knowing intuitively if the device on the far end of the link is an edge port or another switch. Thus, it spends 15 sec listening for BPDUs and another 15 learning IP addresses of that port. This is of course unnecessary on an edge port since it's a network end-point an offers no path to the root through it, and thus the port can be made to connect and start forwarding packets almost instantly using PortFast. It can either be enabled on every port individually or globally.
+
+To enable portfast on a single or range of interfaces, we can use:
+```
+sw4(config)#int g0/1 - 3
+sw4(config-if-ran)#spanning-tree portfast
+```
+
+To enable it globally and not have to set it up for each individual interface, we go to the global config mode and use `spanning-tree portfast default`:
+```
+sw4(config)#spanning-tree portfast default
+```
+Even though we're turning it on globally, since trunk ports don't connect to edge ports, the portfast feature is only going to be turned on for _non-trunking ports_. To see if portfast is turned on for a particular interface, we use:
+
+```
+sw1#sh spanning-tree int g0/2 portfast
+VLAN0300            enabled
+```
+
+# BPDUGuard
+After portfast has been enabled on a port, and after we're done using it, we may forget to turn it off. If after this, we were to use the _now free port_ on which portfast is still configured to connect a bridge, depending on the wiring, there's a chance of _Layer-2 Topological Loop_ formation. However, portfast has a feature built in that lets it _eventually_ transition from an edge port to a forwarding port on detecting a BPDU. The problem lies in the fact that this isn't immediate and hence, for a time, there might be issues on the network, such as a broadcast storm. Fortunately, there is a feature that puts the port in an _error disabled_ state as soon as the first BPDU arrives on the port. This feature is called **BPDUGuard** and like PortFast, it can be enabled globally or on an interface to interface basis.
+
+To turn it on for a single interface, we use:
+```
+sw1(config-if)#spanning-tree bpduguard enable
+```
+
+To turn it on globally on all ports that have PortFast turned on, we use:
+```
+sw1(config)#spanning-tree portfast edge bpduguard default
+```
+
+Then to check if a port has BPDUGuard turned on, we use:
+```
+sw1#sh span sum
+Switch is in rapid-pvst mode
+Root bridge for: VLAN0100, VLAN0300
+Extended system ID                      is enabled
+Portfast Default                        is disabled
+Portfast Edge BPDU Guard Default        is enabled
+...
+```
+
+After a port has entered a _error-disabled_ state, to bring it back up to normal status, we first want to ensure that we resolve whatever caused it to go error disabled, i.e., in this case, unplug the switch which sent an BPDU into an BPDUGuarded port, we can just bounce the state to make it operational. 
