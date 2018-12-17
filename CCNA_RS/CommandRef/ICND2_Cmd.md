@@ -240,6 +240,16 @@ A possible solution to to above problems is to physically break the loop by remo
 # STP Port States
 A Spanning Tree is a **logical loop free topology**. This is done by making one of the ports on the switches block traffic from flowing in/out, thus preventing loop creation, even though a physical loop exists. Thus we get the redundancy without having loops. A spanning tree has a root bridge/switch from which it originates and from it, the spanning tree radiates throughout the subnet. We have administrative control over which switch becomes the root switch. When multiple switches are connected in a loop, if STP is active, it automatically elects a root switch, but it might not be the optimal switch (depending on the traffic patterns in the network). For example, we may have a link between two GigabitEthernet ports and another through FastEthernet interfaces, and STP may elect the device with the FastEthernet ports as the root bridge while the GigabitEthernet ports lay dormant.
 
+The cost for some of the most common interfaces are:
+```
+Port Speed                  STP Port Cost
+=========================   =============
+Ethernet        [ 10Mbps]   100
+FastEthernet    [100Mbps]   19
+GigabitEthernet [  1Gbps]   4
+TenGigE         [ 10Gbps]   2
+```
+
 ## Root Bridge
 In any Spanning Tree topology, there can be only **one root bridge** (or switch) and the bridge with the lowest **Bridge ID (_BID_)** is elected to be the root bridge. The Bridge ID is a combination of a bridge priority, a value we can set and the MAC address. The bridge priority is a value between 0 and 61440, with a default bridge priority of 32768. If we lower the bridge priority, we influence that particular switch to become the root. If we don't change the bridge priority, however, the bridge with the lowest MAC address gets to be the root. In the topology below, switch B gets to be the root bridge since `000 < 001` (first 3 digits of each MAC address). To determine which ports will be blocking and which ports will be forwarding, we need to understand the different port states for a spanning tree.
 
@@ -295,3 +305,326 @@ The spanning tree protocol discussed so far is **IEEE 802.1D** or **Common Spann
 Cisco's proprietary PVST is used over ISL trunks while **PVST+ is used over 802.1Q trunks**, and is thus more common. While these two approaches do use the optimal paths for each VLAN and perform Load Balancing, it still forces each VLAN to have its own spanning tree. This means if there are two or more VLANs having the same optimal path in the network, they still each get their own spanning tree, which is a load on the switch's resources. Instead, we could use **Multiple Instance Spanning Tree Protocol (MISTP_)** or **Multiple Spanning Tree (_MST_)** [_802.1s_]. MISTP is an older name for MST protocol. In this, there are multiple instances of spanning trees and each VLAN that would benefit from that spanning tree is assigned to that instance.
 
 Another variant of STP is **Rapid Spanning Tree Protocol (RSTP)** [_802.1w_]. While a normal Spanning Tree has a convergence time of about 50 seconds after link failure, RSTP has a _typical_ convergence time of 2-3 seconds, although it's not always true. Cisco has it's own proprietary variant of it called **RPVST+ (_Rapid Per-VLAN Spanning Tree Protocol +_)**. When a port transitions to forwarding from previously being in a blocking state, it can send out **TCN (_Topology Change Notification_) BPDUs** that lets its adjacent switches know that they should _flush_ their MAC address tables in order to accommodate the new path. This can propagate throughout the network to deliver faster convergence times. The difference between RSTP and RPVST+ is that RPVST+ runs a separate instance of RSTP for each VLAN on the network.
+
+# PVST+ Calculation
+By default Cisco switches run PVST+ as their default Spanning Tree Protocol (STP). Let us consider the topology below. We see the bridge priority is the same for all, a default of `32,768`. Thus, the MAC addresses of the bridges decide the root bridge. The STP calculations are:
+* Here, Switch sw2 is the root bridge (`0011 < 0014 < fcfb`).
+* Root Ports: **sw1 Gi0/0** and **sw3 Gi0/1**
+* Designated Ports: **sw2 Gi0/0**, **sw2 Gi0/1**, **sw2 Gi0/2** and **sw3 Gi0/0**.
+* Blocking Ports: **sw1 Gi0/1** and **sw3 Gi0/2**.
+
+## STP Calculations
+### Root port calculation
+Since **sw1 Gi0/0** is connected directly to the root, on sw1, the root port is Gi0/0. However, sw3 has two ports with the same cost (2) connected to the root: Gi0/1 and Gi0/2. Only one can be the root port. Hence, **sw2 Gi0/1** is the root port on the basis of port ID (`128.3 < 128.4`).
+
+### Designated Port Calculation
+All ports on the root bridge are designated ports: **sw2 Gi0/0**, **sw2 Gi0/1**, **sw2 Gi0/2**. Because each network segment may have only 1 designated port, we only have 1 more network segment to consider: _sw1 Gi0/1_ to _sw3 Gi0/0_. Both ports on either ends of this network segment have a cost of _2_ to reach the root. As a tie-breaker, we see which end of the link is connected to a bridge with a lower Bridge ID, which in this case is **sw3 Gi0/0**. The remainder are the blocking ports.
+
+We can also change the port ID on **sw2 Gi0/1** to a larger number, by changing the port priority from _128 to 192_, which would make **sw3 Gi0/2** the root port on sw3, and _sw3 Gi0/1_ a blocking port.
+
+# PVST Configuration
+## STP configuration
+### Switch 1
+The command to see the spanning tree configuration for any VLAN is `show spanning-tree vlan <vlan#>`. Thus, we can see the spanning tree for VLAN 100:
+
+```
+sw1#sh spanning-tree vlan 100
+
+VLAN0100
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32868
+             Address     0011.bbda.ea00
+             Cost        4
+             Port        1 (GigabitEthernet0/0)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32868  (priority 32768 sys-id-ext 100)
+             Address     fcfb.fb97.a980
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Root FWD 4         128.1    P2p
+Gi0/1               Altn BLK 4         128.2    P2p
+```
+
+Here, we can see that the root bridge has the MAC address of `0011.bbda.ea00` while sw1 has a MAC address of `fcfb.fb97.a980`, i.e., sw1 is _not_ the root bridge. We can also see the priority is `32868` instead of the expected, `32768`. This is because we're running PVST+ where each VLAN gets its own spanning tree, and thus, each bridge needs an unique Bridge ID. This wouldn't be possible since the in each VLAN, the default priority won't change and neither will the MAC address. So, we split the Bridge ID field into two: one to contain the priority, and the rest to contain the VLAN it belongs to, thus including the VLAN ID in the Bridge ID. Hence, the VLAN number (called the **Extended System ID**) is added to the default priority to get the priority of the bridge.
+
+In CST, the bridge ID is a 64-bit value consisting of a 16-bit bridge priority followed by a 48-bit MAC address of the bridge. In this case, we allocate 12 of the 16-bits of the bridge ID for the VLAN number, and the rest 4-bits for the actual bridge priority. Hence, the actual bridge priority will always be a multiple of 2^12 = 4096 [`0000 xxxx.xxxx.xxxx`, where x = part of VLAN ID].
+
+Just as predicted in the last section, _sw1_ is not the root for VLAN 200 or 300 either:
+```
+sw1#sh span v 200 | i Address           
+             Address     0011.bbda.ea00
+             Address     fcfb.fb97.a980
+sw1#sh span v 300 | i Address
+             Address     0011.bbda.ea00
+             Address     fcfb.fb97.a980
+```
+The `0011.bbda.ea00` MAC address is for sw2, and `fcfb.fb97.a980` for sw1. We can also see that Gi0/1 on sw1 is a blocking port : `Gi0/1 ... BLK`.
+
+### Switch 2
+On switch 2, which should be the root bridge for all VLANs for STP, we see all ports are designated ports and there are no root port or blocking port.
+
+```
+sw2#sh span v 100
+
+VLAN0100
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32868
+             Address     0011.bbda.ea00
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32868  (priority 32768 sys-id-ext 100)
+             Address     0011.bbda.ea00
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Desg FWD 4         128.2    P2p
+Gi0/2               Desg FWD 4         128.3    P2p
+```
+This is the same for all VLANs.
+
+### Switch 3
+On Switch 3, **Gi0/0** should be a root port and **Gi0/1** should be blocking (for all VLANs) which we can verify using:
+
+```
+sw3#sh span v 100
+
+VLAN0100
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32868
+             Address     0011.bbda.ea00
+             Cost        4
+             Port        2 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32868  (priority 32768 sys-id-ext 100)
+             Address     0014.69ac.2000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Root FWD 4         128.2    P2p
+Gi0/2               Altn BLK 4         128.3    P2p
+```
+
+We can get more details for each VLAN using:
+```
+sw1#sh span vlan 100 detail
+
+ VLAN0100 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, sysid 100, address fcfb.fb97.a980
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 32868, address 0011.bbda.ea00
+  Root port is 1 (GigabitEthernet0/0), cost of root path is 4
+  Topology change flag not set, detected flag not set
+  Number of topology changes 0 last change occurred 01:18:42 ago
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 1 (GigabitEthernet0/0) of VLAN0100 is root forwarding
+   Port path cost 4, Port priority 128, Port Identifier 128.1.
+   Designated root has priority 32868, address 0011.bbda.ea00
+   Designated bridge has priority 32868, address 0011.bbda.ea00
+   Designated port id is 128.1, designated path cost 0
+   Timers: message age 1, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   Link type is point-to-point by default
+   BPDU: sent 1, received 2357
+
+ Port 2 (GigabitEthernet0/1) of VLAN0100 is alternate blocking
+   Port path cost 4, Port priority 128, Port Identifier 128.2.
+   Designated root has priority 32868, address 0011.bbda.ea00
+   Designated bridge has priority 32868, address 0014.69ac.2000
+   Designated port id is 128.1, designated path cost 4
+   Timers: message age 2, forward delay 0, hold 0
+   Number of transitions to forwarding state: 0
+   Link type is point-to-point by default
+   BPDU: sent 2, received 2359
+```
+
+## Changing the Port priority
+If we wanted to make a particular port the preferred (root/designated) port, we could change its port ID by changing the port priority. Currently on sw3, Gi0/1 is the root port while Gi0/2 is blocking:
+
+```
+sw3#sh span v 200        
+
+VLAN0200
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32968
+             Address     0011.bbda.ea00
+             Cost        4
+             Port        2 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32968  (priority 32768 sys-id-ext 200)
+             Address     0014.69ac.2000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Root FWD 4         128.2    P2p
+Gi0/2               Altn BLK 4         128.3    P2p
+```
+
+We can convert Gi0/2 to the root port and Gi0/1 to blocking by changing the port priority of the far-end port, i.e., _sw2_ with:
+```
+sw2(config)#int g0/1
+sw2(config-if)#spanning-tree port-priority ?
+  <0-224>  port priority in increments of 32
+
+sw2(config-if)#spanning-tree port-priority 192
+```
+This immediately starts a **re-convergence of STP** on sw3, and after about 50 seconds, the new STP for all the VLANs will be:
+
+```
+sw3#sh span v 200         
+
+VLAN0200
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32968
+             Address     0011.bbda.ea00
+             Cost        4
+             Port        3 (GigabitEthernet0/2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32968  (priority 32768 sys-id-ext 200)
+             Address     0014.69ac.2000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Altn BLK 4         128.2    P2p
+Gi0/2               Root FWD 4         128.3    P2p
+```
+We can see that Gi0/1 and Gi0/2 have swapped roles.
+
+## Changing the cost
+We can also manipulate the STP by artificially changing the cost, because the STP judges links on the basis of costs for redundant links between two bridges and only considers port numbers when the costs are the same:
+```
+sw3(config)#int g0/1
+sw3(config-if)#spanning-tree cost 3
+sw3#sh sp v 100
+
+VLAN0100
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32868
+             Address     0011.bbda.ea00
+             Cost        3
+             Port        2 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32868  (priority 32768 sys-id-ext 100)
+             Address     0014.69ac.2000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  15  sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Root LIS 3         128.2    P2p
+Gi0/2               Altn BLK 4         128.3    P2p
+```
+
+We can see that it goes through the listening, learning and ultimately forwarding phase:
+```
+sw3#sh sp v 100 | i Gi0/1
+Gi0/1               Root LIS 3         128.2    P2p
+sw3#sh sp v 100 | i Gi0/1
+Gi0/1               Root LRN 3         128.2    P2p
+sw3#sh sp v 100 | i Gi0/1
+Gi0/1               Root FWD 3         128.2    P2p
+```
+
+## Changing Bridge Priority
+We can change a bridge to the root by changing the bridge priority:
+
+```
+sw1(config)#spanning-tree vlan 100 ?
+  forward-time  Set the forward delay for the spanning tree
+  hello-time    Set the hello interval for the spanning tree
+  max-age       Set the max age interval for the spanning tree
+  priority      Set the bridge priority for the spanning tree
+  root          Configure switch as root
+  <cr>
+
+sw1(config)#spanning-tree vlan 100 priority ?
+  <0-61440>  bridge priority in increments of 4096
+```
+If a value of less than 32768 is entered, the switch becomes the root. We can also directly force it to be root as well. Further, we can configure primary and secondary roots for PVST+.
+
+## PVST Manipulations
+Since we have a STP for every VLAN, we'd can set up PVST+ such that Sw1 acts as the primary root for VLANs 100 and 300 and as the secondary root for VLAN 200. A **secondary root** is a switch/bridge that takes over the responsibility of the root if the primary root goes down. Similarly, we can also set up sw3 to act as the primary root for VLAN 200 and secondary root for VLANs 100 and 300. For this we use:
+
+```
+sw1(config)#spanning-tree vlan 100 root primary
+sw1(config)#spanning-tree vlan 300 root primary
+sw1(config)#spanning-tree vlan 200 root secondary
+
+sw3(config)#span v 200 root pri
+sw3(config)#span v 100,300 root sec
+```
+
+Now on sw1, we can see that it's the root for VLANs 100 and 300:
+```
+sw1#sh sp v 100
+
+VLAN0100
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24676
+             Address     fcfb.fb97.a980
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    24676  (priority 24576 sys-id-ext 100)
+             Address     fcfb.fb97.a980
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Desg FWD 4         128.2    P2p
+
+sw1#sh sp v 300 | i root
+             This bridge is the root
+```
+The method used to make this switch the primary is by lowering the priority to `24676` from `32868`. Similarly, for a secondary root:
+```
+sw1#sh sp v 200
+
+VLAN0200
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24776
+             Address     0014.69ac.2000
+             Cost        4
+             Port        2 (GigabitEthernet0/1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    28872  (priority 28672 sys-id-ext 200)
+             Address     fcfb.fb97.a980
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Root FWD 4         128.2    P2p
+```
+VLAN 200 has a Bridge Priority of `28872`, which is more than the root's priority of `24776` by `4096`, but it's still lesser than the default priority of `32868`, thus making it the obvious secondary choice in case Bridge 1 goes down.
+
+# RPVST+ Theory
+Cisco's implementation of the Rapid Spanning Tree Protocol is through its own variant, the RPVST+ protocol, which assigns a Rapid Spanning Tree for each VLAN. 
