@@ -290,14 +290,16 @@ Similarly, in case of switches using STP, when a link connecting a designated/ro
 * Root Ports have been elected
 * Designated ports have been elected.
 
-In case of traditional STP, the convergence time is 50 seconds. After the link failure, the switch has to wait to receive a **Bridge Protocol Data Unit (_BPDU_)**. A BPDU is a special type of packet exchanged in a STP topology that is used to determine which switch is the root bridge.
+In case of traditional STP, the convergence time is 50 seconds. After the link failure, the switch has to wait to receive a **Bridge Protocol Data Unit (_BPDU_)**. A BPDU is a special type of packet exchanged in a STP topology that is used to determine which switch is the root bridge. In STP, only the root bridge can send out BPDUs and it acts like _hello_ messages to keep checking if the link to a switch is still up. When there's a change in the topology, e.g., a link failing, a **Topology Change Notification (_TCN_)** is sent from the switch with the failing port to the root bridge. The root bridge then does two things:
+- Send a **Topology Change Acknowledgement (_TCA_)** back to the bridge that sent the TCN.
+- Changes it's BPDUs by setting the Topology Change flag inside the BPDU to 1, and thus alerts all the other switches that a topology change has occurred.
 
-In the topology below, once the top link is lost, Switch A has to wait for about 20 seconds for a BPDU coming from the root Bridge, Switch B on port **Sw-A Fa1/0/1**, to tell it if the link connecting it to the root bridge is still active. At the end of the timer, when a BPDU does not arrive at Fa1/0/1, switch A realizes something is wrong and starts transitioning the blocking port **Sw-A Fa1/0/2** to a forwarding port.
-* The first state in the transition is a **listening**, which last for 15 seconds. During this, even though **Sw-A Fa1/0/2** won't forward packets, it listens to see if a BPDU is received on this port.
-* The next state of transition is the **learning** state, which lasts for another 15 sec, during which the bridge starts to populate the MAC address table for **Sw-A Fa1/0/2** with the MAC addresses seen on the interface.
+In the topology below, once the top link is lost, Switch A has to wait for about 20 seconds (called the _max-age timer_) for a BPDU coming from the root Bridge, Switch B on port **Sw-A Fa1/0/1**, to tell it if the link connecting it to the root bridge is still active. At the end of the timer, when a BPDU does not arrive at Fa1/0/1, switch A realizes something is wrong and starts transitioning the blocking port **Sw-A Fa1/0/2** to a forwarding port.
+* The first state in the transition is a **listening**, which last for 15 seconds (called the _forward delay timer_), with the intent of going back to a blocking state if a BPDU is found. During this, even though **Sw-A Fa1/0/2** won't forward packets, it listens to see if a BPDU is received on this port.
+* The next state of transition is the **learning** state, which lasts for another 15 sec (_forward delay timer_ again), during which the bridge starts to populate the MAC address table for **Sw-A Fa1/0/2** with the MAC addresses seen on the interface.
 * Finally, the switch transitions the port to a forwarding state and starts sending/receiving traffic.
 
-If a new device is plugged into an empty port on the switch, however, and something like PortFast isn't enabled, it's not going to take 50 seconds to converge. Instead, since the port was never blocked, it can directly go the *listening* state and so on, thus bringing down the time to 30 seconds. After 30 seconds of plugging in the device, the port on the switch is going to start forwarding frames.
+If a new device is plugged into an empty port on the switch, however, and something like PortFast isn't enabled, it's not going to take 50 seconds to converge. Instead, since the port was never blocked, it can directly go the *listening* state and so on, thus bringing down the time to 30 seconds (2*_forward delay timer_). After 30 seconds of plugging in the device, the port on the switch is going to start forwarding frames.
 
 # Spanning Tree Variants
 The spanning tree protocol discussed so far is **IEEE 802.1D** or **Common Spanning Tree (_CST_)**, because it doesn't account for VLANs and assigns a single spanning tree for all VLANs, which may be sub-optimal for the individual VLANs. Redundant links that might have been a better path for a specific VLAN sit idly. An alternative is **Per-VLAN Spanning Tree (_PVST_)** where a separate root bridge is assigned for each VLAN. Thus, if Switch B can be the root bridge for VLAN 200 and 300 while Switch A can be the root for VLAN 100, and so on. Then, the redundant links don't have to block all traffic, but only traffic for specific VLANs (i.e., prune specific VLANs), thus reducing the load on other switches as well, thus performing load-balancing.
@@ -627,4 +629,142 @@ Gi0/1               Root FWD 4         128.2    P2p
 VLAN 200 has a Bridge Priority of `28872`, which is more than the root's priority of `24776` by `4096`, but it's still lesser than the default priority of `32868`, thus making it the obvious secondary choice in case Bridge 1 goes down.
 
 # RPVST+ Theory
-Cisco's implementation of the Rapid Spanning Tree Protocol is through its own variant, the RPVST+ protocol, which assigns a Rapid Spanning Tree for each VLAN. 
+Cisco's implementation of the Rapid Spanning Tree Protocol is through its own variant, the RPVST+ protocol, which assigns a Rapid Spanning Tree for each VLAN. Just like in normal STP, a root bridge has to be elected and all ports on that root bridge are deemed _Designated Ports_. We also have root ports and disabled ports (administratively shut down). What we referred to as _blocking ports_ become **alternate ports**, i.e., ports that are capable of becoming an alternate to the root port. It is a port that is currently discarding all data frames, but can provide an alternate path for the traffic to reach the root bridge.
+
+If we look at the topology above we see that two links from sw3 lead to the hub, which means they're on the same shared ethernet segment. Typically in STP we can only have 1 port on a shared ethernet segment, which in this case, is the designated port. The other port is called a **backup port**. A backup port is an alternate port that acts as a redundant link to a shared segment. This means a backup port is a port that's capable of providing an alternate path to the root bridge if needed, is currently discarding data frames and lies on a shared ethernet segment. This means *the only time we may encounter a backup port is when we're connected to an ethernet hub*.
+
+## RPVST Port States
+**Discarding** - Data isn't being forwarded on this port - may be an _alternate, backup or disabled_ port.
+**Learning** - The switch is learning MAC addresses from packets on the port. Port is _transitioning to forwarding_.
+**Forwarding** - Data is being forwarded on the port (i.e., _root port or designated port_).
+
+## RPVST Link Types
+**Point to Point Link** - A link running in full-duplex mode, typically connecting one switch to another.
+**Shared Link** - A link running in half-duplex mode, typically connecting a switch to a hub.
+**Edge port** - Connects to an end-user device/station, i.e., a network endpoint. While calculating RSTP never considers edge ports as ports that can lead back to the root bridge. If we forget after setting a port as an edge port, and we later connect a switch to it, when that port receives a BPDU, it's going to transition out from being an edge port.
+
+## RSTP Topology change
+RSTP only considers a non-edge port transitioning to a forwarding state as a topology change. Let us consider a downstream switch is connected to a port on our switch that goes down. If the port that went down was only connected to our network via that switchport, then there's nothing we can do about it. There's no alternative way of connecting that network back to our root switch. Hence, there's no point in telling the network about the link going down. However, if there is another path back to the root for it, i.e., there's an alternate port, it'll soon transition to a forwarding state, which will then trigger a topology change notification.
+
+The major difference between STP and RSTP is that when a topology change is detected, STP sends the TCN after waiting for the _max-age_ timer to expire. Then it transitions to the listening state and waits for the _forward delay timer_ to expire, by which time it receives a hello BPDU from the root bridge on some port which becomes the new root port. Now, it spends the same amount of time in the learning state. Finally, it then transitions to the forwarding state. In the meantime, once the TCN reaches the root bridge, the root bridge has to send a TCA (Topology Change Acknowledgement) to the switch reporting the change and then set the TC (Topology Change) bit to 1 in it's BPDUs. When these BPDUs reach the other switches, they realize that a topology change has occurred.
+
+However, in RSTP, first of all the _max-age timer_ has been reduced to _6_ seconds and the _forward-delay timer_ has been eliminated all together. Upon link failure, the switch which has had to change its port from _alternate_ to _root port_ will send out it's own BPDUs with the TC flag set to 1 to notify it's neighbours about the change.
+
+When a neighbour receives a topology change, it'll start the _synchronization process_  and block all the other ports other than the new port and the edge ports (to prevent loops from happening). The neighbours will then start the _negotiation phase_ where they'll evaluate the new path to see if the cost is lowered by putting the ports on either side of the link in a listening state, and then once the ideal paths have been determined, they unblock the ports and pass on the new BPDUs to their neighbours and so on.
+
+# RPVST+ configuration
+To see which mode (PVST+/RPVST+) mode the switch is currently in, we use the `show spanning-tree summary` command.
+```
+sw1#sh span sum
+Switch is in pvst mode
+Root bridge for: VLAN0100, VLAN0300
+Extended system ID                      is enabled
+Portfast Default                        is disabled
+Portfast Edge BPDU Guard Default        is disabled
+Portfast Edge BPDU Filter Default       is disabled
+Loopguard Default                       is disabled
+PVST Simulation Default                 is enabled but inactive in pvst mode
+Bridge Assurance                        is enabled but inactive in pvst mode
+EtherChannel misconfig guard            is enabled
+Configured Pathcost method used is short
+UplinkFast                              is disabled
+BackboneFast                            is disabled
+
+Name                   Blocking Listening Learning Forwarding STP Active
+---------------------- -------- --------- -------- ---------- ----------
+VLAN0001                     1         0        0          3          4
+VLAN0100                     0         0        0          2          2
+VLAN0200                     0         0        0          2          2
+VLAN0300                     0         0        0          2          2
+---------------------- -------- --------- -------- ---------- ----------
+4 vlans                      1         0        0          9         10
+```
+
+To enable RPVST+, we have to use the same command on all the switches - `spanning-tree mode rapid-pvst`
+```
+sw1(config)#span mode rapid-pvst
+```
+
+Now we can confirm that we're running RPVST+ by:
+```
+sw1#sh span sum
+Switch is in rapid-pvst mode
+Root bridge for: VLAN0100, VLAN0300
+Extended system ID                      is enabled
+Portfast Default                        is disabled
+Portfast Edge BPDU Guard Default        is disabled
+Portfast Edge BPDU Filter Default       is disabled
+Loopguard Default                       is disabled
+PVST Simulation Default                 is enabled but inactive in rapid-pvst mode
+Bridge Assurance                        is enabled
+EtherChannel misconfig guard            is enabled
+Configured Pathcost method used is short
+UplinkFast                              is disabled
+BackboneFast                            is disabled
+
+Name                   Blocking Listening Learning Forwarding STP Active
+---------------------- -------- --------- -------- ---------- ----------
+VLAN0001                     1         0        0          3          4
+VLAN0100                     0         0        0          2          2
+VLAN0200                     0         0        0          2          2
+VLAN0300                     0         0        0          2          2
+---------------------- -------- --------- -------- ---------- ----------
+
+Name                   Blocking Listening Learning Forwarding STP Active
+---------------------- -------- --------- -------- ---------- ----------
+4 vlans                      1         0        0          9         10
+```
+Although the output states that we're running in _rapid-pvst_ mode, since we're using *dot1q* trunks instead of *ISL* trunks, we're actually using RPVST+ protocol.
+
+## Changing Link Type
+We can see from the following output that on sw1, the port Gi0/1 is set to be a Point-to-Point (P2p) Interface. We can change the interface type by either hard-coding it or changing the duplex settings.
+```
+sw1(config)#int g0/1
+sw1(config-if)#span link-type ?
+  point-to-point  Consider the interface as point-to-point
+  shared          Consider the interface as shared
+```
+We can see that there are only two options: P2p and shared, but not _edge port_. That is done in another way. If we change the duplex, the interface-type will also change:
+```
+sw1(config-if)#duplex half
+sw1(config-if)#do sh sp v 300
+
+VLAN0300
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    24876
+             Address     fcfb.fb97.a980
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    24876  (priority 24576 sys-id-ext 300)
+             Address     fcfb.fb97.a980
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Desg FWD 4         128.2    Shr
+Gi0/2               Desg FWD 4         128.3    P2p
+```
+We can see that on changing the duplex the link type immediately changes. This is because the link-type is determined on the basis of the current duplex mode.
+
+### Converting port to Edge port using PortFast
+The method to convert a port to an edge port is by turning on PortFast on it. By this act, we're telling the switch that the device we're connecting is a end-user device and hence won't send BPDUs, and thus the port should skip the listening and learning phase. We turn on PortFast using `spanning-tree portfast` in interface configuration mode for the edge port.
+```
+sw1(config)#int g0/2
+sw1(config-if)#span portf
+%Warning: portfast should only be enabled on ports connected to a single
+ host. Connecting hubs, concentrators, switches, bridges, etc... to this
+ interface  when portfast is enabled, can cause temporary bridging loops.
+ Use with CAUTION
+
+%Portfast has been configured on GigabitEthernet0/2 but will only
+ have effect when the interface is in a non-trunking mode.
+sw1(config-if)#do sh sp v 300 | b Interface
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi0/0               Desg FWD 4         128.1    P2p
+Gi0/1               Desg FWD 4         128.2    P2p
+Gi0/2               Desg FWD 4         128.3    P2p Edge
+```
