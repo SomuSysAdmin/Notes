@@ -1220,4 +1220,11 @@ sw2(config)#port-channel load-balance ?
 ```
 
 # IP Routing
-# Routing Between VLANs
+# Router-on-a-stick concept
+Let us consider we have a L2 (_Layer 2_) switch that can't route packets. If we have multiple VLANs, and we want hosts on those VLANs to communicate, we need some sort of a router to connect to to translate addresses between the subnets of the VLANs. For example, if VLAN100 has a network address of `192.168.1.0/24` and VLAN200 has a network address of `192.168.2.0/24`, we need a router to translate the route the packets between the two VLANs.
+
+In the actual switch itself, containting both VLANs, we could wire up two different ports in the switch to the router - one from VLAN100 to the router and the other from VLAN200 to the router. This is not very scalable however, since we can have, for example, 10 different VLANs and we don't want to use up 10 ports on the router! A much more efficient method is to connect the L2 switch to the router with a trunk port which carries data for all the VLANs.
+
+So, data from VLAN100 will flow up the trunk to the router, be routed to the VLAN300 and then flow down the trunk and back into the switch and then reach the destination host, and vice-versa.
+
+# Configuring a Router-on-a-Stick
