@@ -823,4 +823,38 @@ Let us consider a switch that has a lot of high-bandwidth connections coming it 
 
 From the perspective of STP/RSTP, the EtherChannel bundle thus created appears as a single (logical) interface with the combined bandwidth of the two ports used, called a _port-channel interface_. The IEEE 802.3AD standard was created _after_ Cisco came up with this, but Cisco still supports both, so we're safe in a multi-vendor environment.
 
-The individual physical links in an EtherChannel aren't used in a round-robin fashion but instead, the link to use is determined by some load-balancing algorithm. 
+The individual physical links in an EtherChannel aren't used in a round-robin fashion but instead, the link to use is determined by some load-balancing algorithm. One such possible algorithm can be based on the destination IP address. Consider the topology below. We have 4 links between the switches. So, we could divide frames based on the last `log2(2) = 2` bits of an IP address. So, if the last 2 bits are `00`, it goes through the first link, for `01` the seconds, and so on.
+
+However, if we have a high powered server that uses a _GigE_ link and we have four _FastEthernet_ links, all traffic going to the IP of the server will be utilizing only 1 link. The same is true if we segregate the packets based on their destination MAC address, or source IP/MAC addresses. Thus, we could consider both the source and destination IP or MAC addresses while choosing the link between switches. We could take the last two bits of both, _XOR_ them and then choose the path that matches the result. This is the calculation of 4 channels. If there were 8 links in the EtherChannel, then we'd be looking at the last `log2(8)  = 3` bits.
+
+# EtherChannel Port Options
+EtherChannels have a couple of link aggregation protocols used to actually convert the bundle of physical links into a single logical link. They are Cisco's proprietary **Port Aggregation Protocol(_PAgP_)** and another, that's an industry standard [_802.AD_], called the **Link Aggregation Control Protocol (_LACP_)**. Both can be used to negotiate an EtherChannel between two Cisco switches. The ports at either end of any link in the EtherChannel need to be set up identically, having the same:
+* Speed
+* Duplex
+* VLAN Assignments
+
+## Port Aggregation Protocol (_PAgP_)
+We can put our ports in one of 3 possible *PAgP Channel modes*:
+* **On** - Tells the port to be an EtherChannel without any negotiation. We don't send/receive PAgP frames. Only forms an EtherChannel with another _On_ port.
+* **Auto** - Forms an EtherChannel if it sees PAgP frames coming from the other end of the link, but won't send PAgP frames to initiate EtherChannel formation. Only forms an EtherChannel with _Desirable_ ports.
+* **Desirable** - Sends PAgP frames to start the negotiation of an EtherChannel. Can form an EtherChannel with either an _auto_ or another _desirable_ port.
+
+The combination of the above modes lead to:
+```
+PAgP Channel mode   On      Auto    Desirable
+=================   ======  ======  =========
+On                  Yes     No      No
+Auto                No      No      Yes
+Desirable           No      Yes     Yes
+```
+If one side is set to _on_ an other to _desirable_, they still won't form an EtherChannel since they both want to form an EtherChannel but one side is willing to negotiate via PAgP frames while the other side just ignores it. Similarly, if both sides are set to _auto_, both sides want to negotiate but neither will start the negotiation by sending PAgP frames.
+
+## Link Aggregation Control Protocol (_LACP_)
+LACP has identical prot control modes to _PAgP_, with just the _auto_ mode being called **Passive** mode here and the _desirable_ mode being called **Active** mode. Thus, the possible port combinations for EtherChannel formation are:
+```
+LACP Channel mode   On      Passive     Active
+=================   ======  =======     =========
+On                  Yes     No          No
+Passive             No      No          Yes
+Active              No      Yes         Yes
+```
