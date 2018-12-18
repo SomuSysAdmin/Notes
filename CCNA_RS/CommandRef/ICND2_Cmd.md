@@ -858,3 +858,365 @@ On                  Yes     No          No
 Passive             No      No          Yes
 Active              No      Yes         Yes
 ```
+
+# Layer 2 EtherChannel Configuration
+A **Layer 2 EtherChannel port** is a virtual port that's been configured as a layer 2 interface, i.e., a _switchport_. With it, we can do things like making it a trunk port just like any other port on a switch. In the topology below, sw2 and sw3 have a couple of ports (**Gi0/1** and **Gi0/2**) on each switch that form a redundant link that we want to convert to an EtherChannel. First, we have to ensure that they both have the same speed, duplex and VLAN assignments. Also, since we're connecting swtiches, i.e., _like devices_, we need to use a **cross-over cable**. If we have straight-through cable, we need to make sure that MDI-X is turned on for both switches, which **require auto speed and duplex** on the ports.
+
+We can use interface configuration mode to configure multiple interfaces at the same time. If we have auto-negotiation turned on, we don't need to manually set the port and duplex to _auto_ (and we can't). If not, we use:
+```
+sw2(config)#int ran g0/1-2
+sw2(config-if-range)#speed auto
+sw2(config-if-range)#duplex auto
+sw2(config-if-range)#mdix auto
+```
+
+Let's say we want to use **PAgP** here instead of LACP, and we want to set the ports to desirable on sw2 and auto on sw3. The EtherChannel will be called `channel-group` and since this is the first EtherChannel on the switch, we use the number `1`:
+```
+sw2(config-if-range)#channel-group 1 mode desirable
+Creating a port-channel interface Port-channel 1
+
+*Dec 18 10:31:59.344: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+*Dec 18 10:31:59.365: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to down
+*Dec 18 10:32:07.920: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+*Dec 18 10:32:08.915: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to up
+```
+We can see that both ports were bounced to form the `port-channel`, i.e., EtherChannel.
+
+Depending on the protocol, the possible options for the virtual port modes were:
+```
+sw2(config-if-range)#channel-group 1 mode ?
+  active     Enable LACP unconditionally
+  auto       Enable PAgP only if a PAgP device is detected
+  desirable  Enable PAgP unconditionally
+  on         Enable Etherchannel only
+  passive    Enable LACP only if a LACP device is detected
+```
+
+We now have a new virtual port called EtherChannel called `Port-channel1`:
+```
+sw2(config)#do sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     unassigned      YES unset  up                    up      
+GigabitEthernet0/1     unassigned      YES unset  up                    up      
+GigabitEthernet0/2     unassigned      YES unset  up                    up      
+GigabitEthernet0/3     unassigned      YES unset  up                    up      
+Port-channel1          unassigned      YES unset  down                  down    
+sw2(config)#do sh int status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/0                        connected    1          a-full   auto RJ45
+Gi0/1                        connected    1          a-full   auto RJ45
+Gi0/2                        connected    1          a-full   auto RJ45
+Gi0/3                        connected    1          a-full   auto RJ45
+Po1                          notconnect   unassigned   auto   auto
+```
+
+We can convert it into a dot1q trunk just like any other layer-2 port:
+```
+sw2(config)#int po1
+sw2(config-if)#switchport trunk encap dot1q
+*Dec 18 10:37:15.857: %EC-5-CANNOT_BUNDLE2: Gi0/1 is not compatible with Gi0/2 and will be suspended (trunk encap of Gi0/1 is dot1q, Gi0/2 is auto)
+*Dec 18 10:37:15.866: %EC-5-COMPATIBLE: Gi0/1 is compatible with port-channel members
+sw2(config-if)#sw mode trunk
+sw2(config-if)#do sh int trunk
+
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/1       on               802.1q         trunking      1
+Gi0/2       on               802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Gi0/1       none
+Gi0/2       none
+
+Port        Vlans allowed and active in management domain
+Gi0/1       none
+Gi0/2       none
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/1       none
+Gi0/2       none
+sw2(config-if)#no shut
+```
+
+We now want to create an identical configuration on sw3, but with the EtherChannel port mode to _auto_ instead of _desirable_:
+```
+sw3(config)#int ran g0/1-2
+sw3(config-if-range)#neg auto
+sw3(config-if-range)#channel-group 1 mode auto
+Creating a port-channel interface Port-channel 1
+*Dec 18 10:47:53.301: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+*Dec 18 10:47:53.342: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to down
+*Dec 18 10:48:02.197: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to up
+*Dec 18 10:48:02.448: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+sw3(config-if-range)#int po1
+*Dec 18 10:48:16.672: %LINK-3-UPDOWN: Interface Port-channel1, changed state to up
+*Dec 18 10:48:17.672: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel1, changed state to up
+sw3(config-if)#sw tr encap dot
+sw3(config-if)#sw mode tr
+```
+
+Now, the `show interface trunk` command won't show us two separate trunks for _Gi0/1_ and _Gi0/2_ but a single trunk for **Port-channel1**:
+```
+sw2#sh int tr    
+
+Port        Mode             Encapsulation  Status        Native vlan
+Po1         on               802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Po1         1-4094
+
+Port        Vlans allowed and active in management domain
+Po1         1
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po1         1
+sw2#sh int status    
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/0                        connected    1          a-full   auto RJ45
+Gi0/1                        connected    trunk      a-full   auto RJ45
+Gi0/2                        connected    trunk      a-full   auto RJ45
+Gi0/3                        connected    1          a-full   auto RJ45
+Po1                          connected    trunk      a-full   auto
+sw2#sh ip int br Po1
+Interface              IP-Address      OK? Method Status                Protocol
+Port-channel1          unassigned      YES unset  up                    up      
+```
+
+The logical interface, made of two individual 1Gbps interfaces will now show up with a bandwidth of 2Gbps:
+```
+sw2#sh int po1 | i BW
+  MTU 1500 bytes, BW 2000000 Kbit/sec, DLY 10 usec,
+```
+
+# Layer 3 EtherChannel Configuration
+Layer 2 VLANs are perfectly adequate if we have end-to-end VLANs throughout the enterprise, i.e., in all the buildings we have the same VLANs with the same configuration, connected via trunks, in which case Port-channel provides a high-bandwidth trunk. However, if each building has its own VLAN, i.e., _local VLAN deployment_, that needs to be routed to another building with another set/configuration of VLANs, and instead of sending traffic over a trunk, we route between buildings, then we need a Layer 3 EtherChannel. In such a case we need to leave a building over a **routed port**.  
+
+ A **routed port** is a port on a Cisco switch that acts like a port on a router. For example, it can be assigned an IP address. Thus, we can form a **Layer 3 EtherChannel** that is then configured to act as a routed interface. we can convert switch-ports to routed ports using the `no switchport` command on switches. Since we're using EtherChannels, we need to convert both the individual switchports as well as the aggregated Port-Channel to routed ports. For obvious reasons of L3 operation, this needs an L3 switch.
+
+ First, we prepare the two ports each on both switches for the port channel and then turn them into routed ports. Then we create the port channel, convert it into a routed port as well and then bring up the port-channel:
+ ```
+sw2(config)#int ran g0/1-2
+sw2(config-if-range)#neg auto
+sw2(config-if-range)#no switchport
+*Dec 18 11:40:33.823: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+*Dec 18 11:40:33.896: %LINK-5-CHANGED: Interface GigabitEthernet0/2, changed state to administratively down
+*Dec 18 11:40:34.825: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+*Dec 18 11:40:34.896: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to down
+sw2(config-if-range)#channel-group 1 mode on
+Creating a port-channel interface Port-channel 1
+sw2(config-if-range)#no shut
+*Dec 18 11:42:00.747: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to up
+*Dec 18 11:42:00.969: %LINK-3-UPDOWN: Interface Port-channel1, changed state to up
+*Dec 18 11:42:01.033: %LINK-3-UPDOWN: Interface GigabitEthernet0/2, changed state to up
+*Dec 18 11:42:01.747: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+*Dec 18 11:42:01.971: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel1, changed state to up
+*Dec 18 11:42:02.039: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to up
+sw2(config-if-range)#int po1
+sw2(config-if)#no switchport
+
+sw3(config)#int ran g0/1-2
+sw3(config-if-range)#neg auto
+sw3(config-if-range)#no switchport
+*Dec 18 11:43:35.548: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+*Dec 18 11:43:35.626: %LINK-5-CHANGED: Interface GigabitEthernet0/2, changed state to administratively down
+*Dec 18 11:43:36.550: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+*Dec 18 11:43:36.626: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to down
+sw3(config-if-range)#channel-gr 1 mode on
+Creating a port-channel interface Port-channel 1
+sw3(config-if-range)#no shut
+*Dec 18 11:44:02.875: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to up
+*Dec 18 11:44:03.056: %LINK-3-UPDOWN: Interface Port-channel1, changed state to up
+*Dec 18 11:44:03.113: %LINK-3-UPDOWN: Interface GigabitEthernet0/2, changed state to up
+*Dec 18 11:44:03.878: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+*Dec 18 11:44:04.057: %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel1, changed state to up
+*Dec 18 11:44:04.175: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/2, changed state to up
+sw3(config-if-range)#int po1
+sw3(config-if)#no switchport
+```
+
+Let us assume we want to create the following topology where the two routed port-channels are connected via a link with the IP addresses `10.1.1.1/30` on sw1 and `10.1.1.2/30` on sw2. We use the `/30` subnet mask since we only need 2 IP addresses in the network (`10.1.1.0/30`). Now, we can set up loopback interfaces with the IP `1.1.1.1/32` on sw1 and `2.2.2.2/32` on sw2. Finally, we want to set up RIPv2 on the routers to dynamically share routes.
+```
+sw2(config-if)#ip addr 10.1.1.1 255.255.255.252
+sw2(config-if)#int lo1
+*Dec 18 11:54:44.344: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback1, changed state to up
+sw2(config-if)#ip addr 1.1.1.1 255.255.255.255
+sw2(config-if)#router rip
+sw2(config-router)#version 2
+sw2(config-router)#network 1.0.0.0
+sw2(config-router)#network 10.0.0.0
+sw2(config-router)#no auto-summary
+
+sw3(config-if)#ip addr 10.1.1.2 255.255.255.252
+sw3(config-if)#int lo1
+*Dec 18 11:55:03.687: %LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback1, changed state to up
+sw3(config-if)#ip addr 2.2.2.2 255.255.255.255
+sw3(config-if)#router rip
+sw3(config-router)#ver 2
+sw3(config-router)#net 10.0.0.0
+sw3(config-router)#net 2.0.0.0
+sw3(config-router)#no auto-sum
+```
+
+Now we have a Layer 3 EtherChannel between the two switches. We can confirm this by:
+
+```
+sw2#sh ip int br | b Loop
+Loopback1              1.1.1.1         YES manual up                    up      
+Port-channel1          10.1.1.1        YES manual up                    up      
+sw2#sh ip route | i R
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+R        2.2.2.2 [120/1] via 10.1.1.2, 00:00:10, Port-channel1
+
+sw3#sh ip int br | b Loop
+Loopback1              2.2.2.2         YES manual up                    up      
+Port-channel1          10.1.1.2        YES manual up                    up      
+sw3#sh ip route | i R
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+R        1.1.1.1 [120/1] via 10.1.1.1, 00:00:21, Port-channel1
+```
+In the above output, we can see that sw2 learnt about `2.2.2.2` over Port-channel1 and sw3 learnt about `1.1.1.1` over Port-channel1. So, the routes were learn over the EtherChannel.
+
+We can also confirm that we have connectivity between the switches with:
+```
+sw2#ping 2.2.2.2         
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2.2.2.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 7/15/26 ms
+sw2#traceroute 2.2.2.2
+Type escape sequence to abort.
+Tracing the route to 2.2.2.2
+VRF info: (vrf in name/id, vrf out name/id)
+  1 10.1.1.2 23 msec *  6 msec
+```
+
+# EtherChannel Troubleshooting
+We can see which ports were bundled to form EtherChannels with the `show etherchannel summary` command:
+```
+sw2#sh etherch sum
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      N - not in use, no aggregation
+        f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        m - not in use, port not aggregated due to minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+        A - formed by Auto LAG
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(RU)          -        Gi0/1(P)    Gi0/2(P)    
+```
+
+The protocol is set to `-` since the mode was set to `on`. In case we specified _PAgP_ or _LACP_, we would see:
+```
+sw2#sh etherch sum
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      N - not in use, no aggregation
+        f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        m - not in use, port not aggregated due to minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+        A - formed by Auto LAG
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)         PAgP      Gi0/1(P)    Gi0/2(P)    
+```
+
+To see more details like the mode of the ports, we have to use the `show etherchannel port-channel` command:
+```
+sw2#sh etherch port-ch
+                Channel-group listing:
+                ----------------------
+
+Group: 1
+----------
+                Port-channels in the group:
+                ---------------------------
+
+Port-channel: Po1
+------------
+
+Age of the Port-channel   = 0d:00h:03m:58s
+Logical slot/port   = 16/0          Number of ports = 2
+GC                  = 0x00010001      HotStandBy port = null
+Port state          = Port-channel Ag-Inuse
+Protocol            =   PAgP
+Port security       = Disabled
+
+Ports in the Port-channel:
+
+Index   Load   Port     EC state        No of bits
+------+------+------+------------------+-----------
+  0     00     Gi0/1    Desirable-Sl       0
+  0     00     Gi0/2    Desirable-Sl       0
+
+Time since last port bundled:    0d:00h:03m:39s    Gi0/2
+```
+
+## EtherChanel Guard
+The **EtherChannel Guard** feature monitors the port-channels on both sides of the EtherChannel link and if it detects mismatched parameters it immediately generates an error and puts the port in an _error-disabled_ state. It's enabled by default, but we can confirm with the `show spanning-tree summary` command:
+```
+sw2#sh span sum | i Ether
+EtherChannel misconfig guard            is enabled
+```
+
+In case it's disabled for some reason, we can turn it back on using `spanning-tree etherchannel guard misconfig` command:
+```
+sw2(config)#sp eth guard misconf
+```
+
+## Load-Balancing
+In case we get poor performance from the EtherChannel, one reason may be improper load-balancing which we might resolve by changing the load-balancing algorithm. We can see the current algorithm using the `show etherchannel load-balancing` command:
+```
+
+sw2#sh etherch load
+EtherChannel Load-Balancing Configuration:
+        src-dst-ip
+
+EtherChannel Load-Balancing Addresses Used Per-Protocol:
+Non-IP: Source XOR Destination MAC address
+  IPv4: Source XOR Destination IP address
+  IPv6: Source XOR Destination IP address
+```
+We can see it's currently set to load balance on the basis of both the source and destination IP addresses. Since we have two channels, only the last `log2(2) = 1` bit will determine which link in the aggregate is chosen to send the packet. So, if the XOR of the last digits of both IP is 0, **Gi0/0** is chosen and if not, **Gi0/1**.
+
+We can see and set the different load-balancing options using the `port-channel load-balancing` command in global config:
+```
+sw2(config)#port-channel load-balance ?
+  dst-ip       Dst IP Addr
+  dst-mac      Dst Mac Addr
+  src-dst-ip   Src XOR Dst IP Addr
+  src-dst-mac  Src XOR Dst Mac Addr
+  src-ip       Src IP Addr
+  src-mac      Src Mac Addr
+```
+
+# IP Routing
