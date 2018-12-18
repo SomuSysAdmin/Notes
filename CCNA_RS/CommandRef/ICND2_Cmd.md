@@ -1223,8 +1223,109 @@ sw2(config)#port-channel load-balance ?
 # Router-on-a-stick concept
 Let us consider we have a L2 (_Layer 2_) switch that can't route packets. If we have multiple VLANs, and we want hosts on those VLANs to communicate, we need some sort of a router to connect to to translate addresses between the subnets of the VLANs. For example, if VLAN100 has a network address of `192.168.1.0/24` and VLAN200 has a network address of `192.168.2.0/24`, we need a router to translate the route the packets between the two VLANs.
 
-In the actual switch itself, containting both VLANs, we could wire up two different ports in the switch to the router - one from VLAN100 to the router and the other from VLAN200 to the router. This is not very scalable however, since we can have, for example, 10 different VLANs and we don't want to use up 10 ports on the router! A much more efficient method is to connect the L2 switch to the router with a trunk port which carries data for all the VLANs.
+In the actual switch itself, containing both VLANs, we could wire up two different ports in the switch to the router - one from VLAN100 to the router and the other from VLAN200 to the router. This is not very scalable however, since we can have, for example, 10 different VLANs and we don't want to use up 10 ports on the router! A much more efficient method is to connect the L2 switch to the router with a trunk port which carries data for all the VLANs.
 
 So, data from VLAN100 will flow up the trunk to the router, be routed to the VLAN300 and then flow down the trunk and back into the switch and then reach the destination host, and vice-versa.
 
 # Configuring a Router-on-a-Stick
+In the current status, let's assume we set up the topology below such that there's a trunk leading to the router, and two other ports on the switch each lead to a PC. The interface status should be:
+```
+sw#sh int status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/0                        connected    trunk      a-full   auto RJ45
+Gi0/1                        connected    10         a-full   auto RJ45
+Gi0/2                        connected    20         a-full   auto RJ45
+Gi0/3                        connected    1          a-full   auto RJ45
+```
+
+Currently, without the router set up, the PCs won't be able to ping each other:
+```
+PC-1> ping 172.16.1.2
+host (192.168.1.1) not reachable
+```
+
+## Sub interfaces
+Given that a trunk port is connected to the router on **Gi0/0**, we can carve up the single interface into multiple local interfaces, one for each VLAN. This is required since this is how router ports handle trunks. We assign a protocol for trunking and a VLAN to each logical interface. We want to assign _sub-interface 1 (**Gi0/0.1**)_ to VLAN 10 and _sub-interface 2(**Gi0/0.2**)_ to VLAN 20, and then assign their IPs. The command to assign the encapsulation and VLAN is `encapsulation <encapName> <VLAN-ID>`:
+```
+ROAS(config)#int g0/0.1
+ROAS(config-subif)#encapsulation dot1q 10
+ROAS(config-subif)#ip addr 192.168.1.1 255.255.255.0
+ROAS(config-subif)#int g0/0.2
+ROAS(config-subif)#encap dot 20
+ROAS(config-subif)#ip addr 172.16.1.1 255.255.255.0
+ROAS(config-subif)#int g0/0
+ROAS(config-if)#no shut
+*Dec 18 13:49:46.567: %LINK-3-UPDOWN: Interface GigabitEthernet0/0, changed state to up
+*Dec 18 13:49:47.567: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+```
+
+Now we can see the sub-interfaces:
+```
+ROAS#sh ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         unassigned      YES unset  up                    up      
+GigabitEthernet0/0.1       192.168.1.1     YES manual up                    up      
+GigabitEthernet0/0.2       172.16.1.1      YES manual up                    up      
+...
+```
+
+Now the two PCs can reach each other:
+```
+PC-1> sh ip
+NAME        : PC-1[1]
+IP/MASK     : 192.168.1.2/24
+GATEWAY     : 192.168.1.1
+PC-1> ping 172.16.1.2
+84 bytes from 172.16.1.2 icmp_seq=1 ttl=63 time=26.702 ms
+84 bytes from 172.16.1.2 icmp_seq=2 ttl=63 time=11.904 ms
+84 bytes from 172.16.1.2 icmp_seq=3 ttl=63 time=11.088 ms
+84 bytes from 172.16.1.2 icmp_seq=4 ttl=63 time=15.978 ms
+84 bytes from 172.16.1.2 icmp_seq=5 ttl=63 time=12.178 ms
+```
+
+We can also see the VLANs known by the router using:
+```
+ROAS#show vlans
+
+Virtual LAN ID:  1 (IEEE 802.1Q Encapsulation)
+
+   vLAN Trunk Interface:   GigabitEthernet0/0
+
+ This is configured as native Vlan for the following interface(s) :
+GigabitEthernet0/0    Native-vlan Tx-type: Untagged
+
+   Protocols Configured:   Address:              Received:        Transmitted:
+
+GigabitEthernet0/0 (1)
+        Other                                           0                  95
+
+   71 packets, 10016 bytes input
+   95 packets, 9535 bytes output
+
+Virtual LAN ID:  10 (IEEE 802.1Q Encapsulation)
+
+   vLAN Trunk Interface:   GigabitEthernet0/0.1
+
+   Protocols Configured:   Address:              Received:        Transmitted:
+
+GigabitEthernet0/0.1 (10)
+           IP              192.168.1.1                 11                  10
+        Other                                           0                   2
+
+   11 packets, 1088 bytes input
+   12 packets, 1112 bytes output
+
+Virtual LAN ID:  20 (IEEE 802.1Q Encapsulation)
+
+   vLAN Trunk Interface:   GigabitEthernet0/0.2
+
+   Protocols Configured:   Address:              Received:        Transmitted:
+
+GigabitEthernet0/0.2 (20)
+           IP              172.16.1.1                   6                   5
+        Other                                           0                   2
+
+   6 packets, 574 bytes input
+   7 packets, 602 bytes output
+```
