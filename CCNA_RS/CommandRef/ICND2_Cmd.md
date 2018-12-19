@@ -1584,3 +1584,39 @@ We can take our entire OSPF network and sub-divide them into multiple *areas*. T
 Every router in an area will have an identical _view of the topology in the area_, i.e., a database about the connections in the area. A router running OSPF forms this **Link State Database** by collecting all the LSAs that comes to it. The SPF algorithm is run on each area and the only criterion for cost is the bandwidth. Thus, if a router sits at a boundary of an area, it needs to run SPF twice: once for each area. At the end of all the calculations, OSPF tries to inject the best route to a network into the router's IP routing table from it's own **Routing Information Base (_RIB_)**. Whether the route makes it to the routing table or not depends on the AD of the other routes in the routing table.
 
 # OSPF Neighbour Formation
+## Neighbours
+Neighbours are routers that are in the same network and exchange _hello_ messages. In case of OSPFv2 the destination address for the hello messages is the IPv4 Unicast IP address `224.0.0.5`. In case of IPv6, OSPFv3 uses the `FF02::5` address. However, _no routing information_, i.e., **LSAs** are exchanged with neighbours. *Neighbouring routers don't necessarily share LSAs - but adjacent routers do!*
+
+## Adjacent routers
+The criteria for being an adjacent router is:
+- Must be neighbours
+- Must have exchanged **Link State Updates (_LSUs_)** and **Database Description (_DD_)** packets. Both of these are used to form the Link State Database of the routers in an area.
+- **Only adjacent routers manufacture the link state database**.
+
+## Forming an Adjacency
+Let us consider the topology below. To start with, the interfaces on both routers are down, i.e., the state of the link, or **link state** is down. Now, when the interfaces come up:
+* R1 goes to the _Init state_.
+* R1 sends a _hello_ message to R2.
+    - R2 goes through the _hello_ message from R1, and sees the list of neighbours known to R1, but doesn't find itself in it.
+    - This changes the state of R2 to **Init**.
+    - **Init** state means that R2 received a hello message from R1 that didn't contain it's **Router ID**.
+* R2 now goes into _2-way state_.
+* R2 replies with a _hello_ message.
+    - R1 sees the list of neighbours in the hello message and **finds its router ID** (because R2 now knows R1 is a neighbour).
+    - This changes R1's link state to the **2-way state**.
+    - **2-Way** state means that R1 received a hello message from R2 that *contained R1's router ID* and thus, recognized R1 as a neighbour.
+* When both routers know about each other as neighbours, i.e., when both are in a _2-way_ state, a **Designated Router (_DR_)** and a **Backup Designated Router (_BDR_)** may be elected. Some types of OSPF networks will elect them while some will not.
+* Both routers will now transition to the **ExStart** state.
+    - In this state, the primary and secondary routers for the formation of the Link State Database are elected.
+* Both routers will now transition to the **Exchange** state.
+    - The **Exchange** state is the state in which the actual _exchange of network information_ occurs to create the Link State Database.
+    - The primary router elected in the _ExStart_ state sends **Database Description (_DD_)** packets to the secondary router.
+    - If R1 is the primary, inside each DD packet there's a list of **Link State Advertisements (_LSAs_)** known to R1.
+    - The secondary router replies with an acknowledgement.
+    - The acknowledgement contains a list of **Link State Advertisements (_LSAs_)** known to R2. A point to be noted is that LSAs aren't a packet type.
+* Both routers now proceed to the **loading** state.
+    - Both routers check the received DD against the list of their own LSAs. If any LSA is missing, they request/query the neighbour to send a copy of the LSA using a **Link State Request (_LSR_)**.
+    - The neighbour replies with a **Link State Update (_LSU_)** which the requestor uses to fill in the missing entry.
+* Once both routers have an identical copy of the Link State Database, the state is called **full**, because the adjacency has fully formed.
+
+# OSPF Areas
