@@ -1329,3 +1329,143 @@ GigabitEthernet0/0.2 (20)
    6 packets, 574 bytes input
    7 packets, 602 bytes output
 ```
+
+# SVI and Routed Port Concepts
+L3 switches are capable of doing routing themselves and don't require a separate router. Consider the topology below. We have two devices connected to the multi-layer switch, the first belongs to VLAN10 and the second to VLAN20. We want to route between them. We can create **Switch Virtual Interfaces (_SVI_)** that'll represent all the ports on a VLAN and then assign IP addresses to these SVIs and configure routing between them. This is one of the prime differences between multi-layer switches and routers - on a router typically each port is on its own subnet/VLAN but a multi-layer switch lets us have several devices belonging to a subnet connect via different ports, which we then allow to route through SVIs.
+
+## Routed Port
+Let us consider the above example where we have a bunch of ports assigned to VLAN10 and another bunch to VLAN20, and have SVIs assigned for each, which lets us route between them. However, if we wanted to communicate with an external router now, we have to configure another port to be a routed port and we assign it an IP address, which we then connect to a router. Now, we'll be able to route internally between all the VLANs on the switch, and if we need to communicate with devices outside the network, we can simply use the router as a next hop.
+
+# SVI and Routed Port Configuration
+The IP address for SVIs that represent each VLAN will be the IP address for the gateway in the devices connected to that VLAN. Thus, the IP address for the SVI in VLAN10, `192.168.1.1` will be the gateway for PC-1 and VLAN20 has an SVI with the IP `172.16.1.1` that will be the gateway for PC-2. Our fist goal is to create the SVIs and allow routing between the two VLANs. The current VLAN assignment is:
+```
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/0, Gi0/3
+10   VLAN0010                         active    Gi0/1
+20   VLAN0020                         active    Gi0/2
+1002 fddi-default                     act/unsup
+1003 token-ring-default               act/unsup
+1004 fddinet-default                  act/unsup
+1005 trnet-default                    act/unsup
+```
+We'll now **create the SVIs by creating an interface for the VLAN**, and then assign IP addresses to them:
+```
+sw1(config)#int vlan 10
+*Dec 19 09:25:29.093: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan10, changed state to down
+sw1(config-if)#ip addr 192.168.1.1 255.255.255.0
+sw1(config-if)#no shut
+*Dec 19 09:28:14.240: %LINK-3-UPDOWN: Interface Vlan10, changed state to up
+*Dec 19 09:28:15.241: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan10, changed state to up
+sw1(config-if)#int vlan 20
+*Dec 19 09:26:14.591: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan20, changed state to down
+sw1(config-if)#ip addr 172.16.1.1 255.255.255.0
+sw1(config-if)#no shut
+*Dec 19 09:26:44.653: %LINK-3-UPDOWN: Interface Vlan20, changed state to up
+*Dec 19 09:26:45.653: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan20, changed state to up
+sw1(config-if)#exit
+sw1(config)#ip routing
+```
+The last command, `ip routing` needs to be enabled since this is a L3 switch that can also act as an L2 switch when the layer 3 functionality is off. We turn on L3 (routing) features with the command.
+
+We should now be able to ping PC2 from PC1 and vice versa:
+```
+PC-1> ping 172.16.1.2
+172.16.1.2 icmp_seq=1 timeout
+172.16.1.2 icmp_seq=2 timeout
+84 bytes from 172.16.1.2 icmp_seq=3 ttl=63 time=4.545 ms
+84 bytes from 172.16.1.2 icmp_seq=4 ttl=63 time=11.222 ms
+84 bytes from 172.16.1.2 icmp_seq=5 ttl=63 time=8.289 ms
+```
+
+Now, to connect the switch to a router, we need to convert the switch port to a routed port. We could create another SVI, assign an IP to it, in the same subnet as the link on the far end on the router, but that's unneccesary overhead, since we won't need other devices belonging to the router's VLAN. Hence, we can directly assign an IP address to the router's port by converting it to a routed port. We do this by using the `no switchport` command in interface config mode:
+```
+sw1(config)#int g0/0
+sw1(config-if)#no switchport
+*Dec 19 09:40:45.359: %LINK-3-UPDOWN: Interface GigabitEthernet0/0, changed state to up
+*Dec 19 09:40:46.360: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+sw1(config-if)#ip addr 10.1.1.1 255.255.255.252
+```
+
+Now the interfaces look like:
+```
+sw1#sh ip int br | e unassigned
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     10.1.1.1        YES manual up                    up      
+Vlan10                 192.168.1.1     YES manual up                    up      
+Vlan20                 172.16.1.1      YES manual up                    up      
+```
+
+We can now also ping the router:
+```
+sw1#ping 10.1.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.1.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms
+```
+
+## Routing between sw1 and R1
+Now, so that the end-devices can reach the subnet of R1, we have to configure a routing protocol or set up static routes on both sw1 and R1. We choose RIPv2 as the routing protocol:
+```
+sw1(config)#router rip
+sw1(config-router)#version 2
+sw1(config-router)#network 192.168.1.0
+sw1(config-router)#network 172.16.1.0
+sw1(config-router)#network 10.0.0.0  
+sw1(config-router)#no auto-sum
+```
+
+Similarly, R1 needs a config:
+```
+R1(config)#router rip
+R1(config-router)#ver 2  
+R1(config-router)#net 10.0.0.0
+R1(config-router)#no auto-sum
+```
+
+We can now confirm _sw1_ is advertising the networks on its VLANs and _R1_ can see them:
+```
+sw1#sh ip proto | b rip
+Routing Protocol is "rip"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Sending updates every 30 seconds, next due in 14 seconds
+  Invalid after 180 seconds, hold down 180, flushed after 240
+  Redistributing: rip
+  Default version control: send version 2, receive version 2
+    Interface             Send  Recv  Triggered RIP  Key-chain
+    GigabitEthernet0/0    2     2                                    
+    Vlan10                2     2                                    
+    Vlan20                2     2                                    
+  Automatic network summarization is not in effect
+  Maximum path: 4
+  Routing for Networks:
+    10.0.0.0
+    172.16.0.0
+    192.168.1.0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 120)
+
+R1#sh ip route | i R
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+     D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+     o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+     + - replicated route, % - next hop override, p - overrides from PfR
+R        172.16.1.0 [120/1] via 10.1.1.1, 00:00:07, GigabitEthernet0/0
+R     192.168.1.0/24 [120/1] via 10.1.1.1, 00:00:07, GigabitEthernet0/0
+```
+
+The end-devices will now be able to ping the router's IP:
+```
+PC-2> ping 10.1.1.2
+84 bytes from 10.1.1.2 icmp_seq=1 ttl=254 time=7.706 ms
+84 bytes from 10.1.1.2 icmp_seq=2 ttl=254 time=10.238 ms
+84 bytes from 10.1.1.2 icmp_seq=3 ttl=254 time=12.132 ms
+84 bytes from 10.1.1.2 icmp_seq=4 ttl=254 time=8.959 ms
+84 bytes from 10.1.1.2 icmp_seq=5 ttl=254 time=7.636 ms
+```
+
+# Open Shortest Path First (OSPF) - Introduction
+The **Open Shortest Path First (_OSPF_)** routing protocol is much more flexible and scalable than RIP, and consequently it's used as an _Interior Gateway Protocol (IGP)_ in many enterprises. 
