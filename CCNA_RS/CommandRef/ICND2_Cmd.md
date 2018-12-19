@@ -1467,5 +1467,120 @@ PC-2> ping 10.1.1.2
 84 bytes from 10.1.1.2 icmp_seq=5 ttl=254 time=7.636 ms
 ```
 
-# Open Shortest Path First (OSPF) - Introduction
-The **Open Shortest Path First (_OSPF_)** routing protocol is much more flexible and scalable than RIP, and consequently it's used as an _Interior Gateway Protocol (IGP)_ in many enterprises. 
+# OSPF
+# Dijkstra's Algorithm
+The **Open Shortest Path First (_OSPF_)** routing protocol is a _link-state_, open standard routing protocol that's much more flexible and scalable than RIP, and consequently it's used as an _Interior Gateway Protocol (IGP)_ in many enterprises. we're primarily concerned with two different versions: OSPFv2 which can only route for IPv4 networks, and OSPFv3, which can also route for IPv6 networks. Both of them work on **Dijkstra's Algorithm**, which _processes_ a topology to calculate the shortest distance between each node, i.e., it finds the shortest path between each device on the network.
+
+## Explanation of Dijkstra's Algorithm
+Dijkstra's algorithm isn't limited to calculating the best route between networking devices. It's used by many navigation platforms such as Google maps to calculate the best path to a destination while driving. Generally speaking, Dijkstra's algorithm calculates the shortest possible distance between two nodes in a _weighted graph_. A **node** or a _vertex_ is a location in Dijkstra's algorithm and **edges** are the paths from one node to another, which have _weights_ or _cost_ associated to them. The algorithm can be used to find the shortest path between two nodes, but can also be extended to find the best paths from a source node to every other node in the graph to form a **shortest path tree**.
+
+In the case of routers, OSPF does this calculation for all routers in an **area**. An area is like a _map_ where all routers share a common database that tells the routers how to get to each network as well the cost involved to get to that network. OSPF will run on all of the routers in an area and they'll all calculate an identical map. In case of routers outside the area, we'll consider the best path to a router that can get us out of the area and to the destination area.
+
+Let us consider the topology below, with the weights indicating the link speeds. We'll be looking from the perspective of R1. R1 will try to calculate the best path to get to any of the networks in the topology. So, in this _graph_, both the routers as well as the Routers are _nodes/vertices_ and the links are the _edges_. However, since we're not really trying to get to another router, each router will ignore the other routers and only consider the cost to the different networks. Hence, R1 will only see the different networks as _nodes_.
+
+### Pass 1
+Initially, the cost to every network is assumed to be infinity. Then, R1 will find the networks that it's *directly* connected to and assign them costs based on the link speed. So, we get the following distances:
+```
+From node   10.1.1.0        10.2.2.0        10.3.3.0        10.4.4.0        10.5.5.0
+=========   =============   =============   =============   =============   =============
+R1          1 (via R1)      10 (R1)         infinity        inf             inf         
+```
+
+Consequently, we've found the network that's least costly to reach. After each pass, we get the lowest cost to one of the networks, which in this case is the `10.1.1.0` network. We're _done_ finding the best path to it, and it won't change. We don't need to calculate that value again anymore.
+
+### Pass 2
+Now, we'll consider the 10.1.1.0 network and consider the best path to the other networks from that node.
+- To get to `10.2.2.0` from `10.1.1.0`, we'd need to go through R1, and hence the total cost will be _10+1=11_, but the currently known least cost is _10_. Hence, we ignore it.
+- To get to `10.2.2.0` from `10.1.1.0`, we have a cost of _1+1=2_. However, we also have to consider the cost to get to R1, which is 1, and thus the total cost is _1+2=3_. Since 3 is less than the previously known least cost, i.e., infinity, it becomes the new shortest path, and we mark
+`10.1.1.0` as the node that gets us there.
+- We don't have connections from `10.1.1.0`, i.e., current node to the other two networks, i.e., `10.4.4.0` and `10.5.5.0`, so we copy their old shortest known path, i.e, infinity.
+
+The new values of the shortest paths will be in the table will be:
+```
+From node   10.1.1.0        10.2.2.0        10.3.3.0        10.4.4.0        10.5.5.0
+=========   =============   =============   =============   =============   =============
+R1          1 (R1)*         10 (R1)         inf             inf             inf         
+---------   -------------   -------------   -------------   -------------   -------------
+10.1.1.0    1 (R1)*         10 (R1)         3 (10.1.1.0)*   inf             inf
+```
+In this pass, we've obtained the shortest path to a new node, i.e., `10.3.3.0` via `10.1.1.0` and that won't change, so we won't calculate it anymore.
+
+### Pass 3
+Now we'll try reaching the all the networks (to which we don't know the shortest path yet) from the perspective of the `10.3.3.0`:
+- We already know the best paths to `10.1.1.0` and `10.3.3.0` networks, so we won't consider them any further.
+- First we try to see if `10.2.2.0` is reachable from `10.3.3.0` than directly from R1 - but since it's not connected, we'll just copy down the old shortest known path.
+- `10.4.4.0` is reachable at a cost of 11 + cost to get to `10.3.3.0`, which makes the total cost _3+11=14_. Since `14` which is less than infinity. So, we set that as the new shortest known path.
+- `10.5.5.0` is reachable at a cost of 2 + cost to get to `10.3.3.0`, which makes the total cost _3+2=5_. Since `5` is less than infinity, making it the new shortest known path.
+
+The shortest paths now are:
+```
+From node   10.1.1.0        10.2.2.0        10.3.3.0        10.4.4.0        10.5.5.0
+=========   =============   =============   =============   =============   =============
+R1          1 (R1)*         10 (R1)         inf             inf             inf         
+---------   -------------   -------------   -------------   -------------   -------------
+10.1.1.0    1 (R1)*         10 (R1)         3 (10.1.1.0)*   inf             inf
+---------   -------------   -------------   -------------   -------------   -------------
+10.3.3.0    1 (R1)*         10 (R1)         3 (10.1.1.0)*   14 (10.3.3.0)   5 (10.3.3.0)*
+```
+The permanent shortest path obtained in this pass is `10.5.5.0` via `10.3.3.0`.
+
+### Pass 4
+We'll now find out the cost to get to the remaining networks via `10.5.5.0`.
+- We already know shortest routes to `10.1.1.0`, `10.3.3.0` and `10.5.5.0` - we'll just copy them.
+- Calculate cost of getting to `10.2.2.0` from `10.5.5.0` - since they're not connected it's infinity; We know a better path via R1, so we ignore this path.
+- Calculate cost of getting to `10.4.4.0` from `10.5.5.0` = 11 + cost to get to `10.5.5.0` from R1 = _11+5 = 16_. This is more than the last known shortest path via `10.3.3.0` _of 14_, so we ignore it.  
+
+The shortest paths now are:
+```
+From node   10.1.1.0        10.2.2.0        10.3.3.0        10.4.4.0        10.5.5.0
+=========   =============   =============   =============   =============   =============
+R1          1 (R1)*         10 (R1)         inf             inf             inf         
+---------   -------------   -------------   -------------   -------------   -------------
+10.1.1.0    1 (R1)*         10 (R1)         3 (10.1.1.0)*   inf             inf
+---------   -------------   -------------   -------------   -------------   -------------
+10.3.3.0    1 (R1)*         10 (R1)         3 (10.1.1.0)*   14 (10.3.3.0)   5 (10.3.3.0)*
+---------   -------------   -------------   -------------   -------------   -------------
+10.5.5.0    1 (R1)*         10 (R1)*        3 (10.1.1.0)*   14 (10.3.3.0)   5 (10.3.3.0)*
+```
+
+The permanent shortest path obtained in this pass is `10.2.2.0` via _R1_, since we know that the other nodes are too costly to get us there via them.
+
+### Pass 5
+In the final pass, we'll find out the cost to get to the _last_ remaining networks, `10.4.4.0` via `10.2.2.0` and see if that's better than the current lowest known cost, i.e., _14_.
+- Copy the best routes we already know.
+- Calculate cost of getting to `10.4.4.0` from `10.2.2.0` - it's _20_ + cost to get to `10.2.2.0` = _20+10 = 30_. Since `20>14`, we'll ignore this route.
+- We now have the shortest paths from R1 to each node, as well as know which node to go through to get to them:
+
+```
+From node   10.1.1.0        10.2.2.0        10.3.3.0        10.4.4.0        10.5.5.0
+=========   =============   =============   =============   =============   =============
+R1          1 (R1)*         10 (R1)         inf             inf             inf         
+---------   -------------   -------------   -------------   -------------   -------------
+10.1.1.0    1 (R1)*         10 (R1)         3 (10.1.1.0)*   inf             inf
+---------   -------------   -------------   -------------   -------------   -------------
+10.3.3.0    1 (R1)*         10 (R1)         3 (10.1.1.0)*   14 (10.3.3.0)   5 (10.3.3.0)*
+---------   -------------   -------------   -------------   -------------   -------------
+10.5.5.0    1 (R1)*         10 (R1)*        3 (10.1.1.0)*   14 (10.3.3.0)   5 (10.3.3.0)*
+---------   -------------   -------------   -------------   -------------   -------------
+10.2.2.0    1 (R1)*         10 (R1)*        3 (10.1.1.0)*   14 (10.3.3.0)*  5 (10.3.3.0)*
+```
+
+So, the best routes are:
+```
+From node   10.1.1.0        10.2.2.0        10.3.3.0        10.4.4.0        10.5.5.0
+=========   =============   =============   =============   =============   =============
+R1          1 (R1)          10 (R1)         3 (10.1.1.0)    14 (10.3.3.0)   5 (10.3.3.0)
+```
+
+The shortest path tree becomes:
+
+Each router in the given OSPF area will calculate this tree and route according to the best known path.
+
+# OSPF Overview
+Unlike _RIPv2_ or _EIGRP_, which are _distance-vector_ routing protocols, OSPF is a **link-state routing protocol** , which means it must be fed a _map_ of the area on which it'll run the **Dijsktra's Shortest Path First (SPF)** algorithm, or simply, the _SPF_ algorithm  to get the shortest path to each network in the area. It can form **adjacencies** with other routers which is different from **neighbourships**. OSPF only passes network condition updates to routers with which it's formed _adjacencies_.
+
+We can take our entire OSPF network and sub-divide them into multiple *areas*. This can be done so that every route on the network doesn't have to know about every other router on the network, but just their part of the network, i.e., their _area_. Routers send **Link State Advertisements (_LSA_)** to every router in their area. There can be several different types of LSAs, some of which let us advertise network of one area in another area.   
+
+Every router in an area will have an identical _view of the topology in the area_, i.e., a database about the connections in the area. A router running OSPF forms this **Link State Database** by collecting all the LSAs that comes to it. The SPF algorithm is run on each area and the only criterion for cost is the bandwidth. Thus, if a router sits at a boundary of an area, it needs to run SPF twice: once for each area. At the end of all the calculations, OSPF tries to inject the best route to a network into the router's IP routing table from it's own **Routing Information Base (_RIB_)**. Whether the route makes it to the routing table or not depends on the AD of the other routes in the routing table.
+
+# OSPF Neighbour Formation
