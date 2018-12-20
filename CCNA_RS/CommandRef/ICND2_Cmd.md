@@ -1631,3 +1631,70 @@ Originally it was suggested that an area shouldn't have more than 50 routers, bu
 In case there's a non-contiguous area, i.e., an area not directly connected to area 0 on the network, but connected through another area, then we _can_ connect that area to area 0 with a virtual/logical link, although Cisco doesn't recommend it. Cisco prefers that we re-design the network to ensure all other areas are physically connected to area 0.
 
 # OSPFv2 Configuration
+## R1 config
+We want to set up a multi-area OSPF topology as shown in the figure below. First we have to start up OSPF with a _locally significant process ID_, that _doesn't_ have to match up with the neighbours (unlike EIGRP). Next, we specify a _network statement_ to state explicitly which interfaces will be participating in OSPF, i.e., which interfaces (falling within this network) will receive and advertise routes via OSPF. We also need a wild-card mask to specify the host bits.
+
+Given that our subnet mask length is /24, the last `32-24=8` bits are 1's in the wildcard mask, which becomes: `0.0.0.255`. Since we want the `192.168.1.1/24` interface to participate in OSPF, we use, `network 192.168.1.0 0.0.0.255`. We also specify the area in the network command, which in this case will be area 1. So, the complete command becomes `network 192.168.1.0 0.0.0.255 area 1`:
+```
+R1(config)#router ospf 1
+R1(config-router)#network 192.168.1.0 0.0.0.255 area 1
+R1(config-router)#network 1.1.1.1 0.0.0.0 area 1
+R1(config-router)#network 10.0.0.1 0.0.0.0 area 1
+```
+With the last 2 commands, we also add the loopback interface and the interface leading to _sw1_ in OSPF area 1.
+
+## R2 Config
+R2 is _special_ since it's an **Area Border Router (_ABR_)**, i.e., a router that runs OSPF for 2 ore more different areas, one of which is area 0/backbone of OSPF. We know that the interface `Gi0/0` with IP `10.0.0.2/24` will be in area 1 while the rest of the two interfaces will be in area 0. The process ID for OSPF of course, doesn't have to match up to that running on R1, but we'll use PID 1 just for the sake of consistency. The loopback can be in either area 1 or 0, but we choose 1.
+
+Let us first start the OSPF process, and setup the interfaces for the loopback, and area 0 to participate in OSPF. Given that all the interfaces in the area 0 interconnting R1, R2 and R3 have a `/30` subnet mask, their wildcard mask will be `255.255.255.255 - 255.255.255.252 = 0.0.0.3`. We include them in OSPF using:
+```
+R2(config)#router ospf 1
+R2(config-router)#network 2.2.2.2 0.0.0.0 area 1
+R2(config-router)#network 192.168.0.0 0.0.0.3 area 0
+R2(config-router)#network 192.168.0.4 0.0.0.3 area 0  
+```  
+
+There's also an additional way to tell the router which interfaces to allow to participate in OSPF. Since all we're doing is telling the router which participating interfaces will be in which area of OSPF, we can directly do so from the interface configuration mode using the `ip ospf <pid> area <areaID>` command:
+```
+R2(config-if)#ip ospf 1 area 1
+*Dec 20 12:28:45.309: %OSPF-5-ADJCHG: Process 1, Nbr 1.1.1.1 on GigabitEthernet0/0 from LOADING to FULL, Loading Done
+```
+We can see there's an immediate adjacency formation between R1 and R2. Further, the route for 1.1.1.1 was exchanged from R1 to R2 via an LSU. Finally, once this was done, the adjacency reached _full_ state.
+
+## R3 and R4 Config
+All the interfaces in R3 and R4 need to participate in OSPF and all are contained within area 0. So, instead of setting them up all individually, we _can_ set them up generically. We can ask the router to let all the interfaces participate in OSPF in area 0. The command is `network 0.0.0.0 255.255.255.255 area 0`:
+```
+R3(config)#router ospf 1
+R3(config-router)#network 0.0.0.0 255.255.255.255 area 0
+*Dec 20 12:35:46.062: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on GigabitEthernet0/1 from LOADING to FULL, Loading Done
+
+R4(config)#router ospf 1
+R4(config-router)#network 0.0.0.0 255.255.255.255 area 0
+*Dec 20 12:37:42.615: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on GigabitEthernet0/1 from LOADING to FULL, Loading Done
+*Dec 20 12:37:42.618: %OSPF-5-ADJCHG: Process 1, Nbr 3.3.3.3 on GigabitEthernet0/2 from LOADING to FULL, Loading Done
+```
+We can see that once OSPF on R4 was configured, it formed 2 adjacencies: one with R2 (`2.2.2.2/32`) and one with R3 (`3.3.3.3/32`).
+
+Finally, we can now use the `ip route show` command to see all the routes learnt by the router R4 via OSPF:
+```
+R4#sh ip route | i O
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+O IA     1.1.1.1 [110/3] via 192.168.0.5, 00:01:39, GigabitEthernet0/1
+O IA     2.2.2.2 [110/2] via 192.168.0.5, 00:01:39, GigabitEthernet0/1
+O        3.3.3.3 [110/2] via 192.168.0.9, 00:01:39, GigabitEthernet0/2
+O IA     10.0.0.0 [110/2] via 192.168.0.5, 00:01:39, GigabitEthernet0/1
+O        172.16.1.0/24 [110/2] via 192.168.0.9, 00:01:39, GigabitEthernet0/2
+O        192.168.0.0/30 [110/2] via 192.168.0.9, 00:01:39, GigabitEthernet0/2
+O IA  192.168.1.0/24 [110/3] via 192.168.0.5, 00:01:39, GigabitEthernet0/1
+```
+We can see that some of the routes have an `IA` next to them, which indicate `IA - OSPF inter area`. This means the routes were learnt from OSPF running in another area.
+
+From the full `ip route show` command, we also see:
+```
+O        192.168.0.0/30 [110/2] via 192.168.0.9, 00:17:45, GigabitEthernet0/2
+                        [110/2] via 192.168.0.5, 00:17:45, GigabitEthernet0/1
+```
+Here we find that **R4** has 2 alternate paths to the 192.168.0.0/30 network, one via R2 and R3, and it can load balance using the links if need be.  The cost of both are the same, i.e., 2 as noted in `[110/2]`. The first number, `110` is the Administrative Distance (AD) of the OSPF protocol.
