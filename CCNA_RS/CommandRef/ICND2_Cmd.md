@@ -1698,3 +1698,141 @@ O        192.168.0.0/30 [110/2] via 192.168.0.9, 00:17:45, GigabitEthernet0/2
                         [110/2] via 192.168.0.5, 00:17:45, GigabitEthernet0/1
 ```
 Here we find that **R4** has 2 alternate paths to the 192.168.0.0/30 network, one via R2 and R3, and it can load balance using the links if need be.  The cost of both are the same, i.e., 2 as noted in `[110/2]`. The first number, `110` is the Administrative Distance (AD) of the OSPF protocol.
+
+# OSPFv2 Verification
+We'll start our verification on our ABR, *R2*. We can see which interfaces are participating in OSPF using the `show ip ospf interface brief` command:
+```
+R2#sh ip ospf int br
+Interface    PID   Area            IP Address/Mask    Cost  State Nbrs F/C
+Gi0/2        1     0               192.168.0.5/30     1     DR    1/1
+Gi0/1        1     0               192.168.0.1/30     1     DR    1/1
+Lo1          1     1               2.2.2.2/32         1     LOOP  0/0
+Gi0/0        1     1               10.0.0.2/24        1     BDR   1/1
+```
+We can see which OSPF process the interfaces are linked to, the area where they operate, the IP address of the interfaces, the cost and the neighbours available through that interface. Of course, the loopback doesn't have any neighbour accessible through it.
+
+We can get the routing details for OSPF using `show ip protocols` command:
+```
+R2#sh ip proto | b ospf
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 2.2.2.2
+  It is an area border router
+  Number of areas in this router is 2. 2 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    2.2.2.2 0.0.0.0 area 1
+    192.168.0.0 0.0.0.3 area 0
+    192.168.0.4 0.0.0.3 area 0
+  Routing on Interfaces Configured Explicitly (Area 1):
+    GigabitEthernet0/0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    4.4.4.4              110      00:51:29
+    3.3.3.3              110      00:51:29
+    1.1.1.1              110      00:59:57
+  Distance: (default is 110)
+```
+We see that the router ID is obtained from the loopback interface, which in this case is `Router ID 2.2.2.2`. We also see that we can load-balance across 4 equal cost paths: `Maximum path: 4`. We can see which networks we're routing for and also which interface we explicitly configured. The Gi0/0 interface is in that list because we asked it to participate in OSPF in the interface configuration mode instead of setting up OSPF for its network. We also see the neighbours from which we're getting routing information:
+```
+Routing Information Sources:
+  Gateway         Distance      Last Update
+  4.4.4.4              110      00:51:29
+  3.3.3.3              110      00:51:29
+  1.1.1.1              110      00:59:57
+```
+
+We can also get more details about the neighbours using the `show ip ospf neighbor` command:
+```
+R2#sh ip o ne
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           1   FULL/BDR        00:00:39    192.168.0.6     GigabitEthernet0/2
+3.3.3.3           1   FULL/BDR        00:00:30    192.168.0.2     GigabitEthernet0/1
+1.1.1.1           1   FULL/DR         00:00:39    10.0.0.1        GigabitEthernet0/0
+```
+We can also see which interface the neighbours are connected to.
+
+Now, we can view the OSPF Link State Database using `sh ip ospf database` command:
+```
+R2#sh ip ospf datab
+
+            OSPF Router with ID (2.2.2.2) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+2.2.2.2         2.2.2.2         1597        0x80000006 0x00BE9C 2
+3.3.3.3         3.3.3.3         1660        0x80000003 0x009BC6 4
+4.4.4.4         4.4.4.4         1608        0x80000002 0x00DB71 4
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+192.168.0.1     2.2.2.2         1850        0x80000002 0x006E47
+192.168.0.5     2.2.2.2         1597        0x80000002 0x007835
+192.168.0.9     3.3.3.3         1660        0x80000002 0x00544D
+
+                Summary Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+1.1.1.1         2.2.2.2         79          0x80000003 0x002FFD
+2.2.2.2         2.2.2.2         338         0x80000003 0x00F633
+10.0.0.0        2.2.2.2         79          0x80000003 0x00D057
+192.168.1.0     2.2.2.2         79          0x80000003 0x00A026
+
+                Router Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         123         0x80000006 0x005A25 3
+2.2.2.2         2.2.2.2         79          0x80000004 0x0006E8 2
+
+                Net Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+10.0.0.1        1.1.1.1         123         0x80000003 0x0077A5
+
+                Summary Net Link States (Area 1)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+3.3.3.3         2.2.2.2         1850        0x80000002 0x00D451
+4.4.4.4         2.2.2.2         1597        0x80000002 0x00A67B
+172.16.1.0      2.2.2.2         1850        0x80000002 0x00CEA5
+172.16.2.0      2.2.2.2         1597        0x80000002 0x00C3AF
+192.168.0.0     2.2.2.2         338         0x80000003 0x008F3C
+192.168.0.4     2.2.2.2         338         0x80000003 0x006760
+192.168.0.8     2.2.2.2         1850        0x80000002 0x004B78
+```
+We can see that part of the database is for area 0 and part for area 1.
+
+If we go to R4, we'll see the same area 0 database:
+```
+R4#sh ip ospf d  
+
+            OSPF Router with ID (4.4.4.4) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+2.2.2.2         2.2.2.2         1756        0x80000006 0x00BE9C 2
+3.3.3.3         3.3.3.3         1819        0x80000003 0x009BC6 4
+4.4.4.4         4.4.4.4         1765        0x80000002 0x00DB71 4
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+192.168.0.1     2.2.2.2         2010        0x80000002 0x006E47
+192.168.0.5     2.2.2.2         1756        0x80000002 0x007835
+192.168.0.9     3.3.3.3         1819        0x80000002 0x00544D
+
+                Summary Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+1.1.1.1         2.2.2.2         232         0x80000003 0x002FFD
+2.2.2.2         2.2.2.2         492         0x80000003 0x00F633
+10.0.0.0        2.2.2.2         232         0x80000003 0x00D057
+192.168.1.0     2.2.2.2         232         0x80000003 0x00A026
+```
+
+# OSPF Cost Calculation
