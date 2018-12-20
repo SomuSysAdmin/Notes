@@ -1620,3 +1620,14 @@ Let us consider the topology below. To start with, the interfaces on both router
 * Once both routers have an identical copy of the Link State Database, the state is called **full**, because the adjacency has fully formed.
 
 # OSPF Areas
+Every interface that's participating in OSPF must belong to an area. We use areas to carve up the network into different sections. When we run the Dijkstra's SPF algorithm on the link state topology in the link state database, it's run within the boundaries of the area and every router ends up with the same view of the area. We don't need to have multiple areas, but for scalability, we can divide a large network into several smaller areas. In such cases, we'd have different instances of SPF running for each area.
+
+In a multi-area topology, we must have a **backbone area (Area 0)** or area _0.0.0.0_ to which all other areas would connect directly. In the topology shown below, there are 3 areas: area 0, 1 and 2. Every area, however, needs to be contiguous, i.e., they need to be directly connected to Area 0. Each of the areas have their own instance of SPF algo running, but the two routers that sit at the intersection of the areas, **R4** and **R7** are called **Area Border Routers (_ABR_s)**, since they have interfaces in more than one area. Since they're in multiple areas, they have more than one instance of the SPF running on them.
+
+For example, R4 has an instance of SPF running for _area 1_ and another running for the backbone, _area 0_, and consequently, will have a section of its link state database that has the topology for area 1 and another section containing the topology of the backbone. A special LSA is used to send the routers in area 0 the routes available in area 1 since it doesn't need to know any details beyond that, like the actual topology of area 1.
+
+Originally it was suggested that an area shouldn't have more than 50 routers, but that was based on the available processing power on a router. This is because the more the number of nodes, the more intensive calculation is required to run the SPF algorithm on that area. But given the increases in processing power of modern day enterprise-grade routers like the cisco ISR/ISR2, etc, that may no longer be a major concern. In practice, we could place non-Cisco routers in their own OSPF area given that they might behave unpredictably than our Cisco routers.
+
+In case there's a non-contiguous area, i.e., an area not directly connected to area 0 on the network, but connected through another area, then we _can_ connect that area to area 0 with a virtual/logical link, although Cisco doesn't recommend it. Cisco prefers that we re-design the network to ensure all other areas are physically connected to area 0.
+
+# OSPFv2 Configuration
