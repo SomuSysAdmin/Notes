@@ -1836,3 +1836,35 @@ Link ID         ADV Router      Age         Seq#       Checksum
 ```
 
 # OSPF Cost Calculation
+The metric on the basis of which OSPF calculates the best route is bandwidth. There's a reference bandwidth of **100 Mbps** on the basis of which we judge the other bandwidths. Thus, the formula for cost is:
+
+> Cost = Reference bandwidth/Interface bandwidth
+
+In the topology below, the cost of going to R2 from R1 is:
+
+> Cost = 100 Mbps/100 Mbps = 1
+
+Similarly the cost of going from R2 to R3 is 1, and the cumulative cost of going from R1 to R3 becomes _1+1=2_. Thus, the total cost to get to PC2 is _1+1+1 = 3_ since we also have to add the cost of the exit interface on R3 to PC2 through the switch.
+
+The cost of going from R1 to R3 directly through the 10Mbps link would be _100 Mbps/10 Mbps = 10_ and then to get to pc2, we have a cost of 1, making the cumulative cost _11_. Thus, the route through R2 is a better route.
+
+## GigabitEthernet Links
+Cost value has to be approximated to an integer, and so, if there's a 1Gbps = 1000Mbps link, the cost is:
+
+> Cost = 100 Mbps/1 Gbps = 100/1000 = 0.1 ~= 1.
+
+Since the value is a fraction, i.e., _0.1_, we have to round up to the next integer, i.e., 1. Now, if we adjust the values for the above topologies, and make the 100 Mbps links GigE links, and the 10 Mbps link into a 100 Mbps link, we see that the route via R2 now costs _3_ while the direct route from R1 to R3 and on to the PC costs _2_. This'll make OSPF think that the route directly to PC2 is the best one. We, of course know this isn't true since the GigE interfaces are much faster. The problem is we need a bigger reference bandwidth. We can set it using the `auto-cost reference-bandwidth <value>`, where _value is in Mbps_.
+
+With a higher reference bandwidth of say, _100,000 Mbps (100Gbps)_, the new costs are:
+
+> Cost of R1-R2-R3-Pc2  =   100+100+1000 = 1200
+> Cost of R1-R3-Pc2     =   1000+1000 = 2000
+
+Thus, the path through GigE connections shows up as the best path again, once the reference bandwidth has been adjusted. However, there is a problem with setting the reference bandwidth too high as well. The cost value is a _16-bit unsigned integer_ value, which means it has a range between _0_ and _65,535_. Thus, if divided by too small an actual bandwidth while the reference bandwidth is too high would mean an overflow, which would mean that the lower bandwidths would cost identical amounts. So, the cost has to be balanced.
+
+# OSPF Cost Configuration
+If we have a couple of routes to another network, one through a slower speed interface and another through a higher one, the one with the high speed interface will be chosen and the other ignored due to the cost. This also means no load balancing would be done. To prevent this, and to force load balancing, we can _intentionally_ provide the wrong information to OSPF by manually configuring the costs to be identical. Then OSPF will use both routes and load-balance.
+
+For this, we go into an interface/sub-interface configuration mode and then use the command `ip ospf cost <value>`.
+
+# Designated and Backup Designated Routers
