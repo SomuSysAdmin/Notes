@@ -1868,3 +1868,63 @@ If we have a couple of routes to another network, one through a slower speed int
 For this, we go into an interface/sub-interface configuration mode and then use the command `ip ospf cost <value>`.
 
 # Designated and Backup Designated Routers
+Routers in an area need to form the same _view_ of the area, represented by a common link state database. For this, they need to form an adjacency within the area. The total number of possible adjacencies in a area is given by:
+
+> Number of Total Possible Adjacencies = n * (n-1)/2
+
+This is the equation for the total number of edges in a complete graph with `n` nodes. However, if all the routers in an area have an interface in the same subnet, instead of forming an adjacency with every router, a **Designated Router (_DR_)** and a **Backup Designated Router (_BDR_)**, used when the DR goes down, an be _elected_. This is needed because a full adjacency between a number of routers isn't very scalable. For example, if we have 6 routers, the total number of adjacencies will be _6*5*0.5 = 15_. For 10 routers, the number climbs to _45_! Instead we elect a DR and BDR and we only need to have adjacencies between every router on the subnet and the DR and the BDR. This makes the number of adjacencies to:
+
+> Number of Adjacencies with DR & BDR = 2*(n-2)+1 = 2n - 3.
+
+Thus, only a partial mesh is required instead of a full mesh of adjacencies. The order of a full mesh was _n^2_, but in the case of DR & BDRs, it becomes _n_. Thus, it scales linearly, instead of exponentially.
+
+## OSPF Multicast Addresses
+Given the lack of a full mesh of adjacencies, OSPF needs a couple of different multicast address. This is because it needs to selectively talk to all the routers participating in OSPF or just the DR and BDR. Some of the OSPF multicast IPv4 addresses are:
+```
+IPv4 Address    IPv6 Address    Use
+============    ============    ======================================================
+224.0.0.5       FF02::5         All OSPF Routers
+224.0.0.6       FF02::6         All Designated and Backup Designated Routers (DR+BDRs)
+```
+
+## Designated Rourter election
+The **hello protocol**, used to send _hello_ messages is used to elect both the DR and BDR. The router with the **highest OSPF priority value wins** the election. Every interface on a router has a _default OSPF priority value of 1_. The priority value can be anything between _0 and 255_. If the OSPF priority is _0_, it means the router won't even participate in the DR election. In the interface configuration mode, we can manually set the OSPF priority value with `ip ospf priority <value>`.
+
+When we have a tie in the OSPF priority, the router with the highest **Router ID (RID)** wins. The Router ID can be configured manually in the _router configuration mode_ with the command `router-id <id>`. When not manually configured, the RID is auto-detected and set to the highest IP address of a (up/active) loopback interface. If a loopback interface (in up-state) is not found, it then uses the highest value non-loopback interface.
+
+If there's an established OSPF adjacency between routers, if a new router is added to the network with a higher RID/Priority *after* the DR & BDR election, then it *does not* become the new DR. This is because there's no _pre-emption_ in OSPF. In case of Cisco routers, a **DR** is elected first and then a **BDR** is elected from the remaining candidates by the same criteria.
+
+We can see the OSPF DR router using:
+```
+R1#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/DR         00:00:31    10.0.0.2        GigabitEthernet0/1
+```
+
+We can also see the DR using the `show ip ospf interface <intID>`:
+```
+R1#sh ip ospf int g0/1
+GigabitEthernet0/1 is up, line protocol is up
+  Internet Address 10.0.0.1/24, Area 1, Attached via Network Statement
+  Process ID 1, Router ID 1.1.1.1, Network Type BROADCAST, Cost: 1
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           1         no          no            Base
+  Transmit Delay is 1 sec, State BDR, Priority 1
+  Designated Router (ID) 2.2.2.2, Interface address 10.0.0.2
+  Backup Designated router (ID) 1.1.1.1, Interface address 10.0.0.1
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:08
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 1 msec, maximum is 2 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 2.2.2.2  (Designated Router)
+  Suppress hello for 0 neighbor(s)
+```
+This shows that R1 is the BDR due to the loopback IP `1.1.1.1` and R2 is the DR due to the _higher_ loopback IP `2.2.2.2`. Note that the only reason we can use these loopback interfaces outside the private-IP ranges is since we're using the `/32` mask, which makes it so that even if our network ever needs to reach the `2.0.0.0` network, it doesn't consider this the correct path. Further, we may also turn off the advertisement of the loopback interface networks and only assign the router id with it. 
