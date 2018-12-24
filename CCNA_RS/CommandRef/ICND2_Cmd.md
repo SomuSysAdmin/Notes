@@ -1927,4 +1927,50 @@ GigabitEthernet0/1 is up, line protocol is up
     Adjacent with neighbor 2.2.2.2  (Designated Router)
   Suppress hello for 0 neighbor(s)
 ```
-This shows that R1 is the BDR due to the loopback IP `1.1.1.1` and R2 is the DR due to the _higher_ loopback IP `2.2.2.2`. Note that the only reason we can use these loopback interfaces outside the private-IP ranges is since we're using the `/32` mask, which makes it so that even if our network ever needs to reach the `2.0.0.0` network, it doesn't consider this the correct path. Further, we may also turn off the advertisement of the loopback interface networks and only assign the router id with it. 
+This shows that R1 is the BDR due to the loopback IP `1.1.1.1` and R2 is the DR due to the _higher_ loopback IP `2.2.2.2`. Note that the only reason we can use these loopback interfaces outside the private-IP ranges is since we're using the `/32` mask, which makes it so that even if our network ever needs to reach the `2.0.0.0` network, it doesn't consider this the correct path. Further, we may also turn off the advertisement of the loopback interface networks and only assign the router id with it.
+
+# OSPF Network Type
+When we enable OSPF on an interface on a router, the interface will join one of several possible network types. We can take a look at the characteristics of these network types:
+
+```
+Network Type            DR/BDR Election     Default Hello Interval      Uses the neighbor command
+====================    ===============     ======================      =========================
+Broadcast               Yes                 10 sec                      No
+Point-to-Point          No                  10 sec                      No
+Non-Broadcast (NBMA)    Yes; DR only        30 sec                      Yes
+Point-to-Multipoint     No                  30 sec                      No
+```
+
+## Broadcast Network
+This is the case when multiple routers are connected to a single broadcast medium, for example, a L2 switch. In such scenarios, a DR and a BDR will be elected and there's no need to maintain a full-mesh of adjacencies. The default timer for the hello messages, i.e., the **hello interval**, is 10 seconds. If a neighbour doesn't receive a _hello_ message from a neighbour within _4*10=40_ seconds, called the **Dead interval**, it assumes the neighbour has gone down. Also, since we can dynamically discover neighbours, in this type of network, there's no need to statically configure a neighbour, with the `neighbor` command.
+
+## Point-to-Point Network
+This is the case when two routers are connected via a WAN, or maybe we're running the *Point-to-Point Protocol (PPP)* or HDLC, or even a frame-relay network. Since we only have two routers, we don't have to worry about DR and BDR elections. The hello interval is still 10 seconds and the dead interval is 4x hello interval = 40 seconds. Again, since there's only one other router, there's no need to statically set up the neighbour using the `neighbor` command.
+
+## Non-Broadcast/Non-Broadcast Multi-Access (NBMA) Network
+Let us consider the network is as shown, with a single router at the HQ connected to multiple other routers at different remote offices, all connected via a frame-relay network. All of them can be in the same subnet. However, it's impossible for the routers to dynamically discover the neighbours since it's *non-broadcast* and hence we don't have the luxury of a multicast to all OSPF routers. So, we have to statically configure a neighbour in the router's OSPF configuration mode.
+
+There still has to be a DR, but the DR has to be strategically *selected* so that it's adjacent to every router (*R1 in this case*). So, we have to set the OSPF priority to _0_ on all routers but R1, such that it's the only one participating in the election. Further, a **BDR isn't possible** here since the topology won't allow it. Here the *hello interval* is 30 seconds, and the dead timer is 120 seconds. Given the need to statically set up neighbours, the `neighbor` command is required in NBMA.
+
+## Point to Multipoint Network
+While topologically this looks like a NBMA network, if the egress interface from R1 going to the Frame-relay service provider is set to use the *Point to Multipoint protocol*, each single link to every other router in the network will be treated like a discrete or separate point-to-point links. They'll all be in different subnets. Just like point-to-point networks, there's no need for DR and BDR elections. Each of these connections are called **Permanent Virtual Circuits (_PVC_s)** and every single one appear to the routers as their own separate point to point network.
+
+The hello timer is 30 seconds and the dead timer is 120 seconds, and since each PVC is separate, there is no need to use the `neighbor` command to configure neighbours.
+
+## Default Network Types
+The type of technology used heavily dictates the network type that's available:
+* For **Ethernet** networks, the network type is **Broadcast**.
+* For **Frame-relay point-to-point sub-interfaces**, the default network type is **Point-to-Point**.
+* For **Frame-relay physical interfaces**, the default network type is **NBMA**.
+* For **Frame-relay multi-point sub-interfaces**, the default network type is **NBMA**.
+
+## Frame Relays
+Frame relay is a layer 2 WAN technology that's a service provided by _Frame relay service providers_. It sends layer 2 frames over a **Private Virtual Circuit (_PVC_)** that are marked with **Data Link Connection Identifiers (_DLCI_s)** numbers (pronounced *del-Cs*). In modern days, it's used less given the popularity of cable modems and DSL connections - but in the past, these used to be the _go-to_ WAN technology for small-businesses, because it could provide a connection to the internet or other branch offices at a reasonable price compared to erstwhile leased lines. It uses DLCIs to form multiple Permanent Virtual Circuits (PVCs).
+
+A **Virtual Circuit (_VC_)** is a logical connection between two endpoints. Thus, there could be multitple VCs over a single physical circuit (leading to the frame-relay service provider) when frame relay is used. A virtual circuit can be brought up on demand, in which case they're called **Switched Virtual Circuits (_SVC_s)** or have them installed permanently, called **Permanent Virtual Circuits (_PVC_)** - the latter being the case for frame-relay clouds. A **Data Link Connection Identifier (_DLCI_)** is a _locally-significant_ connection identifier. These are the **layer 2 addresses in the world of Frame-relay**. For example, in the figure below, the DLCI for the PVC to R2, R1 has a DLCI number of _102_. This however, doesn't match the DLCI of 201 on R2, because DLCIs are only relevant on the router on which they're defined.
+
+The connections may either be _point-to-point_ or _point-to-multipoint_ connections. In a point to point connection, all the PVCs belong in their own subnet, but in case of point-to-multipoint, they all share a subnet. A major disadvantage of a frame-relay connection over a leased line is that if we lease a T1, we get the entire bandwidth (1.5Mbps) of the T1 for ourselves. However, in a frame-relay, the bandwidth has to be shared among customers. As such, a frame-relay provider has to make **Service Level Agreements (_SLA_s)** with the customer, to ensure they get a certain bandwidth and they don't get _starved out_. The bandwidth promised/guaranteed by a service provider to be made available to a customer for a certain percentage of the time in the VC is called the **Committed Information Rate (_CIR_)**.
+
+Typically, if a customer has a T1 line (1.5Mbps) connected to his network, with a CIR of only *512Kbps*, then he can set the speed of the interface to higher than the CIR. So, when there's no congestion, some of that data will pass. However, every packet in excess of the CIR will have the **Discard Eligibility (DE)** bit set in it's Frame relay header, which indicates to the service provider's network that this frame was sent consuming a bandwidth beyond what was promised in the CIR and hence the service provider may choose to discard it in case of congestion. This can be great for TCP packets in FTP, for instance, but for real-time applications like VoIP that use UDP, we would want to ensure as little packet loss as possible.
+
+In case of congestion, the Frame-relay service provider's equipment can ask the link that's exceeding the CIR to slow down. For example, if R1 exceeds the CIR when sending traffic to R3, when a return packet from R3 is going to R1, the service provider can mark the **Backward Explicit Congestion Notification (_BECN_)** bit in the frame's header, which'll make the transmission speed on R1 to drop. However, if R1 is merely the server providing data for R3 to download, it's possible that there's no packet flow back to R1. In such cases, if the frame-relay cloud has **Forward Explicit Congestion Notification (_FECN_)** adaption enabled, it can mark one of the frames going to R3 with the FECN bit, which causes the receiver, R3 to send a frame (_without_ any meaningful data, called a _Q.922 test frame_) back to R1, on which the frame relay can mark the BECN bit.
