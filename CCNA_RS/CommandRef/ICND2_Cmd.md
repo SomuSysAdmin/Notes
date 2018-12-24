@@ -1963,3 +1963,7 @@ The type of technology used heavily dictates the network type that's available:
 * For **Frame-relay point-to-point sub-interfaces**, the default network type is **Point-to-Point**.
 * For **Frame-relay physical interfaces**, the default network type is **NBMA**.
 * For **Frame-relay multi-point sub-interfaces**, the default network type is **NBMA**.
+
+The network type for an interface can be seen by using the `show ip ospf interface` command. We can also change the network type by entering the interface/sub-interface configuration mode and then using the command: `ip ospf network <netType>`. However, if we manually change the network type, we should also change the network type of the far-end interface so that they can agree upon whether to use a DR/BDR, as well as the hello and dead timers.
+
+# OSPF timers
