@@ -2118,4 +2118,64 @@ O        192.168.0.4/30 [110/128] via 192.168.0.10, 00:29:17, Serial1/0.203
 C        192.168.0.8/30 is directly connected, Serial1/0.203
 L        192.168.0.9/32 is directly connected, Serial1/0.203
 ```
-The routes for the `192.168.1.1` network that's beyond R2 are missing. To fix this, the network type between neighbours must also match. So, we'd have to change the network type to NBMA on R3 and R4 to match up. 
+The routes for the `192.168.1.1` network that's beyond R2 are missing. To fix this, the network type between neighbours must also match. So, we'd have to change the network type to NBMA on R3 and R4 to match up.
+
+# OSPF Passive interfaces
+Let us consider that in the topology below, the `192.168.1.0/24` network only has end users connected and doesn't have any routers connected. Thus, there's no need for us to be sending out OSPF adjacency messages on that interface of R1, i.e., **R1 e0/0**. We still want that network to be advertised out the other interfaces. Plus, if anyone were to plug in their own router into that network, it would be a security concern if authentication isn't enabled. Thus, we can turn it into a passive interface with the `passive interface e 0/0` command:
+```
+R1(config)#router ospf 1
+R1(config-router)#passive-interface e 0/0
+```
+
+Now, we'll still be advertising the network:
+```
+R1#sh ip ospf int br
+Interface    PID   Area            IP Address/Mask    Cost  State Nbrs F/C
+Et0/0        1     1               192.168.1.1/24     10    DR    0/0
+Et0/1        1     1               10.0.0.1/24        10    DR    1/1
+```
+
+However, we won't be using it to learn routes:
+```
+R1#sh ip proto
+...
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 1.1.1.1
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    10.0.0.0 0.0.0.255 area 1
+    192.168.1.0 0.0.0.255 area 1
+  Passive Interface(s):
+    Ethernet0/0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    2.2.2.2              110      00:15:03
+  Distance: (default is 110)
+```
+
+Note, however, that if an interface connects us to an *adjacent* router, it must **not be passive** for the adjacencies to form. A good security practice is to first convert all the interfaces to passive interfaces using the `passive-interface default` command, and then manually turning the required interfaces into active interfaces when needed:
+```
+R1(config)#router ospf 1
+R1(config-router)#passive-interface default 
+*Dec 27 12:23:33.209: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Ethernet0/1 from FULL to DOWN, Neighbor Down: Interface down or detached
+R1(config-router)#do sh ip proto | s Passive
+  Passive Interface(s):
+    Ethernet0/0
+    Ethernet0/1
+    Ethernet0/2
+    Ethernet0/3
+    Serial1/0
+    Serial1/1
+    Serial1/2
+    Serial1/3
+    Loopback1
+    RG-AR-IF-INPUT1
+     VoIP-Null0
+    VoIP-Null0
+
+R1(config-router)#no passive-interface e0/1
+*Dec 27 12:24:58.030: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Ethernet0/1 from LOADING to FULL, Loading Done
+```
