@@ -1966,4 +1966,156 @@ The type of technology used heavily dictates the network type that's available:
 
 The network type for an interface can be seen by using the `show ip ospf interface` command. We can also change the network type by entering the interface/sub-interface configuration mode and then using the command: `ip ospf network <netType>`. However, if we manually change the network type, we should also change the network type of the far-end interface so that they can agree upon whether to use a DR/BDR, as well as the hello and dead timers.
 
-# OSPF timers
+# OSPF Timers
+OSPF uses a couple of timers/intervals, namely, the **hello interval** and **dead interval**. The hello interval is the time period (in sec) after which an OSPF enabled interface on the router sends out a hello message. Similarly, the dead timer is the amount of time that a router will wait to receive a hello message from an adjacent router, before considering it to be down. The dead timer, by default, is 4 times the hello timer.
+
+In the following topology, if we see **R2 e0/0**, it's a broadcast interface, with the hello timer set to 10 secs and the dead timer set to 40 secs:
+```
+R2#sh ip ospf int e0/0
+Ethernet0/0 is up, line protocol is up
+  Internet Address 10.0.0.2/24, Area 1, Attached via Network Statement
+  Process ID 1, Router ID 2.2.2.2, Network Type BROADCAST, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 2.2.2.2, Interface address 10.0.0.2
+  Backup Designated router (ID) 1.1.1.1, Interface address 10.0.0.1
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:04
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 2, maximum is 2
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 1.1.1.1  (Backup Designated Router)
+  Suppress hello for 0 neighbor(s)
+```
+
+However, for the Serial sub-interface, **R1 S1/0.103**, which is a _point-to-point_ interface, we have the same timers:
+```
+R2#sh ip ospf int s1/0.103
+Serial1/0.103 is up, line protocol is up
+  Internet Address 192.168.0.5/30, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 2.2.2.2, Network Type POINT_TO_POINT, Cost: 64
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           64        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:09
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/3, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 4.4.4.4
+  Suppress hello for 0 neighbor(s)
+```
+
+If we were to change the network type on these two - the adjacencies would be brought down and the hello and dead timers would also change:
+```
+R2(config)#int e0/0
+R2(config-if)#ip ospf network non-broadcast
+*Dec 27 11:34:56.120: %OSPF-5-ADJCHG: Process 1, Nbr 1.1.1.1 on Ethernet0/0 from FULL to DOWN, Neighbor Down: Interface down or detached
+R2(config-if)#int s1/0.102
+R2(config-subif)#ip ospf network non-broadcast
+*Dec 27 11:35:32.720: %OSPF-5-ADJCHG: Process 1, Nbr 3.3.3.3 on Serial1/0.102 from FULL to DOWN, Neighbor Down: Interface down or detached
+R2(config-subif)#end
+R2#sh ip ospf int e0/0 | i Timer
+  Timer intervals configured, Hello 30, Dead 120, Wait 120, Retransmit 5
+R2#sh ip ospf int s1/0.103 | i Timer
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+```
+
+On router R3, after the adjacency goes down with R2:
+```
+R3#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           0   FULL/  -        00:00:36    192.168.0.10    Serial1/0.203
+2.2.2.2           0   FULL/  -        00:00:38    192.168.0.1     Serial1/0.201
+R3#
+*Dec 27 11:36:09.873: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Serial1/0.201 from FULL to DOWN, Neighbor Down: Dead timer expired
+R3#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           0   FULL/  -        00:00:33    192.168.0.10    Serial1/0.203
+```
+
+However, if we were to manually set the timers to match, the adjacency would come back up:
+```
+R3(config)#int s1/0.201
+R3(config-subif)#ip ospf hello 30
+R3(config-subif)#end
+R3#sh ip ospf int s1/0.
+*Dec 27 11:42:13.234: %OSPF-4-NET_TYPE_MISMATCH: Received Hello from 2.2.2.2 on Serial1/0.201 indicating a  potential
+             network type mismatch
+*Dec 27 11:42:13.439: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Serial1/0.201 from LOADING to FULL, Loading Done
+R3#sh ip ospf int s1/0.201
+Serial1/0.201 is up, line protocol is up
+  Internet Address 192.168.0.2/30, Area 0, Attached via Network Statement
+  Process ID 1, Router ID 3.3.3.3, Network Type POINT_TO_POINT, Cost: 64
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           64        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 30, Dead 120, Wait 120, Retransmit 5
+    oob-resync timeout 120
+    Hello due in 00:00:15
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 2.2.2.2
+  Suppress hello for 0 neighbor(s)
+```
+Now, even though the network type is set to point-to-point, the adjacency forms since the timers match up. We can even see the neighbourship using:
+```
+R3#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           0   FULL/  -        00:00:30    192.168.0.10    Serial1/0.203
+2.2.2.2           0   FULL/  -        00:01:58    192.168.0.1     Serial1/0.201
+```
+
+However, on closer inspection, we see that we're not really learning routes from R2:
+```
+R3#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      3.0.0.0/32 is subnetted, 1 subnets
+C        3.3.3.3 is directly connected, Loopback1
+      10.0.0.0/24 is subnetted, 1 subnets
+O IA     10.0.0.0 [110/138] via 192.168.0.10, 00:11:28, Serial1/0.203
+      172.16.0.0/16 is variably subnetted, 3 subnets, 2 masks
+C        172.16.1.0/24 is directly connected, Ethernet0/0
+L        172.16.1.1/32 is directly connected, Ethernet0/0
+O        172.16.2.0/24 [110/74] via 192.168.0.10, 00:29:17, Serial1/0.203
+      192.168.0.0/24 is variably subnetted, 5 subnets, 2 masks
+C        192.168.0.0/30 is directly connected, Serial1/0.201
+L        192.168.0.2/32 is directly connected, Serial1/0.201
+O        192.168.0.4/30 [110/128] via 192.168.0.10, 00:29:17, Serial1/0.203
+C        192.168.0.8/30 is directly connected, Serial1/0.203
+L        192.168.0.9/32 is directly connected, Serial1/0.203
+```
+The routes for the `192.168.1.1` network that's beyond R2 are missing. To fix this, the network type between neighbours must also match. So, we'd have to change the network type to NBMA on R3 and R4 to match up. 
