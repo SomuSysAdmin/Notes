@@ -2649,3 +2649,36 @@ R3#sh ip ospf nei
 Neighbor ID     Pri   State           Dead Time   Address         Interface
 2.2.2.2           0   FULL/  -        00:00:39    10.1.1.5        Serial1/0
 ```
+
+Finally, we can see that the inter-area routes are being learnt, which would indicate the adjacency is up and OSPF is working:
+```
+R3#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O IA     1.1.1.1 [110/75] via 10.1.1.5, 00:05:15, Serial1/0
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/65] via 10.1.1.5, 00:05:15, Serial1/0
+      3.0.0.0/32 is subnetted, 1 subnets
+C        3.3.3.3 is directly connected, Loopback1
+      10.0.0.0/8 is variably subnetted, 3 subnets, 2 masks
+O IA     10.1.1.0/30 [110/74] via 10.1.1.5, 00:05:15, Serial1/0
+C        10.1.1.4/30 is directly connected, Serial1/0
+L        10.1.1.6/32 is directly connected, Serial1/0
+      172.16.0.0/16 is variably subnetted, 2 subnets, 2 masks
+C        172.16.1.0/24 is directly connected, Ethernet0/0
+L        172.16.1.1/32 is directly connected, Ethernet0/0
+O IA  192.168.1.0/24 [110/84] via 10.1.1.5, 00:05:15, Serial1/0
+```
+
+# OSPF Troubleshooting Exercise 2
