@@ -2401,3 +2401,251 @@ FF00::/8
 The link local addresses (`FE80::`) are those for the next hop neighbours in the forwarding process.
 
 # OSPF Troubleshooting Exercise 1
+Let us consider we have the topology below. The Routers are all configured for OSPF on process 1, but for some reason, R2 and R3 are unable to form an adjacency while R1 and R2 have already formed one:
+```
+R1#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/BDR        00:00:34    10.1.1.2        Ethernet0/1
+
+R2#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+1.1.1.1           1   FULL/DR         00:00:33    10.1.1.1        Ethernet0/0
+3.3.3.3           0   EXCHANGE/  -    00:00:37    10.1.1.6        Serial1/0
+
+R3#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           0   EXSTART/  -     00:00:38    10.1.1.5        Serial1/0
+```
+The problem is that R2 and R3 are unable to form an adjacency, as demonstrated by R2 being stuck in the exchange state while R3 is still trying to start the exchange. Given that both routers are connected via a point-to-point network type interface, the DR/BDR election won't occur. The ExStart state shows that the primary/secondary router election didn't go well. This might be due to a settings mismatch between the two routers connected to the `10.1.1.4/30` network.
+
+We can check the OSPF settings on R3 using:
+```
+R3#sh ip proto         
+*** IP Routing is NSF aware ***
+...
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 3.3.3.3
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    3.3.3.3 0.0.0.0 area 1
+    10.1.1.4 0.0.0.3 area 1
+    172.16.1.0 0.0.0.255 area 1
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    2.2.2.2              110      00:18:02
+  Distance: (default is 110)
+```
+We can see we're advertising all the right networks, and all the right information sources for routing are being used. We can also see the interface config for OSPF that connect us to `2.2.2.2`:
+```
+R3#sh ip ospf int s1/0
+Serial1/0 is up, line protocol is up
+  Internet Address 10.1.1.6/30, Area 1, Attached via Network Statement
+  Process ID 1, Router ID 3.3.3.3, Network Type POINT_TO_POINT, Cost: 64
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           64        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:07
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 0
+  Suppress hello for 0 neighbor(s)
+```
+
+We can now check the settings on R3 to see if they match:
+```
+R2#sh ip proto
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 2.2.2.2
+  It is an area border router
+  Number of areas in this router is 2. 2 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    2.2.2.2 0.0.0.0 area 1
+    10.1.1.0 0.0.0.3 area 0
+    10.1.1.4 0.0.0.3 area 1
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    3.3.3.3              110      00:22:29
+    1.1.1.1              110      00:23:56
+  Distance: (default is 110)
+
+R2#sh ip ospf int s1/0
+  Serial1/0 is up, line protocol is up
+    Internet Address 10.1.1.5/30, Area 1, Attached via Network Statement
+    Process ID 1, Router ID 2.2.2.2, Network Type POINT_TO_POINT, Cost: 64
+    Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+          0           64        no          no            Base
+    Transmit Delay is 1 sec, State POINT_TO_POINT
+    Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+      oob-resync timeout 40
+      Hello due in 00:00:07
+    Supports Link-local Signaling (LLS)
+    Cisco NSF helper support enabled
+    IETF NSF helper support enabled
+    Index 1/1/2, flood queue length 0
+    Next 0x0(0)/0x0(0)/0x0(0)
+    Last flood scan length is 1, maximum is 1
+    Last flood scan time is 0 msec, maximum is 0 msec
+    Neighbor Count is 1, Adjacent neighbor count is 0
+    Suppress hello for 0 neighbor(s)
+```
+We can see that the area, network type and timer intervals all match.
+
+Under such circumstances, we can turn on some debugging to try and understand what's going on. The debugging options for OSPF can be seen with:
+```
+R2#debug ip ospf ?
+  <1-65535>       Process ID number
+  adj             OSPF adjacency
+  capability      OSPF capability
+  database-timer  OSPF database timer
+  demand-circuit  OSPF demand-circuit negotiation
+  events          OSPF miscellaneous events
+  flood           OSPF flooding
+  ha              OSPF high availability
+  hello           OSPF hello
+  lsa-generation  OSPF LSA generation
+  monitor         OSPF SPF monitoring
+  mpls            OSPF MPLS
+  nsf             OSPF non-stop forwarding
+  nsr             OSPF non-stop routing
+  packet          OSPF received packets
+  rib             OSPF RIB
+  scheduler       OSPF process scheduling
+  snmp            OSPF snmp
+  spf             OSPF SPF
+```
+
+Let's start by debugging the `hello` messages:
+```
+R2#debug ip ospf hello
+OSPF hello debugging is on
+*Dec 28 12:56:59.074: OSPF-1 HELLO Se1/0: Send hello to 224.0.0.5 area 1 from 10.1.1.5
+*Dec 28 12:57:02.609: OSPF-1 HELLO Et0/0: Rcv hello from 1.1.1.1 area 0 10.1.1.1
+*Dec 28 12:57:04.098: OSPF-1 HELLO Et0/0: Send hello to 224.0.0.5 area 0 from 10.1.1.2
+*Dec 28 12:57:06.166: OSPF-1 HELLO Se1/0: Rcv hello from 3.3.3.3 area 1 10.1.1.6
+*Dec 28 12:57:09.028: OSPF-1 HELLO Se1/0: Send hello to 224.0.0.5 area 1 from 10.1.1.5
+*Dec 28 12:57:11.921: OSPF-1 HELLO Et0/0: Rcv hello from 1.1.1.1 area 0 10.1.1.1
+*Dec 28 12:57:13.729: OSPF-1 HELLO Et0/0: Send hello to 224.0.0.5 area 0 from 10.1.1.2
+*Dec 28 12:57:15.481: OSPF-1 HELLO Se1/0: Rcv hello from 3.3.3.3 area 1 10.1.1.6
+R2#u all
+All possible debugging has been turned off
+```
+We can see that the router can send and receive hello messages from either interfaces.
+
+We can now try debugging the packet information:
+```
+R2#debug ip ospf packet
+OSPF packet debugging is on
+R2#
+*Dec 28 13:01:51.226: OSPF-1 PAK  : Se1/0:  IN: 10.1.1.6->224.0.0.5: ver:2 type:2 len:32 rid:3.3.3.3 area:0.0.0.1 chksum:7B3E auth:0
+*Dec 28 13:01:51.226: OSPF-1 PAK  : Se1/0: OUT: 10.1.1.5->224.0.0.5: ver:2 type:2 len:132 rid:2.2.2.2 area:0.0.0.1 chksum:E458 auth:0
+R2#
+*Dec 28 13:01:55.286: OSPF-1 PAK  : Se1/0:  IN: 10.1.1.6->224.0.0.5: ver:2 type:1 len:48 rid:3.3.3.3 area:0.0.0.1 chksum:E193 auth:0
+*Dec 28 13:01:55.524: OSPF-1 PAK  : Se1/0: OUT: 10.1.1.5->224.0.0.5: ver:2 type:1 len:48 rid:2.2.2.2 area:0.0.0.1 chksum:E193 auth:0
+*Dec 28 13:01:55.906: OSPF-1 PAK  : Se1/0:  IN: 10.1.1.6->224.0.0.5: ver:2 type:2 len:32 rid:3.3.3.3 area:0.0.0.1 chksum:7B3E auth:0
+*Dec 28 13:01:55.906: OSPF-1 PAK  : Se1/0: OUT: 10.1.1.5->224.0.0.5: ver:2 type:2 len:132 rid:2.2.2.2 area:0.0.0.1 chksum:E442 auth:0
+R2#u all
+All possible debugging has been turned off
+```
+We can see RID information being exchanged, but nothing useful.
+
+Now, we can try checking the adjacency, since that's where the issue seems to reside:
+```
+R2#debug ip ospf adj
+OSPF adjacency debugging is on
+R2#
+*Dec 28 13:04:19.802: OSPF-1 ADJ   Se1/0: Rcv DBD from 3.3.3.3 seq 0x44C opt 0x52 flag 0x7 len 32  mtu 1480 state EXCHANGE
+*Dec 28 13:04:19.802: OSPF-1 ADJ   Se1/0: Nbr 3.3.3.3 has smaller interface MTU
+*Dec 28 13:04:19.802: OSPF-1 ADJ   Se1/0: Send DBD to 3.3.3.3 seq 0x44C opt 0x52 flag 0x2 len 132
+R2#
+*Dec 28 13:04:24.411: OSPF-1 ADJ   Se1/0: Rcv DBD from 3.3.3.3 seq 0x44C opt 0x52 flag 0x7 len 32  mtu 1480 state EXCHANGE
+*Dec 28 13:04:24.411: OSPF-1 ADJ   Se1/0: Nbr 3.3.3.3 has smaller interface MTU
+*Dec 28 13:04:24.411: OSPF-1 ADJ   Se1/0: Send DBD to 3.3.3.3 seq 0x44C opt 0x52 flag 0x2 len 132
+R2#u all
+All possible debugging has been turned off
+```
+It now tells us that R3 has a smaller MTU size. Now we have somewhere to start.
+
+First we check the MTU size on the interface **R2 S1/0** and then compare it with **R3 S1/0** to see if they match:
+```
+R2#sh int s1/0 | i MTU
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,
+R3#sh int s1/0 | i MTU
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,
+```
+We can see they match, but that's only the MTU for the interface at L2.
+
+We can see the MTU settings for IP (L3) with:
+```
+R2#sh ip int s1/0 | i MTU     
+  MTU is 1500 bytes
+R3#sh ip int s1/0 | i MTU
+  MTU is 1480 bytes
+```
+We can see that there's a mismatch. The value of `1480` as the MTU isn't a normal value. We have to check the running config. Alternatively, we could've directly checked the running config as soon as we saw the MTU debug warning:
+```
+R3#sh run | s Serial1/0
+interface Serial1/0
+ description Conn to R2
+ ip address 10.1.1.6 255.255.255.252
+ ip mtu 1480
+ serial restart-delay 0
+```
+We see that the MTU has been set manually to a non-standard value of `1480`. The MTUs is one of the parameters that should match on every interface on the same subnet for an adjacency to be formed. If this were set to match that of R2 (`1500B`, default), then the adjacency should form. We can set it back to default using the `default ip mtu` command:
+```
+R3(config)#int S1/0
+R3(config-if)#do ping 1.1.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+..
+Success rate is 0 percent (0/2)
+R3(config-if)#default ip mtu
+*Dec 28 13:14:19.422: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Serial1/0 from LOADING to FULL, Loading Done
+R3(config-if)#do ping 1.1.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 1.1.1.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 11/11/12 ms
+```
+
+We can further see that the adjacency is now in a `FULL` state in the neighbour table on either router:
+```
+R2#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+1.1.1.1           1   FULL/DR         00:00:32    10.1.1.1        Ethernet0/0
+3.3.3.3           0   FULL/  -        00:00:37    10.1.1.6        Serial1/0
+
+R3#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           0   FULL/  -        00:00:39    10.1.1.5        Serial1/0
+```
