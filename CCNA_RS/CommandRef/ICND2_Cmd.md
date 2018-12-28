@@ -2159,7 +2159,7 @@ Routing Protocol is "ospf 1"
 Note, however, that if an interface connects us to an *adjacent* router, it must **not be passive** for the adjacencies to form. A good security practice is to first convert all the interfaces to passive interfaces using the `passive-interface default` command, and then manually turning the required interfaces into active interfaces when needed:
 ```
 R1(config)#router ospf 1
-R1(config-router)#passive-interface default 
+R1(config-router)#passive-interface default
 *Dec 27 12:23:33.209: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Ethernet0/1 from FULL to DOWN, Neighbor Down: Interface down or detached
 R1(config-router)#do sh ip proto | s Passive
   Passive Interface(s):
@@ -2179,3 +2179,225 @@ R1(config-router)#do sh ip proto | s Passive
 R1(config-router)#no passive-interface e0/1
 *Dec 27 12:24:58.030: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Ethernet0/1 from LOADING to FULL, Loading Done
 ```
+
+# OSPFv3 configuration
+We need to ensure a few features are turned on in each of the routers for IPv6 and OSPFv3 to operate properly. The first is IPv6 Unicast routing and next, IPv6 Cisco Express Forwarding (CEF). Thus, on each router, we execute:
+```
+ipv6 unicast-routing
+ipv6 cef
+```
+Next, we set up the IPv6 addresses as per the network diagram.
+```
+R1(config)#int e0/0
+R1(config-if)#ipv6 addr 2000:11AA::1/64
+R1(config-if)#int e0/0
+R1(config-if)#no shut
+*Dec 27 13:40:53.720: %LINK-3-UPDOWN: Interface Ethernet0/0, changed state to up
+*Dec 27 13:40:54.724: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/0, changed state to up
+R1(config-if)#int e0/1
+R1(config-if)#ipv6 addr 2000:1122::1/64
+R1(config-if)#no shut
+*Dec 27 13:40:42.750: %LINK-3-UPDOWN: Interface Ethernet0/1, changed state to up
+*Dec 27 13:40:43.756: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/1, changed state to up
+
+R2(config)#int e0/0
+R2(config-if)#ipv6 addr 2000:1122::2/64
+R2(config-if)#no shut
+*Dec 27 13:48:33.396: %LINK-3-UPDOWN: Interface Ethernet0/0, changed state to up
+*Dec 27 13:48:34.402: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/0, changed state to up
+R2(config-if)#int s1/0
+R2(config-if)#ipv6 addr 2000:2233::2/64
+R2(config-if)#no shut
+*Dec 27 13:49:10.393: %LINK-3-UPDOWN: Interface Serial1/0, changed state to up
+*Dec 27 13:49:11.402: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+
+R3(config)#int s1/0
+R3(config-if)#ipv6 addr 2000:2233::3/64
+R3(config-if)#no shut
+*Dec 27 13:51:47.894: %LINK-3-UPDOWN: Interface Serial1/0, changed state to up
+*Dec 27 13:51:48.897: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+R3(config-if)#int e0/0
+R3(config-if)#ipv6 addr 2000:33AA::3/64
+R3(config-if)#no shut
+*Dec 27 13:52:22.939: %LINK-3-UPDOWN: Interface Ethernet0/0, changed state to up
+*Dec 27 13:52:23.947: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/0, changed state to up
+```
+
+OSPF uses the IPv4 loop back address as the router IDs, and so, we can even manually set them up like:
+```
+R1(config)#ipv6 router ospf 1
+R1(config-rtr)#router-id 1.1.1.1
+
+R2(config)#ipv6 router ospf 1
+R2(config-rtr)#router-id 2.2.2.2
+
+R1(config)#ipv6 router ospf 1
+R3(config-rtr)#router-id 3.3.3.3
+```
+Note, if the loopback interfaces are present, there's no need to manually define the router-id. The OSPF process will auto-assign it to the highest loopback interface address that's currently up.
+
+Unlike OSPFv2 with IPv4, we don't define networks such that any interface that falls within the range can participate in OSPF, but instead directly define which interfaces participate in OSPF. This is done via the interface configuration mode. In out topology all interfaces on R1 belong to _area 0_ and all interfaces on R3 belong to _area 1_ while the interfaces on R2 is shared by both areas since it's the ABR.
+```
+R1(config)#int e0/0
+R1(config-if)#ipv6 ospf 1 area 0
+R1(config-if)#int e0/1
+R1(config-if)#ipv6 ospf 1 area 0
+
+R3(config)#int e0/0
+R3(config-if)#ipv6 ospf 1 area 0
+R3(config-if)#int s1/0
+R3(config-if)#ipv6 ospf 1 area 0
+
+R2(config)#int e0/0
+R2(config-if)#ipv6 ospf 1 area 0
+*Dec 28 11:29:04.480: %OSPFv3-5-ADJCHG: Process 1, Nbr 1.1.1.1 on Ethernet0/0 from LOADING to FULL, Loading Done
+R2(config-if)#int s1/0
+R2(config-if)#ipv6 ospf 1 area 1
+*Dec 28 11:29:22.385: %OSPFv3-5-ADJCHG: Process 1, Nbr 3.3.3.3 on Serial1/0 from LOADING to FULL, Loading Done
+```
+
+# OSPFv3 Verification
+The command for the verification of IPv6 networking are identical to their IPv4 couterparts. For example, we have `show ipv6 interfaces brief` instead of `show ip interfaces brief`. and so on:
+```
+R1#sh ipv6 int br
+Ethernet0/0            [up/up]
+    FE80::A8BB:CCFF:FE00:100
+    2000:11AA::1
+Ethernet0/1            [up/up]
+    FE80::A8BB:CCFF:FE00:110
+    2000:1122::1
+Ethernet0/2            [administratively down/down]
+    unassigned
+Ethernet0/3            [administratively down/down]
+    unassigned
+Serial1/0              [administratively down/down]
+    unassigned
+Serial1/1              [administratively down/down]
+    unassigned
+Serial1/2              [administratively down/down]
+    unassigned
+Serial1/3              [administratively down/down]
+    unassigned
+Loopback1              [up/up]
+    unassigned
+```
+
+The command to show the IPv6 routing table is:
+```
+R1#sh ipv6 route
+IPv6 Routing Table - default - 7 entries
+Codes: C - Connected, L - Local, S - Static, U - Per-user Static route
+       B - BGP, HA - Home Agent, MR - Mobile Router, R - RIP
+       H - NHRP, I1 - ISIS L1, I2 - ISIS L2, IA - ISIS interarea
+       IS - ISIS summary, D - EIGRP, EX - EIGRP external, NM - NEMO
+       ND - ND Default, NDp - ND Prefix, DCE - Destination, NDr - Redirect
+       O - OSPF Intra, OI - OSPF Inter, OE1 - OSPF ext 1, OE2 - OSPF ext 2
+       ON1 - OSPF NSSA ext 1, ON2 - OSPF NSSA ext 2, la - LISP alt
+       lr - LISP site-registrations, ld - LISP dyn-eid, a - Application
+C   2000:1122::/64 [0/0]
+     via Ethernet0/1, directly connected
+L   2000:1122::1/128 [0/0]
+     via Ethernet0/1, receive
+C   2000:11AA::/64 [0/0]
+     via Ethernet0/0, directly connected
+L   2000:11AA::1/128 [0/0]
+     via Ethernet0/0, receive
+OI  2000:2233::/64 [110/74]
+     via FE80::A8BB:CCFF:FE00:200, Ethernet0/1
+OI  2000:33AA::/64 [110/84]
+     via FE80::A8BB:CCFF:FE00:200, Ethernet0/1
+L   FF00::/8 [0/0]
+     via Null0, receive
+```
+Here, the routes marked with `O` are learnt via OSPF and those with `OI` were also learnt via OSPF, but from another area (in this case _area 1_).
+
+Ping and traceroute also work identically:
+```
+R1#ping 2000:33AA::3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 2000:33AA::3, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 10/13/28 ms
+R1#traceroute 2000:33AA::3
+Type escape sequence to abort.
+Tracing the route to 2000:33AA::3
+
+  1 2000:1122::2 1 msec 1 msec 0 msec
+  2 2000:2233::3 11 msec 10 msec 10 msec
+```
+
+We can also see the details of OSPF running on the router. First to see the adjacencies, we use `show ipv6 ospf neighbours` and then to see the OSPF details of a particular interface, we use `show ipv6 ospf interface <interfaceID>`:
+```
+R2#sh ipv6 ospf nei
+
+            OSPFv3 Router with ID (2.2.2.2) (Process ID 1)
+
+Neighbor ID     Pri   State           Dead Time   Interface ID    Interface
+1.1.1.1           1   FULL/BDR        00:00:35    4               Ethernet0/0
+3.3.3.3           0   FULL/  -        00:00:35    7               Serial1/0
+R2#sh ipv6 ospf int s1/0
+Serial1/0 is up, line protocol is up
+  Link Local Address FE80::A8BB:CCFF:FE00:200, Interface ID 7
+  Area 1, Process ID 1, Instance ID 0, Router ID 2.2.2.2
+  Network Type POINT_TO_POINT, Cost: 64
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:08
+  Graceful restart helper support enabled
+  Index 1/1/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 3.3.3.3
+  Suppress hello for 0 neighbor(s)
+```
+The above also gives us the hello and dead intervals as well as the router ID and the interface's network type.
+
+The IPv6 protocols command is `show ipv6 protocols`:
+```
+R2#sh ipv6 proto
+IPv6 Routing Protocol is "connected"
+IPv6 Routing Protocol is "application"
+IPv6 Routing Protocol is "ND"
+IPv6 Routing Protocol is "ospf 1"
+  Router ID 2.2.2.2
+  Area border router
+  Number of areas: 2 normal, 0 stub, 0 nssa
+  Interfaces (Area 0):
+    Ethernet0/0
+  Interfaces (Area 1):
+    Serial1/0
+  Redistribution:
+    None
+```
+
+The IPv6 CEF that was enabled earlier maintains a FIB just like in IPv4 CEF. This can be viewed with: `show ipv6 cef`:
+```
+R2#sh ipv6 cef
+::/0
+  no route
+::/127
+  discard
+2000:1122::/64
+  attached to Ethernet0/0
+2000:1122::1/128
+  attached to Ethernet0/0
+2000:1122::2/128
+  receive for Ethernet0/0
+2000:11AA::/64
+  nexthop FE80::A8BB:CCFF:FE00:110 Ethernet0/0
+2000:2233::/64
+  attached to Serial1/0
+2000:2233::2/128
+  receive for Serial1/0
+2000:33AA::/64
+  nexthop FE80::A8BB:CCFF:FE00:300 Serial1/0
+FE80::/10
+  receive for Null0
+FF00::/8
+  multicast
+```
+The link local addresses (`FE80::`) are those for the next hop neighbours in the forwarding process.
+
+# OSPF Troubleshooting Exercise 1
