@@ -3263,3 +3263,56 @@ Max Nbrs: 0, Current Nbrs: 0
 ```
 
 # Configuring Unequal Cost Load Balancing
+OSPF can load-balance accross equal cost paths, and that's what EIGRP does by default, as well. However, it also has the option of _variance_ that lets it load-balance across unequal cost paths if one of those is the successor route and one or more are feasible successor routes. The maximum number of paths that can be used to load-balance by default is _4_ and can be seen as _maximum path_ in the output of the `show ip protocols` command:
+```
+R2#sh ip proto | s eigrp
+Routing Protocol is "eigrp 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 Protocol for AS(1)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 10.2.2.2
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+```
+This can be changed by going to the router configuration mode and then change the `maximum-paths` option:
+```
+R2(config)#router eigrp 1
+R2(config-router)#maximum-paths ?
+  <1-32>  Number of paths
+```
+
+We can see that the only route to the `10.10.10.0/24` network is through R4, and the route through R3 isn't in the routing table:
+```
+R2#sh ip route | s 10.10.10.0/24
+D        10.10.10.0/24 [90/5537536] via 172.16.1.6, 00:39:39, Serial1/1
+```
+However, EIGRP does know the route via R3 (`172.16.1.2`):
+```
+R2#sh ip eigrp topo | s 10.10.10.0/24
+P 10.10.10.0/24, 1 successors, FD is 5537536
+        via 172.16.1.6 (5537536/281600), Serial1/1
+        via 172.16.1.2 (10537472/281600), Serial1/0
+```
+
+The **Variance** is an integer factor, a value with which we multiply the FD of the successor route to get a maximum FD across which we're willing to load-balance. Any feasible successor route which has a FD equal to or less than this maximum FD will then participate in load-balancing. In this case, we have an FD of about 5.5M for the successor route. If the factor were to be 4, the max FD would be 22M, which is much higher than our required 10.5M. A better method than guessing the factor would be to divide the highest FD we have for a route we want to use in load-balancing, in our case: 10.5M by 5.5M, which is the FD of the successor route, to obtain an approx factor, which in this case is _1.9 ~= 2_. Thus, in this case, our variance multiplier should be _2_. We can set it in the router configuration mode:
+```
+R2(config)#router eigrp 1
+R2(config-router)#variance 2
+```
+Now, we should see 2 routes instead of just the successor route in the IP routing table:
+```
+R2#sh ip route | s 10.10.10.0/24
+D        10.10.10.0/24 [90/5537536] via 172.16.1.6, 00:01:32, Serial1/1
+                       [90/10537472] via 172.16.1.2, 00:01:32, Serial1/0
+```
+
+# EIGRP for IPv6 Overview
