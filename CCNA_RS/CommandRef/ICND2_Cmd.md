@@ -2982,3 +2982,23 @@ The context-sensitive help states that the next value should be a **Type of Serv
 ```
 
 # EIGRP Feasibility Condition
+EIGRP has two motivations:
+- To minimize convergence time and provide very fast failover alternate routes.
+- To ensure there are no routing loops.
+
+To help EIGRP determine if it's safe to failover right now, or if additional checking is required, we have the **EIGRP Feasibility Condition**. An EIGRP route is considered a **feasible successor route** if the **Reported Distance (_RD_)** from our _neighbour_ is less than the **Feasible Distance (_FD_)** of the _successor route_. We have to remember that **RD** is the distance from the neighbour to the destination, and **FD** is the distance to the neighbour plus RD. Let us illustrate this condition with the help of the topology below. Let us consider we want to get from R1 to the network `10.1.1.0/24` network, connected to R5.
+
+Here, we have three different paths: _R1-R2-R5_ through **R2**, _R1-R3-R5_ through **R3** and _R1-R4-R5_ through **R5**. The nubmers next to the links indicate the cost to travel through those links. Then we get the following table on R1:
+```
+Neighbour   RD      FD = RD + Dist to Nbr.      (Feaisble?) Successor
+=========== ======= =========================== =====================
+    R2       6,000  6,000 + 10,000 = 16,000     Successor
+    R3      11,000  7,000 + 11,000 = 18,000     Feasible Successor
+    R4      18,000  4,000 + 10,000 = 22,000     NO.
+```
+
+First, we choose the path with the lowest cost - which in this case is _R1-R2-R5_, which has a FD of only 16,000. A route is only called feasible if there's a stand-by route for failover that's available immediately via one of the other neighbours. In order to become a feasible successor, the RD of the path being considered must be less than the FD of the path via the current successor. Thus, in this case, for R3 to be come the feasible successor, its RD (cost to reach the destination network) has to be less than the FD of route via R2. This is true (Since `11,000 < 16,000`). However, when we compare R2 and R4, we see that RD of R4 = `18,000` is *not less than* the FD of the current router, R1 = 16,000. Thus it won't become a feasible successor.
+
+The failure of the feasibility condition doesn't necessarily indicate the presence of a routing loop, as in this case the _R1-R4-R5_ path didn't have any routing loops, but failed the feasibility criteria anyway. It just means that further analysis is required to determine if there's a routing loop. The job of a feasible successor router is to ensure that a backup route is available for use instantly when the primary link fails, and since the route through R4 requires more analysis, it's not a feasible successor router. The path through R4 may still be used as a backup path, but it's going to take longer to switchover since the router R1 has to first ensure that path isn't causing a routing loop. For this, R1 will send R4 a query and R4 will send its neighbour R5 a query, etc. After this querying process, the router R4 is ready to use, but it's not nearly as fast as having a feasible successor router with a standby link. While in this simple topology the querying process will end quickly, in larger enterprise networks, the querying will generate a noticable delay.
+
+# EIGRP for IPv4 Configuration and Verification
