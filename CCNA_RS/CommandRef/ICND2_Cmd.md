@@ -2682,3 +2682,206 @@ O IA  192.168.1.0/24 [110/84] via 10.1.1.5, 00:05:15, Serial1/0
 ```
 
 # OSPF Troubleshooting Exercise 2
+In the topology shown below, where we have a redundant link between R2 and R3 - one with an Ethernet link and another a Serial link, we can see that we have two adjacencies between R2 (`2.2.2.2`) and R3 (`3.3.3.3`):
+```
+R3#sh ip ospf nei
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/DR         00:00:31    10.1.1.9        Ethernet0/1
+2.2.2.2           0   FULL/  -        00:00:39    10.1.1.5        Serial1/0
+```
+
+If we check the routing, we see:
+```
+R3#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O IA     1.1.1.1 [110/21] via 10.1.1.9, 00:18:20, Ethernet0/1
+                 [110/21] via 10.1.1.5, 00:00:55, Serial1/0
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/11] via 10.1.1.9, 00:18:20, Ethernet0/1
+                 [110/11] via 10.1.1.5, 00:00:55, Serial1/0
+      3.0.0.0/32 is subnetted, 1 subnets
+C        3.3.3.3 is directly connected, Loopback1
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+O IA     10.1.1.0/30 [110/20] via 10.1.1.9, 00:18:20, Ethernet0/1
+                     [110/20] via 10.1.1.5, 00:00:55, Serial1/0
+C        10.1.1.4/30 is directly connected, Serial1/0
+L        10.1.1.6/32 is directly connected, Serial1/0
+C        10.1.1.8/30 is directly connected, Ethernet0/1
+L        10.1.1.10/32 is directly connected, Ethernet0/1
+      172.16.0.0/16 is variably subnetted, 2 subnets, 2 masks
+C        172.16.1.0/24 is directly connected, Ethernet0/0
+L        172.16.1.1/32 is directly connected, Ethernet0/0
+O IA  192.168.1.0/24 [110/30] via 10.1.1.9, 00:18:20, Ethernet0/1
+                     [110/30] via 10.1.1.5, 00:00:55, Serial1/0
+```
+
+Specifically, we see that both the Ethernet and the Serial Interfaces are being used to load-balance. However, Serial Interfaces have a default interface speed of a T1 line, i.e., `~1.5Mbps` while Ethernet Interfaces have a interface speed default of `10Mbps`. Thus, ideally we'd be using the Ethernet link with the Serial as a backup. This isn't the case, as we see:
+```
+1.0.0.0/32 is subnetted, 1 subnets
+O IA     1.1.1.1 [110/21] via 10.1.1.9, 00:18:20, Ethernet0/1
+           [110/21] via 10.1.1.5, 00:00:55, Serial1/0
+```
+
+First, we see the maximum paths settings in the `sh ip proto` command to see the number of concurrent load-balancing links:
+```
+R3#sh ip proto | s ospf
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 3.3.3.3
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    3.3.3.3 0.0.0.0 area 1
+    10.1.1.4 0.0.0.3 area 1
+    10.1.1.8 0.0.0.3 area 1
+    172.16.1.0 0.0.0.255 area 1
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+     2.2.2.2              110      00:05:21
+  Distance: (default is 110)
+```
+we can see that it's set to `4`. The criteria for load-balancing is that the paths must have the same cost. Since in OSPF, the cost is a function of the bandwidth, either one of the interfaces must have an error or a non-standard value in the cost configuration.
+
+We can check the OSPF cost settings using:
+```
+R3#sh ip ospf int e0/1
+Ethernet0/1 is up, line protocol is up
+  Internet Address 10.1.1.10/30, Area 1, Attached via Network Statement
+  Process ID 1, Router ID 3.3.3.3, Network Type BROADCAST, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State BDR, Priority 1
+  Designated Router (ID) 2.2.2.2, Interface address 10.1.1.9
+  Backup Designated router (ID) 3.3.3.3, Interface address 10.1.1.10
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:00
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/4/4, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 1 msec, maximum is 1 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 2.2.2.2  (Designated Router)
+  Suppress hello for 0 neighbor(s)
+R3#sh ip ospf int s1/0
+Serial1/0 is up, line protocol is up
+  Internet Address 10.1.1.6/30, Area 1, Attached via Network Statement
+  Process ID 1, Router ID 3.3.3.3, Network Type POINT_TO_POINT, Cost: 10
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           10        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:03
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 2.2.2.2
+  Suppress hello for 0 neighbor(s)
+```
+We can see that they both have the same cost. This shouldn't be the case, given that Ethernet links are typically faster than Serial links.
+
+We can check the bandwidth settings now, to see if they're non-standard:
+```
+R3#sh int e0/1 | i BW
+  MTU 1500 bytes, BW 10000 Kbit/sec, DLY 1000 usec,
+R3#sh int S1/0 | i BW
+  MTU 1500 bytes, BW 10000 Kbit/sec, DLY 20000 usec,
+```
+It appears that the Serial interface has a non-standard interface speed of `10000Kbps` or `10Mbps`, which causes OSPF to use it for load-balancing. We can change this behavior by finding the offending line in the config:
+```
+R3#sh run | s Serial1/0
+interface Serial1/0
+ description Conn to R2
+ bandwidth 10000
+ ip address 10.1.1.6 255.255.255.252
+ serial restart-delay 0
+```
+
+We remove the `bandwidth 10000` setting by:
+```
+R3(config)#int s1/0
+R3(config-if)#default bandwidth
+R3(config-if)#end
+R3#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+O IA     1.1.1.1 [110/21] via 10.1.1.9, 00:31:50, Ethernet0/1
+      2.0.0.0/32 is subnetted, 1 subnets
+O        2.2.2.2 [110/11] via 10.1.1.9, 00:31:50, Ethernet0/1
+      3.0.0.0/32 is subnetted, 1 subnets
+C        3.3.3.3 is directly connected, Loopback1
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+O IA     10.1.1.0/30 [110/20] via 10.1.1.9, 00:31:50, Ethernet0/1
+C        10.1.1.4/30 is directly connected, Serial1/0
+L        10.1.1.6/32 is directly connected, Serial1/0
+C        10.1.1.8/30 is directly connected, Ethernet0/1
+L        10.1.1.10/32 is directly connected, Ethernet0/1
+      172.16.0.0/16 is variably subnetted, 2 subnets, 2 masks
+C        172.16.1.0/24 is directly connected, Ethernet0/0
+L        172.16.1.1/32 is directly connected, Ethernet0/0
+O IA  192.168.1.0/24 [110/30] via 10.1.1.9, 00:31:50, Ethernet0/1
+```
+Now we can see that only the Ethernet link is being used, as we intended.
+
+We can also see that Serial1/0 now has the correct interface speed:
+```
+R3#sh ip ospf int s1/0  
+Serial1/0 is up, line protocol is up
+  Internet Address 10.1.1.6/30, Area 1, Attached via Network Statement
+  Process ID 1, Router ID 3.3.3.3, Network Type POINT_TO_POINT, Cost: 64
+  Topology-MTID    Cost    Disabled    Shutdown      Topology Name
+        0           64        no          no            Base
+  Transmit Delay is 1 sec, State POINT_TO_POINT
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    oob-resync timeout 40
+    Hello due in 00:00:02
+  Supports Link-local Signaling (LLS)
+  Cisco NSF helper support enabled
+  IETF NSF helper support enabled
+  Index 1/2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1, Adjacent neighbor count is 1
+    Adjacent with neighbor 2.2.2.2
+  Suppress hello for 0 neighbor(s)
+R3#sh int s1/0 | i BW
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,
+```
+The cost is now `64` due to an interface speed of `1.544Mbps`.
+
+# Enhanced Interior Gateway Routing Protocol (EIGRP)
