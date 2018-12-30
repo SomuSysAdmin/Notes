@@ -2997,8 +2997,269 @@ Neighbour   RD      FD = RD + Dist to Nbr.      (Feaisble?) Successor
     R4      18,000  4,000 + 10,000 = 22,000     NO.
 ```
 
-First, we choose the path with the lowest cost - which in this case is _R1-R2-R5_, which has a FD of only 16,000. A route is only called feasible if there's a stand-by route for failover that's available immediately via one of the other neighbours. In order to become a feasible successor, the RD of the path being considered must be less than the FD of the path via the current successor. Thus, in this case, for R3 to be come the feasible successor, its RD (cost to reach the destination network) has to be less than the FD of route via R2. This is true (Since `11,000 < 16,000`). However, when we compare R2 and R4, we see that RD of R4 = `18,000` is *not less than* the FD of the current router, R1 = 16,000. Thus it won't become a feasible successor.
+First, we choose the path with the lowest cost - which in this case is _R1-R2-R5_, which has a FD of only 16,000. A route is only called feasible if there's a stand-by route for failover that's available immediately via one of the other neighbours. In order to become a feasible successor, the RD of the path being considered must be less than the FD of the path via the current successor. Thus, in this case, for R3 to be come the feasible successor, its RD (cost to reach the destination network) has to be less than the FD of route via R2. This is true (Since `11,000 < 16,000`). However, when we compare R2 and R4, we see that RD of R4 = `18,000` is *not less than* the FD of the current router, R1 = `16,000`. Thus it won't become a feasible successor.
 
-The failure of the feasibility condition doesn't necessarily indicate the presence of a routing loop, as in this case the _R1-R4-R5_ path didn't have any routing loops, but failed the feasibility criteria anyway. It just means that further analysis is required to determine if there's a routing loop. The job of a feasible successor router is to ensure that a backup route is available for use instantly when the primary link fails, and since the route through R4 requires more analysis, it's not a feasible successor router. The path through R4 may still be used as a backup path, but it's going to take longer to switchover since the router R1 has to first ensure that path isn't causing a routing loop. For this, R1 will send R4 a query and R4 will send its neighbour R5 a query, etc. After this querying process, the router R4 is ready to use, but it's not nearly as fast as having a feasible successor router with a standby link. While in this simple topology the querying process will end quickly, in larger enterprise networks, the querying will generate a noticable delay.
+The failure of the feasibility condition doesn't necessarily indicate the presence of a routing loop, as in this case the _R1-R4-R5_ path didn't have any routing loops, but failed the feasibility criteria anyway. It just means that further analysis is required to determine if there's a routing loop. The job of a feasible successor router is to ensure that a backup route is available for use instantly when the primary link fails, and since the route through R4 requires more analysis, it's not a feasible successor router. The path through R4 may still be used as a backup path, but it's going to take longer to switchover since the router R1 has to first ensure that path isn't causing a routing loop. For this, R1 will send R4 a query and R4 will send its neighbour R5 a query, etc. After this querying process, the router R4 is ready to use, but it's not nearly as fast as having a feasible successor router with a standby link. While in this simple topology the querying process will end quickly, in larger enterprise networks, the querying will generate a noticeable delay.
 
 # EIGRP for IPv4 Configuration and Verification
+Let us assume that we want to enable EIGRP on the following topology. Just like OSPF, we'll be using network statements to define which interfaces will be participating in routing protocol. We begin the EIGRP configuration by declaring an **Autonomous System (_AS_) Number**. Then on each router we define the network statements. In OSPF we had to include the wildcard mask, but in EIGRP, if the wildcard mask is skipped, then the router uses the network's classful address mask to figure out the wildcard mask.
+```
+R1(config)#router eigrp 1
+R1(config-router)#network 192.168.1.1 0.0.0.255
+R1(config-router)#network 192.168.2.0 0.0.0.255
+R1(config-router)#network 10.1.1.1 0.0.0.0
+
+R2(config)#router eigrp 1
+R2(config-router)#network 192.168.2.0
+*Dec 30 13:20:48.303: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 192.168.2.1 (Ethernet0/0) is up: new adjacency
+R2(config-router)#network 172.16.0.0
+R2(config-router)#network 10.0.0.0        
+```
+On the configuration of R2, we skipped the wildcard mask for the `192.168.2.0/24` network because the classful mask of the `192.168.*.0` network is 24 bits. Almost immediately, an adjacency will form with R1. Further, we have two different links in the `172.16.0.0/12` range: `172.16.1.1` and `172.16.1.5` networks. The default classful mask length for the `172.16.0.0` network is 12 bits, not the required 30 bits, but since it encompasses the IP address' block and since there aren't any interfaces within this block that we don't want to participate in EIGRP, we can just write it this way. Similarly, we include the entire `10.0.0.0/8` network since `10.2.2.2` is an IP within this address block.
+
+Now we configure R3 and R4. Again, we just enabled routing on the entire `172.16.0.0` network, but since the `172.16.1.4/30` network is the only one assigned to an interface, that's the only one that'll be advertised. An adjacency is formed with R2. Then, we had two different networks that we wanted to participate in EIGRP: `10.3.3.3/32` and `10.10.10.1/24`. Since both fall within the `10.0.0.0/8` network, we include them both with the `network 10.0.0.0` command, since the classful mask of `/8` will generate a `0.255.255.255` wildcard mask which will encompass both the networks:
+```
+R3(config)#router eigrp 1
+R3(config-router)#network 172.16.0.0
+*Dec 30 13:32:07.181: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 172.16.1.1 (Serial1/0) is up: new adjacency
+R3(config-router)#network 10.0.0.0
+
+R4(config)#router eigrp 1
+R4(config-router)#network 0.0.0.0
+*Dec 30 13:39:33.729: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 10.10.10.1 (Ethernet0/0) is up: new adjacency
+*Dec 30 13:39:33.738: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 172.16.1.5 (Serial1/0) is up: new adjacency
+```
+Finally, in the case of R4, we included all active interfaces in routing by using the `network 0.0.0.0` command. It's the IP address for all possible IPv4 networks, and will have a wildcard mask of (`255.255.255.255`). This automatically activates EIGRP on all interfaces. This is why two different adjacencies are formed.
+
+## EIGRP Verification
+Now that EIGRP has been configured on all the routers, we can verify the configuration. First we go to R2 since it has 4 different interfaces all participating in EIGRP. To see which interfaces are participating in EIGRP, we use `show ip eigrp interfaces`:
+```
+R2#sh ip eigrp int
+EIGRP-IPv4 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Et0/0                    1        0/0       0/0           6       0/2           50           0
+Se1/0                    1        0/0       0/0          17       2/95         147           0
+Se1/1                    1        0/0       0/0          16       1/50         110           0
+Lo1                      0        0/0       0/0           0       0/0            0           0
+```
+
+To see which IP addresses are our neighbours, we use the command `show ip eigrp neighbors`:
+```
+R2#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+2   172.16.1.6              Se1/1                    14 00:07:58   16   300  0  10
+1   172.16.1.2              Se1/0                    11 00:15:24   17   570  0  17
+0   192.168.2.1             Et0/0                    11 00:26:43    6   100  0  10
+```
+
+Next, to see which routes EIGRP is aware of, we use the `show ip eigrp topology` command:
+```
+R2#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+2   172.16.1.6              Se1/1                    14 00:07:58   16   300  0  10
+1   172.16.1.2              Se1/0                    11 00:15:24   17   570  0  17
+0   192.168.2.1             Et0/0                    11 00:26:43    6   100  0  10
+R2#sh ip eigrp topo
+EIGRP-IPv4 Topology Table for AS(1)/ID(10.2.2.2)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status
+
+P 10.3.3.3/32, 1 successors, FD is 2297856
+        via 172.16.1.6 (5665536/409600), Serial1/1
+        via 172.16.1.2 (10639872/128256), Serial1/0
+P 10.1.1.1/32, 1 successors, FD is 409600
+        via 192.168.2.1 (409600/128256), Ethernet0/0
+P 192.168.2.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+P 192.168.1.0/24, 1 successors, FD is 307200
+        via 192.168.2.1 (307200/281600), Ethernet0/0
+P 10.4.4.4/32, 1 successors, FD is 2297856
+        via 172.16.1.6 (5639936/128256), Serial1/1
+        via 172.16.1.2 (10665472/409600), Serial1/0
+P 172.16.1.4/30, 1 successors, FD is 5511936
+        via Connected, Serial1/1
+P 172.16.1.0/30, 1 successors, FD is 10511872
+        via Connected, Serial1/0
+P 10.2.2.2/32, 1 successors, FD is 128256
+        via Connected, Loopback1
+P 10.10.10.0/24, 1 successors, FD is 2195456
+        via 172.16.1.6 (5537536/281600), Serial1/1
+        via 172.16.1.2 (10537472/281600), Serial1/0
+```
+
+Here, we can see that R2 knows 2 different routes to sw3, i.e., the `10.10.10.0/24` network - one through R3(`172.16.1.2`) and the other through R4 (`172.16.1.6`):
+```
+P 10.10.10.0/24, 1 successors, FD is 2195456
+        via 172.16.1.6 (5537536/281600), Serial1/1
+        via 172.16.1.2 (10537472/281600), Serial1/0
+```
+The first number in `172.16.1.6 (5537536/281600)`, i.e., `5537536` is the **Feasible Distance (_FD_)**, the total cost of getting to that network, and the 2nd number `281600` is the **Reported Distance (_RD_)**, which is the cost to traverse to the destination from the neighbour. Thus, it costs `281600` to get to the destination `10.10.10.0/24` _from_ R4 (172.16.1.6) and costs `5537536` to get to the destination from R2. while both routes are known by EIGRP, when we check the IP routing table, we see that only one of these routes were injected into the routing table, the one with the least metric, i.e., R4 (`172.16.1.6`):
+```
+R2#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+D        10.1.1.1/32 [90/409600] via 192.168.2.1, 00:11:49, Ethernet0/0
+C        10.2.2.2/32 is directly connected, Loopback1
+D        10.3.3.3/32 [90/5665536] via 172.16.1.6, 00:13:05, Serial1/1
+D        10.4.4.4/32 [90/5639936] via 172.16.1.6, 00:13:05, Serial1/1
+D        10.10.10.0/24 [90/5537536] via 172.16.1.6, 00:13:05, Serial1/1
+      172.16.0.0/16 is variably subnetted, 4 subnets, 2 masks
+C        172.16.1.0/30 is directly connected, Serial1/0
+L        172.16.1.1/32 is directly connected, Serial1/0
+C        172.16.1.4/30 is directly connected, Serial1/1
+L        172.16.1.5/32 is directly connected, Serial1/1
+D     192.168.1.0/24 [90/307200] via 192.168.2.1, 00:11:49, Ethernet0/0
+      192.168.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.2.0/24 is directly connected, Ethernet0/0
+L        192.168.2.2/32 is directly connected, Ethernet0/0
+```
+
+This is due to the fact that one of the links is a 256Kbps line while the other is a 512Kbps line to the same destination. Thus, the higher speed interfaces connected between R2 and R4 generate a lower **Feasible Distance (_FD_)**, and thus has the lower cost and becomes the preferred route. However, the 2nd route via `172.16.1.2 (10537472/281600)` has met the *Feasibility Condition* since the RD of path through R3 (`281600`) is lower than the FD of the **Successor**, i.e., the current preferred path through R4 (`5537536`). Hence it has become the *Feasible Successor Router*, and it'll take over instantly if R4 or the connecting links fail.
+
+The output of the `show ip eigrp topo` command only shows us the successor or feasible successor routes. To see all possible routes, including the *non-successor* routes, we use the commnand `show ip eigrp topology all-links`:
+```
+R2#sh ip eigrp topo all
+EIGRP-IPv4 Topology Table for AS(1)/ID(10.2.2.2)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status
+
+P 10.3.3.3/32, 1 successors, FD is 2297856, serno 15
+        via 172.16.1.6 (5665536/409600), Serial1/1
+        via 172.16.1.2 (10639872/128256), Serial1/0
+P 10.1.1.1/32, 1 successors, FD is 409600, serno 3
+        via 192.168.2.1 (409600/128256), Ethernet0/0
+        via 172.16.1.2 (11203072/5691136), Serial1/0, serno 28
+P 192.168.2.0/24, 1 successors, FD is 281600, serno 1
+        via Connected, Ethernet0/0
+P 192.168.1.0/24, 1 successors, FD is 307200, serno 2
+        via 192.168.2.1 (307200/281600), Ethernet0/0
+        via 172.16.1.2 (11100672/5588736), Serial1/0, serno 30
+P 10.4.4.4/32, 1 successors, FD is 2297856, serno 16
+        via 172.16.1.6 (5639936/128256), Serial1/1
+        via 172.16.1.2 (10665472/409600), Serial1/0
+P 172.16.1.4/30, 1 successors, FD is 5511936, serno 18
+        via Connected, Serial1/1
+        via 172.16.1.2 (11049472/5537536), Serial1/0, serno 32
+P 172.16.1.0/30, 1 successors, FD is 10511872, serno 13
+        via Connected, Serial1/0
+        via 172.16.1.6 (11049472/10537472), Serial1/1, serno 23
+P 10.2.2.2/32, 1 successors, FD is 128256, serno 6
+        via Connected, Loopback1
+P 10.10.10.0/24, 1 successors, FD is 2195456, serno 17
+        via 172.16.1.6 (5537536/281600), Serial1/1
+        via 172.16.1.2 (10537472/281600), Serial1/0
+```
+
+Finally, we use the `show ip protocols` command to get the details of the running EIGRP process on the router:
+```
+R2#sh ip proto  
+*** IP Routing is NSF aware ***
+...
+Routing Protocol is "eigrp 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 Protocol for AS(1)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 10.2.2.2
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    10.0.0.0
+    172.16.0.0
+    192.168.2.0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    192.168.2.1           90      00:28:17
+    172.16.1.6            90      00:28:41
+    172.16.1.2            90      00:28:17
+  Distance: internal 90 external 170
+```
+We can see the Autonomous System (AS) number, the value of the K-constants/metric weights, the router ID, the networks being advertised and which neighbours are sending us routing updates.
+
+We can also see the timers for a particular interface using the `show ip eigrp interface detail <intID>` command. Skipping the interface ID would show us the details of all available interfaces participating in EIGRP:
+```
+R2#sh ip eigrp int detail s1/0
+EIGRP-IPv4 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Se1/0                    1        0/0       0/0          17       2/95         147           0
+  Hello-interval is 5, Hold-time is 15
+  Split-horizon is enabled
+  Next xmit serial <none>
+  Packetized sent/expedited: 7/0
+  Hello's sent/expedited: 698/2
+  Un/reliable mcasts: 0/0  Un/reliable ucasts: 8/10
+  Mcast exceptions: 0  CR packets: 0  ACKs suppressed: 0
+  Retransmissions sent: 1  Out-of-sequence rcvd: 1
+  Topology-ids on interface - 0
+  Authentication mode is not set
+```
+
+## Statically Configuring EIGRP Neighbour
+Although we don't do this quite often, we _can_ statically define a neighbour with EIGRP. We do this by going to the router configuration mode and specifying the neighbour's IP address and the interface which connects to it. Let's do this for R1:
+```
+R1(config)#router eigrp 1
+R1(config-router)#neighbor 192.168.2.2 e0/1   
+*Dec 30 14:23:55.706: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 192.168.2.2 (Ethernet0/1) is down: Static peer replaces multicast
+```
+We need to be careful while doing this because we lose all the neighbourships that were dynamically discovered by EIGRP on that interface. In this case, of there were any more neighbours connected to switch _sw2_, R1'd lose its neighbourship with all of them. Further, the new/static neighbourship hasn't formed yet, and won't till we define R1 as a static neighbour on R2:
+```
+R2(config)#router eigrp 1
+R2(config-router)#neighbor 192.168.2.1 e0/0
+*Dec 30 14:27:32.403: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 192.168.2.1 (Ethernet0/0) is up: new adjacency
+```
+
+We can now see that R2's a neighbour of R1 again, and the `show ip eigrp neighbors detail` command shows us that it's a statically configured neighbour:
+```
+R2#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+2   192.168.2.1             Et0/0                    12 00:01:24   15   100  0  6
+1   172.16.1.6              Se1/1                    13 00:06:52   14   288  0  25
+0   172.16.1.2              Se1/0                    12 00:06:52   18   582  0  21
+R2#sh ip eigrp nei det
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+2   192.168.2.1             Et0/0                    13 00:02:09   15   100  0  6
+   Static neighbor
+   Version 18.0/2.0, Retrans: 0, Retries: 0, Prefixes: 2
+   Topology-ids from peer - 0
+1   172.16.1.6              Se1/1                    10 00:07:36   14   288  0  25
+   Version 18.0/2.0, Retrans: 0, Retries: 0, Prefixes: 4
+   Topology-ids from peer - 0
+0   172.16.1.2              Se1/0                    13 00:07:36   18   582  0  21
+   Version 18.0/2.0, Retrans: 1, Retries: 0, Prefixes: 6
+   Topology-ids from peer - 0
+Max Nbrs: 0, Current Nbrs: 0
+```
+
+# Configuring Unequal Cost Load Balancing
