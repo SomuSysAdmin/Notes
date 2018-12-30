@@ -2900,3 +2900,86 @@ Four essential components of the operation of the **Enhanced Interior Gateway Ro
 * **Protocol-Dependent Modules** - EIGRP not only acts as a routing protocol for IPv4/IPv6, but also as a routing protocol for other non-IP Layer 3 protocols, like _AppleTalk, IPX_, etc. The *Protocol Dependent Modules* provide support for these. Even though we might not need to route for non-IP protocols, EIGRP *does* support them.
 
 # EIGRP Data Structures
+EIGRP uses _three_ different data-structures:
+* **Neighbour Table** - Contains information about IGPR speaking neighbours; can be viewed with `show ip eigrp neighbors`.
+* **Interface Table** - Contains information about the Router's interfaces participating in EIGRP; can be viewed with `show ip eigrp interfaces`.
+* **Topology Table** - Contains routes known to EIGRP that are either _successor_ or _feasible successor_ routes; can be viewed with `show ip eigrp topology`. To see all the routes, many which EIGRP may never use, we use the command `show ip eigrp topology all-links`.
+
+Just because a route is known by EIGRP doesn't mean, however, that it'll be injected into the IP routing table.
+
+> [Config Required]
+
+# EIGRP Timers
+While EIGRP is really fast (i.e., has _low convergence times_), improper timers can slow it down. The timers are used as in OSPF to determine if a neighbour becomes unavailable. This can be either due to a connected link failing or a neighbour failing. In case a directly connected link goes down, i.e., the interfaces status changes from _up/up_ to anything else, EIGRP can instantly remove/recalculate that neighbourship. However, if a neighbour goes down but the interface remains up/up, then we have to wait for the hold timer to expire. We have a couple of timers - the _hello_ timer and the _hold_ timer.
+
+The default _hello_ interval is 5 seconds on a LAN, and the default hold time is 15 sec. The timer values also change based on the connecting network type, i.e., the hello interval for frame relay networks is 60 seconds. In case of LANs, if the router running EIGRP doesn't get a _hello_ message from a neighbour for a period of 15 seconds, it declares that neighbourship dead. Unlike OSPF, the value of the timers don't have to match between neighbours. Thus, we can have different hello and hold timer configurations for different neighbours. While it's a best practice to ensure that the timers match at either end of a circuit, they don't have to match for EIGRP to work!
+
+Another important distinction between the hold timer and the dead timer from OSPF, is that the value for the hold timer doesn't tell the current router to assume a neighbour is dead if not heard from within 15 seconds - instead it tells the _neighbour_ to declare this router as _dead_ if it can't send a hello to it within every 15 seconds. Thus, the hello interval is telling R1 when to send the hello messages, and the hold interval instructs R2 what to do. Thus, R2 will reset it's hello timer for R1 every time it gets a _hello_ message from R1, or declare it dead once the timer expires. By default the hold timer is 3 times the hello interval, but it doesn't have to be.
+
+> [Config Required]
+
+# EIGRP Metric Calculation
+EIGRP has 5 total criteria for calculating the metric:
+* Bandwidth
+* Delay
+* Reliability
+* Load
+* MTU
+
+An acrostic to remember them is '*Big Dogs Really Like Me*'. However, it doesn't use all of them while calculating the metric by default:
+
+Metric = [(K1 * Bw_min + (K2 * Bw_min)/(256 - Load) + K3 * Delay) + K5/(K4 + Reliability)] * 256
+
+> Where, K1 = 1
+> K2 = 0
+> K3 = 1
+> K4 = 0
+> K5 = 0, and
+> Bw_min = 10^7 / least-bandwidth in Kbps
+
+The bandwidth in the above formula has to be in Kbps, which when divided by 10^7 gives us the value for _Bw_min_. The delay is cumulative in nature, i.e., each interface adds to the delay. Although the delay is in microseconds, the delay in the formula has to be in _tens of microseconds_, i.e., 10^-5 seconds. So, the delay becomes (delay in micro-secs)/10. Reliability is a ratio of a number between _0_ and _255_, divided by 255. Thus, if our link is 100% reliable, then the reliability would be _255/255_. The load defines how _busy_ our link is, i.e., how much traffic is passing over it. It's a number over 255 as well, and so if minimal traffic passes over the link, the load will be _1/255_. The MTU doesn't even appear in the formula, because it acts as a tie-breaker when the above formula gives us two different routes with the same metric. The link with the *highest MTU* wins.
+
+The values of _K1 - K5_ are the weights given to each component in the calculation of the metric. The values of these weights/constants don't have to be 0 or 1, but can be values >1, based on their importance. Thus, by default the bandwidth and the delay are the only components EIGRP considers for the calculation of the metric:
+
+> Metric = (Bw_min + Delay) * 256 (where K1=K3=1 ; K2=K4=K5=0)
+> Metric (Reduced/Default) = [(10,000,000/Min Bandwidth) + (Sum of interface delays/10)] * 256
+
+The default formula of the calculation of the metric should be left alone unless we know what we're doing. For example, Cisco states that factoring load in a link may cause the links to switch frequently, due to oscillating load values. This may be because one link has a low load, and is thus desirable. Once traffic flows through it, the load increases, and the other link becomes desirable. Now the route is switched to the old link and load on it increases, causing the route to be switched back and forth.
+
+## EIGRP Metric Exercise
+Let us consider the topology below and calculate the metric for the links in the network. Let us consider we want to find out the metric to reach the `192.168.1.1/24` network from the perspective of R1.
+
+> The least bandwidth in the route is of the Serial link, with 1.544 Mbps = 1544 Kbps.
+> So, Bw_min = 10^7 / 1544 = 6476.684 ~= 6476 (Integer Trunkation)
+> Interface Delay Sum = 20000 + 1000 = 21000
+> Delay = 20100/10 = 2100
+> Metric = (6476 + 2100) * 256 ~= 2,195,456.
+
+The above prediction can be easily verified. First, we'll see how to obtain the bandwidth and the delay values:
+```
+R1#sh int s1/0 | i BW
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,
+
+R2#sh int s1/0 | i BW
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,
+R2#sh int e0/0 | i BW
+  MTU 1500 bytes, BW 10000 Kbit/sec, DLY 1000 usec,
+```
+
+Now, to find the metric to the `192.168.1.0/24` network, we check the feasible distance to it on R1 using `show ip eigrp topology`:
+```
+
+```
+> Config required
+
+## Changing K-Values
+The values of the constants or weight can be changed in router config mode:
+```
+
+```
+The context-sensitive help states that the next value should be a **Type of Service (_ToS_)** value, which is a **Quality of Service (_QoS_)** marking called **IP Precedence**. The higher the _ToS/IP Precedence_, the higher the priority of the packet. The only TOS value supported here is 0. Now, we follow up with the values of _K1 - K5_. Note that the *K-Values need to match at either end of the link for neighbourship to be maintained*.
+```
+
+```
+
+# EIGRP Feasibility Condition
