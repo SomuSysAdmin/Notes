@@ -2928,20 +2928,19 @@ EIGRP has 5 total criteria for calculating the metric:
 
 An acrostic to remember them is '*Big Dogs Really Like Me*'. However, it doesn't use all of them while calculating the metric by default:
 
-Metric = [(K1 * Bw_min + (K2 * Bw_min)/(256 - Load) + K3 * Delay) + K5/(K4 + Reliability)] * 256
+>Metric = [(K1 * Bw<sub>min</sub> + (K2 * Bw<sub>min</sub>)/(256 - Load) + K3 * Delay) + K5/(K4 + Reliability)] * 256
+> Where, K<sub>1</sub> = 1
+> K<sub>2</sub> = 0
+> K<sub>3</sub> = 1
+> K<sub>4</sub> = 0
+> K<sub>5</sub> = 0, and
+> Bw<sub>min</sub> = 10^7 / least-bandwidth in Kbps
 
-> Where, K1 = 1
-> K2 = 0
-> K3 = 1
-> K4 = 0
-> K5 = 0, and
-> Bw_min = 10^7 / least-bandwidth in Kbps
-
-The bandwidth in the above formula has to be in Kbps, which when divided by 10^7 gives us the value for _Bw_min_. The delay is cumulative in nature, i.e., each interface adds to the delay. Although the delay is in microseconds, the delay in the formula has to be in _tens of microseconds_, i.e., 10^-5 seconds. So, the delay becomes (delay in micro-secs)/10. Reliability is a ratio of a number between _0_ and _255_, divided by 255. Thus, if our link is 100% reliable, then the reliability would be _255/255_. The load defines how _busy_ our link is, i.e., how much traffic is passing over it. It's a number over 255 as well, and so if minimal traffic passes over the link, the load will be _1/255_. The MTU doesn't even appear in the formula, because it acts as a tie-breaker when the above formula gives us two different routes with the same metric. The link with the *highest MTU* wins.
+The bandwidth in the above formula has to be in Kbps, which when divided by 10<sup>7</sup> gives us the value for _Bw<sub>min</sub>_. The delay is cumulative in nature, i.e., each interface adds to the delay. Although the delay is in microseconds, the delay in the formula has to be in _tens of microseconds_, i.e., 10<sup>-5</sup> seconds. So, the delay becomes (delay in micro-secs)/10. Reliability is a ratio of a number between _0_ and _255_, divided by 255. Thus, if our link is 100% reliable, then the reliability would be _255/255_. The load defines how _busy_ our link is, i.e., how much traffic is passing over it. It's a number over 255 as well, and so if minimal traffic passes over the link, the load will be _1/255_. The MTU doesn't even appear in the formula, because it acts as a tie-breaker when the above formula gives us two different routes with the same metric. The link with the *highest MTU* wins.
 
 The values of _K1 - K5_ are the weights given to each component in the calculation of the metric. The values of these weights/constants don't have to be 0 or 1, but can be values >1, based on their importance. Thus, by default the bandwidth and the delay are the only components EIGRP considers for the calculation of the metric:
 
-> Metric = (Bw_min + Delay) * 256 (where K1=K3=1 ; K2=K4=K5=0)
+> Metric = (Bw<sub>min</sub> + Delay) * 256 (where K1=K3=1 ; K2=K4=K5=0)
 > Metric (Reduced/Default) = [(10,000,000/Min Bandwidth) + (Sum of interface delays/10)] * 256
 
 The default formula of the calculation of the metric should be left alone unless we know what we're doing. For example, Cisco states that factoring load in a link may cause the links to switch frequently, due to oscillating load values. This may be because one link has a low load, and is thus desirable. Once traffic flows through it, the load increases, and the other link becomes desirable. Now the route is switched to the old link and load on it increases, causing the route to be switched back and forth.
@@ -2950,7 +2949,7 @@ The default formula of the calculation of the metric should be left alone unless
 Let us consider the topology below and calculate the metric for the links in the network. Let us consider we want to find out the metric to reach the `192.168.1.1/24` network from the perspective of R1.
 
 > The least bandwidth in the route is of the Serial link, with 1.544 Mbps = 1544 Kbps.
-> So, Bw_min = 10^7 / 1544 = 6476.684 ~= 6476 (Integer Trunkation)
+> So, Bw<sub>min</sub> = 10<sup>7</sup> / 1544 = 6476.684 ~= 6476 (Integer Trunkation)
 > Interface Delay Sum = 20000 + 1000 = 21000
 > Delay = 20100/10 = 2100
 > Metric = (6476 + 2100) * 256 ~= 2,195,456.
