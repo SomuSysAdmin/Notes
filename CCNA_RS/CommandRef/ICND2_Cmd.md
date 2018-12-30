@@ -2885,3 +2885,18 @@ R3#sh int s1/0 | i BW
 The cost is now `64` due to an interface speed of `1.544Mbps`.
 
 # Enhanced Interior Gateway Routing Protocol (EIGRP)
+# EIGRP Overview
+Some of the defining characteristics of EIGRP are its _fast convergence times_ and _scalability_. So, if a link fails, an alternate link takes its place in the routing tables very quickly (in seconds) - whether that's a small network or a large one. An advantage of EIGRP over OSPF is its ability to load-balance over unequal cost paths. We can use the _variance_ option to perform load-balancing over paths that have different metrics.
+
+Just like OSPF, EIGRP supports VLSM (_Variable Length Subnet Masking_), i.e., it's a **classless** routing protocol. This means unlike RIPv2, we're not limited to the classful boudaries for our advertisements. Thus, we can choose to only advertise `10.1.1.0/24` network, ignore advertising for the `10.1.2.0/24` network and advertise the `10.1.3.0/24` network and so on, which isn't possible in the case of classful routing protocols.
+
+To communicate among the neighbours, a multicast address of `224.0.0.10` for IPv4 and `FF02::A` for IPv6 are used. It's one of the best _distance-vector_ protocols with the support for _dynamic route updates_ and the fact that Cisco made EIGRP an _open-standard_ also means that it's supported in a multi-vendor environment.
+
+# EIGRP Components
+Four essential components of the operation of the **Enhanced Interior Gateway Routing Protocol (_EIGRP_)** are:
+* **Neighbour Discovery** - EIGRP can dynamically discover other EIGRP speaking routers on the network and form neighbourships with them when appropriate.
+* **Reliable Transport Protocol (_RTP_)** - RTP lets routers ensure that the _EIGRP packets_ that they sent to their EIGRP speaking neighbour really did reach them _in order_. This becomes important when packets travel through different paths. However, since not all packets need to be reliably transmitted RTP is only used when needed. For example, a router doesn't need to send _EIGRP hello messages_ to all the neighbours individually, and can just send a _multicast hello_ to `244.0.0.10`. Thus, EIGRP can also indicate inside the _hello_ message that the recepient routers don't need to _acknowledge_ the hello messages. However, routing updates need to be and will be acknowledged. RTP for EIGRP **must not be confused with Realtime Transport Protocol (RTP)** which is a Layer 4 protocol for transmission of UDP packets, used in applications such as video transmission in chats, etc.
+* **Diffusing Update Algorithm (_DUAL_)** - **DUAL** is an algorithm that runs on EIGRP speaking routers, which calculates the successor among all the neighbours for each destination network. A **Successor** is an EIGRP speaking neighbouring router that has the best path (with the lowest metric) to a destination network, i.e., the best next-hop router for a destination network. The selected, most-attractive route via the successor is called the **Successor Route**. Another EIGRP router that provides an alternative, but not the best path to a destination router, _without causing a routing loop_, is called a **Feasible Successor** and acts as a backup to the _Successor_. The route through it is called a _feasible successor route_.
+* **Protocol-Dependent Modules** - EIGRP not only acts as a routing protocol for IPv4/IPv6, but also as a routing protocol for other non-IP Layer 3 protocols, like _AppleTalk, IPX_, etc. The *Protocol Dependent Modules* provide support for these. Even though we might not need to route for non-IP protocols, EIGRP *does* support them.
+
+# EIGRP Data Structures
