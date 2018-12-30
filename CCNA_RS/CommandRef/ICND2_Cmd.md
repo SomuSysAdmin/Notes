@@ -2940,7 +2940,7 @@ The bandwidth in the above formula has to be in Kbps, which when divided by 10<s
 
 The values of _K1 - K5_ are the weights given to each component in the calculation of the metric. The values of these weights/constants don't have to be 0 or 1, but can be values >1, based on their importance. Thus, by default the bandwidth and the delay are the only components EIGRP considers for the calculation of the metric:
 
-> Metric = (Bw<sub>min</sub> + Delay) * 256 (where K1=K3=1 ; K2=K4=K5=0)    
+> Metric = (Bw<sub>min</sub> + Delay) * 256 (where K<sub>1</sub>=K<sub>3</sub>=1 ; K<sub>2</sub>=K<sub>4</sub>=K<sub>5</sub>=0)    
 > Metric (Reduced/Default) = [(10,000,000/Min Bandwidth) + (Sum of interface delays/10)] * 256
 
 The default formula of the calculation of the metric should be left alone unless we know what we're doing. For example, Cisco states that factoring load in a link may cause the links to switch frequently, due to oscillating load values. This may be because one link has a low load, and is thus desirable. Once traffic flows through it, the load increases, and the other link becomes desirable. Now the route is switched to the old link and load on it increases, causing the route to be switched back and forth.
