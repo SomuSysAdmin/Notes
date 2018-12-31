@@ -3316,3 +3316,49 @@ D        10.10.10.0/24 [90/5537536] via 172.16.1.6, 00:01:32, Serial1/1
 ```
 
 # EIGRP for IPv6 Overview
+EIGRP for IPv6 is similar to EIGRP for IPv4, with a new key differences:
+* The next hop address is the neighbour's Link Local address. This isn't possible in IPv4 since there are no link local addresses in IPv4.
+* Instead of using EIGRP specific authentication features like in EIGRP for IPv4, EIGRP for IPv6 used the authentication features built into IPv6.
+* Since there are no IPv6 address classes, auto-summarization isn't possible in IPv6 and the wild-card mask must be specified in each instance.
+* Neighbours don't need to be in the same subnet.
+* Multicast address used is FF02::A
+
+# EIGRP for IPv6 Configuration
+Similar to the process for OSPFv3, we should first start IPv6 unicast routing and IPv6 CEF. Then, we can start the EIGRP process for the particular AS.
+```
+R1(config)#ipv6 unicast-routing
+R1(config)#ipv6 cef
+R1(config)#ipv6 router eigrp 1
+R1(config-rtr)#
+```
+
+In the router configuration mode we can define the number of paths used for load-balancing, the variance and passive interfaces, etc., but we won't be defining the interfaces that'll be participating in EIGRP here. Just like OSPF, instead of defining the networks that will contain the interfaces which'll participate in EIGRP, we'll directly go to the interface configuration mode and ask them to join EIGRP.
+```
+R1(config-rtr)#int e0/0
+R1(config-if)#ipv6 eigrp 1
+R1(config-if)#int s1/0
+R1(config-if)#ipv6 eigrp 1
+```
+Since we already have a loopback interface, we don't need to separately specify the Router ID for EIGRP.
+
+Now we can move on to the configuration of Router R2 and R3. We have to ensure that the **autonomous system numbers must match between routers**. We can also ignore the loop back interface and directly assign a router ID:
+```
+R2(config)#ipv6 uni
+R2(config)#ipv6 cef
+R2(config)#int s1/0
+R2(config-if)#ipv6 eigrp 1
+R2(config-if)#int s1/1
+R2(config-if)#ipv6 eigrp 1
+R2(config)#ipv6 router eigrp 1
+R2(config-rtr)#eigrp router-id 4.4.4.4
+
+R3(config)#ipv6 uni             
+R3(config)#ipv6 cef
+R3(config)#int s1/0
+R3(config-if)#ipv6 eigrp 1
+R3(config-if)#int e0/0
+R3(config-if)#ipv6 eigrp 1
+R3(config)#ipv6 router eigrp 1
+```
+
+# EIGRP for IPv6 Verification
