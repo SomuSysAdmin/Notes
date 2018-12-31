@@ -3540,3 +3540,373 @@ P 2000:1::/64, 1 successors, FD is 2195456
         via FE80::A8BB:CCFF:FE00:100 (2195456/281600), Serial1/0
 ```
 The _passive_ states indicate that the routes are stable and are not being recalculated.
+
+# EIGRP Troubleshooting Exercise 1
+In this trouble ticket, we seem to be unable to learn routes from R3 or have R3 learn routes via EIGRP. The parameters for routers that must match between EIGRP neighbours are:
+* AS number
+* K Values
+* Auth credentials
+* Subnet and masks
+
+The configuration on R1 is:
+```
+R1#sh ip proto | b eigrp
+Routing Protocol is "eigrp 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 Protocol for AS(1)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 1.1.1.1
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    1.1.1.1/32
+    10.1.1.0/24
+    172.16.1.0/30
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.1.1.2              90      00:12:15
+    172.16.1.2            90      00:03:14
+  Distance: internal 90 external 170
+
+R1#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+0   172.16.1.2              Se1/0                    10 00:13:02   16   100  0  17
+R1#sh ip eigrp int
+EIGRP-IPv4 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Lo0                      0        0/0       0/0           0       0/0            0           0
+Et0/0                    0        0/0       0/0           0       0/2           50           0
+Se1/0                    1        0/0       0/0          16       0/16          72           0
+R1#sh ip eigrp topo
+EIGRP-IPv4 Topology Table for AS(1)/ID(1.1.1.1)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status
+
+P 10.2.2.0/24, 1 successors, FD is 332800
+        via 172.16.1.2 (2195456/281600), Serial1/0
+P 192.168.1.0/30, 1 successors, FD is 307200
+        via 172.16.1.2 (2195456/281600), Serial1/0
+P 2.2.2.2/32, 1 successors, FD is 435200
+        via 172.16.1.2 (2297856/128256), Serial1/0
+P 172.16.1.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/0
+P 10.1.1.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+P 1.1.1.1/32, 1 successors, FD is 128256
+        via Connected, Loopback0
+
+R1#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+C        1.1.1.1 is directly connected, Loopback0
+      2.0.0.0/32 is subnetted, 1 subnets
+D        2.2.2.2 [90/2297856] via 172.16.1.2, 00:03:45, Serial1/0
+      10.0.0.0/8 is variably subnetted, 3 subnets, 2 masks
+C        10.1.1.0/24 is directly connected, Ethernet0/0
+L        10.1.1.1/32 is directly connected, Ethernet0/0
+D        10.2.2.0/24 [90/2195456] via 172.16.1.2, 00:03:45, Serial1/0
+      172.16.0.0/16 is variably subnetted, 2 subnets, 2 masks
+C        172.16.1.0/30 is directly connected, Serial1/0
+L        172.16.1.1/32 is directly connected, Serial1/0
+      192.168.1.0/30 is subnetted, 1 subnets
+D        192.168.1.0 [90/2195456] via 172.16.1.2, 00:03:45, Serial1/0
+R1#sh ip route eigrp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      2.0.0.0/32 is subnetted, 1 subnets
+D        2.2.2.2 [90/2297856] via 172.16.1.2, 00:03:52, Serial1/0
+      10.0.0.0/8 is variably subnetted, 3 subnets, 2 masks
+D        10.2.2.0/24 [90/2195456] via 172.16.1.2, 00:03:52, Serial1/0
+      192.168.1.0/30 is subnetted, 1 subnets
+D        192.168.1.0 [90/2195456] via 172.16.1.2, 00:03:52, Serial1/0
+```
+
+On R2, the configuration is:
+```
+R2#sh ip proto | b eigrp
+Routing Protocol is "eigrp 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 Protocol for AS(1)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 2.2.2.2
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    2.2.2.2/32
+    10.2.2.0/24
+    172.16.1.0/30
+    192.168.1.0/30
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    192.168.1.1           90      00:14:35
+    172.16.1.1            90      00:05:35
+  Distance: internal 90 external 170
+
+R2#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+0   172.16.1.1              Se1/0                    10 00:15:06   19   114  0  13
+R2#sh ip eigrp int
+EIGRP-IPv4 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Lo0                      0        0/0       0/0           0       0/0            0           0
+Et0/0                    0        0/0       0/0           0       0/0            0           0
+Se1/0                    1        0/0       0/0          19       0/16          92           0
+Et0/1                    0        0/0       0/0           0       0/2           50           0
+R2#sh ip eigrp topo
+EIGRP-IPv4 Topology Table for AS(1)/ID(2.2.2.2)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status
+
+P 10.2.2.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+P 192.168.1.0/30, 1 successors, FD is 281600
+        via Connected, Ethernet0/1
+P 2.2.2.2/32, 1 successors, FD is 128256
+        via Connected, Loopback0
+P 172.16.1.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/0
+P 10.1.1.0/24, 1 successors, FD is 307200
+        via 172.16.1.1 (2195456/281600), Serial1/0
+P 1.1.1.1/32, 1 successors, FD is 435200
+        via 172.16.1.1 (2297856/128256), Serial1/0
+
+R2#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+D        1.1.1.1 [90/2297856] via 172.16.1.1, 00:05:35, Serial1/0
+      2.0.0.0/32 is subnetted, 1 subnets
+C        2.2.2.2 is directly connected, Loopback0
+      10.0.0.0/8 is variably subnetted, 3 subnets, 2 masks
+D        10.1.1.0/24 [90/2195456] via 172.16.1.1, 00:05:35, Serial1/0
+C        10.2.2.0/24 is directly connected, Ethernet0/0
+L        10.2.2.1/32 is directly connected, Ethernet0/0
+      172.16.0.0/16 is variably subnetted, 2 subnets, 2 masks
+C        172.16.1.0/30 is directly connected, Serial1/0
+L        172.16.1.2/32 is directly connected, Serial1/0
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/30 is directly connected, Ethernet0/1
+L        192.168.1.2/32 is directly connected, Ethernet0/1
+R2#sh ip route eigrp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      1.0.0.0/32 is subnetted, 1 subnets
+D        1.1.1.1 [90/2297856] via 172.16.1.1, 00:05:35, Serial1/0
+      10.0.0.0/8 is variably subnetted, 3 subnets, 2 masks
+D        10.1.1.0/24 [90/2195456] via 172.16.1.1, 00:05:35, Serial1/0
+```
+
+On router R3, the configuration is:
+```
+R3#sh ip proto | b eigrp
+Routing Protocol is "eigrp 10"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 Protocol for AS(10)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 3.3.3.3
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    3.3.3.3/32
+    10.1.1.0/24
+    192.168.1.0/30
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: internal 90 external 170
+
+R3#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(10)
+R3#sh ip eigrp int
+EIGRP-IPv4 Interfaces for AS(10)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Et0/0                    0        0/0       0/0           0       0/0            0           0
+Et0/1                    0        0/0       0/0           0       0/0            0           0
+Lo0                      0        0/0       0/0           0       0/0            0           0
+R3#sh ip eigrp topo
+EIGRP-IPv4 Topology Table for AS(10)/ID(3.3.3.3)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status
+
+P 192.168.1.0/30, 1 successors, FD is 281600
+        via Connected, Ethernet0/1
+P 3.3.3.3/32, 1 successors, FD is 128256
+        via Connected, Loopback0
+P 10.1.1.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+
+R3#sh ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      3.0.0.0/32 is subnetted, 1 subnets
+C        3.3.3.3 is directly connected, Loopback0
+      10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C        10.1.1.0/24 is directly connected, Ethernet0/0
+L        10.1.1.2/32 is directly connected, Ethernet0/0
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/30 is directly connected, Ethernet0/1
+L        192.168.1.1/32 is directly connected, Ethernet0/1
+R3#sh ip route eigrp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+```
+
+We can see that R3 has learnt no routes and none of the other routers have learnt routes from it. This would indicate an issue with the EIGRP process running on R3. Upon careful inspection, we see that the Autonomous System number is `10` on R3 while it's `1` on the rest of the routers. Since in EIGRP, the autonomous system number must match between neighbours, this would stop R3 from becoming a neighbour with R1 and R2 as we see in the example above.
+
+Since the network statements are correct, we can simply copy them from the running config and paste them for the correct AS:
+```
+R3#sh run | s router eigrp
+router eigrp 10
+ network 3.3.3.3 0.0.0.0
+ network 10.1.1.0 0.0.0.255
+ network 192.168.1.0 0.0.0.3
+```
+Now we create the correct AS with `AS(1)` and paste the network statements:
+```
+R3(config)#router eigrp 1
+R3(config-router)# network 3.3.3.3 0.0.0.0
+R3(config-router)# network 10.1.1.0 0.0.0.255
+R3(config-router)# network 192.168.1.0 0.0.0.3
+*Dec 31 07:08:03.789: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 10.1.1.1 (Ethernet0/0) is up: new adjacency
+*Dec 31 07:08:08.817: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 192.168.1.2 (Ethernet0/1) is up: new adjacency
+R3(config-router)#exit
+R3(config)#no router eigrp 10
+```
+We just saw the two adjacencies with R1 and R2 come up. Now we can check the neibourship to ensure everything is correct:
+```
+R3#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+1   192.168.1.2             Et0/1                    10 00:01:42    9   100  0  22
+0   10.1.1.1                Et0/0                    14 00:01:47   10   100  0  20
+```
+
+Initially we couldn't see the `3.3.3.3` network on R1. Now, we should be able to:
+```
+R1#sh ip route eigrp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      2.0.0.0/32 is subnetted, 1 subnets
+D        2.2.2.2 [90/435200] via 10.1.1.2, 00:03:17, Ethernet0/0
+      3.0.0.0/32 is subnetted, 1 subnets
+D        3.3.3.3 [90/409600] via 10.1.1.2, 00:03:17, Ethernet0/0
+      10.0.0.0/8 is variably subnetted, 3 subnets, 2 masks
+D        10.2.2.0/24 [90/332800] via 10.1.1.2, 00:03:17, Ethernet0/0
+      192.168.1.0/30 is subnetted, 1 subnets
+D        192.168.1.0 [90/307200] via 10.1.1.2, 00:03:17, Ethernet0/0
+```
+
+# EIGRP Troubleshooting Exercise 2
