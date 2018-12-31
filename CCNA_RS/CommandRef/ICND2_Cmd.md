@@ -3910,3 +3910,276 @@ D        192.168.1.0 [90/307200] via 10.1.1.2, 00:03:17, Ethernet0/0
 ```
 
 # EIGRP Troubleshooting Exercise 2
+In this trouble ticket, the users connected to sw1 can't communicate with user on sw2. We have the configuration for PC1 and PC2 as:
+```
+PC-1> sh ip
+NAME        : PC-1[1]
+IP/MASK     : 10.1.1.3/24
+GATEWAY     : 10.1.1.1
+DNS         :
+MAC         : 00:50:79:66:68:00
+LPORT       : 10002
+RHOST:PORT  : 127.0.0.1:10003
+MTU:        : 1500
+
+PC-2> sh ip
+NAME        : PC-2[1]
+IP/MASK     : 10.2.2.2/24
+GATEWAY     : 10.2.2.1
+DNS         :
+MAC         : 00:50:79:66:68:01
+LPORT       : 10004
+RHOST:PORT  : 127.0.0.1:10005
+MTU:        : 1500
+```
+
+First we verify the problem and then check if each PC can reach their respective gateways:
+```
+PC-1> ping 10.2.2.1
+*10.1.1.1 icmp_seq=1 ttl=255 time=0.999 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.1.1.1 icmp_seq=2 ttl=255 time=0.995 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.1.1.1 icmp_seq=3 ttl=255 time=1.002 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.1.1.1 icmp_seq=4 ttl=255 time=1.835 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.1.1.1 icmp_seq=5 ttl=255 time=2.011 ms (ICMP type:3, code:1, Destination host unreachable)
+PC-1> ping 10.1.1.1
+84 bytes from 10.1.1.1 icmp_seq=1 ttl=255 time=1.838 ms
+84 bytes from 10.1.1.1 icmp_seq=2 ttl=255 time=1.838 ms
+
+PC-2> ping 10.2.2.1
+84 bytes from 10.2.2.1 icmp_seq=1 ttl=255 time=1.831 ms
+84 bytes from 10.2.2.1 icmp_seq=2 ttl=255 time=1.982 ms
+```
+
+Our next step should be to see if PC2 is reachable from either R1 or R3:
+```
+R1#ping 10.2.2.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.2.2.1, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+
+R3#ping 10.2.2.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.2.2.1, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+```
+
+Now since we aren't able to ping `10.2.2.1`, we need to confirm if R2 is a neighbour on either router:
+```
+R1#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+1   10.1.1.2                Et0/0                    13 00:04:18   10   100  0  8
+0   172.16.1.2              Se1/0                    10 00:04:46   18   108  0  11
+R1#sh ip eigrp topo
+EIGRP-IPv4 Topology Table for AS(1)/ID(1.1.1.1)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status
+P 192.168.1.0/30, 1 successors, FD is 307200
+        via 10.1.1.2 (307200/281600), Ethernet0/0
+        via 172.16.1.2 (2195456/281600), Serial1/0
+P 2.2.2.2/32, 1 successors, FD is 435200
+        via 10.1.1.2 (435200/409600), Ethernet0/0
+        via 172.16.1.2 (2297856/128256), Serial1/0
+P 172.16.1.0/30, 1 successors, FD is 2169856
+        via Connected, Serial1/0
+P 3.3.3.3/32, 1 successors, FD is 409600
+        via 10.1.1.2 (409600/128256), Ethernet0/0
+P 10.1.1.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+P 1.1.1.1/32, 1 successors, FD is 128256
+        via Connected, Loopback0
+R1#sh ip route eigrp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+Gateway of last resort is not set
+      2.0.0.0/32 is subnetted, 1 subnets
+D        2.2.2.2 [90/435200] via 10.1.1.2, 00:04:39, Ethernet0/0
+      3.0.0.0/32 is subnetted, 1 subnets
+D        3.3.3.3 [90/409600] via 10.1.1.2, 00:04:39, Ethernet0/0
+      192.168.1.0/30 is subnetted, 1 subnets
+D        192.168.1.0 [90/307200] via 10.1.1.2, 00:04:39, Ethernet0/0
+R1#sh ip route 10.2.2.1
+% Subnet not in table
+
+R3#sh ip eigrp nei
+EIGRP-IPv4 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+1   10.1.1.1                Et0/0                    14 00:05:59 1603  5000  0  9
+0   192.168.1.2             Et0/1                    14 00:06:27    2   100  0  10
+R3#sh ip eigrp topo
+EIGRP-IPv4 Topology Table for AS(1)/ID(3.3.3.3)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status
+P 192.168.1.0/30, 1 successors, FD is 281600
+        via Connected, Ethernet0/1
+P 2.2.2.2/32, 1 successors, FD is 409600
+        via 192.168.1.2 (409600/128256), Ethernet0/1
+P 172.16.1.0/30, 2 successors, FD is 2195456
+        via 10.1.1.1 (2195456/2169856), Ethernet0/0
+        via 192.168.1.2 (2195456/2169856), Ethernet0/1
+P 3.3.3.3/32, 1 successors, FD is 128256
+        via Connected, Loopback0
+P 10.1.1.0/24, 1 successors, FD is 281600
+        via Connected, Ethernet0/0
+P 1.1.1.1/32, 1 successors, FD is 409600
+        via 10.1.1.1 (409600/128256), Ethernet0/0
+R3#sh ip route eigrp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+Gateway of last resort is not set
+      1.0.0.0/32 is subnetted, 1 subnets
+D        1.1.1.1 [90/409600] via 10.1.1.1, 00:06:07, Ethernet0/0
+      2.0.0.0/32 is subnetted, 1 subnets
+D        2.2.2.2 [90/409600] via 192.168.1.2, 00:06:35, Ethernet0/1
+      172.16.0.0/30 is subnetted, 1 subnets
+D        172.16.1.0 [90/2195456] via 192.168.1.2, 00:06:07, Ethernet0/1
+                    [90/2195456] via 10.1.1.1, 00:06:07, Ethernet0/0
+R3#sh ip route 10.2.2.1
+% Subnet not in table
+```
+We can see from the above output that R2 is a neighbour for both routers R1 and R3, but for some reason we don't have a route for the `10.2.2.0` subnet in the routing tables or the known-EIGRP routes, while the other routes from R2 are there.
+
+This means we should check the EIGRP configuration on R2, specifically, which networks are being advertised and which interfaces are participating in EIGRP:
+```
+R2#sh ip eigrp int
+EIGRP-IPv4 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Lo0                      0        0/0       0/0           0       0/0            0           0
+Se1/0                    1        0/0       0/0          19       0/16          92           0
+Et0/1                    1        0/0       0/0          11       0/2           50           0
+R2#sh ip proto | b eigrp
+Routing Protocol is "eigrp 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 Protocol for AS(1)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 2.2.2.2
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    2.2.2.2/32
+    172.16.1.0/30
+    192.168.1.0/30
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    192.168.1.1           90      00:09:24
+    172.16.1.1            90      00:09:24
+  Distance: internal 90 external 170
+```
+We can see from the above output that the `10.2.2.0/24` network isn't participating in EIGRP and neither is the interface it's directly connected to, **R2 E0/0**.
+
+Now we check the actual EIGRP configuration on R2:
+```
+R2#sh run | s router eigrp
+router eigrp 1
+ network 2.2.2.2 0.0.0.0
+ network 172.16.1.0 0.0.0.3
+ network 192.168.1.0 0.0.0.3
+```
+We can see that we're missing the `network 10.2.2.0 0.0.0.255` statement. If we add this, everything should be working correctly:
+```
+R2(config)#router eigrp 1
+R2(config-router)#network 10.2.2.0 0.0.0.255
+R2(config-router)#do sh ip proto | b eigrp
+Routing Protocol is "eigrp 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 Protocol for AS(1)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+    Soft SIA disabled
+    NSF-aware route hold timer is 240
+    Router-ID: 2.2.2.2
+    Topology : 0 (base)
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    2.2.2.2/32
+    10.2.2.0/24
+    172.16.1.0/30
+    192.168.1.0/30
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    192.168.1.1           90      00:12:45
+    172.16.1.1            90      00:12:45
+  Distance: internal 90 external 170
+```
+We can see that now EIGRP is advertising the network.
+
+We check if PC-1 can now ping PC-2:
+```
+PC-1> ping 10.2.2.2
+10.2.2.2 icmp_seq=1 timeout
+10.2.2.2 icmp_seq=2 timeout
+84 bytes from 10.2.2.2 icmp_seq=3 ttl=62 time=4.129 ms
+84 bytes from 10.2.2.2 icmp_seq=4 ttl=62 time=5.336 ms
+84 bytes from 10.2.2.2 icmp_seq=5 ttl=62 time=3.952 ms
+```
+The first two timeouts were due to the ARPing process.
+
+We can also confirm that R1 and R3 know about the `10.2.2.0/24` network:
+```
+R1#sh ip route 10.2.2.2
+Routing entry for 10.2.2.0/24
+  Known via "eigrp 1", distance 90, metric 332800, type internal
+  Redistributing via eigrp 1
+  Last update from 10.1.1.2 on Ethernet0/0, 00:03:35 ago
+  Routing Descriptor Blocks:
+  * 10.1.1.2, from 10.1.1.2, 00:03:35 ago, via Ethernet0/0
+      Route metric is 332800, traffic share count is 1
+      Total delay is 3000 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 2
+
+R3#sh ip route 10.2.2.2
+Routing entry for 10.2.2.0/24
+  Known via "eigrp 1", distance 90, metric 307200, type internal
+  Redistributing via eigrp 1
+  Last update from 192.168.1.2 on Ethernet0/1, 00:03:16 ago
+  Routing Descriptor Blocks:
+  * 192.168.1.2, from 192.168.1.2, 00:03:16 ago, via Ethernet0/1
+      Route metric is 307200, traffic share count is 1
+      Total delay is 2000 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 1
+```
+
+# Wide Area Networks (_WANs_)
+# Point to Point Protocol (_PPP_)
