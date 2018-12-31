@@ -4186,3 +4186,286 @@ Routing entry for 10.2.2.0/24
 **Point-to-Point Protocol (_PPP_)** is a protocol meant to run between two devices that share a point-to-point connection. For point to multipoint networks, we also have the **Multi-Link Point-to-Point Protocol (_MLPPP_)**. Finally, there's also a protocol called **Point-to-Point over Ethernet Protocol (_PPPoE_)** that lets us configure and run Point-to-Point Protocol over an Ethernet network.
 
 # Configuring and Verifying PPP and MLPPP
+The default Layer 2 encapsulation on Cisco's Serial Interfaces is called **High-level Data Link Control (_HDLC_)**. An alternative to this is the **Point to Point (_PPP_)** protocol. It is commonly used on leased lines that connect two sites of the same enterprise and supports:
+* Authentication with PAP/CHAP
+* Data Compression
+* Error Checking and Correction
+* Combining multiple physical interfaces into a single logical interface called a _multilink interface_.
+
+## Sub-Protocols
+Some of the important protocols that work in conjunction with each other and PPP to provide the functionality of PPP are:
+* **Link Control Protocol (_LCP_)** - This is the protocol used by PPP to setup, destroy or maintain the connections.
+* **Network Control Protocols (_NCPs_)** - There are several different NCPs, one for each protocol used, that negotiates the configuration of that protocol. PPP can support multiple Layer 3 and 2 protocols, and each of the protocols that are encapsulated by PPP is given their own NCP to control that protocol. For ex, IP has **IPCP (_IP Control Protocol_)** and CDP has **CPDCP (_CDP Control Protocol_)**.
+
+Let us consider we want to configure PPP on the two serial links shown above. First of all we have to switch from the default HDLC to PPP encapsulation:
+```
+R1(config)#int s1/0
+R1(config-if)#encap ppp
+*Dec 31 10:49:22.024: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to down
+R1(config-if)#int s1/1
+R1(config-if)#encap ppp
+*Dec 31 10:49:40.785: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to down
+```
+The interface just went down since the other ends of the links are still configured to be HDLC. We have to change that:
+```
+R2(config)#int s1/0
+R2(config-if)#encap ppp
+*Dec 31 10:51:00.837: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+R2(config-if)#int s1/1
+R2(config-if)#encap ppp
+*Dec 31 10:51:09.549: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to up
+```
+
+We can now confirm that we're up at both layer 1 and 2, and then also confirm that PPP is the protocol being used:
+```
+R2#sh ip int br | e un
+Interface                  IP-Address      OK? Method Status                Protocol
+Serial1/0                  10.1.1.2        YES manual up                    up      
+Serial1/1                  10.1.1.6        YES manual up                    up      
+
+R2#sh int s1/0
+Serial1/0 is up, line protocol is up
+  Hardware is M4T
+  Description: S0 Con to R1
+  Internet address is 10.1.1.2/30
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation PPP, LCP Open
+  Open: IPCP, CDPCP, crc 16, loopback not set
+  Keepalive set (10 sec)
+  Restart-Delay is 0 secs
+  Last input 00:00:09, output 00:00:09, output hang never
+  Last clearing of "show interface" counters 00:02:51
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     43 packets input, 2326 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     43 packets output, 2326 bytes, 0 underruns
+     0 output errors, 0 collisions, 0 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+     0 carrier transitions     DCD=up  DSR=up  DTR=up  RTS=up  CTS=up
+```
+In the above output we can also see the NCPs being used : _IPCP_ and _CDPCP_.
+
+## Authentication
+We'll set up PAP on the first link, i.e., S1/0 on either router, and CHAP on S1/1 of either router.
+
+### Password Authentication Protocol (_PAP_)
+A relatively unsecure protocol used by PPP that sends the PAP password accross the network to the server for authentication in clear-text. PAP only allows one-way authentication, and hence we'll set R1 as our auth server and R2 as the auth-client. First we set the global PAP username and password on the server:
+```
+R1(config)#username papuser password pappass
+R1(config)#int s1/0
+R1(config-if)#ppp authentication pap
+*Dec 31 11:00:33.354: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to down
+```
+The link layer immediately went down because we aren't authenticated yet. To do so, we go to R2, i.e., the client:
+```
+R2(config)#int s1/0
+R2(config-if)#ppp pap sent-username papuser password pappass
+*Dec 31 11:02:43.164: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+```
+We're now authenticated and hence layer 2 went back up.
+
+The PAP server just sent the PAP client a challenge user-name and asked for the password for that user. Hence, the `sent-username` section is required. We can actually see this happening if we have debugging turned on:
+```
+R2(config-if)#do debug ppp authentication
+PPP authentication debugging is on
+R2(config-if)#shut
+*Dec 31 11:07:50.247: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to down
+*Dec 31 11:07:50.247: %LINK-5-CHANGED: Interface Serial1/0, changed state to administratively down
+R2(config-if)#no shut
+*Dec 31 11:07:54.888: %LINK-3-UPDOWN: Interface Serial1/0, changed state to up
+*Dec 31 11:07:54.888: Se1/0 PPP: Using default call direction
+*Dec 31 11:07:54.888: Se1/0 PPP: Treating connection as a dedicated line
+*Dec 31 11:07:54.888: Se1/0 PPP: Session handle[F4000008] Session id[7]
+*Dec 31 11:07:54.923: Se1/0 PPP: No authorization without authentication
+*Dec 31 11:07:54.923: Se1/0 PAP: Using hostname from interface PAP
+*Dec 31 11:07:54.923: Se1/0 PAP: Using password from interface PAP
+*Dec 31 11:07:54.923: Se1/0 PAP: O AUTH-REQ id 1 len 20 from "papuser"
+*Dec 31 11:07:54.939: Se1/0 PAP: I AUTH-ACK id 1 len 5
+*Dec 31 11:07:54.939: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+R2(config-if)#do u all
+All possible debugging has been turned off
+```
+The `O AUTH-REQ id 1 len 20 from "papuser"` statement means we're being challenged by _papuser_, the username on the auth server, in reply to which we provide the password. Once successful, an acknowledgement was sent via the server, `I AUTH-ACK id 1 len 5` and then layer 2 came back up.
+
+### Challenge Handshake Authentication Protocol (_CHAP_)
+CHAP is a secure protocol used by PPP that first calculates the hash of a password and then sends the hash across the network for comparison and authentication. Unlike PAP, CHAP provides 2-way authentication, i.e., both the routers authenticate to each others. On Router R1, we need to create a username for the other router, i.e., `R2` that wants to authenticate with R1. The passwords are going to match on both routers, but the usernames will vary:
+```
+R1(config)#username R2 password chappass
+R1(config)#int s1/1
+R1(config-if)#ppp authentication chap
+*Dec 31 11:27:36.095: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to down
+```
+
+Now, we need to create a user called `R1` on router R2 and set the same password on it. Then, we'll enable CHAP on **R2 S1/1** as well:
+```
+R2(config)#username R1 password chappass
+*Dec 31 11:29:51.327: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to up
+R2(config)#int s1/1
+R2(config-if)#ppp authentication chap
+*Dec 31 11:30:47.909: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to down
+*Dec 31 11:30:47.964: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to up
+```
+Once the interface bounces, the authentication is complete and the authentication is set up completely.
+
+We can now confirm that both of our serial interfaces are up at both layer 1 and 2:
+```
+R2#sh ip int br | e un
+Interface                  IP-Address      OK? Method Status                Protocol
+Serial1/0                  10.1.1.2        YES manual up                    up      
+Serial1/1                  10.1.1.6        YES manual up                    up      
+```
+
+## Compression
+Can be of two types - software compression and hardware compression. In software compression, the router's processor has to be involved in the compression of the data packets prior to transmission over the wire. In case of heavy traffic flow over the router, this can be very taxing on the resources of the router. Almost all Cisco routers can do software compression, but some even support hardware compression, where the task of data compression is offloaded to a dedicated chip/circuit and thus the processor's resources aren't consumed. Due to the relative scarcity of processing power as compared to the available bandwidth, we generally don't have to use this feature. Some variants of the compression algorithm provided are:
+* MPPC compression Algorithm
+* Predictor Compression Type
+* Stac Compression Algorithm
+
+Cisco suggests that we use the Stac compression since it's the most versatile, and so, we'll set it up on S1/0 of R1 and R2. All we need to do is use the command `compress stac`:
+```
+R1(config)#int s1/0
+R1(config-if)#comp stac
+
+R2(config)#int s1/0
+R2(config-if)#comp stac
+```
+
+Data via S1/0 will now be compressed and then sent. We can test this by first sending large packets via ping and then comparing the compressed and uncompressed bytes:
+```
+R1#ping 10.1.1.2 size 1500
+Type escape sequence to abort.
+Sending 5, 1500-byte ICMP Echos to 10.1.1.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 12/12/14 ms
+R1#show compress
+ Serial1/0
+         Software compression enabled
+         uncompressed bytes xmt/rcv 7510/7510
+         compressed bytes   xmt/rcv 371/381
+         Compressed bytes sent:       371 bytes   0 Kbits/sec  ratio: 20.242
+         Compressed bytes recv:       381 bytes   0 Kbits/sec  ratio: 19.711
+         1  min avg ratio xmt/rcv 8.682/9.907
+         5  min avg ratio xmt/rcv 2.135/2.549
+         10 min avg ratio xmt/rcv 2.135/2.549
+         no bufs xmt 0 no bufs rcv 0
+         resyncs 1
+         Additional Stac Stats:
+         Transmit bytes:  Uncompressed =        0 Compressed =        371
+         Received bytes:  Compressed =        386 Uncompressed =        0
+```
+The stac algorithm compressed our `7510B` packets to `371B`. The compression ratio depends upon the file type.
+
+## Error Detection and Correction
+This features enables the routers involved in PPP to take a look at the Layer 2 frame and if an error is detected, the frame is discarded and re-transmitted. It's extremely simple to turn on using `ppp reliable-link` command:
+```
+R1(config-if)#ppp reliabl  
+R1(config-if)#ppp reliable-link
+*Dec 31 11:46:31.033: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to down
+*Dec 31 11:46:31.101: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+
+R2(config)#int s1/0
+R2(config-if)#ppp reli  
+*Dec 31 11:46:45.543: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to down
+*Dec 31 11:47:01.815: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+```
+
+We can now confirm that the reliable link is on, since the output of the show interface command will now contain an extra block:
+```
+R1#sh int s1/0
+Serial1/0 is up, line protocol is up
+  Hardware is M4T
+  Description: S0 con to R2
+  Internet address is 10.1.1.1/30
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation PPP, LCP Open
+  Open: IPCP, CCP, CDPCP
+  LAPB DTE, state CONNECT, modulo 8, k 7, N1 12080, N2 3
+      T1 3000, T2 0, interface outage (partial T3) 0, T4 0, PPP over LAPB
+      VS 0, VR 6, tx NR 6, Remote VR 0, Retransmissions 0
+      Queues: U/S frames 0, I frames 0, unack. 0, reTx 0
+      IFRAMEs 56/46 RNRs 0/0 REJs 0/0 SABM/Es 1/0 FRMRs 0/0 DISCs 0/0, crc 16, loopback not set
+  Keepalive set (10 sec)
+  Restart-Delay is 0 secs
+  Last input 00:00:07, output 00:00:07, output hang never
+  Last clearing of "show interface" counters 00:59:49
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     936 packets input, 36428 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     1032 packets output, 39376 bytes, 0 underruns
+     0 output errors, 0 collisions, 8 interface resets
+     12 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+     8 carrier transitions     DCD=up  DSR=up  DTR=up  RTS=up  CTS=up
+```
+The `reTx 0` value tells us if we've retransmitted any frames.
+
+**Note** this feature doesn't work with MLPPP and hence has to be turned off before MLPPP can be activated.
+
+## Multiple Link support
+Using the **Multi-Link Point-to-Point (_MLPPP_)**, several physical links can be logically combined to form a single logical link. While the concept is similar to EtherChannels or Port-Channels, MLPPP supports the bonding of interfaces of different speeds to form the logical link. Further, Port-Channels are only available for Ethernet networks while Multi-Link PPP is available for Point to Point networks. The MLPPP also does load-balancing across all the physical interfaces that make up the logical interface.
+
+To configure one, we just make a new (virtual/logical) multilink interface in configuration mode. Then, we assign an IP to it from one of the links we're combining since the individual physical links won't have their own IP address but just the IP address of the virtual link. We then convert it into a PPP multilink interface by using the `ppp multilink` statement. At this point, our multilink interface is ready for the physical links to join it's multilink group (i.e., _group 1_):
+```
+R1(config)#int multilink 1
+R1(config-if)#ip addr 10.1.1.1 255.255.255.252
+% 10.1.1.0 overlaps with Serial1/0
+R1(config-if)#ppp multilink
+R1(config-if)#exit
+R1(config)#int s1/0
+R1(config-if)#no ip addr
+R1(config-if)#ppp multilink group 1
+*Dec 31 12:46:18.826: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to down
+*Dec 31 12:46:18.877: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+R1(config-if)#int s1/1
+R1(config-if)#no ip addr
+R1(config-if)#ppp mul gr 1
+*Dec 31 12:46:27.692: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to down
+*Dec 31 12:46:27.745: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to up
+```
+The `ppp multilink group 1` command asks the interface to join the _multilink group_ of interface _Multilink1_.
+
+Now we configure the same settings on R2:
+```
+R2(config)#int multi 1
+R2(config-if)#ppp multilink
+R2(config-if)#ip addr 10.1.1.2 255.255.255.252
+% 10.1.1.0 overlaps with Serial1/0
+R2(config-if)#int s1/0
+R2(config-if)#no ip addr
+R2(config-if)#ppp multilink group 1
+R2(config-if)#
+*Dec 31 12:49:24.680: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to down
+*Dec 31 12:49:24.728: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/0, changed state to up
+*Dec 31 12:49:24.743: %LINEPROTO-5-UPDOWN: Line protocol on Interface Multilink1, changed state to down
+*Dec 31 12:49:24.743: %LINK-3-UPDOWN: Interface Multilink1, changed state to up
+*Dec 31 12:49:24.743: %LINEPROTO-5-UPDOWN: Line protocol on Interface Multilink1, changed state to up
+R2(config-if)#int s1/1
+R2(config-if)#no ip addr
+R2(config-if)#ppp multilink gr 1
+*Dec 31 12:49:40.312: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to down
+*Dec 31 12:49:40.388: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1/1, changed state to up
+```
+
+We can now ping the over the multilink interface:
+```
+R2#ping 10.1.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.1.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 9/10/11 ms
+```
