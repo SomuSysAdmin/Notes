@@ -4183,3 +4183,6 @@ Routing entry for 10.2.2.0/24
 
 # Wide Area Networks (_WANs_)
 # Point to Point Protocol (_PPP_)
+**Point-to-Point Protocol (_PPP_)** is a protocol meant to run between two devices that share a point-to-point connection. For point to multipoint networks, we also have the **Multi-Link Point-to-Point Protocol (_MLPPP_)**. Finally, there's also a protocol called **Point-to-Point over Ethernet Protocol (_PPPoE_)** that lets us configure and run Point-to-Point Protocol over an Ethernet network.
+
+# Configuring and Verifying PPP and MLPPP
