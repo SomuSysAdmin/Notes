@@ -3362,3 +3362,181 @@ R3(config)#ipv6 router eigrp 1
 ```
 
 # EIGRP for IPv6 Verification
+We can see the IPv6 routes knows via EIGRP with:
+```
+R1#sh ipv6 route
+IPv6 Routing Table - default - 7 entries
+Codes: C - Connected, L - Local, S - Static, U - Per-user Static route
+       B - BGP, HA - Home Agent, MR - Mobile Router, R - RIP
+       H - NHRP, I1 - ISIS L1, I2 - ISIS L2, IA - ISIS interarea
+       IS - ISIS summary, D - EIGRP, EX - EIGRP external, NM - NEMO
+       ND - ND Default, NDp - ND Prefix, DCE - Destination, NDr - Redirect
+       O - OSPF Intra, OI - OSPF Inter, OE1 - OSPF ext 1, OE2 - OSPF ext 2
+       ON1 - OSPF NSSA ext 1, ON2 - OSPF NSSA ext 2, la - LISP alt
+       lr - LISP site-registrations, ld - LISP dyn-eid, a - Application
+C   2000:1::/64 [0/0]
+     via Ethernet0/0, directly connected
+L   2000:1::1/128 [0/0]
+     via Ethernet0/0, receive
+C   2000:2::/64 [0/0]
+     via Serial1/0, directly connected
+L   2000:2::1/128 [0/0]
+     via Serial1/0, receive
+D   2000:3::/64 [90/2681856]
+     via FE80::A8BB:CCFF:FE00:200, Serial1/0
+D   2000:4::/64 [90/2707456]
+     via FE80::A8BB:CCFF:FE00:200, Serial1/0
+L   FF00::/8 [0/0]
+     via Null0, receive
+```
+The EIGRP IPv6 routes will be indicated with the `D` in the first column. To exclusively see those routes, we could use `show ipv6 route eigrp`:
+```
+R1#sh ipv6 route eigrp
+IPv6 Routing Table - default - 7 entries
+Codes: C - Connected, L - Local, S - Static, U - Per-user Static route
+       B - BGP, HA - Home Agent, MR - Mobile Router, R - RIP
+       H - NHRP, I1 - ISIS L1, I2 - ISIS L2, IA - ISIS interarea
+       IS - ISIS summary, D - EIGRP, EX - EIGRP external, NM - NEMO
+       ND - ND Default, NDp - ND Prefix, DCE - Destination, NDr - Redirect
+       O - OSPF Intra, OI - OSPF Inter, OE1 - OSPF ext 1, OE2 - OSPF ext 2
+       ON1 - OSPF NSSA ext 1, ON2 - OSPF NSSA ext 2, la - LISP alt
+       lr - LISP site-registrations, ld - LISP dyn-eid, a - Application
+D   2000:3::/64 [90/2681856]
+     via FE80::A8BB:CCFF:FE00:200, Serial1/0
+D   2000:4::/64 [90/2707456]
+     via FE80::A8BB:CCFF:FE00:200, Serial1/0
+```
+To see if route for a specific network exists, we can mention the name of the network in the command:
+```
+R1#sh ipv6 route 2000:1::/64
+Routing entry for 2000:1::/64
+  Known via "connected", distance 0, metric 0, type connected
+  Route count is 1/1, share count 0
+  Routing paths:
+    directly connected via Ethernet0/0
+      Last updated 00:19:18 ago
+```
+
+We can see the EIGRP protocol to get the K-Values:
+```
+R1#sh ipv6 proto
+IPv6 Routing Protocol is "connected"
+IPv6 Routing Protocol is "application"
+IPv6 Routing Protocol is "ND"
+IPv6 Routing Protocol is "eigrp 1"
+EIGRP-IPv6 Protocol for AS(1)
+  Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+  Soft SIA disabled
+  NSF-aware route hold timer is 240
+  Router-ID: 1.1.1.1
+  Topology : 0 (base)
+    Active Timer: 3 min
+    Distance: internal 90 external 170
+    Maximum path: 16
+    Maximum hopcount 100
+    Maximum metric variance 1
+
+  Interfaces:
+    Ethernet0/0
+    Serial1/0
+  Redistribution:
+    None
+```
+
+On Router R2, we can verify if our manual configuration of `4.4.4.4` was accepted for the router ID:
+```
+R2#sh ipv6 proto
+IPv6 Routing Protocol is "connected"
+IPv6 Routing Protocol is "application"
+IPv6 Routing Protocol is "ND"
+IPv6 Routing Protocol is "eigrp 1"
+EIGRP-IPv6 Protocol for AS(1)
+  Metric weight K1=1, K2=0, K3=1, K4=0, K5=0
+  Soft SIA disabled
+  NSF-aware route hold timer is 240
+  Router-ID: 4.4.4.4
+  Topology : 0 (base)
+    Active Timer: 3 min
+    Distance: internal 90 external 170
+    Maximum path: 16
+    Maximum hopcount 100
+    Maximum metric variance 1
+
+  Interfaces:
+    Serial1/0
+    Serial1/1
+  Redistribution:
+    None
+```
+
+We can see the IPv6 neighbours using:
+```
+R2#sh ipv6 eigrp nei
+EIGRP-IPv6 Neighbors for AS(1)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+1   Link-local address:     Se1/0                    14 00:12:18   19   114  0  7
+    FE80::A8BB:CCFF:FE00:100
+0   Link-local address:     Se1/1                    14 00:12:19   20   120  0  7
+    FE80::A8BB:CCFF:FE00:300
+```
+EIGRP uses link-local addresses for next hops.
+
+We can also see the interfaces that are participating in EIGRP:
+```
+R2#sh ipv6 eigrp int
+EIGRP-IPv6 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Se1/0                    1        0/0       0/0          19       0/15          95           0
+Se1/1                    1        0/0       0/0          20       0/15          95           0
+```
+
+We can see the timers using:
+```
+R2#sh ipv6 eigrp int det
+EIGRP-IPv6 Interfaces for AS(1)
+                              Xmit Queue   PeerQ        Mean   Pacing Time   Multicast    Pending
+Interface              Peers  Un/Reliable  Un/Reliable  SRTT   Un/Reliable   Flow Timer   Routes
+Se1/0                    1        0/0       0/0          19       0/15          95           0
+  Hello-interval is 5, Hold-time is 15
+  Split-horizon is enabled
+  Next xmit serial <none>
+  Packetized sent/expedited: 5/0
+  Hello's sent/expedited: 256/3
+  Un/reliable mcasts: 0/0  Un/reliable ucasts: 6/7
+  Mcast exceptions: 0  CR packets: 0  ACKs suppressed: 0
+  Retransmissions sent: 0  Out-of-sequence rcvd: 0
+  Topology-ids on interface - 0
+  Authentication mode is not set
+Se1/1                    1        0/0       0/0          20       0/15          95           0
+  Hello-interval is 5, Hold-time is 15
+  Split-horizon is enabled
+  Next xmit serial <none>
+  Packetized sent/expedited: 5/0
+  Hello's sent/expedited: 258/3
+  Un/reliable mcasts: 0/0  Un/reliable ucasts: 7/7
+  Mcast exceptions: 0  CR packets: 0  ACKs suppressed: 0
+  Retransmissions sent: 0  Out-of-sequence rcvd: 0
+  Topology-ids on interface - 0
+  Authentication mode is not set
+```
+Again, just like in IPv4, the hold timer doesn't state that it will wait 15 seconds before declaring that a neighbour is down, but instead it tells its neighbours to wait for 15 seconds for a hello message from R2 which if not received would indicate that R2 is down.
+
+Finally, we can can see which routes IPv6 EIGRP is aware of using:
+```
+R2#sh ipv6 eigrp topo
+EIGRP-IPv6 Topology Table for AS(1)/ID(4.4.4.4)
+Codes: P - Passive, A - Active, U - Update, Q - Query, R - Reply,
+       r - reply Status, s - sia Status
+
+P 2000:2::/64, 1 successors, FD is 2169856
+        via Connected, Serial1/0
+P 2000:3::/64, 1 successors, FD is 2169856
+        via Connected, Serial1/1
+P 2000:4::/64, 1 successors, FD is 2195456
+        via FE80::A8BB:CCFF:FE00:300 (2195456/281600), Serial1/1
+P 2000:1::/64, 1 successors, FD is 2195456
+        via FE80::A8BB:CCFF:FE00:100 (2195456/281600), Serial1/0
+```
+The _passive_ states indicate that the routes are stable and are not being recalculated.
