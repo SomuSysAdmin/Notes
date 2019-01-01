@@ -4469,3 +4469,157 @@ Sending 5, 100-byte ICMP Echos to 10.1.1.1, timeout is 2 seconds:
 !!!!!
 Success rate is 100 percent (5/5), round-trip min/avg/max = 9/10/11 ms
 ```
+
+# Configure and Verify PPPoE Client-side Interfaces
+**Point-to-Point Protocol over Ethernet (_PPPoE_)** allows us to carry the PPP protocol over Ethernet frames so that we can get the features of PPP in an Ethernet network. Such a feature is authentication. In the case of residential **Digital Subscriber Line (_DSL_)** users, both their _land-line_ phone services and data services are connected via the same DSL modem. So, the DSL modem is connected to phones and/or computers or a router at the customer's side, and also a link leading to the **ISP (_Internet Service Provider_)**.
+
+This link to the ISP leads to the ISP's **DSL Access Multiplexer (_DSLAM_)**. The link between the DSLAM and the DSL modem is set up to use PPPoE and this is one of the most common real-world use-case of PPPoE. We have to use this because Ethernet by itself has no authentication mechanism. While only the client-side configuration is required for CCNA, to emulate the connection in a lab, it's useful to know the server config as well.
+
+## Server Config on ISP Router
+There are six steps in configuring the ISP router for PPPoE:
+* Set up the username & password with which the user will authenticate
+* Set up a local IP pool (not DHCP pool) containing the IP addresses which'll be handed out the clients connecting to the router.
+* Set up a _Virtual-Template_, assign an IP address to it for connection and associate it to distribute IP address from the pool
+* Set up the same Virtual-Template to for _CHAP callin_ authentication
+* Assign the Virtual-Templete to a _Broad-Band Access Group_.
+* Assign the Broad-Band Access group to the ingress interface from which client's authentication requests will originate.
+
+For the authentication, we need to set up the username and password with which the user will authenticate with CHAP. We can set it up with:
+```
+ISP(config)#username dsl_user password cisco
+```
+
+For the setup of `virtual-template1` we have to assign an IP address to it, specify a pool of IP addresses from which it can hand out IPs and set up the CHAP authentication for **callin**, i.e., authenticate remotely on incoming call only:
+```
+ISP(config)#ip local pool ISP_POOL 10.1.1.2 10.1.1.254
+ISP(config)#int virtual-Template 1
+ISP(config-if)#ip addr 10.1.1.1 255.255.255.0  
+ISP(config-if)#peer default ip address pool ISP_POOL
+ISP(config-if)#ppp authentication chap callin
+```
+
+We have to set up a **Broad-Band Access (_BBA_) Group** which will refer to `virtual-template1`:
+```
+ISP(config)#bba-group pppoe ISP_GROUP
+*Jan  1 10:06:25.860: %LINEPROTO-5-UPDOWN: Line protocol on Interface Virtual-Access1, changed state to up
+*Jan  1 10:06:25.860: %LINK-3-UPDOWN: Interface Virtual-Access1, changed state to up
+ISP(config-bba-group)#virtual-template 1
+```
+
+Finally, on the ingress interface to the ISP router, we have to enable the PPPoE group:
+```
+ISP(config)#int e0/0
+ISP(config-if)#pppoe enable group ISP_GROUP
+ISP(config-if)#no shut
+*Jan  1 10:42:20.789: %LINK-3-UPDOWN: Interface Ethernet0/0, changed state to up
+*Jan  1 10:42:21.798: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/0, changed state to up
+```
+
+## Client-Side configuration
+The first thing we have to do on the client is set up a **dialer interface**. A _dialer interface_ is a logical interface that points to a **dialer pool**. This _dialer pool_ contains one or more physical interfaces. We'll be configuring our dialer interface to dynamically obtain an IP address from the PPPoE server via PPP's NCP of **IP Control Protocol (_IPCP_)** (instead of _DHCP_ which is used over Ethernet). We'd also set the MTU to `1492B`.  This is because the typical Ethernet (non-jumbo) frames have an MTU of `1500B` but our PPP header is of `8B`. We'd like to avoid the processor overhead of frame fragmentation which will be caused by a frame of `1508B` while still accommodating the PPP header. Finally, we'll ask the dialer interface to use the PPP encapsulation:
+```
+R1(config)#int dialer 1
+R1(config-if)#ip address negotiated
+R1(config-if)#mtu 1492
+R1(config-if)#encap ppp
+```
+
+Now we can configure the authentication on R1, using the username we defined on the ISP router. In our case, it's `dsl_user` with a password of `cisco`:
+```
+R1(config-if)#ppp chap hostname dsl_user
+R1(config-if)#ppp chap password cisco
+```
+
+The way we use the dialer interface is by associating with a dialer pool and then also associating a physical interface with the same dialer pool.  Once done, we can bring up the physical interface:
+```
+R1(config)#int dialer1
+R1(config-if)#dialer pool 10
+R1(config-if)#int e0/0
+R1(config-if)#pppoe-client dial-pool-number 10
+R1(config-if)#no shut
+R1(config-if)#
+*Jan  1 11:04:38.832: %LINK-3-UPDOWN: Interface Ethernet0/0, changed state to up
+*Jan  1 11:04:39.841: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0/0, changed state to up
+*Jan  1 11:05:02.483: %DIALER-6-BIND: Interface Vi1 bound to profile Di1
+*Jan  1 11:05:02.489: %LINK-3-UPDOWN: Interface Virtual-Access1, changed state to up
+*Jan  1 11:05:02.521: %LINEPROTO-5-UPDOWN: Line protocol on Interface Virtual-Access1, changed state to up
+```
+
+At this point, our configuration is complete and our router R1 was able to authenticate with the ISP server and get a dynamic IP address via IPCP:
+```
+R1#sh ip int br | e adm
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                unassigned      YES NVRAM  up                    up      
+Dialer1                    10.1.1.2        YES IPCP   up                    up      
+Virtual-Access1            unassigned      YES unset  up                    up      
+```
+
+We can see the details of the dialer interface with the `sh interfaces dialer1` command:
+```
+R1#sh int Di1
+Dialer1 is up, line protocol is up (spoofing)
+  Hardware is Unknown
+  Internet address is 10.1.1.2/32
+  MTU 1492 bytes, BW 56 Kbit/, DLY 20000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation PPP, LCP Closed, loopback not set
+  Keepalive set (10 sec)
+  DTR is pulsed for 1 seconds on reset
+  Interface is bound to Vi1
+  Last input never, output never, output hang never
+  Last clearing of "show interface" counters 00:11:33
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     2 packets input, 28 bytes
+     60 packets output, 840 bytes
+Bound to:
+Virtual-Access1 is up, line protocol is up
+  Hardware is Virtual Access interface
+  MTU 1492 bytes, BW 56 Kbit/sec, DLY 20000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation PPP, LCP Open
+  Stopped: CDPCP
+  Open: IPCP
+  PPPoE vaccess, cloned from Dialer1
+  Vaccess status 0x44, loopback not set
+  Keepalive set (10 sec)
+  DTR is pulsed for 5 seconds on reset
+  Interface is bound to Di1 (Encapsulation PPP)
+  Last input 00:00:05, output never, output hang never
+  Last clearing of "show interface" counters 00:05:06
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     68 packets input, 957 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     67 packets output, 950 bytes, 0 underruns
+     0 output errors, 0 collisions, 0 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+     0 carrier transitions
+```
+
+If we see the status of the interface, we see it's set to `Dialer1 is up, line protocol is up (spoofing)`. The _spoofing_ keyword indicates that the actual Layer 2 operation isn't being handled by the dialer interface, but by a _Virtual Access_ interface to which it is **bound**. The Vi1 interface itself has the status: `Virtual-Access1 is up, line protocol is up`. We can also see the IP address obtained in the process and the MTU size:
+```
+Internet address is 10.1.1.2/32
+MTU 1492 bytes, BW 56 Kbit/sec, DLY 20000 usec,
+```
+
+We can also use the `show pppoe session` command:
+```
+R1#sh pppoe session
+     1 client session
+
+Uniq ID  PPPoE  RemMAC          Port                    VT  VA         State
+           SID  LocMAC                                      VA-st      Type
+    N/A      1  aabb.cc00.0200  Et0/0                   Di1 Vi1        UP      
+                aabb.cc00.0100                              UP              
+```
+Here, we can see two different MAC addresses: the bottom MAC address, `aabb.cc00.0100` is the *local MAC* for the port **R1 e0/0** and the one above, `aabb.cc00.0200` is for **ISP e0/0** and is called the _remote MAC_. We can also see that the interface on R1 being used to connect to the ISP is `Et0/0`, or **R1 e0/0**.
