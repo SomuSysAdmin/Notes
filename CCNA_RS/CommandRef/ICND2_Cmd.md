@@ -4478,7 +4478,7 @@ This link to the ISP leads to the ISP's **DSL Access Multiplexer (_DSLAM_)**. Th
 ## Server Config on ISP Router
 There are six steps in configuring the ISP router for PPPoE:
 * Set up the username & password with which the user will authenticate
-* Set up a local IP pool (not DHCP pool) containing the IP addresses which'll be handed out the clients connecting to the router.
+* Set up a **dialer pool** - local IP pool (not DHCP pool) containing the IP addresses which'll be handed out the clients connecting to the router.
 * Set up a _Virtual-Template_, assign an IP address to it for connection and associate it to distribute IP address from the pool
 * Set up the same Virtual-Template to for _CHAP callin_ authentication
 * Assign the Virtual-Templete to a _Broad-Band Access Group_.
@@ -4516,7 +4516,7 @@ ISP(config-if)#no shut
 ```
 
 ## Client-Side configuration
-The first thing we have to do on the client is set up a **dialer interface**. A _dialer interface_ is a logical interface that points to a **dialer pool**. This _dialer pool_ contains one or more physical interfaces. We'll be configuring our dialer interface to dynamically obtain an IP address from the PPPoE server via PPP's NCP of **IP Control Protocol (_IPCP_)** (instead of _DHCP_ which is used over Ethernet). We'd also set the MTU to `1492B`.  This is because the typical Ethernet (non-jumbo) frames have an MTU of `1500B` but our PPP header is of `8B`. We'd like to avoid the processor overhead of frame fragmentation which will be caused by a frame of `1508B` while still accommodating the PPP header. Finally, we'll ask the dialer interface to use the PPP encapsulation:
+The first thing we have to do on the client is set up a **dialer interface**, which lets us specify various layer 2 and layer 3 parameters for the PPPoE connection. A _dialer interface_ is a logical interface that points to a **dialer pool**. This _dialer pool_ contains one or more physical interfaces. We'll be configuring our dialer interface to dynamically obtain an IP address from the PPPoE server via PPP's NCP of **IP Control Protocol (_IPCP_)** (instead of _DHCP_ which is used over Ethernet). We'd also set the MTU to `1492B`.  This is because the typical Ethernet (non-jumbo) frames have an MTU of `1500B` but our PPP header is of `8B`. We'd like to avoid the processor overhead of frame fragmentation which will be caused by a frame of `1508B` while still accommodating the PPP header. Finally, we'll ask the dialer interface to use the PPP encapsulation:
 ```
 R1(config)#int dialer 1
 R1(config-if)#ip address negotiated
@@ -4623,3 +4623,27 @@ Uniq ID  PPPoE  RemMAC          Port                    VT  VA         State
                 aabb.cc00.0100                              UP              
 ```
 Here, we can see two different MAC addresses: the bottom MAC address, `aabb.cc00.0100` is the *local MAC* for the port **R1 e0/0** and the one above, `aabb.cc00.0200` is for **ISP e0/0** and is called the _remote MAC_. We can also see that the interface on R1 being used to connect to the ISP is `Et0/0`, or **R1 e0/0**.
+
+# Troubleshooting PPP and PPPoE
+Some common issues with PPP and PPPoE are:
+- **Encapsulation Mismatch** - The default encapsulation for Cisco's Serial Interfaces is HDLC (High-level Data Link Control) Protocol, and not PPP. Hence, if one side is set to PPP and the other to HDLC, there's going to be an encapsulation mismatch and the PPP won't work.
+- **Authentication Mismatch** - We have several options for the authentication : we can skip authentication by not configuring it or set it to PAP or CHAP. We should ensure that the same authenticaton method is used on either side of the Point to Point link. The username and password need to match up as well.
+- **Dialer Interface Misconfiguration** - The Dialer interface may be pointing to the wrong dialer pool.
+- **Dialer Pool Misconfig** - The *dialer pool* may be set up for the wrong IP address range on the ISP server.
+- **Clocking on Physical Interface** - One side of a serial interface cable needs to send a clocking signal while the other side needs to synchronize itself on the basis of that clock signal. The side that provides the clocking signal is typically on the ISP side and is called **Data Circuit-Terminating Equipment (_DCE_)** while the side that receives the clocking signal is called the **Data Terminal Equipment (_DTE_)**. We need to ensure that the clock signal source of our serial connection is the DCE side while the recepient is the DTE side. The Serial cables themselves are labled with the DCE/DTE side labels.
+
+## Checking Serial Interface Controllers
+The `show controller <serialIntID>` command shows us which side we're on - the DCE or DTE:
+```
+R1# show controllers serial 0/1/0
+Interface Serial0/1/0
+Hardware is PowerQUICC MPC860
+DTE V.35 clocks stopped.
+
+ISP# show controllers serial 0/1/0
+Interface Serial0/1/0
+Hardware is PowerQUICC MPC860
+DCE V.35, no clock
+```
+
+# Options for WAN Connectivity
