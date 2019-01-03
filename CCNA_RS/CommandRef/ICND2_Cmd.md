@@ -4757,7 +4757,7 @@ Tunnel1 is up, line protocol is up
     Key disabled, sequencing disabled
     Checksumming of packets disabled
   Tunnel TTL 255, Fast tunneling enabled
-  Tunnel transport MTU 1476 bytes
+  Tunnel transport MTU 1476 byt
   Tunnel transmit bandwidth 8000 (kbps)
   Tunnel receive bandwidth 8000 (kbps)
   Last input 00:00:05, output 00:00:03, output hang never
@@ -4789,3 +4789,13 @@ VRF info: (vrf in name/id, vrf out name/id)
 We can now confirm that the R1 router is only 1 hop away via the tunnel.
 
 # Troubleshooting GRE Issues
+Some of the common issues that may present themselves while working with GRE tunnels are:
+* The source IP address isn't reachable from far-end router
+* The destination IP address isn't reachable from local router
+* GRE is blocked by an **Access Control List (_ACL_)**
+* Fragmentation may be caused due to inconsistent MTU settings throughout the tunnel. Since our **GRE headers are 24B**, which means that if the interface MTUs were originally set to 1500B, our MTU will now have to be `1476B` to avoid fragmentation.
+* **Recursive Routing** - This is the case when the best route to reach the destination of the tunnel, is through the tunnel itself, which'll bring down the tunnel.
+
+Recursive routing can be demonstrated when load-balancing in EIGRP across unequal cost paths. In such a case, the router will try to load balance across the serial link and the tunnel created via the serial link, which is essentially the same path - causing the tunnel to fail! In cases of recursive routing, it's better to set up a static route to the destination of the tunnel, instead of using a dynamic routing protocol like EIGRP.
+
+# 
