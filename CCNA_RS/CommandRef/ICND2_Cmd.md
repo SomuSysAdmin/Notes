@@ -4689,3 +4689,6 @@ An IPsec tunnel is like a _tunnel within a tunnel_. There's an outer tunnel call
 IPsec does have a major disadvantage, because *it can only be used for unicast IP traffic*. It can't be used for multicast, broadcast or non-IP traffic. Hence, we have the option of taking our data that's in any protocol and encapsulate within a **Generic Routing Encapsulation (_GRE_) tunnel**, which is a logical connection capable of encapsulating a lot of data types. This means that any type of packet can be encapsulated withi the GRE packets which is essentially an IP unicast packet and hence can be routed through an IPsec tunnel.
 
 # GRE Tunnel Theory and Configuration
+Let us consider that we have two routers are two different sites, separated by a service provider's cloud, or even the internet, and we need the two routers to be _layer-2 adjacent_, so that they can form a neighbourship between themselves. In such a case, we can form a **Generic Routing Encapsulation (_GRE_)** tunnel, which can encapsulate multiple layer 3 protocols. From the perspective of the router, the entire logical tunnel thus created appears to be a single hop! GRE however, doesn't do security by itself, and thus have to be sent through an IPsec tunnel for that.
+
+## GRE Tunnel Configuration
