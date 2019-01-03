@@ -4663,3 +4663,9 @@ Typically in an IPv4 packet, there's a data payload that's encapsulated with the
 **Label Switch Router (_LSR_)/Provider Router (_P-Router_)** - LSRs are routers that view the labels on incoming traffic to make forwarding decisions, relabels them for the next LSRs so that the packet reaches the right destination network. Every LSR hop changes the label in the packet.
 
 # Metro Ethernet
+A _Metropolitan Ethernet_ or **Metro Ethernet** is a _Metropolitan Area Network (MAN)_ technology that runs on high speed Ethernet connections. However, since we are spanning huge distances - for example between different corporate office in different parts of the city, we won't be using UTP wires as the medium, but fiber optics. A part of the metro ethernet is the service provider, whom the customer uses the reach the internet. Some of the advantages of Metro Ethernet are:
+* Easier to connect to most LANs since it's based on Ethernet technology, which is what modern LANs typically use.
+* Metro Ethernet is cheaper than the alternatives, like _SONET_. **Synchronous Optical Network (_SONET_)** is a multiplexing standard for fiber optic cables that allows multiple channels of communications to pass traffic through a single fiber optic cable by sharing it.
+* Lower end speeds in Metro Ethernet starts from 10 Gbps, with 40 Gbps speeds being a more common one. At the higher end of speeds, modern installations contain 100Gbps links.
+
+# VPN Fundamentals
