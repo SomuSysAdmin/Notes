@@ -4669,3 +4669,23 @@ A _Metropolitan Ethernet_ or **Metro Ethernet** is a _Metropolitan Area Network 
 * Lower end speeds in Metro Ethernet starts from 10 Gbps, with 40 Gbps speeds being a more common one. At the higher end of speeds, modern installations contain 100Gbps links.
 
 # VPN Fundamentals
+A **Virtual Private Network (_VPN_)** is a logically defined network where data flows through a tunnel between two sites. The traffic may be encrypted while within the tunnel, which allows the data to flow securely through untrusted networks, such as the internet. Some of the advantages of VPN are:
+* It can use common broadband technologies, such as DSL and cable, which already exist in most small offices and homes.
+* It's very scalable since any new connection just needs to be able to connect to the internet, to reach the **VPN concentrator** at the main site. The VPN concentrator is typically a Cisco ASA (_Adaptive Security Appliances_)/Router that has sufficient processing power to handle a number of incoming VPN sessions.
+* The reason for companies using leased-line, or the cheaper alternative, frame-relay clouds in the old days was to avoid having their data intercepted while travelling through the internet. However, with the encryption, the data can travel through an untrusted network within the encrypted tunnel.
+
+Cisco has two broad category of VPNs:
+**Site-to-Site VPN** - In this two sites are connected via a VPN tunnel, with the routers/ASAs at either end of the tunnel acting as the end-points. This kind of VPN is transparent to the end user, since they never have to be made aware of the VPN. The traffic exiting one site is encrypted and passed through the VPN till it reaches the end of the tunnel at the other site, where the other router decrypts the traffic.
+
+**Remote-Access VPN** - In remote access VPNs, the authentication is done at the end-user station, e.g., PC or a laptop. There are a couple of **SSL (_Secure Sockets Layer_) VPN** options:
+* Securely through a web browser, e.g., _Clientless Cisco SSL VPN_. We can connect to a website using HTTPS which will then grant me access to the internal network of the office.
+* Installing a software client, e.g., Cisco AnyConnect SSL VPN Client, or an VPN client built into the OS.
+
+## IPsec
+IPsec is the most popular technology used to secure the communications between sites connected through a VPN. It's a kind of VPN that not only maintains the confidentiality of the data flowing through it, but also maintain data integrity to ensure the data isn't modified in transit by use of hashing algorithms, provide authentication features and anti-replay protection. **Anti-replay protection** ensures that a malicious user can't perform a packet capture of a successful login and then send the captured packets again at a later time to log himself in.
+
+An IPsec tunnel is like a _tunnel within a tunnel_. There's an outer tunnel called the **Internet Key Exchange (_IKE_) Phase I** Tunnel or a **ISAKMP** tunnel, where the security parameters/configuration for the inner tunnel are negotiated to reach consensus among the sites. The **IKE Phase II** Tunnel, or IPsec tunnel, is the inner tunnel in an IPsec connection. The actual traffic between the two sites passes through this tunnel.
+
+IPsec does have a major disadvantage, because *it can only be used for unicast IP traffic*. It can't be used for multicast, broadcast or non-IP traffic. Hence, we have the option of taking our data that's in any protocol and encapsulate within a **Generic Routing Encapsulation (_GRE_) tunnel**, which is a logical connection capable of encapsulating a lot of data types. This means that any type of packet can be encapsulated withi the GRE packets which is essentially an IP unicast packet and hence can be routed through an IPsec tunnel.
+
+# GRE Tunnel Theory and Configuration
