@@ -4639,12 +4639,27 @@ R1# show controllers serial 0/1/0
 Interface Serial0/1/0
 Hardware is PowerQUICC MPC860
 DTE V.35 clocks stopped.
+...
 
 ISP# show controllers serial 0/1/0
 Interface Serial0/1/0
 Hardware is PowerQUICC MPC860
 DCE V.35, no clock
+...
 ```
 
 # Options for WAN Connectivity
 # MPLS
+**Multi Protocol Label Switching (_MPLS_)** is a WAN technology where forwarding decisions are made on the basis of a 20bit label stored in a 32bit header. In this system, the routers in a service provider's cloud can perform routing decisions on the basis of the label instead of the IP address stored in the layer 3 header. Originally, MPLS was designed since label switching was faster as opposed to forwarding based on IP, but given the increase in processing power and efficiency of modern routers, that may no longer be a factor. However, there are other advantages.
+
+From a service provider's perspective, it becomes easier to separate the traffic of one customer from another customer's traffic simply on the basis of the labels. This gives us a very fine level of control over how traffic flows through a network. Quality of Service (QoS) control is another advantage since we can treat different types of traffic differently. MPLS can also interface with a wide number of protocols. If one customer uses ATM while another uses frame-relay, MPLS is still compatible with both simultaneously.
+
+Typically in an IPv4 packet, there's a data payload that's encapsulated with the IP header on layer 3 to form the _IP packet_ and then again, the entire IP packet is encapsulated with the layer 2 header to form the layer 2 _frame_ before being sent out on the wire. MPLS inserts its own **32-bit header, called the shim header** in between the layer 2 and layer 3 headers, which contains the actual labels the routers in the service provider's MPLS cloud use to forward the packets. There are some important types of devices for MPLS:
+
+**Customer Premise Equipment (_CPE_)** - The router at the customer's site that connects to a service provider's MPLS cloud. Traffic leaving the CPE doesn't have to be labled since it hasn't entered the MPLS cloud yet. The CPE leads to the _PE router_.
+
+**Edge Label Switch Router (_ELSR_)/Provider Edge (_PE_) Router** - These are the routers at the edge (i.e., ingress or egress sections) of the MPLS cloud and hence have to attach the shim header into the incoming traffic and remove the shim header from traffic leaving the cloud. The ELSRs forward the packets to LSRs within the cloud for routing to the right ELSR at the other edge of the cloud that's connected to the destination network.
+
+**Label Switch Router (_LSR_)/Provider Router (_P-Router_)** - LSRs are routers that view the labels on incoming traffic to make forwarding decisions, relabels them for the next LSRs so that the packet reaches the right destination network. Every LSR hop changes the label in the packet.
+
+# Metro Ethernet
