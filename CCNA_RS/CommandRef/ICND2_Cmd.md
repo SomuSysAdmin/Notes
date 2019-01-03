@@ -4806,3 +4806,13 @@ In the topology above, we have two options:
 * Make all the router's egress interfaces mGRE interfaces.
 
 However, the routers still need to know the IP address at the far end of the tunnel. For this, we need the **Next Hop Resolution Protocol (_NHRP_)**, which allows the interface configured with mGRE find out the IP address of the link at the far-end of the tunnel.
+
+# WAN Topologies
+# Single Homed vs Dual homed Connections
+A **Single Homed connection** is when we have one connection to one ISP. In such cases, the routing is simpler because we don't have to know about all the routes on the internet. Our edge router needs only know about the routes internal to our network, and for everything else, we set a default route that's the gateway router of the ISP, which will connect our network to the internet.
+
+A **Dual Homed connection** is when we have dual connections, for redundancy with the same ISP. Now since we have multiple connections going out to the internet, the routing will start to be more challenging. In such cases, instead of using static/default routing, we use the exterior gateway protocol called **Border Gateway Protocol (_BGP_)** to route between the various autonomous systems on the internet.
+
+A **Single multi-homed connection** is when we have a single link per ISP to two, or more ISPs. We can also have two or more connections per ISP to two or more ISPs, which is called **Dual multi-homed connection**.
+
+# Border Gateway Protocol (_BGP_)
