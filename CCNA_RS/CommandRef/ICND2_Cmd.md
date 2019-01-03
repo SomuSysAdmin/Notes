@@ -4793,9 +4793,16 @@ Some of the common issues that may present themselves while working with GRE tun
 * The source IP address isn't reachable from far-end router
 * The destination IP address isn't reachable from local router
 * GRE is blocked by an **Access Control List (_ACL_)**
-* Fragmentation may be caused due to inconsistent MTU settings throughout the tunnel. Since our **GRE headers are 24B**, which means that if the interface MTUs were originally set to 1500B, our MTU will now have to be `1476B` to avoid fragmentation.
+* Fragmentation may be caused due to MTU settings throughout the tunnel. Since our **GRE headers are 24B**, which means that if the interface MTUs were originally set to 1500B, our MTU will now have to be `1476B` to avoid fragmentation.
 * **Recursive Routing** - This is the case when the best route to reach the destination of the tunnel, is through the tunnel itself, which'll bring down the tunnel.
 
 Recursive routing can be demonstrated when load-balancing in EIGRP across unequal cost paths. In such a case, the router will try to load balance across the serial link and the tunnel created via the serial link, which is essentially the same path - causing the tunnel to fail! In cases of recursive routing, it's better to set up a static route to the destination of the tunnel, instead of using a dynamic routing protocol like EIGRP.
 
-# 
+# DMVPN Fundamentals
+Let us consider a hub-and-spoke VPN topology as shown below. Every VPN in the remote offices are connected to the headquarters. If remote office B would want to communicate with remote office C, it'd have to sent the packet to headquarters first, to be route to remote office C. This isn't very efficient. Another approach would be a full-mesh of VPN connections, but that wouldn't be scalable. This is why we have **Dynamic Multipoint VPN (_DMVPN_)** which lets us create and tear down VPN connections on an _as-needed basis_, similar to Virtual Circuits in a frame-relay cloud. On eof the technologies that makes DMVPN possible is **Multipoint GRE (_mGRE_)**, which allows a single router interface to have multiple GRE tunnels.
+
+In the topology above, we have two options:
+* Make the HQ router's egress interface a mGRE interface,
+* Make all the router's egress interfaces mGRE interfaces.
+
+However, the routers still need to know the IP address at the far end of the tunnel. For this, we need the **Next Hop Resolution Protocol (_NHRP_)**, which allows the interface configured with mGRE find out the IP address of the link at the far-end of the tunnel.
