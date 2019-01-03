@@ -4686,9 +4686,106 @@ IPsec is the most popular technology used to secure the communications between s
 
 An IPsec tunnel is like a _tunnel within a tunnel_. There's an outer tunnel called the **Internet Key Exchange (_IKE_) Phase I** Tunnel or a **ISAKMP** tunnel, where the security parameters/configuration for the inner tunnel are negotiated to reach consensus among the sites. The **IKE Phase II** Tunnel, or IPsec tunnel, is the inner tunnel in an IPsec connection. The actual traffic between the two sites passes through this tunnel.
 
-IPsec does have a major disadvantage, because *it can only be used for unicast IP traffic*. It can't be used for multicast, broadcast or non-IP traffic. Hence, we have the option of taking our data that's in any protocol and encapsulate within a **Generic Routing Encapsulation (_GRE_) tunnel**, which is a logical connection capable of encapsulating a lot of data types. This means that any type of packet can be encapsulated withi the GRE packets which is essentially an IP unicast packet and hence can be routed through an IPsec tunnel.
+IPsec does have a major disadvantage, because *it can only be used for unicast IP traffic*. It can't be used for multicast, broadcast or non-IP traffic. Hence, we have the option of taking our data that's in any protocol and encapsulate within a **Generic Routing Encapsulation (_GRE_) tunnel**, which is a logical connection capable of encapsulating a lot of data types. This means that any type of packet can be encapsulated within the GRE packets which is essentially an IP unicast packet and hence can be routed through an IPsec tunnel.
 
 # GRE Tunnel Theory and Configuration
 Let us consider that we have two routers are two different sites, separated by a service provider's cloud, or even the internet, and we need the two routers to be _layer-2 adjacent_, so that they can form a neighbourship between themselves. In such a case, we can form a **Generic Routing Encapsulation (_GRE_)** tunnel, which can encapsulate multiple layer 3 protocols. From the perspective of the router, the entire logical tunnel thus created appears to be a single hop! GRE however, doesn't do security by itself, and thus have to be sent through an IPsec tunnel for that.
 
 ## GRE Tunnel Configuration
+In the topology below, we can see in order to reach R4 from R1, we need to go through multiple hops - R2 and R3, but once the GRE tunnel is up, it'll look like just a single hop from the router's perspective. First, we create a virtual tunnel interface, on both R1 and R4 and then assign the IP address to them.
+```
+R1(config)#int tunnel 1
+*Jan  3 12:13:04.679: %LINEPROTO-5-UPDOWN: Line protocol on Interface Tunnel1, changed state to down
+R1(config-if)#ip addr 192.168.0.1 255.255.255.248
+R1(config-if)#desc GRE Start
+```
+Now we have to define the source and the destination of the tunnel from R1's perspective:
+```
+R1(config-if)#tunnel source lo1
+R1(config-if)#tunnel destination 4.4.4.4
+*Jan  3 12:16:24.849: %LINEPROTO-5-UPDOWN: Line protocol on Interface Tunnel1, changed state to up
+```
+There are of course several more ways to define the tunnel's source - by using the interface name on the egress interface, ip address or the loopback address, as shown here.
+
+Now we'll set up R4 in a similar manner:
+```
+R4(config)#int tunnel 1
+*Jan  3 12:19:16.447: %LINEPROTO-5-UPDOWN: Line protocol on Interface Tunnel1, changed state to down
+R4(config-if)#ip addr 192.168.0.2 255.255.255.248
+R4(config-if)#desc GRE End
+R4(config-if)#tunnel source lo1
+R4(config-if)#tunnel destination 1.1.1.1
+*Jan  3 12:20:09.663: %LINEPROTO-5-UPDOWN: Line protocol on Interface Tunnel1, changed state to up
+```
+
+All routers have OSPF running on them, with area 0, and if we include the `192.168.0.0/29` subnet in OSPF, we'll see:
+```
+R1(config-router)#network 192.168.0.0 0.0.0.7 ar 0        
+
+R4(config-router)#network 192.168.0.0 0.0.0.7 ar 0
+*Jan  3 12:23:36.345: %OSPF-5-ADJCHG: Process 1, Nbr 1.1.1.1 on Tunnel1 from LOADING to FULL, Loading Done
+```
+We can see that an adjacency comes up once the tunnel is up.
+
+We can ping the other side of the tunnel:
+```
+R4#ping 192.168.0.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.0.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 28/29/31 ms
+```
+
+We can see more information about this tunnel with the command `show interface tunnel 1`:
+```
+R4#sh int tu1
+Tunnel1 is up, line protocol is up
+  Hardware is Tunnel
+  Description: GRE End
+  Internet address is 192.168.0.2/29
+  MTU 17916 bytes, BW 100 Kbit/sec, DLY 50000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation TUNNEL, loopback not set
+  Keepalive not set
+  Tunnel linestate evaluation up
+  Tunnel source 4.4.4.4 (Loopback1), destination 1.1.1.1
+   Tunnel Subblocks:
+      src-track:
+         Tunnel1 source tracking subblock associated with Loopback1
+          Set of tunnels with source Loopback1, 1 member (includes iterators), on interface <OK>
+  Tunnel protocol/transport GRE/IP
+    Key disabled, sequencing disabled
+    Checksumming of packets disabled
+  Tunnel TTL 255, Fast tunneling enabled
+  Tunnel transport MTU 1476 bytes
+  Tunnel transmit bandwidth 8000 (kbps)
+  Tunnel receive bandwidth 8000 (kbps)
+  Last input 00:00:05, output 00:00:03, output hang never
+  Last clearing of "show interface" counters 00:11:06
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/0 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     65 packets input, 7000 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     58 packets output, 6252 bytes, 0 underruns
+     0 output errors, 0 collisions, 0 interface resets
+     0 unknown protocol drops
+     0 output buffer failures, 0 output buffers swapped out
+```
+We can see that the source is `4.4.4.4` and the destination is `1.1.1.1`. We can also see that the encapsulation is `TUNNEL` which denotes the GRE encapsulation.
+
+However, the real test of the tunnel is a traceroute:
+```
+R4#traceroute 192.168.0.1
+Type escape sequence to abort.
+Tracing the route to 192.168.0.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.168.0.1 34 msec 30 msec 29 msec
+```
+We can now confirm that the R1 router is only 1 hop away via the tunnel.
+
+# Troubleshooting GRE Issues
