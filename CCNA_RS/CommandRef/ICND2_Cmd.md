@@ -4831,3 +4831,37 @@ In BGP we can *influence* these path attributes to control the path selection. O
 For outbound path selection, we can use the **Local Preference** path attribute, which is a PA that can be assigned to routes originating/received from some other AS. This is then exchanged between the routers in an AS. BGP would prefer routes with a higher local preference. Thus, we can tag the routes coming in from ISP2 with a local preference of 200, while those that we get from ISP1 get tagged with a local preference of 100. This would influence R2's path selection to favour the T1 link.
 
 # BGP Configuration and Verification
+The objective of BGP at the CCNA level is to ensure that routers in different AS can use eBGP as their EGP and can advertise routes to each other.
+Let us configure the network shown in the diagram below. When setting up R1 for BGP, we start the process for BGP on R1 with the AS=`64500` since that's the AS number in which R1 is contained.
+
+After that, we have to manually specify the IP and the _remote-AS_, i.e., the AS number of the neighbour using the `neighbour <ip> remote-as <as#>` command. This makes that IP a BGP neighbour. Now we need to advertise routes to it. For this we use the network command - which unlike in IGPs actually states which networks to advertise. Thus, the config on R1 and R2 will be:
+```
+R1(config)#router bgp 64500
+R1(config-router)#neighbor 198.51.100.2 remote-as 64495
+R1(config-router)#network 192.0.2.0 mask 255.255.255.0
+
+R2(config)#router bgp 64495
+R2(config-router)#neighbor 198.51.100.1 remote-as 64500
+*Jan  4 10:47:34.095: %BGP-5-ADJCHANGE: neighbor 198.51.100.1 Up
+R2(config-router)#network 203.0.113.0 mask 255.255.255.0
+```
+
+Now that the BGP configuration is done, we can verify which networks are known to BGP:
+```
+R2#sh ip bgp
+BGP table version is 3, local router ID is 203.0.113.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, f RT-Filter,
+              x best-external, a additional-path, c RIB-compressed,
+Origin codes: i - IGP, e - EGP, ? - incomplete
+RPKI validation codes: V valid, I invalid, N Not found
+
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>  192.0.2.0        198.51.100.1             0             0 64500 i
+ *>  203.0.113.0      0.0.0.0                  0         32768 i
+```
+Just because a network is in the BGP table doesn't mean that it'll get injected into the IP routing table of the router. Only the best, valid path will get injected _if_ BGP is the most authoritative source for that network. The `*` in the `*>` before each network tells us that the path is valid. This means that the next hop for the path is reachable by this router. The `>` means the path is the best path to the network.
+
+The `Path` in the output is the value of *AS_PATH* and here is only `64500` for `192.0.2.0` since it's in that AS. Typically, for AS out on the internet, this path is much bigger.
+
+# Network Services
