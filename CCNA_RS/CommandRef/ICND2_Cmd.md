@@ -4816,3 +4816,18 @@ A **Dual Homed connection** is when we have dual connections, for redundancy wit
 A **Single multi-homed connection** is when we have a single link per ISP to two, or more ISPs. We can also have two or more connections per ISP to two or more ISPs, which is called **Dual multi-homed connection**.
 
 # Border Gateway Protocol (_BGP_)
+In situations where we have more than one route to the internet from our network, instead of using static routes, we should be using an exterior gateway protocol, like the **Border Gateway Protocol (_BGP_)**. Unlike Interior Gateway Protocols (IGPs) like OSPF and EIGRP, BGP is meant to route between autonomous systems. Some of the properties of BGW are:
+* Just like IGPs, BGP also forms neighbourships, but they don't have to be adjacent - they can be several hops away!
+* There is no mechanism to dynamically discover the IP address of a neighbour via multicast - the neighbour's IP address must be explicitly specified.
+* A TCP session is established between neighbours.
+* BGP advertises both the network prefix and length, together called **Network Layer Reachability Information (_NLRI_)** for BGP. This is similar to OSPF and EIGRP.
+* Unlike IGPs, BGP, along with the NLRI, will also advertise **Path Attributes (_PA_s)** that are used to select the best route.
+* BGP is a **Path Vector** routing protocol. Similar to _Distance Vector_ protocols, such as RIP which stores the direction (next hop) in which a network is available and the number of hops to reach the network, BGP stores the number of *Autonomous Systems* it has to cross to reach that network, which is its metric.
+
+Let us consider the following network, where we have our AS=`65,001`. We're also connected to AS `65,002` and `65,004` via links from our ISP. Additionally AS `65,003` may be a network that we're not directly connected to by our ISP, and may be an AS out on the internet we're trying to reach. Unlike IGPs, BGP doesn't have bandwidth as its metric, but rather the number of AS hops to reach a destination AS. In the figure below, we have two links, a T1 with 1.544Mbps bandwidth and a link with half that speed (768Kbps). Unlike IGPs, BGP may end up using the path with the lower bandwidth if the destination network is closer, i.e., lesser AS hops away when compared to the higher bandwidth T1.
+
+In BGP we can *influence* these path attributes to control the path selection. One of the path attributes for BGP is **AS_PATH** which contains a list of all the AS through which a packet must flow to reach the destination network - the shorter the _AS_PATH_, the better. In the above case, to ensure the T1 is used with BGP, we can ask R2 to *prepend* multiple instances of our own AS in the AS_PATH when advertising routes to IPS1, to tell ISP1 that  our AS is further away than it really is. ISP1 will think that to get to our AS, it first needs to go to AS 65001, then to AS 65001 again, then to AS 65001, and so on. This solves the issue of the 768Kbps link used as the preferred inbound path.
+
+For outbound path selection, we can use the **Local Preference** path attribute, which is a PA that can be assigned to routes originating/received from some other AS. This is then exchanged between the routers in an AS. BGP would prefer routes with a higher local preference. Thus, we can tag the routes coming in from ISP2 with a local preference of 200, while those that we get from ISP1 get tagged with a local preference of 100. This would influence R2's path selection to favour the T1 link.
+
+# BGP Configuration and Verification
