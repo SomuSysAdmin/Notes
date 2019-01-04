@@ -4865,3 +4865,17 @@ Just because a network is in the BGP table doesn't mean that it'll get injected 
 The `Path` in the output is the value of *AS_PATH* and here is only `64500` for `192.0.2.0` since it's in that AS. Typically, for AS out on the internet, this path is much bigger.
 
 # Network Services
+# Hot Standby Router Protocol (_HSRP_) Operation
+HSRP is a Cisco proprietary **First Hop Redundancy Protocol (_FHRP_)**. Hosts on a subnet depend on a gateway router to forward packets to and from outside it's own subnet. However, if that gateway were to go down, the host would be reduced only communicating on it's local subnet, and be unable to reach any outside network. A _FHRP_ solves this problem by letting a secondary router step in when the primary router fails so that we can avoid a single point of failure like a single physical gateway. The gateway's IP is assigned to a virtual router instead of a physical router. An industry standard _FHRP_ also exists, called **Virtual Router Redundancy Protocol (_VRRP_)**.
+
+Let us consider the topology below. Since in our modern networks, we have multilayer switches, they're typically the ones our devices use as the default gateway. Neither sw2 or sw3 has the IP address `10.1.1.1` but sw2 takes the active role in routing packets meant for `10.1.1.1` while sw3 will step in if sw1 fails, and is thus the standby _router_. The switches do this by not only hosting the IP address for the gateway but the MAC address for the gateway as well, that the PC learns via ARPing.
+
+When sw2 goes down sw3 will get to know about it very soon, since _hello messages_ are exchanged between _routers_ with a default hello interval of _3 seconds_. If sw3 doesn't get a hello message from sw2, which was the active switch, for a period called the _hold time_, it's transition to _active_ state itself. The hold time is a value not less than 3 times the hello timer, which by default would be _10 sec_. While this might be a long time to wait, if we have high bandwidth links between sw2 and sw3, such as GigE Links, we can set the hello timer to sub-seconds value, which would make our hold time _1 sec or less_.
+
+## Interface Tracking
+Let us consider that instead of Sw2 going down, the link between sw2 and the internet fails. In such case by default, sw3 will still get hello messages from sw2 and remain in a stand-by state. Hence, HSRP has a feature called **interface tracking**, which can monitor the status of an interface and can decrement a priority value if that interface goes down to ensure traffic is re-routed via a live interface. By default in the **Active Router Election**, the router with the highest HSRP priority becomes the active router. Default priority is 100. When sw2's link goes down, it's priority decrease will cause sw3 to have the greater priority and become the active router. However, when sw2 comes back up after a repair, it won't automatically get back it's original priority. To solve this, we have the **preempt option** which lets a router that was previously the active router reclaim its role of active router when it comes back up after a failure or when its priority increasest to the highest value.
+
+## Enhanced Object Tracking
+This feature allows the aforementioned priority value to be decremented not just on the basis of a link failure, but a host of other reasons. This may be a route no longer being in a router's IP table, or a metric to a network exceeding a certain value, etc., all of which can cause a decrease in priority.
+
+# HSRP Configuration
