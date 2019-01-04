@@ -4879,3 +4879,21 @@ Let us consider that instead of Sw2 going down, the link between sw2 and the int
 This feature allows the aforementioned priority value to be decremented not just on the basis of a link failure, but a host of other reasons. This may be a route no longer being in a router's IP table, or a metric to a network exceeding a certain value, etc., all of which can cause a decrease in priority.
 
 # HSRP Configuration
+Let us configure the topology below to have a virtual router with `10.1.1.1` as the gateway for hosts on sw1. Unlike _VRRP_, _HSRP_ doens't support setting the IP address of a physical interface as the Virtual Router's IP. Here, we want the entire configuration to be in HSRP _Group 10_, an arbitrary HSRP group. This is because HSRP can have multiple instances running for different IP ranges, and each instance is called a _group_. First we go to sw2, the multilayer switch and enter the interface configuration mode for **sw2 e0/0**:
+```
+sw2(config)#int e0/0
+sw2(config-if)#standby 10 ip 10.1.1.1
+sw2(config-if)#standby 10 priority 110
+sw2(config-if)#standby 10 preempt
+*Jan  4 12:38:40.257: %HSRP-5-STATECHANGE: Ethernet0/0 Grp 10 state Standby -> Active
+```
+We want the virtual router to have an IP address of `10.1.1.1`, which is what is set in the IP address value. Further, since we want sw2 to be the primary router, we set it's priority to `110`, which is greater than the default value of `100`. Finally, if we lose our role as the active router, we want to reclaim our role as the primary/active once it's repaired. So, we set up the preempt option. This concludes our initial configuration on sw2.
+
+We want to set up a similar configuration on sw3, and so we use:
+```
+sw3(config)#int e0/0
+sw3(config-if)#standby 10 ip 10.1.1.1
+sw3(config-if)#standby 10 preempt
+*Jan  4 12:42:53.376: %HSRP-5-STATECHANGE: Ethernet0/0 Grp 10 state Speak -> Standby
+```
+On sw3 we didn't turn up the priority since we _want_ it to be the Stand-by router for 10.1.1.1 Virtual router in the HSRP config. 
