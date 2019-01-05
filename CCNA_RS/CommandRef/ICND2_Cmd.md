@@ -4879,6 +4879,8 @@ Let us consider that instead of Sw2 going down, the link between sw2 and the int
 This feature allows the aforementioned priority value to be decremented not just on the basis of a link failure, but a host of other reasons. This may be a route no longer being in a router's IP table, or a metric to a network exceeding a certain value, etc., all of which can cause a decrease in priority.
 
 # HSRP Configuration
+_**NOTE**: A known bug with IOU images is that HSRP won't work with them, use IOSv images instead!_
+
 Let us configure the topology below to have a virtual router with `10.1.1.1` as the gateway for hosts on sw1. Unlike _VRRP_, _HSRP_ doens't support setting the IP address of a physical interface as the Virtual Router's IP. Here, we want the entire configuration to be in HSRP _Group 10_, an arbitrary HSRP group. This is because HSRP can have multiple instances running for different IP ranges, and each instance is called a _group_. First we go to sw2, the multilayer switch and enter the interface configuration mode for **sw2 e0/0**:
 ```
 sw2(config)#int e0/0
@@ -4896,4 +4898,333 @@ sw3(config-if)#standby 10 ip 10.1.1.1
 sw3(config-if)#standby 10 preempt
 *Jan  4 12:42:53.376: %HSRP-5-STATECHANGE: Ethernet0/0 Grp 10 state Speak -> Standby
 ```
-On sw3 we didn't turn up the priority since we _want_ it to be the Stand-by router for 10.1.1.1 Virtual router in the HSRP config. 
+On sw3 we didn't turn up the priority since we _want_ it to be the Stand-by router for 10.1.1.1 Virtual router in the HSRP config. This concludes our basic HSRP config.
+
+Now we can check which route the PC takes to reach the `1.1.1.1` site on the internet:
+```
+PC-1> sh ip        
+
+NAME        : PC-1[1]
+IP/MASK     : 10.1.1.100/24
+GATEWAY     : 10.1.1.1
+DNS         :
+MAC         : 00:50:79:66:68:00
+LPORT       : 10001
+RHOST:PORT  : 127.0.0.1:10002
+MTU:        : 1500
+
+PC-1> trace 1.1.1.1
+trace to 1.1.1.1, 8 hops max, press Ctrl+C to stop
+ 1   10.1.1.2   9.426 ms  9.919 ms  10.416 ms
+ 2   *172.16.0.2   14.382 ms (ICMP type:3, code:3, Destination port unreachable)
+```
+We can see that the first hope is actually `10.1.1.2` to reach the site `1.1.1.1`, which is actually a router here with the interface `172.16.0.2` connecting to it by our active HSRP router, R2.
+
+Now let's test the failover and transition of R3 from the standby router to the active router. Since we're using a VPCS virtual PC, the ping command has an option of `-t` for perpetual ping and `-i` to set the interval between sending packets in ms. We want to start the perpetual ping on PC-1, shutdown port G0/0 on sw2 to simulate a failure and see if the failover succeeds:
+```
+PC-1> ping 1.1.1.1 -i 500 -t
+84 bytes from 1.1.1.1 icmp_seq=1 ttl=254 time=23.804 ms
+84 bytes from 1.1.1.1 icmp_seq=2 ttl=254 time=16.857 ms
+84 bytes from 1.1.1.1 icmp_seq=3 ttl=254 time=16.863 ms
+84 bytes from 1.1.1.1 icmp_seq=4 ttl=254 time=11.903 ms
+84 bytes from 1.1.1.1 icmp_seq=5 ttl=254 time=38.690 ms
+84 bytes from 1.1.1.1 icmp_seq=6 ttl=254 time=14.880 ms
+84 bytes from 1.1.1.1 icmp_seq=7 ttl=254 time=15.372 ms
+84 bytes from 1.1.1.1 icmp_seq=8 ttl=254 time=23.333 ms
+84 bytes from 1.1.1.1 icmp_seq=9 ttl=254 time=11.412 ms
+...
+```
+
+On R2:
+```
+sw2(config)#int g0/0
+sw2(config-if)#shutdown
+*Jan  5 10:20:51.708: %LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to administratively down
+*Jan  5 10:20:52.706: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to down
+*Jan  5 10:20:52.710: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Active -> Init
+```
+
+This causes the pings to timeout on PC-1:
+```
+...
+1.1.1.1 icmp_seq=10 timeout
+1.1.1.1 icmp_seq=11 timeout
+1.1.1.1 icmp_seq=12 timeout
+1.1.1.1 icmp_seq=13 timeout
+1.1.1.1 icmp_seq=14 timeout
+1.1.1.1 icmp_seq=15 timeout
+```
+
+The pings timeout till sw3 steps in to be the active router simulating the `10.1.1.1` IP:
+```
+*Jan  5 10:20:39.914: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Standby -> Active
+```
+
+This immediately makes the ping succeed on PC-1 again:
+```
+1.1.1.1 icmp_seq=16 timeout
+1.1.1.1 icmp_seq=17 timeout
+84 bytes from 1.1.1.1 icmp_seq=18 ttl=254 time=13.393 ms
+84 bytes from 1.1.1.1 icmp_seq=19 ttl=254 time=29.758 ms
+84 bytes from 1.1.1.1 icmp_seq=20 ttl=254 time=40.672 ms
+84 bytes from 1.1.1.1 icmp_seq=21 ttl=254 time=37.200 ms
+84 bytes from 1.1.1.1 icmp_seq=22 ttl=254 time=48.606 ms
+84 bytes from 1.1.1.1 icmp_seq=23 ttl=254 time=36.234 ms
+84 bytes from 1.1.1.1 icmp_seq=24 ttl=254 time=26.789 ms
+84 bytes from 1.1.1.1 icmp_seq=25 ttl=254 time=25.296 ms
+84 bytes from 1.1.1.1 icmp_seq=26 ttl=254 time=14.385 ms
+84 bytes from 1.1.1.1 icmp_seq=27 ttl=254 time=11.846 ms
+84 bytes from 1.1.1.1 icmp_seq=28 ttl=254 time=17.856 ms
+84 bytes from 1.1.1.1 icmp_seq=29 ttl=254 time=16.838 ms
+
+PC-1> trace 1.1.1.1
+trace to 1.1.1.1, 8 hops max, press Ctrl+C to stop
+ 1   10.1.1.3   11.907 ms  14.309 ms  9.424 ms
+ 2   *172.16.0.6   17.860 ms (ICMP type:3, code:3, Destination port unreachable)
+
+```
+When we perform a trace route, we see that we're now using `10.1.1.3`. i.e., sw3 as the next hop to reach the _internet_. Now let's see what happens when the router _sw2_ comes back up.
+
+For this, we'll use HSRP debugging on _sw3_, which has several options:
+```
+sw3#debug standby ?
+  errors   HSRP errors
+  events   HSRP events
+  packets  HSRP packets
+  terse    Display limited range of HSRP errors, events and packets
+```
+
+We'll use the `terse` option as it shows us a limited range of all kinds of errors, events and packet flows. We'll start the perpetual ping on PC-1 again, switch the port on sw2 back on and see what happens on sw3:
+```
+sw3#debug standby terse
+HSRP:
+  HSRP Errors debugging is on
+  HSRP Events debugging is on
+    (protocol, neighbor, redundancy, track, ha, arp, interface)
+  HSRP Packets debugging is on
+    (Coup, Resign)
+
+PC-1> ping 1.1.1.1 -i 500 -t
+84 bytes from 1.1.1.1 icmp_seq=1 ttl=254 time=18.348 ms
+84 bytes from 1.1.1.1 icmp_seq=2 ttl=254 time=12.888 ms
+84 bytes from 1.1.1.1 icmp_seq=3 ttl=254 time=19.344 ms
+84 bytes from 1.1.1.1 icmp_seq=4 ttl=254 time=30.258 ms
+84 bytes from 1.1.1.1 icmp_seq=5 ttl=254 time=15.374 ms
+84 bytes from 1.1.1.1 icmp_seq=6 ttl=254 time=24.799 ms
+84 bytes from 1.1.1.1 icmp_seq=7 ttl=254 time=16.819 ms
+...
+
+sw2(config-if)#no shut
+sw2(config-if)#
+*Jan  5 10:30:22.974: %LINK-3-UPDOWN: Interface GigabitEthernet0/0, changed state to up
+*Jan  5 10:30:23.976: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+*Jan  5 10:30:24.000: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 10.1.1.3 (GigabitEthernet0/0) is up: new adjacency
+sw2(config-if)#
+*Jan  5 10:30:25.274: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Listen -> Active
+
+...
+84 bytes from 1.1.1.1 icmp_seq=8 ttl=254 time=16.870 ms
+84 bytes from 1.1.1.1 icmp_seq=9 ttl=254 time=17.856 ms
+84 bytes from 1.1.1.1 icmp_seq=10 ttl=254 time=15.872 ms
+84 bytes from 1.1.1.1 icmp_seq=11 ttl=254 time=13.394 ms
+84 bytes from 1.1.1.1 icmp_seq=12 ttl=254 time=21.824 ms
+84 bytes from 1.1.1.1 icmp_seq=13 ttl=254 time=15.377 ms
+84 bytes from 1.1.1.1 icmp_seq=14 ttl=254 time=19.343 ms
+84 bytes from 1.1.1.1 icmp_seq=15 ttl=254 time=13.392 ms
+```
+We can see that the pings weren't affected when sw2 was coming back up.
+
+Now we can analyse the debugging on sw3:
+```
+*Jan  5 10:29:52.626: HSRP: Gi0/0 Grp 10 ARP src 10.1.1.100 tgt 10.1.1.1, reply with mac 0000.0c07.ac0a
+*Jan  5 10:30:00.836: %DUAL-5-NBRCHANGE: EIGRP-IPv4 1: Neighbor 10.1.1.2 (GigabitEthernet0/0) is up: new adjacency
+*Jan  5 10:30:01.849: HSRP: Gi0/0 Nbr 10.1.1.2 Adv in, active 0 passive 1
+*Jan  5 10:30:01.850: HSRP: Gi0/0 Nbr 10.1.1.2 created
+*Jan  5 10:30:01.852: HSRP: Gi0/0 Nbr 10.1.1.2 is passive
+*Jan  5 10:30:02.110: HSRP: Gi0/0 Nbr 10.1.1.2 Adv in, active 1 passive 1
+*Jan  5 10:30:02.111: HSRP: Gi0/0 Nbr 10.1.1.2 is no longer passive
+*Jan  5 10:30:02.112: HSRP: Gi0/0 Nbr 10.1.1.2 destroyed
+*Jan  5 10:30:02.117: HSRP: Gi0/0 Grp 10 Coup   in  10.1.1.2 Listen  pri 110 vIP 10.1.1.1
+*Jan  5 10:30:02.120: HSRP: Gi0/0 Grp 10 Active: j/Coup rcvd from higher pri router (110/10.1.1.2)
+*Jan  5 10:30:02.121: HSRP: Gi0/0 Grp 10 Active router is 10.1.1.2, was local
+*Jan  5 10:30:02.122: HSRP: Gi0/0 Nbr 10.1.1.2 created
+*Jan  5 10:30:02.124: HSRP: Gi0/0 Nbr 10.1.1.2 active for group 10
+*Jan  5 10:30:02.125: HSRP: Gi0/0 Grp 10 Active -> Speak
+*Jan  5 10:30:02.127: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Active -> Speak
+*Jan  5 10:30:02.128: HSRP: Gi0/0 Grp 10 Redundancy "hsrp-Gi0/0-10" state Active -> Speak
+*Jan  5 10:30:02.134: HSRP: Gi0/0 Grp 10 Removed 10.1.1.1 from ARP
+*Jan  5 10:30:02.140: HSRP: Gi0/0 IP Redundancy "hsrp-Gi0/0-10" update, Active -> Speak
+*Jan  5 10:30:13.746: HSRP: Gi0/0 Grp 10 Speak: d/Standby timer expired (unknown)
+*Jan  5 10:30:13.747: HSRP: Gi0/0 Grp 10 Standby router is local
+*Jan  5 10:30:13.747: HSRP: Gi0/0 Grp 10 Speak -> Standby
+*Jan  5 10:30:13.748: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Speak -> Standby
+*Jan  5 10:30:13.749: HSRP: Gi0/0 Grp 10 Redundancy "hsrp-Gi0/0-10" state Speak -> Standby
+*Jan  5 10:30:13.755: HSRP: Gi0/0 IP Redundancy "hsrp-Gi0/0-10" standby, unknown -> local
+*Jan  5 10:30:13.756: HSRP: Gi0/0 IP Redundancy "hsrp-Gi0/0-10" update, Speak -> Standby
+sw3#u all
+All possible debugging has been turned off
+```
+
+## HSRP States
+There are five different states of an interface participating in HSRP:
+* **Init** - The state of an HSRP interface after coming back up or after an interface configuration change.
+* **Listen** - The interface now knows the _virtual IP address_ and is listening for hello messages.
+* **Speak** - The interface now sends out hello messages to participate in the **Active/Standby router election**.
+* **Standby** - The router on which the interface is located is now acting as the backup/standby router after losing the election, but is next in line to become the active router if the incumbent active router fails. It still sends out hello messages.
+* **Active** - The HSRP state of an interface that's actively forwarding packets for the Virtual IP and MAC addresses. This too has to send out hello messages to let the backup router know it's still alive and hence ask it to stay on _stand-by_.
+
+We can see that in the previous HSRP failover debugging, we get the following messages:
+```
+*Jan  5 10:30:02.117: HSRP: Gi0/0 Grp 10 Coup   in  10.1.1.2 Listen  pri 110 vIP 10.1.1.1
+*Jan  5 10:30:02.120: HSRP: Gi0/0 Grp 10 Active: j/Coup rcvd from higher pri router (110/10.1.1.2)
+*Jan  5 10:30:02.121: HSRP: Gi0/0 Grp 10 Active router is 10.1.1.2, was local
+*Jan  5 10:30:02.122: HSRP: Gi0/0 Nbr 10.1.1.2 created
+*Jan  5 10:30:02.124: HSRP: Gi0/0 Nbr 10.1.1.2 active for group 10
+*Jan  5 10:30:02.125: HSRP: Gi0/0 Grp 10 Active -> Speak
+*Jan  5 10:30:02.127: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Active -> Speak
+...
+*Jan  5 10:30:13.748: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Speak -> Standby
+```
+First sw2 sends sw3 a **coup message** claiming its right to be the active router. Sw3 realizes that sw2 has a higher priority and relinquishes its role as the active router. The interface on sw3 first goes from _active_ to _speak_ and eventually, to _standby_.
+
+## HSRP Verification
+We can see the status of HSRP with the command `show standby brief`:
+```
+sw3#sh standby brief
+                     P indicates configured to preempt.
+                     |
+Interface   Grp  Pri P State   Active          Standby         Virtual IP
+Gi0/0       10   100 P Standby 10.1.1.2        local           10.1.1.1
+```
+We can see that **Gi0/0** participates in HSRP for _HSRP group 10_ with a default priority of `100`, has pre-emption turned on. The Virtual IP address is `10.1.1.1`, the active router has the IP `10.1.1.2` and the standby router is a _local interface_, i.e., sw3 is the backup router.
+
+To get more details, we use the `show standby` command, optionally with an interface name:
+```
+sw3#sh standby g0/0
+GigabitEthernet0/0 - Group 10
+  State is Standby
+    6 state changes, last state change 00:19:47
+  Virtual IP address is 10.1.1.1
+  Active virtual MAC address is 0000.0c07.ac0a (MAC Not In Use)
+    Local virtual MAC address is 0000.0c07.ac0a (v1 default)
+  Hello time 3 sec, hold time 10 sec
+    Next hello sent in 2.544 secs
+  Preemption enabled
+  Active router is 10.1.1.2, priority 110 (expires in 8.608 sec)
+  Standby router is local
+  Priority 100 (default 100)
+  Group name is "hsrp-Gi0/0-10" (default)
+```
+Here, we can also see the virtual MAC address, which is `0000.0c07.ac0a` which is the default for HSRPv1. The same virtual MAC is used by both active and standby routers to ensure the frames are switched correctly. The first part of the MAC address, `0000.0c` is a vendor code for Cisco. The next part, `07.ac` tells us that it's a Virtual MAC address, specifically for _HSRPv1_. The final two Hex bits, `0a` is the group number in Hex, i.e., _group 10_.
+
+## Decreasing failover time with HSRPv2
+When we're using sub-second hello timers, Cisco recommends that we use _HSRPv2_. To switch the existing configuration to HSRPv2, we just use the command `standby version 2` on all participating routers:
+```
+sw2(config-if)#standby ver 2
+*Jan  5 10:56:33.335: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Active -> Init
+*Jan  5 10:56:54.824: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Standby -> Active
+
+sw3(config-if)#standby ver 2
+*Jan  5 10:56:14.318: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Active -> Init
+*Jan  5 10:56:40.670: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Speak -> Standby
+```
+
+Now we move on to reducing the hello and hold timers for faster switch-overs. Let's say we want our hello timer to be `200ms`, and let's set the hold timer which must be more than `600ms`, to `900ms`:
+```
+sw2(config-if)#standby 10 timers ?
+  <1-254>  Hello interval in seconds
+  msec     Specify hello interval in milliseconds
+
+sw2(config-if)#standby 10 timers ms 200 ?
+  <1-255>  Hold time in seconds
+  msec     Specify hold time in milliseconds
+
+sw2(config-if)#standby 10 timers ms 200 ms 900
+
+sw3(config-if)#standby 10 time ms 200 ms 900
+```
+
+For HSRPv2, the MAC address has changed:
+```
+sw3#sh standby
+GigabitEthernet0/0 - Group 10 (version 2)
+  State is Standby
+    9 state changes, last state change 00:06:08
+  Virtual IP address is 10.1.1.1
+  Active virtual MAC address is 0000.0c9f.f00a (MAC Not In Use)
+    Local virtual MAC address is 0000.0c9f.f00a (v2 default)
+  Hello time 200 msec, hold time 900 msec
+    Next hello sent in 0.192 secs
+  Preemption enabled
+  Active router is 10.1.1.2, priority 110 (expires in 0.880 sec)
+    MAC address is 0c88.a91f.0200
+  Standby router is local
+  Priority 100 (default 100)
+  Group name is "hsrp-Gi0/0-10" (default)
+```
+We can see the default MAC address is now `0000.0c9f.f00a` where `0000.0c` is still the vendor code, which remains unchanged, the next part `9f.f`
+tells us that it's a HSRPv2 MAC address and finally, we have the last 3 instead of 2 bits to store the group number, which in this case is `00a`, i.e., 10 in decimal. This also means that we can have more HSRP groups in HSRPv2.
+
+Another difference between HSRPv1 and v2 is that v1 uses the _all-routers_ multi-cast group of `224.0.0.2` while HSRPv2 uses `224.0.0.102`. Finally, HSRPv2 also supports IPv6, which v1 doesn't support.
+
+The failover time now is much faster:
+```
+PC-1> trace 1.1.1.1
+trace to 1.1.1.1, 8 hops max, press Ctrl+C to stop
+ 1   10.1.1.2   9.916 ms  20.834 ms  19.344 ms
+ 2   *172.16.0.2   14.881 ms (ICMP type:3, code:3, Destination port unreachable)
+
+PC-1> ping 1.1.1.1 -i 500 -t
+84 bytes from 1.1.1.1 icmp_seq=1 ttl=254 time=17.354 ms
+84 bytes from 1.1.1.1 icmp_seq=2 ttl=254 time=18.849 ms
+84 bytes from 1.1.1.1 icmp_seq=3 ttl=254 time=12.399 ms
+84 bytes from 1.1.1.1 icmp_seq=4 ttl=254 time=48.615 ms
+84 bytes from 1.1.1.1 icmp_seq=5 ttl=254 time=12.892 ms
+84 bytes from 1.1.1.1 icmp_seq=6 ttl=254 time=10.940 ms
+84 bytes from 1.1.1.1 icmp_seq=7 ttl=254 time=12.400 ms
+1.1.1.1 icmp_seq=8 timeout
+84 bytes from 1.1.1.1 icmp_seq=9 ttl=254 time=18.352 ms
+84 bytes from 1.1.1.1 icmp_seq=10 ttl=254 time=24.306 ms
+84 bytes from 1.1.1.1 icmp_seq=11 ttl=254 time=36.705 ms
+84 bytes from 1.1.1.1 icmp_seq=12 ttl=254 time=13.882 ms
+84 bytes from 1.1.1.1 icmp_seq=13 ttl=254 time=15.876 ms
+
+PC-1> trace 1.1.1.1         
+trace to 1.1.1.1, 8 hops max, press Ctrl+C to stop
+ 1   10.1.1.3   11.893 ms  21.818 ms  16.865 ms
+ 2   *172.16.0.6   13.891 ms (ICMP type:3, code:3, Destination port unreachable)
+```
+We can see that we only lost 1 ping packet. This is due to the very low hello and hold timers - something we have to be careful about in real networks. If a network is un-realiable or is congested, the failovers will be frequent and un-predictable, and hence we must apporpriately adjust them.
+
+## Interface Tracking Configuration
+We want to ensure that if the link between sw2 and the internet fails, we still switchover to sw3 as the active. For this, we have to turn on interface tracking on interface **sw2 g0/1** that leads to the internet and ensure that if the WAN link on sw2 fails, the priority of the **sw2 g0/0** port goes down by 20, i.e., reach _90_, less than the default priority of _100_ on **sw3 g0/0** to make it the active router. We can do this with the `standby <HSRP-Group-num> track <interface ID> <dec Value>` command, which in this case would be `standby 10 Gi 0/1 20`. However, in IOSv 15.2, this isn't available, so, we first have to attach the interface to a tracking object and then track it:
+```
+sw2(config)#track 1 int Gi 0/1 ip routing
+sw2(config-track)#int g0/0
+sw2(config-if)#standby 10 track 1 dec 20
+```
+
+We can now check our priority before and after shutting down the interface:
+```
+sw2(config)#do sh stand br
+                     P indicates configured to preempt.
+                     |
+Interface   Grp  Pri P State   Active          Standby         Virtual IP
+Gi0/0       10   110 P Active  local           10.1.1.3        10.1.1.1
+sw2(config)#int g0/1
+sw2(config-if)#shut
+*Jan  5 11:38:58.527: %TRACK-6-STATE: 1 interface Gi0/1 ip routing Up -> Down
+*Jan  5 11:38:58.771: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Active -> Speak
+*Jan  5 11:38:59.811: %HSRP-5-STATECHANGE: GigabitEthernet0/0 Grp 10 state Speak -> Standby
+*Jan  5 11:39:00.490: %LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+*Jan  5 11:39:01.502: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+sw2(config-if)#do sh stand br
+                     P indicates configured to preempt.
+                     |
+Interface   Grp  Pri P State   Active          Standby         Virtual IP
+Gi0/0       10   90  P Standby 10.1.1.3        local           10.1.1.1
+```
+We can see that after the WAN link shutdown, the priority was decreased by 20 and then the backup router was switched to being the active router and vice versa.
+
+# Quality of Service (_QoS_)
+# Fundamentals of _QoS_
