@@ -5244,3 +5244,62 @@ Some of the common QoS mechanisms between all categories of QoS are:
 These QoS mechanisms can be implemented both at a router or switch. If our network is congested 24x7, the only permanent solution would be to buy extra bandwidth, but QoS can help us out during peak hour congestion when our networks only get congested for relatively short periods of time when traffic volume is high.
 
 # Traffic Markings
+Marking traffic saves the other routers/switches through which the packet will flow from re-analysing the packet to determine what kind of data it contains. Instead, they can just look up the marking and make their forwarding/dropping decisions based on the markings alone. We can have markings at both layer 2 and layer 3.
+
+## Layer 2 Class of Service (_CoS_) Markings
+The CoS marking in the layer 2 frame is a 3 bit value, which gives us a total of _2^3=8_ possible markings. Thus, the CoS marking can have any value between 0-7, but Cisco forbids us from using the values _6 or 7 (110-111)_, since they're for network use, leaving _0 (000) to 5 (101)_ for marking production traffic. _Cisco IP phones_ automatically mark voice packets with CoS value of _5_. Traffic can be marked with CoS values over both IEEE 802.1Q trunks as well as ISL trunks, though in production, we typically only use _.1q_ trunks.
+
+In the case of 802.1Q frames, we have 4 bytes called the **Tag Control Information (_TCI_)** bytes. The first 3 bits in these 4 bytes are called the **Priority** field, and this is where the CoS markings are stored. The next 1 bit is called the **Canonical Format Indicator (_CFI_)** and it tells us whether the following bits, indicating the VLAN conform to the standards of an Ethernet frame or not. For Ethernet, CFI is always _0_ and _1_ for networks like token ring LANs. Finally, the next 12 bits (`3B`) are the VLAN indicator (for _4096_ possible VLANs) . In the case of ISL frames, there's a VLAN field, and within that field we use 3 bits to indicate our CoS.
+
+It is also possible to mark a CoS marking in the layer 2 header coming from a PC through a **Network Interface Card (_NIC_)**, if the NIC supports **802.1p** priority markings. In this case, the NIC adds the 4B that the .1q frames have, so that it can provide the priority in the first 3 of the 16bits added. However, the final 12bits for the VLAN indicator are `0x0` (all zeroes) for .1p frames since they don't belong to any VLAN.
+
+The problem with layer 2 markings is that they get re-written with every router hop and hence, all these bits of information are lost the moment the frame hits a router. When a frame crosses a router, the destination and source MAC addresses get re-written, and in a similar manner, the CoS bits get re-written to `000` when crossing a router. However, it's possible to have layer 3 markings as well that _do_ survive router hops.
+
+## Layer 3 Type of Service (_ToS_) for IPv4 and Traffic Class for IPv6 Markings
+The ToS markings are stored in the IP header. In the case of IPv4 it's called the **Type of Service (_ToS_)** byte and in case of IPv6 it's the **Traffic Class** byte. In it's present iteration, this field is also called the **DiffServ** or the *DS* field. In the ToS bytes, the first 3 bits are called the **IP Precedence** and are just like the CoS bits. They range from _000 to 111_ and like CoS, the values _6 and 7_ are reserved for network use. This gives us 6 levels of priority. However, in the case of certain network designs, we want more granular control of the priority, in which case we can use the next 3 bits as well as the first 3, in which case the first 6 bits of the ToS byte is called the **Differentiated Services Code Point (_DSCP_)**. This gives us _2^6=64_ possible values between _0 to 63_. However, this is too many values to have standard priority levels. Hence, the **Internet Engineering Task Force (_IETF_)** Standards body chose 21 among the 64 and gave them names called **Per Hop Behaviours (_PHB_s)**. Each of the 21 PHBs are in a particular category:
+- **Default** - The default per-hop behaviour has a value of `00 0000` or `0x0`.
+- **Expedited Forwarding (_EF_)** - This is for our high-priority, latency sensitive traffic such as voice/video packets. This has a value of `46`, `0b101110` in binary or `0x2E` in hex. Cisco IP phones not only set the CoS to `5` in the layer 2 header but also set the DSCP to `46` in the layer 3 header. The great part is since in binary the left most 3 bits `101` equate to 5, this value is still high priority for routers that only know about IP precedence. The last binary bit is **always 0** for any of the values selected by IETF.
+- **Class Selector** - Class selector is made to be backwards compatible with IP precedence _speaking_ routers. Hence, only the IP Precedence bits are _set_ in these while the remaining 3 bits of DSCP are set to `0`. We don't have a CS0 since that's equal to the _default_ DSCP value. The possible values of class selectors are:
+    * _CS1_ - `001 000` in binary, equal to `08` in decimal and `0x08` in hex, equal to IP precedence of `1`.
+    * _CS2_ - `010 000` in binary, equal to `16` in decimal and `0x10` in hex, equal to IP precedence of `2`.
+    * _CS3_ - `011 000` in binary, equal to `24` in decimal and `0x18` in hex, equal to IP precedence of `3`.
+    * _CS4_ - `100 000` in binary, equal to `32` in decimal and `0x20` in hex, equal to IP precedence of `4`.
+    * _CS5_ - `101 000` in binary, equal to `40` in decimal and `0x28` in hex, equal to IP precedence of `5`.
+    * _CS6_ - `110 000` in binary, equal to `48` in decimal and `0x30` in hex, equal to IP precedence of `6`.
+    * _CS7_ - `111 000` in binary, equal to `56` in decimal and `0x38` in hex, equal to IP precedence of `7`.
+- **Assured Forwarding** - We have 12 possible *assured forwarding values*. The are written in the format: `AFxy` where `x`, the first digit, is the _IP precedence equivalent value_. For example, if we use a PHB of `AF21`, and the packet passes a router that only understands IP precedence, it'll look at the first 3 bits of AF21 (`0110 001`) and see that it's IP precedence value is `2`. Hence, all `AF2*` PHBs are called class 2 AF PHBs. The next number, `y` in `AFxy` is the **drop probability**, which is used by _WRED (Weighted Random Early Detection)_ to choose which packet to drop in the case of a network congestion. Any of the AFs in the high drop probability columns will be dropped before a single packet from medium drop probability and any of the medium drop probability packets will be dropped before the router has to drop a single one of the low drop probability packets.
+```
+Class #     Low Drop Probability    Medium Drop Probability     High Drop Probability
+========    ====================    =======================     =====================
+Class 1     AF11(10) - 001 01 0     AF12(12) - 001 10 0         AF13(14) - 001 11 0
+Class 2     AF21(18) - 010 01 0     AF22(20) - 010 10 0         AF23(22) - 010 11 0
+Class 3     AF31(26) - 011 01 0     AF32(28) - 011 10 0         AF33(30) - 011 11 0
+Class 4     AF41(34) - 100 01 0     AF42(36) - 100 10 0         AF43(38) - 100 11 0
+```
+
+The formatting of the `AFxy` is such that the first 3 bits of the binary represent `x` and the next 2 bits represent `y`, and since IETF chose all these values to end in `0`, the last bit will always be `0`. Hence, we have `AF21` where `x = 2 = 010` and `y = 1 = 01` and finally, the **LSB (Least Significant Bit)** of _0_. Thus, AF21 in binary is `010 10 0` = _2^4+2^2 = 16 + 4 = 18_ in decimal.
+
+We're going to assign a _default (0)_ PHB to our best-effort traffic. For our voice and other low-latency needs, we'll assign a Expedited Forwarding (_EF_) PHB of `46` due to its high priority. For the rest, such as our video or other data types, we'll use a class selector or a assured forwarding PHB.
+
+### Assured Forwarding Value Practice Examples
+- _Find the decimal equivalent for PHB **AF41**_ - AF41: 4 = `0b100`, 1 = `0b01`, LSB = `0`. So, AF41 = `0b 100 010` = `34` in decimal.
+- _Find the PHB with the decimal equivalent **40**_ - `40` in decimal is `0b 101 00 0`. `0b101` is `5` and `0b00` is `0`. Since the last 3 bits are `0`, this must be a Class selector. Since the first 3 bits equate to 2, the PHB is _CS5_.
+
+### Drop probabilities for different Assured Forwarding Per Hop Behaviours and RED/WRED
+Interfaces have a buffer of a finite size where it stores packets of a certain priority when it can't transmit it due to limited bandwidth. When this queue/buffer overflows, there's data loss and uncontrolled slowdown of TCP streams, etc. This is where industry standard algorithms like RED come in. Let us consider the figure below, where we have a buffer that's capable of storing, say 64 packets with 24 packets being the minimum and 48 packets being the maximum thresholds.
+
+After there are 24 packets in the queue, we're going to introduce the _possibility_ of randomly and occasionally throwing away some traffic. The probability of discarding traffic will get greater and greater as we approach the maximum threshold of 48 packets. After that, we'll definitely be throwing away traffic, i.e., after there are already 48 packets in the buffer, we'll throw away all traffic. Cisco _improved_ RED with **Weighted RED (_WRED_)** where we also consider the traffic's markings. All default, EF, class selector and AF PHBs have default RED profiles in Cisco's IOS, i.e., each have their own min and max thresholds and factors that define the probability of discard for each type of packet. The graph below shows the probability of discard for some of the AFs with respect to the queue depth:
+
+In the graph above, let's consider we have a 25 packet min threshold for high-drop probability for the `AFx3`s, i.e., _AF13, AF23, AF33 and AF43_. Similarly, we have a `30` packet min threshold for `AFx2` and a `35` packet threshold for `AFx1` PHBs. Once we reach a max packet threshold of 100 on any queue (when probability of discard is _25%_), we'll start discarding all packets on that queue. There is a way, however, to prevent the aggressive discarding of the traffic, by using the final 2 bits of the layer 3 header.
+
+## Explicit Congestion Notification (_ECN_)
+The 7th and 8th bits of the _ToS_ byte are called the **ECN-Capable Transport (_ECT_)** bit and the **Congestion Experienced (_CE_)** bit. These two bits are used to notify the router at the far end that this router's getting congested and if they don't slow down, this router will have to start dropping packets. For this to work, first of all, the routers at both ends of the link need to be capable of ECN. These two bits are set on the basis of the following criteria:
+```
+Bit Combo   Meaning
+=========   ====================================================================
+00          Router doesn't have ECN functionality.
+01/10       Router is capable of ECN, but isn't congested right now.          
+11          Router is ECN capable and is currently congested.
+```
+
+Thus, if the routers can't use ECN, they set the ECT and CE bits to `00`. If they aren't congested right now, but can send congestion notifications to the far end, they use `01` or `10`. If they are currently congested, however, the bits are set to `11`, which informs the router at the far end to slow down while sending data to prevent dropping packets.
