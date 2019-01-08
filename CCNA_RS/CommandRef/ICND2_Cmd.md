@@ -5303,3 +5303,29 @@ Bit Combo   Meaning
 ```
 
 Thus, if the routers can't use ECN, they set the ECT and CE bits to `00`. If they aren't congested right now, but can send congestion notifications to the far end, they use `01` or `10`. If they are currently congested, however, the bits are set to `11`, which informs the router at the far end to slow down while sending data to prevent dropping packets.
+
+# Trusting Devices
+Several devices are able to provide their own priority markings, such as a Cisco IP phone or IP camera, but we might not want to trust the markings from a PC, all of which plug into a switch. We may also have marking coming in from an enterprise cloud. Cisco's Catalyst switches have the ability to trust devices based on device identity. **Cisco Discovery Protocol (_CDP_)** lets Cisco's routers and switches know about the other _CDP-speaking_ devices connected to it, and thus know about the device identity. Some switches even have the ability to get the CoS value and then re-mark it to the corresponding DSCP value so that it can survive router hops.
+
+Cisco IP phones show up as `SEPxyz...` under the `show cdp neighbors` command, where SEP stands for _Selsius Ethernet Phone_, a company Cisco acquired while first getting into the telephony business. Before we can ask the switch to trust the CoS markings coming from the IP phone, we need to turn on the global QoS settings:
+```
+sw1(config)#mls qos
+```
+Just by turning on the global QoS feature, we get the ability to mark layer 2 CoS values to Layer 3 ToS values. The mapping can be seen with:
+```
+sw1#show mls qos maps cos-dscp
+   Cos-dscp map:
+        cos:   0    1   2   3   4   5   6   7
+     ----------------------------------------
+       dscp:   0    8  16  24  32  40  48  56
+```
+
+Let us say we have a Cisco IP phone connected to interface `fa0/3`. We can ask the switch to trust the CoS value, but only if it comes from a Cisco IP phone. For this we have to first tell the switch which value to trust: CoS or DSCP. Then, we define which devices we'll trust. We do this by:
+```
+sw1(config)#int fa 0/3
+sw1(config-if)#mls qos trust cos
+sw1(config-if)#mls qos trust device cisco-phone
+```
+Now the CoS markings will only be trusted if they're coming from the IP phone, and not even if they come from a PC _daisy-chained_ to the IP phone so that the ethernet cable carries both voice and data VLANs.
+
+# Prioritizing Traffic Types
