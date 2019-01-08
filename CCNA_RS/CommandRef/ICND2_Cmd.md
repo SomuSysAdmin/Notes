@@ -4237,7 +4237,7 @@ Serial1/0 is up, line protocol is up
   Last input 00:00:09, output 00:00:09, output hang never
   Last clearing of "show interface" counters 00:02:51
   Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
-  Queueing strategy: fifo
+  Queuing strategy: fifo
   Output queue: 0/40 (size/max)
   5 minute input rate 0 bits/sec, 0 packets/sec
   5 minute output rate 0 bits/sec, 0 packets/sec
@@ -4398,7 +4398,7 @@ Serial1/0 is up, line protocol is up
   Last input 00:00:07, output 00:00:07, output hang never
   Last clearing of "show interface" counters 00:59:49
   Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
-  Queueing strategy: fifo
+  Queuing strategy: fifo
   Output queue: 0/40 (size/max)
   5 minute input rate 0 bits/sec, 0 packets/sec
   5 minute output rate 0 bits/sec, 0 packets/sec
@@ -4569,7 +4569,7 @@ Dialer1 is up, line protocol is up (spoofing)
   Last input never, output never, output hang never
   Last clearing of "show interface" counters 00:11:33
   Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
-  Queueing strategy: fifo
+  Queuing strategy: fifo
   Output queue: 0/40 (size/max)
   5 minute input rate 0 bits/sec, 0 packets/sec
   5 minute output rate 0 bits/sec, 0 packets/sec
@@ -4591,7 +4591,7 @@ Virtual-Access1 is up, line protocol is up
   Last input 00:00:05, output never, output hang never
   Last clearing of "show interface" counters 00:05:06
   Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
-  Queueing strategy: fifo
+  Queuing strategy: fifo
   Output queue: 0/40 (size/max)
   5 minute input rate 0 bits/sec, 0 packets/sec
   5 minute output rate 0 bits/sec, 0 packets/sec
@@ -4763,7 +4763,7 @@ Tunnel1 is up, line protocol is up
   Last input 00:00:05, output 00:00:03, output hang never
   Last clearing of "show interface" counters 00:11:06
   Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
-  Queueing strategy: fifo
+  Queuing strategy: fifo
   Output queue: 0/0 (size/max)
   5 minute input rate 0 bits/sec, 0 packets/sec
   5 minute output rate 0 bits/sec, 0 packets/sec
@@ -5236,7 +5236,7 @@ With Quality of Service settings, we can treat different types of traffic differ
 ## Common QoS Mechanisms
 Some of the common QoS mechanisms between all categories of QoS are:
 * **Classification and Marking** - Classification is the process of identifying the type of data contained within a packet and _marking_ involves going into the packet and altering bytes in the layer-2 or layer-3 header to define its priority level. If marking is done early on in the flow of the packet through the network, the subsequent switches/routers won't have to re-evaluate the packet to find out what kind of data is contained within it, and directly forward/drop the packet as and when needed.
-* **Queueing** - Classification and marking itself doesn't change the way the data is handled. We need a system to evaluate the marking and take a decision on the basis of it. _Queueing_ is a QoS mechanism that determines how packets are stored and transmitted from the queue of a router/switch during network congestion. Interfaces on networking devices have a **buffer/queue** that it uses to temporarily store data that it can't yet transmit/forward. Such a case can be experienced when, for example, we have a 1GigE connection at the ingress interface of the router for the local LAN, but the egress WAN port is a T1 line with _1.544Mbps_ bandwidth. Data flows in a lot faster than it can be sent out via the WAN, and hence, the router has to _queue the packets_ by storing them in the _buffer_ till the bandwidth demand on the WAN interface dies down and the packets in the buffer can be transmitted. There are several queueing algorithms - some like the _best effort_ algorithm sends everything out in the same order they arrived, but some prioritize the _latency-sensitive_ packets such as VoIP/Video packets and let them pass through the queue first. In such cases, we may have a separate queue for voice/data and another for other traffic. Thus, even when the normal buffer is full and packets have to be discarded, the voice/data buffer will have enough space for the rest of the packets and thus won't be discarded.
+* **Queuing** - Classification and marking itself doesn't change the way the data is handled. We need a system to evaluate the marking and take a decision on the basis of it. _Queuing_ is a QoS mechanism that determines how packets are stored and transmitted from the queue of a router/switch during network congestion. Interfaces on networking devices have a **buffer/queue** that it uses to temporarily store data that it can't yet transmit/forward. Such a case can be experienced when, for example, we have a 1GigE connection at the ingress interface of the router for the local LAN, but the egress WAN port is a T1 line with _1.544Mbps_ bandwidth. Data flows in a lot faster than it can be sent out via the WAN, and hence, the router has to _queue the packets_ by storing them in the _buffer_ till the bandwidth demand on the WAN interface dies down and the packets in the buffer can be transmitted. There are several Queuing algorithms - some like the _best effort_ algorithm sends everything out in the same order they arrived, but some prioritize the _latency-sensitive_ packets such as VoIP/Video packets and let them pass through the queue first. In such cases, we may have a separate queue for voice/data and another for other traffic. Thus, even when the normal buffer is full and packets have to be discarded, the voice/data buffer will have enough space for the rest of the packets and thus won't be discarded.
 * **Congestion Avoidance** - This is a QoS mechanism like **Random Early Detection (_RED_)** that tries to stop the queue from filling up till it's capacity by randomly discarding packets when the queue depth increases. When the network is congested, and the buffers overflow, data is lost since many packets are discarded. Further, TCP traffic slows down since TCP reduces its window size when packets are lost. An industry standard solution to reduce congestion is *RED* of which Cisco has it's own proprietary version called **Weighted Random Early Detection (_WRED_)**. As the queue depth increases, RED/WRED starts discarding packet more aggressively in proportion to the queue depth, based on pre-defined thresholds. RED sacrifices the perforamce of a few applications by discarding their packets so that they send less traffic and the entire network doesn't suffer. In Cisco's WRED, packets with lower priority markings can be dropped more aggressively.
 * **Policing and Shaping** - The policing and shaping mechanisms can limit the amount of bandwidth available to specific classes of traffic.  While _policing_ and _shaping_ are similar, _policing_ is more strict, with the default implementation of many _policing algorithms_ configured to throw away excess traffic when an application tries to use more than its allocated share of the bandwidth. Shaping is relatively _milder_ since if an application exceeds the **Comitted Information Rate (_CIR_)**, the excess packets are stored in a queue to be sent out when the bandwidth demand of the network tapers down.
 * **Link Efficiency** - These are QoS mechanisms made to use the limited WAN bandwidth most efficiently. Techniques include **RTP Header Compression (_cRTP_)** and **Link Fragmentation and Interleaving (_LFI_)**. Voice and Video traffic use the **Realtime Transport Protocol (_RTP_)** and the header can be as large as `40B`. In such cases, compression can bring down the size of the header to `2-4B`. This particular method is actually caching since the routers at either end of the link can cache the redundant information among the voice packets' headers such as source and destination IP, source and destination UDP port number, RTP payload type, etc., thus reducing the amount of data that needs to be transferred. The routers store the headers locally and identify which inbound packet belongs to which header by their *Session Context ID (CID)*. Another link efficiency mechanism is LFI. We may have giant data packets clogging up the WAN link while smaller, high priority packets may be waiting for a chance to be transmitted. In such cases, we break down the giant data packets into smaller fragments and shuffle the high priorty smaller packets between them so that they can leave through the WAN interface sooner.
@@ -5329,9 +5329,9 @@ sw1(config-if)#mls qos trust device cisco-phone
 Now the CoS markings will only be trusted if they're coming from the IP phone, and not even if they come from a PC _daisy-chained_ to the IP phone so that the ethernet cable carries both voice and data VLANs.
 
 # Prioritizing Traffic Types
-When there's a speed mismatch between the ingress and the WAN ports for traffic leaving the network, for example, a GigE port for the ingress and a Serial port for the egress, we're going to need to store the incoming packets before sending them out via the WAN due to the speed mismatch. Thus, certain traffic will be allowed to leave sooner than the rest, which is where queueing algorithms come into play. One such algorithm is **Class-Based Weighted Fair Queuing (_CBWFQ_)**. In this, we have a default class that includes all kinds of traffic, called _class-default_. This'll include any kind of traffic that we don't categorize. For this class, we can turn on **Weighted Fair Queuing (_WFQ_)** to treat all the packets in this class fairly. For the traffic that we _do care enough to make a special class about_, Cisco recommends that we create no more than 11 special classes. This brings the total possible classes to _11 + 1(default) = 12_.
+When there's a speed mismatch between the ingress and the WAN ports for traffic leaving the network, for example, a GigE port for the ingress and a Serial port for the egress, we're going to need to store the incoming packets before sending them out via the WAN due to the speed mismatch. Thus, certain traffic will be allowed to leave sooner than the rest, which is where Queuing algorithms come into play. One such algorithm is **Class-Based Weighted Fair Queuing (_CBWFQ_)**. In this, we have a default class that includes all kinds of traffic, called _class-default_. This'll include any kind of traffic that we don't categorize. For this class, we can turn on **Weighted Fair Queuing (_WFQ_)** to treat all the packets in this class fairly. For the traffic that we _do care enough to make a special class about_, we also have a _default class_. Cisco recommends that we create no more than 11 special classes. This brings the total possible classes to _11 + 1(default) = 12_.
 
-Let us consider that we have a class called _Bulk-Data_ for telnet/FTP etc traffic that aren't mission criticial. Using CBWFQ, we set up the minimum bandwidth allocations, and hence, if we assign 1Mbps of bandwidth to Bulk Data, the device going to make sure that **at least 1Mbps** of bandwidth is available for the members of this class, and if more bandwidth is available, it can be given to the class. If we have another class for _critical-data_, we can assign a minimum bandwidth of 3Mbps as well. If there's a Network Control class of traffic, we can guarantee that it gets 1Mbps even during the heaviest congestion. We could also have a separate class for call signalling, which gets 1Mbps bandwidth. This is the way CBWFQ works - by categorizing traffic early on and then populate the different classes with individual traffic flows. Finally, we allocate the desired bandwidth to each class and guarantee the minimum bandwidth available to each one of the them when they need it.
+Let us consider that we have a class called _Bulk-Data_ for telnet/FTP etc traffic that aren't mission critical. Using CBWFQ, we set up the minimum bandwidth allocations, and hence, if we assign 1Mbps of bandwidth to Bulk Data, the device going to make sure that **at least 1Mbps** of bandwidth is available for the members of this class, and if more bandwidth is available, it can be given to the class. If we have another class for _critical-data_, we can assign a minimum bandwidth of 3Mbps as well. If there's a Network Control class of traffic, we can guarantee that it gets 1Mbps even during the heaviest congestion. We could also have a separate class for call signalling, which gets 1Mbps bandwidth. This is the way CBWFQ works - by categorizing traffic early on and then populate the different classes with individual traffic flows. Finally, we allocate the desired bandwidth to each class and guarantee the minimum bandwidth available to each one of the them when they need it.
 
 ## Low Latency Queuing (_LLQ_)
 The CBWFQ method, however, doesn't work well with _latency-sensitive data_  like voice or video, for which we have to add a priority queue. We're configuring it so that during the times of congestion, the priority queue can have up to a certain (Say 3Mbps) bandwidth for the traffic and we'll never let it get larger than the bandwidth assigned to it, since we have to put a speed limit on the priority queue so that it doesn't starve the other queues. When we add a priority queue to _CBWFQ_, it's called **Low Latency Queuing (_LLQ_)**. The caveat with LLQ is that if we need to prioritize both voice and video, they won't go into two separate pririoty queues, but into a single queue, and will have to share the bandwidth for the priority queue.
@@ -5351,3 +5351,373 @@ Thus *Bc* is the number of bits for shaping or bytes for policing sent out durin
 Our Bc defines the number of bits we can send out every interval for transmission via the egress interface. Hence, we set the size of Bc such that we transmit for 50% of each interval and then wait for our own token bucket of size Bc to get replenished, which happens at the beginning of the next interval. Thus, we send all 8000 bits in our bucket then wait 1/250th of a second for our bucket to get filled at the start of the next interval again. So on a total, we'll be sending 8000 bits 8 times = 64,000 bits over 1 second = 64Kbps.
 
 # QoS Configuration Example
+The procedure to configure quality of service via the command line is a 3-step process called the **Modular Quality of Service Command-line(_MQC_)** Interface:
+- **Class-map** - We start out by defining a bunch of _class-maps_. Each class-map is a definition for a particular class of traffic. Thus, we can put email in a class map, web-traffic in another class-map, and voice traffic in another class-map etc. Cisco states that we should define no more than 11 class-maps for a policy-map.
+- **Policy-map** - In this step, we define what we're going to do with a particular class of traffic. We have several options, like marking the traffic, configure Class Based Weighted Fair Queuing CBWFQ or Low Latency Queuing (LLQ), or configure WRED, RTD header compression, etc. Now, we can apply the policy thus created.
+- **Service-policy** - Finally, we use the `service-policy` command to apply the policy-map to an interface in the inbound or outbound direction.
+
+## Class-Map Config
+We start by configuring a class-map with the `class-map` command in the global configuration mode:
+```
+HQ(config)#class-map ?
+  WORD       class-map name
+  match-all  Logical-AND all matching statements under this classmap
+  match-any  Logical-OR all matching statements under this classmap
+  type       Configure CPL Class Map
+```
+We may choose to have all the provided conditions match with a boolean _AND_ or select any statement that matches on the basis of boolean _OR_.
+
+Let us consider we're creating a class-map for email. Since it's not possible for a packet to simultaneously be a Microsoft Exchange and IMAP and POP3 packet, we'll use the `match-any` clause:
+```
+HQ(config)#class-map match-any EMAIL
+HQ(config-cmap)#match ?
+  access-group         Access group
+  any                  Any packets
+  application          Application to match
+  cac                  Call Admission Control
+  class-map            Class map
+  cos                  IEEE 802.1Q/ISL class of service/user priority values
+  destination-address  Destination address
+  discard-class        Discard behavior identifier
+  dscp                 Match DSCP in IPv4 and IPv6 packets
+  fr-de                Match on Frame-relay DE bit
+  fr-dlci              Match on fr-dlci
+  input-interface      Select an input interface to match
+  ip                   IP specific values
+  metadata             Metadata to match
+  mpls                 Multi Protocol Label Switching specific values
+  not                  Negate this match result
+  packet               Layer 3 Packet length
+  precedence           Match Precedence in IPv4 and IPv6 packets
+  protocol             Protocol
+  qos-group            Qos-group
+  security-group       Security group
+  service              Service Instance to match
+  source-address       Source address
+  vlan                 VLANs to match
+```
+We can see there are several criteria on the basis of which we can refine the traffic for the class-map. We'll be using `protocol` since it'll allow the system to use **Network Based Application Recognition (_NBAR_)**, which can even look at layer 7 information in the packet to determine the protocol, by performing a *deep packet inspection*. We'll match packets for MS Exchange:
+```
+HQ(config-cmap)#match protocol exchange
+```
+The first time we enter this command, it'll take a little time for the command prompt to appear again, since the router has to check if IP CEF is turned on because NBAR needs it for its operation. Now we'll also add the SMTP, POP3 and IMAP protocols:
+```
+HQ(config-cmap)#match proto smtp
+HQ(config-cmap)#match proto imap
+HQ(config-cmap)#match proto pop3
+```
+
+We'll create another class-map for web traffic:
+```
+HQ(config-cmap)#class-map match-any WEB
+HQ(config-cmap)#match proto http
+HQ(config-cmap)#match proto secure-http
+```
+
+Finally, we'll create one that has a single protocol - for torrent traffic - which means we don't need to specify `match-any` or `match-all`. If we don't specify either, the default is **match-all**. We'd also like to create a class-map for voice so that we can prioritize it. It uses RTP but the Real Time Protocol is also used by video chat software. So, we'd like to specify RTP audio:
+```
+HQ(config-cmap)#class-map DOWNLOADS
+HQ(config-cmap)#match proto bittorrent
+HQ(config-cmap)#class-map VOICE
+HQ(config-cmap)#match proto rtp ?
+  audio             Match voice packets
+  in-app-hierarchy  Match protocol in transport hierarchy
+  payload-type      Match an explicit PT
+  potentially       Match protocol, and all potentiall traffic
+  video             Match video packets
+  <cr>
+
+HQ(config-cmap)#match proto rtp audio
+```
+
+Now we can see the existing class-maps using the `show class-map` command:
+```
+HQ#sh class-map
+ Class Map match-any class-default (id 0)
+   Match any
+
+ Class Map match-all DOWNLOADS (id 3)
+   Match protocol bittorrent
+
+ Class Map match-any EMAIL (id 1)
+   Match protocol exchange
+   Match protocol smtp
+   Match protocol imap
+   Match protocol pop3
+
+ Class Map match-any WEB (id 2)
+   Match protocol http
+   Match protocol secure-http
+
+ Class Map match-all VOICE (id 4)
+   Match protocol rtp audio
+```
+
+## Policy-Map Config
+First we name our policy map and enter it's configuration mode:
+```
+HQ(config)#policy-map BW_CONT
+HQ(config-pmap)#?
+Policy-map configuration commands:
+  class        policy criteria
+  description  Policy-Map description
+  exit         Exit from policy-map configuration mode
+  no           Negate or set default values of a command
+```
+We can see that there are not many options here. To define what policy we'd like to apply to the class-map, we have to enter the class configuration mode within the policy map (_pmap-c_). Let us set the policy for email first:
+```
+HQ(config-pmap)#class EMAIL
+HQ(config-pmap-c)#?
+Policy-map class configuration commands:
+  admit            Admit the request for
+  bandwidth        Bandwidth
+  compression      Activate Compression
+  drop             Drop all packets
+  exit             Exit from class action configuration mode
+  fair-queue       Enable Flow-based Fair Queuing in this Class
+  flow             Flow subcommands
+  log              Log IPv4 and ARP packets
+  measure          Measure
+  netflow-sampler  NetFlow action
+  no               Negate or set default values of a command
+  police           Police
+  priority         Strict Scheduling Priority for this Class
+  queue-limit      Queue Max Threshold for Tail Drop
+  random-detect    Enable Random Early Detection as drop policy
+  service-policy   Configure QoS Service Policy
+  set              Set QoS values
+  shape            Traffic Shaping
+```
+We can enable all class-based QoS mechanisms like policing/shaping/queuing, etc here:
+
+### Marking
+First we'll begin by setting our DiffServ PHB for the class, by assigning a DSCP marking to it:
+```
+HQ(config-pmap-c)#set dscp ?
+  <0-63>     Differentiated services codepoint value
+  af11       Match packets with AF11 dscp (001010)
+  af12       Match packets with AF12 dscp (001100)
+  af13       Match packets with AF13 dscp (001110)
+  af21       Match packets with AF21 dscp (010010)
+  af22       Match packets with AF22 dscp (010100)
+  af23       Match packets with AF23 dscp (010110)
+  af31       Match packets with AF31 dscp (011010)
+  af32       Match packets with AF32 dscp (011100)
+  af33       Match packets with AF33 dscp (011110)
+  af41       Match packets with AF41 dscp (100010)
+  af42       Match packets with AF42 dscp (100100)
+  af43       Match packets with AF43 dscp (100110)
+  cos        Set packet DSCP from L2 COS
+  cs1        Match packets with CS1(precedence 1) dscp (001000)
+  cs2        Match packets with CS2(precedence 2) dscp (010000)
+  cs3        Match packets with CS3(precedence 3) dscp (011000)
+  cs4        Match packets with CS4(precedence 4) dscp (100000)
+  cs5        Match packets with CS5(precedence 5) dscp (101000)
+  cs6        Match packets with CS6(precedence 6) dscp (110000)
+  cs7        Match packets with CS7(precedence 7) dscp (111000)
+  default    Match packets with default dscp (000000)
+  ef         Match packets with EF dscp (101110)
+  qos-group  Set packet dscp from QoS Group.
+  tunnel     set tunnel packet dscp
+```
+We can specify either the PHB name or the decimal value for the DSCP:
+```
+HQ(config-pmap-c)#set dscp af11
+```
+
+### Class Based Weighted Fair Queuing with Bandwidth
+We can turn on CBWFQ or LLQ with the `bandwidth` command. Here we want to use Class Based Weighted Fair Queuing:
+```
+HQ(config-pmap-c)#bandwidth ?
+  <1-2000000>  Kilo Bits per second
+  percent      % of total Bandwidth
+  remaining    percent/ratio of the remaining bandwidth
+
+HQ(config-pmap-c)#bandwidth 10000
+```
+We just instructed the router to allocate at least 10,000Kbps = 10Mbps bandwidth for emails. If more is required, and is avialable, then it'll be allocated. Let us allocate the same for web-traffic:
+```
+HQ(config-pmap-c)#class WEB
+HQ(config-pmap-c)#bandwidth 10000
+```
+
+### Congestion Avoidance with WRED and ECN
+We can turn on WRED to drop packets based on several criteria. Here, we want to randomly drop packets on the basis of DSCP:
+```
+HQ(config-pmap-c)#random-detect ?
+  atm-clp-based                   Enable atm-clp-based WRED as drop policy
+  clp                             parameters for each clp value
+  cos                             parameters for each cos value
+  cos-based                       Enable cos-class-based WRED as drop policy
+  discard-class                   parameters for each discard-class value
+  discard-class-based             Enable discard-class-based WRED as drop
+                                  policy
+  dscp                            parameters for each dscp value
+  dscp-based                      Enable dscp-based WRED as drop policy
+  ecn                             explicit congestion notification
+  exponential-weighting-constant  weight for mean queue depth calculation
+  precedence                      parameters for each precedence value
+  precedence-based                Enable precedence-based WRED as drop policy
+  <cr>
+
+HQ(config-pmap-c)#random-detect dscp-based
+```
+We can also turn on Explicit Congestion Notifications (ECN) that ask the sender to slow down using:
+```
+HQ(config-pmap-c)#random-detect ecn
+```
+
+### Policing and Shaping
+We want to police our torrent traffic such that any packet that exceeds the 1Mbps rate is discarded. For this, we use:
+```
+HQ(config-pmap-c)#police 1m ?
+  <1000-512000000>  Burst bytes
+  bc                Conform burst
+  conform-action    action when rate is less than conform burst
+  pir               Peak Information Rate
+  <cr>
+
+HQ(config-pmap-c)#police 1m
+HQ(config-pmap-c-police)#
+```
+We had an option to define the conformity action - whether to allow that traffic to pass or block, but since we chose to use the _default_ action, any packet exceeding the 1Mbps bandwidth will be dropped.
+
+### Low Latency Queuing with Priority
+The idea behind a low-latency queuing is to allocate it to a **priority queue** with a maximum bandwidth upto which we will allow it to consume. This is to ensure that even during network congestion, when the priority queue will be getting its data sent first, we won't have it starving the other classes of their bandwidth. We can assign the _VOICE_ class to a priority queue and set the limit using:
+```
+HQ(config-pmap-c-police)#class VOICE
+HQ(config-pmap-c)#priority ?   
+  <1-2000000>  Kilo Bits per second
+  level        Multi-Level Priority Queue
+  percent      % of total bandwidth
+HQ(config-pmap-c)#priority 1000
+```
+We just ensured that the low latency packets will be passed first as long as their flow remains below 1Mbps, i.e., we set a maximum bandwidth of 1Mbps to the low latency priority queue.
+
+### Compression
+RTP compression depends upon the type of interface we use. Since we're using GigabitEthernet interfaces, it won't be accpeted, but for some slower speed interfaces, this can be applied. To turn on RTP compression, we use:
+```
+HQ(config-pmap-c)#compression header ip ?
+  rtp  configure rtp header compression
+  tcp  configure tcp header compression
+  <cr>
+
+  HQ(config-pmap-c)#compression header ip rtp
+```
+
+Finally, we can check our policy-maps using:
+```
+HQ(config)#do sh policy-map
+  Policy Map BW_CONT
+    Class EMAIL
+      set dscp af11
+      bandwidth 10000 (kbps)
+    Class WEB
+      bandwidth 10000 (kbps)
+       wred, exponential weight 9
+      random-detect ecn
+
+      dscp    min-threshold    max-threshold    mark-probablity
+      ----------------------------------------------------------
+      default (0)   -                -                1/10
+    Class DOWNLOADS
+     police cir 1000000 bc 31250
+       conform-action transmit
+       exceed-action drop
+    Class VOICE
+      priority 1000 (kbps)
+```
+
+## Applying policy to interface with service-policy
+We can apply a policy to an interface in an inbound/outbound direction. Whether we can apply it in our preferred direction depends upon the configuration of the policy map itself. For example, shaping or queuing can't be set up in the inbound direction on an interface. To apply our policy to the interface **Gi0/0**  in the outbound direction, we use:
+```
+HQ(config)#int g0/0
+HQ(config-if)#service-policy output BW_CONT
+```
+
+To see the policies that have been applied to a particular interface, we use:
+```
+HQ#sh policy-map interface g0/0
+ GigabitEthernet0/0
+
+  Service-policy output: BW_CONT
+
+    queue stats for all priority classes:
+      Queueing
+      queue limit 64 packets
+      (queue depth/total drops/no-buffer drops) 0/0/0
+      (pkts output/bytes output) 0/0
+
+    Class-map: EMAIL (match-any)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match: protocol exchange
+        0 packets, 0 bytes
+        5 minute rate 0 bps
+      Match: protocol smtp
+        0 packets, 0 bytes
+        5 minute rate 0 bps
+      Match: protocol imap
+        0 packets, 0 bytes
+        5 minute rate 0 bps
+      Match: protocol pop3
+        0 packets, 0 bytes
+        5 minute rate 0 bps
+      Queueing
+      queue limit 64 packets
+      (queue depth/total drops/no-buffer drops) 0/0/0
+      (pkts output/bytes output) 0/0
+      QoS Set
+        dscp af11
+          Packets marked 0
+      bandwidth 10000 kbps
+
+    Class-map: WEB (match-any)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match: protocol http
+        0 packets, 0 bytes
+        5 minute rate 0 bps
+      Match: protocol secure-http
+        0 packets, 0 bytes
+        5 minute rate 0 bps
+      Queueing
+      queue limit 64 packets
+      (queue depth/total drops/no-buffer drops) 0/0/0
+      (pkts output/bytes output) 0/0
+      bandwidth 10000 kbps
+        Exp-weight-constant: 9 (1/512)
+        Mean queue depth: 0 packets
+        dscp       Transmitted    ECN       Random drop      Tail drop          Minimum        Maximum     Mark
+                pkts/bytes     marked        pkts/bytes       pkts/bytes          thresh         thresh     prob
+
+
+    Class-map: DOWNLOADS (match-all)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match: protocol bittorrent
+      police:
+          cir 1000000 bps, bc 31250 bytes
+        conformed 0 packets, 0 bytes; actions:
+          transmit
+        exceeded 0 packets, 0 bytes; actions:
+          drop
+        conformed 0000 bps, exceeded 0000 bps
+
+    Class-map: VOICE (match-all)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match: protocol rtp audio
+      Priority: 1000 kbps, burst bytes 25000, b/w exceed drops: 0
+
+
+    Class-map: class-default (match-any)  
+      12 packets, 1310 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match: any
+
+      queue limit 64 packets
+      (queue depth/total drops/no-buffer drops) 0/0/0
+      (pkts output/bytes output) 12/1310
+```
+This shows us the combined output of both the `show class-map` and `show policy-map` commands, along with the usage statistics for each class, like packet and byte counts.
