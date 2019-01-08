@@ -5745,3 +5745,11 @@ An alternative would be to engage a private WAN provider. Then we could use a te
 A much better alternative is **Intercloud Exchange** or _cloud-of-clouds_ which lets an enterprise easily connect to several cloud providers. Thus, the company needs only connect to the one intercloud exchange, which will then connect us to our cloud provider. At the time of changing cloud providers, all we need to do is to ask our intercloud exchange to switch us over to the new provider. This gives us the security, QoS and no change to the the outgoing link, but it'll still take a bit of time to connect to the intercloud exchange as compared to the internet.
 
 # Virtual Services
+Let us consider the scenario below. We are connected to the cloud provider where all our servers are hosted in VMs. This is very beneficial since if we need to quickly increase our resources, the cloud provider can provision the resources and we merely need to spin up a couple of extra VMs. In case the servers are identical, the cloud provider may be running some **Virtual Server Load Balancer (_vSLB_)** that distributes the load to the VMs. However, the cloud provider's router, vSLB or any other equipment won't be configured by us, and if we need a little more control over the data that flows in and out of our network, we need to have equipment in the chain to our VMs. However, the cloud provider won't let us install our own hardware in the racks of their own data-centers. So, we require virtual network gear.
+
+For security, Cisco provides software firewalls called **_Adaptive Security Virtual Appliances (ASAv)_** that lets us do almost anything that a physical firewall would let us do, but runs inside a VM. Similarly, if we need routers, we have Cisco's **CSR1000V** which is a *software-only* virtual Router. It runs a version of Cisco's IOS called the IOS-XE. Again, this lets us do almost anything a phsycial router would. For example, let's say we want our VMs to source the time via NTP from our router, in which case we can use the virtual router running inside a VM.
+
+# Securing Network Devices
+# Advanced Switch Security
+# Non-Default Native VLAN
+Cisco always suggests that instead of a monolithic model of security, we have several layers of security. Just one of the many layers is *security best practices for security Cisco's Catalyst Switches*.
