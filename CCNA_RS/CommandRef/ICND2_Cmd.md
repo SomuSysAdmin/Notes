@@ -5724,7 +5724,7 @@ This shows us the combined output of both the `show class-map` and `show policy-
 
 # Cloud Resources
 # Cloud Computing Fundamentals
-Traditionally all servers and networking gear was hosted at the enterprise premises or a datacenter, but recently there has been a trend of migrating to cloud service providers where storage, computing resources like memory and processing power, databases and services like email are handled by the cloud service provider and the equipment to support all this is physically hosted at the service provider's premises. This is called _cloud computing_. This takes the _headache_ of server provisioning, maintenance and repair to the cloud provider. There are primarily three types of clouds:
+Traditionally all servers and networking gear was hosted at the enterprise premises or a data-center, but recently there has been a trend of migrating to cloud service providers where storage, computing resources like memory and processing power, databases and services like email are handled by the cloud service provider and the equipment to support all this is physically hosted at the service provider's premises. This is called _cloud computing_. This takes the _headache_ of server provisioning, maintenance and repair to the cloud provider. There are primarily three types of clouds:
 * **Public Clouds** - These are the services that interact with publicly accessible networks like the internet or with other public clouds.
 * **Private Clouds** - Here, the provided services are only accessible by and interact with other members of the private cloud, i.e., devices within a company.
 * **Hybrid Clouds** - This is a collection of services some of which interact with a public cloud and some which interact with a private cloud.
@@ -5736,3 +5736,12 @@ Typical cloud services include:
 * **Network as a Service (NaaS)** - In this scenario, the cloud provider makes network resources such as VPNs, elastic bandwidth, and internet connectivity available to the customer.
 
 # Accessing Cloud Services
+With the cloud provider taking over the infrastructure responsibilities, a new problem arises. How does an enterprise connect to the cloud provider which houses a majority its corporate computing infrastructure? An option would be through the internet. This would however, pose a huge security threat since our data will traverse an untrusted network which opens us up for _man-in-the-middle_ attacks, etc. Another issue would be the Quality of Service (QoS) - when our data traverses the internet, there's no guarantee that our ISP will provide us a reliable QoS for all our services.
+
+A pro of this would be that we could connect very quickly since the company will already ahve a connection to the internet and there's no hassle of obtaining a connection from a private WAN provider. Another pro is that when changing cloud providers, we don't have to change our out-going connection since we're connecting to the internet. Another method would be to still use the internet, but have our data flow through a secure, encrypted VPN tunnel. This'll mitigate some security concerns such as _man-in-the-middle_ attacks, but QoS will still suffer.
+
+An alternative would be to engage a private WAN provider. Then we could use a technology such as MPLS or Metro Ethernet to connect to our cloud services provider. The pros of this method is that we get the security that we desire and they'll also take care of the QoS issues, but this will take longer and more effort to set up. Further, if we want to change cloud provider, we'll have to get another private WAN connection to that new cloud provider.
+
+A much better alternative is **Intercloud Exchange** or _cloud-of-clouds_ which lets an enterprise easily connect to several cloud providers. Thus, the company needs only connect to the one intercloud exchange, which will then connect us to our cloud provider. At the time of changing cloud providers, all we need to do is to ask our intercloud exchange to switch us over to the new provider. This gives us the security, QoS and no change to the the outgoing link, but it'll still take a bit of time to connect to the intercloud exchange as compared to the internet.
+
+# Virtual Services
