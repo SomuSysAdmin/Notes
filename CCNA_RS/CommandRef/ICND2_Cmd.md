@@ -5721,3 +5721,18 @@ HQ#sh policy-map interface g0/0
       (pkts output/bytes output) 12/1310
 ```
 This shows us the combined output of both the `show class-map` and `show policy-map` commands, along with the usage statistics for each class, like packet and byte counts.
+
+# Cloud Resources
+# Cloud Computing Fundamentals
+Traditionally all servers and networking gear was hosted at the enterprise premises or a datacenter, but recently there has been a trend of migrating to cloud service providers where storage, computing resources like memory and processing power, databases and services like email are handled by the cloud service provider and the equipment to support all this is physically hosted at the service provider's premises. This is called _cloud computing_. This takes the _headache_ of server provisioning, maintenance and repair to the cloud provider. There are primarily three types of clouds:
+* **Public Clouds** - These are the services that interact with publicly accessible networks like the internet or with other public clouds.
+* **Private Clouds** - Here, the provided services are only accessible by and interact with other members of the private cloud, i.e., devices within a company.
+* **Hybrid Clouds** - This is a collection of services some of which interact with a public cloud and some which interact with a private cloud.
+
+Typical cloud services include:
+* **Infrastructure as a Service (_IaaS_)** - This is a service where the service providers allow companies to rent virtualized servers that run specific applications. Instead of paying for the hardware, the companies rent it on an _as needed_ basis, thus offering quick provisioning and scalability of services.
+* **Platform as a Service (_PaaS_)** - PaaS offers the developers in a company a platform (servers, infrastructure and operating system and other required software) on which they can deploy their own code, primarily of use to application programmers. This again is highly scalable and offers the opportunity to deploy quickly.
+* **Software as a Service (_SaaS_)** - Here the cloud provider directly provides all the software and the infrastructure needed to run that software and store its data for the company. The software is typically licensed and hosted by the cloud service provider and the users connect to the software and use it via a web browser.
+* **Network as a Service (NaaS)** - In this scenario, the cloud provider makes network resources such as VPNs, elastic bandwidth, and internet connectivity available to the customer.
+
+# Accessing Cloud Services
