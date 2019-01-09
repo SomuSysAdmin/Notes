@@ -5929,7 +5929,7 @@ Some of the features of RADIUS are:
 * It encrypts only the password.
 * Better at Accounting functions than TACACS+
 
-## TACACS+ Setup
+## RADIUS/TACACS+ Network Access Server (Client) Setup
  Here we want to configure a switch to authenticate with a RADIUS server, and if that server isn't available, we want to failover to a local username database. We'll be configuring this on a Cisco Catalyst switch.
 
 To enable AAA, we first give the command `aaa new-model` in the global configuration mode. Now, to enable a RADIUS server, we use the command `radius-server <IPaddress>` or for a TACACS+ server, it becomes `tacacs-server <IPaddress>`:
@@ -5960,4 +5960,4 @@ sw1(config)#aaa authentication login default group R-GROUP local
 ```
 The list provided is the **method list** which is a list of authentication procedures. Here, the list begins from the word _default_ which asks the switch to use the default method list for authentication. Finally, if the RADIUS authentication server is not available, i.e., `10.10.10.10` doesn't respond appropriately or just doesn't respond at all, we'll be falling back to local login database, which is why we use the `local` keyword at the end.
 
-If the auth server isn't available during login, the switch will try to get the response from the server for several seconds, and when it can't, it'll finally use the local database and let us log in if our credentials are also stored locally. 
+If the auth server isn't available during login, the switch will try to get the response from the server for several seconds, and when it can't, it'll finally use the local database and let us log in if our credentials are also stored locally.
