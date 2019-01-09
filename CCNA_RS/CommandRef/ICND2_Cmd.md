@@ -5773,3 +5773,137 @@ When a supplicant first connects to a switchport, the authenticator, i.e., the s
 Now that the new host is authenticated, we can also perform encryption using 802.1x, which uses some variant (or _method_) of the **Extensible Authentication Protocol (_EAP_)**, which defines how authentication is done between the supplicant and the authenticator. EAP can encrypt the communication between the switch and the authenticator. While sending the authorization to the switch, the auth server can provide keys to encrypt traffic between itself and the host to the authenticator, thus encrypting traffic. This will prevent eavesdropping and _man-in-the-middle_ attacks.
 
 # DHCP Snooping
+DHCP servers work using the **DORA** process, where the client first sends out a *Discover* request to see which DHCP server is available on the network, to which the DHCP server responds with a *Offer*, stating the identity of the server. At this point, the client sends a *Request* for the information it needs to connect to the network and finally, the server responds with an *Acknowledgement* with the requested details containing the IP address, the DNS details, etc. Let us consider the topology below: the DHCP server is on the same subnet as the laptop. Even if it weren't we could just go the the gateway router of the laptop and there use the `ip helper-address <IPaddr>` to provide the IP address of the DHCP server on another subnet and the DHCP discover broadcasts would be sent to it.
+
+If a malicious agent puts a rogue DHCP server in the network, perhaps plugs it in to the same switch the laptop's connected to, it can intercept the DHCP broadcast and respond with the offer _faster_ than the corporate DHCP server. Our laptop would use the offer it gets first, and hence use the malicious agent's device as the default gateway and allow the intruder's device to intercept all the traffic to the actual server.
+
+To prevent this from happening, Cisco Catalyst switches have a feature called DHCP snooping where we can mark the switchports as either trusted or untrusted and then reject all DHCP packets coming from a DHCP server connected to a port in an untrusted state. In addition to protection from DHCP snooping, this also protects the clients on the switch from getting responses from rogue DHCP servers that were accidentally left _on_ when the clients were reconfigured.
+
+## DHCP Snooping Configuration
+Consider the topology below. We have a genuine and a rogue DHCP server connected to the same switch. Thus, when the client requests an IP address, it can get an address from either `192.168.1.0/24` network connected to the genuine DHCP server or `192.168.2.0/24` rogue DHCP server:
+```
+Client> ip dhcp
+DDORA IP 192.168.1.51/24 GW 192.168.1.1
+
+Client> ip dhcp -r
+DORA IP 192.168.2.51/24 GW 192.168.2.1
+```
+To prevent this, we'll enable DHCP snooping on the switch, _sw1_.
+
+We start off by first globally enabling DHCP snooping from the configuration mode. However, simply globally turning it on won't enable DHCP snooping in any of our VLANs. We also have to enable it on VLAN1, where all our switchports are located.
+```
+sw1(config)#ip dhcp snooping
+sw1(config)#ip dhcp snooping vlan 1
+```
+This sets all the ports in VLAN 1 in an **untrusted** state, which means any and all DHCP offers will be rejected by the switch. In this condition, our client won't even be able to get an IP from the genuine DHCP server:
+```
+Client> ip dhcp
+DDD
+Can't find dhcp server
+```
+To fix this, we need to we need to trust the interface in terms of DHCP snooping.
+
+We first go into interface config and then use the `ip dhcp snooping trust` command:
+```
+sw1(config)#int e0/0
+sw1(config-if)#ip dhcp snooping trust
+```
+
+At this point, we'll see that the DHCP requests from the clients still fail even though the DHCP server's port is trusted. This is because of a _zero value in **giaddr** field_ due to enabling of **DHCP Informatin Option/Option 82**. The Option 82 feature is used in Metro Ethernets or large enterprise deployment to denote where the client is physically attached when the DHCP server is separated from the client by one or more DHCP relay agents. The DHCP packets contain a field called _giaddr_ which the relay is supposed to fill to specify information about the switch-port from which the packet originates. The DHCP server can then use the information in Option 82 to select a _sub-pool_ from the pool of IP addresses based on that information. The issue is, by default Cisco IOS switches are configured to send a _zero giaddr_ field in the option 82 information and Cisco IOS routers are set to reject any packet with zero giaddr field. So, even though the router receives a DHCP discovery message, it doesn't respond:
+```
+DHCP#debug ip dhcp server packet
+DHCP server packet debugging is on.
+*Jan  9 10:17:50.919: DHCPD: inconsistent relay information.
+*Jan  9 10:17:50.921: DHCPD: relay information option exists, but giaddr is zero.
+```
+
+To solve this, we have two options:
+* We can ask the DHCP server to trust the packets with _zero giaddr field_ with `ip dhcp relay inform trust-all` in the global configuration mode OR `ip dhcp relay inform trusted` in the interface configuration mode.
+* We can ask the switch not to insert the option 82 information all together with the `no ip dhcp snooping information option` in global config mode.
+
+In this case, since we don't want to disable option 82, we'll ask the DHCP server to trust the packet. This however will mean that this'll have to be done on all DHCP servers in an environment where we have multiple DHCP servers (perhaps for different VLANs) on different routers. So, we go to the DHCP server and use:
+```
+DHCP(config)#ip dhcp relay inform trust-all
+```
+In order to test our DHCP snooping, we also do this on the intruder:
+```
+Rogue(config)#ip dhcp relay inform trust-all
+```
+
+Now when we try to get an IP address, the right DHCP server will be the one that's trusted by the switch:
+```
+Client> ip dhcp
+DDORA IP 192.168.1.52/24 GW 192.168.1.1
+```
+
+We can also see that the offer packet from the intruder is rejected:
+```
+sw1#sh ip dhcp snooping statistics
+ Packets Forwarded                                     = 2
+ Packets Dropped                                       = 12
+ Packets Dropped From untrusted ports                  = 12
+
+sw1#sh ip dhcp snooping statistics detail
+ Packets Processed by DHCP Snooping                    = 14
+ Packets Dropped Because
+   IDB not known                                       = 0
+   Queue full                                          = 0
+   Interface is in errdisabled                         = 0
+   Rate limit exceeded                                 = 0
+   Received on untrusted ports                         = 12
+   Nonzero giaddr                                      = 0
+   Source mac not equal to chaddr                      = 0
+   No binding entry                                    = 0
+   Insertion of opt82 fail                             = 0
+   Unknown packet                                      = 0
+   Interface Down                                      = 0
+   Unknown output interface                            = 0
+   Misdirected Packets                                 = 0
+   Packets with Invalid Size                           = 0
+   Packets with Invalid Option                         = 0
+```
+
+## Preventing DoS attacks on DHCP Servers
+The rogue server can now start a Denial of Service attack on the legitimate DHCP server by flooding it with DHCP discover requests. Hence, we should rate-limit the DHCP traffic on it's connected interface and in fact, all untrusted interfaces to a maximum number of packets per second:
+```
+sw1(config)#int g0/0
+sw1(config-if)#ip dhcp snoop limit rate 100
+sw1(config-if)#int ran g0/2-3
+sw1(config-if-range)#ip dhcp snoop lim rate 100
+```
+
+## Checking DHCP Snooping Configuration
+We can check the current DHCP snooping configuration using the `show ip dhcp snooping` command:
+```
+sw1#sh ip dhcp snooping
+Switch DHCP snooping is enabled
+Switch DHCP gleaning is disabled
+DHCP snooping is configured on following VLANs:
+1
+DHCP snooping is operational on following VLANs:
+1
+DHCP snooping is configured on the following L3 Interfaces:
+
+Insertion of option 82 is enabled
+   circuit-id default format: vlan-mod-port
+   remote-id: 0c27.bb00.9f00 (MAC)
+Option 82 on untrusted port is not allowed
+Verification of hwaddr field is enabled
+Verification of giaddr field is enabled
+DHCP snooping trust/rate is configured on the following Interfaces:
+
+Interface                  Trusted    Allow option    Rate limit (pps)
+-----------------------    -------    ------------    ----------------   
+GigabitEthernet0/0         no         no              100       
+  Custom circuit-ids:
+GigabitEthernet0/1         yes        yes             unlimited
+  Custom circuit-ids:
+GigabitEthernet0/2         no         no              100       
+  Custom circuit-ids:
+GigabitEthernet0/3         no         no              100       
+  Custom circuit-ids:
+```
+Here, we can see that DHCP snooping is up and operational on VLAN1, and that option 82 is enabled which means that the VLAN information and the MAC address of the client are sent to the DHCP server for evaluation during the discovery phase to help ensure a proper sub-pool of IP (if configured) is assigned to it. we can also see the rate-limits on the untrusted ports.
+
+# Authentication, Authorization and Accounting (_AAA_)
+**Authentication** involves proving we are who we claim to be. In the case of networks, this may mean proving we have access to the network by providing a username-password combo. Once the identity is validate, the authenticating systems bestows upon the user a set of privileges that allows the user to use the system in a certain way, which is called **Authorization**. **Accounting** keeps a record of the activity of the user on the network.
