@@ -5907,3 +5907,57 @@ Here, we can see that DHCP snooping is up and operational on VLAN1, and that opt
 
 # Authentication, Authorization and Accounting (_AAA_)
 **Authentication** involves proving we are who we claim to be. In the case of networks, this may mean proving we have access to the network by providing a username-password combo. Once the identity is validate, the authenticating systems bestows upon the user a set of privileges that allows the user to use the system in a certain way, which is called **Authorization**. **Accounting** keeps a record of the activity of the user on the network.
+
+The authorizer is a router/switch to which we connect to be connected to the rest of the network, which is also called the **Network Access Server**. The AAA server might itself be running TACACS+ or RADIUS, etc, and it might be configured to let a Network Administrator connect to the router/switch itself. This is especially needed in an enterprise network where it's not possible to keep local copies of login credentials for every administrator on every device!
+
+Some of the features of TACACS+ are:
+* TACACS+ stands for **Terminal Access Controller Access Control System+**
+* It can run on a variety of Cisco gear, such as switches, routers and ASA firewalls.
+* Developed by Cisco, but is now an open standard.
+* Not every vendor uses it despite it being open standard. Still popular in _all-Cisco_ networks.
+* Sends Layer 4 segments using TCP.
+* Authentication, Authorization and Accounting all run as separate processes.
+* **Two-way** challenge and response make it a bit more secure than RADIUS.
+* TACACS+ encrypts the entire packet.
+
+Some of the features of RADIUS are:
+* RADIUS is now an industry-standard, supported by most vendors.
+* Popular in a mixed vendor environment.
+* Sends Layer 4 segments using UDP.
+* Authentication, Authorization and Accounting are all combined in the same process.
+* One way authentication where only the client authenticates with the server.
+* It encrypts only the password.
+* Better at Accounting functions than TACACS+
+
+## TACACS+ Setup
+ Here we want to configure a switch to authenticate with a RADIUS server, and if that server isn't available, we want to failover to a local username database. We'll be configuring this on a Cisco Catalyst switch.
+
+To enable AAA, we first give the command `aaa new-model` in the global configuration mode. Now, to enable a RADIUS server, we use the command `radius-server <IPaddress>` or for a TACACS+ server, it becomes `tacacs-server <IPaddress>`:
+```
+sw1#conf t
+sw1(config)#radius-server 10.10.10.10
+sw1(config)#tacacs-server 20.20.20.20
+```
+
+In case of larger networks such as enterprise networks, we might have to define a group of RADIUS/TACACS+ servers using:
+```
+sw1(config)#aaa group server radius R-GROUP
+sw1(config-sg-radius)#server 10.10.10.10
+```
+
+## Failover
+When the RADIUS/TACACS+ server isn't available for authentication, we can still failover to local authentication. For this, we must first have a local username and password:
+```
+sw1(config)#username somu secret cisco
+```
+
+Now when we authenticate
+
+## Using RADIUS for Authentication
+Now to actually setup RADIUS for the authentication, we use:
+```
+sw1(config)#aaa authentication login default group R-GROUP local
+```
+The list provided is the **method list** which is a list of authentication procedures. Here, the list begins from the word _default_ which asks the switch to use the default method list for authentication. Finally, if the RADIUS authentication server is not available, i.e., `10.10.10.10` doesn't respond appropriately or just doesn't respond at all, we'll be falling back to local login database, which is why we use the `local` keyword at the end.
+
+If the auth server isn't available during login, the switch will try to get the response from the server for several seconds, and when it can't, it'll finally use the local database and let us log in if our credentials are also stored locally. 
