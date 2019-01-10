@@ -5961,3 +5961,14 @@ sw1(config)#aaa authentication login default group R-GROUP local
 The list provided is the **method list** which is a list of authentication procedures. Here, the list begins from the word _default_ which asks the switch to use the default method list for authentication. Finally, if the RADIUS authentication server is not available, i.e., `10.10.10.10` doesn't respond appropriately or just doesn't respond at all, we'll be falling back to local login database, which is why we use the `local` keyword at the end.
 
 If the auth server isn't available during login, the switch will try to get the response from the server for several seconds, and when it can't, it'll finally use the local database and let us log in if our credentials are also stored locally.
+
+# Access Control Lists (_ACL_)
+Let us consider the topology below, where both PC-A and PC-B are connected to a network which leads to a server. We only want PC-A to have access to the server, but not PC-B. This is something we can achieve with **Access Control Lists (_ACL_)**. An ACL contains a bunch of entries, each of which state that a certain type of traffic will be allowed/permitted or denied. So, at the router, we could apply an ACL that allows PC-A's IP to come in to the router but not PC-B's IP. An ACL can be applied either in the inbound or outbound direction, and they're processed in a **top-down** manner.
+
+Thus, thus, if we have an entry barring any traffic from PC-A and PC-B's network, but later down the list, we have another rule that only allows PC-A, we'll still not be able to access the server from PC-A because a rule above has already blocked access. As such, we _must have more specific rules at the top_. So, in this case, we'd first have a rule to permit PC-A's IP and then a rule further down the list that denies all traffic from PC-A's subnet that PC-B also lives in. There is also an **implicit deny any** statement at the bottom of _every ACL_. This does the job of blocking all traffic, which means even though we don't have to _explicitly_ state it, any traffic that's not accounted for in the ACL gets denied. So, if we have an ACL stating _block PC-B_, it'll block everything since the list will also have an implicit _deny any_ clause, and we haven't explicitly permitted anything!
+
+We can have two types of ACLs:
+- **Standard ACL** - In standard ACLs, we can _filter_ the traffic only on the basis of source IP addresses.
+- **Extended ACL** - In extended ACLs, we can permit/deny traffic based on both source and destination IP addresses.
+
+# Standard ACL
