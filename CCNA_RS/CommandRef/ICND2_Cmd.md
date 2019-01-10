@@ -5963,7 +5963,7 @@ The list provided is the **method list** which is a list of authentication proce
 If the auth server isn't available during login, the switch will try to get the response from the server for several seconds, and when it can't, it'll finally use the local database and let us log in if our credentials are also stored locally.
 
 # Access Control Lists (_ACL_)
-Let us consider the topology below, where both PC-A and PC-B are connected to a network which leads to a server. We only want PC-A to have access to the server, but not PC-B. This is something we can achieve with **Access Control Lists (_ACL_)**. An ACL contains a bunch of entries, each of which state that a certain type of traffic will be allowed/permitted or denied. So, at the router, we could apply an ACL that allows PC-A's IP to come in to the router but not PC-B's IP. An ACL can be applied either in the inbound or outbound direction, and they're processed in a **top-down** manner.
+Let us consider the topology below, where both PC-A and PC-B are connected to a network which leads to a server. We only want PC-A to have access to the server, but not PC-B. This is something we can achieve with **Access Control Lists (_ACL_)**. An ACL contains a bunch of entries, called **Access Control Entries (_ACE_)**, each of which state that a certain type of traffic will be allowed/permitted or denied. So, at the router, we could apply an ACL that allows PC-A's IP to come in to the router but not PC-B's IP. An ACL can be applied either in the inbound or outbound direction, and they're processed in a **top-down** manner.
 
 Thus, thus, if we have an entry barring any traffic from PC-A and PC-B's network, but later down the list, we have another rule that only allows PC-A, we'll still not be able to access the server from PC-A because a rule above has already blocked access. As such, we _must have more specific rules at the top_. So, in this case, we'd first have a rule to permit PC-A's IP and then a rule further down the list that denies all traffic from PC-A's subnet that PC-B also lives in. There is also an **implicit deny any** statement at the bottom of _every ACL_. This does the job of blocking all traffic, which means even though we don't have to _explicitly_ state it, any traffic that's not accounted for in the ACL gets denied. So, if we have an ACL stating _block PC-B_, it'll block everything since the list will also have an implicit _deny any_ clause, and we haven't explicitly permitted anything!
 
@@ -6035,3 +6035,133 @@ Standard IP access list 1
 ```
 
 # Numbered Extended ACLs
+Let us consider the following topology. Here, we want to use **Numbered Extended ACLs** so that PC-A can communicate with Server A but not Server B. Further, we want to ensure that PC-B can only communicate with Server B via HTTP but nothing else, and have no communication with Server A whatsoever. Extended ACLs can have a number in the range _100-199_, and can of course have both a source and a destination IP address. They also have the ability to specify the protocols in the ACL itself.
+
+So, to only allow PC-A to talk to Server A, the command becomes:
+```
+R1(config)#access-list 100 permit ip host 10.1.1.101 host 192.168.1.2
+```
+We just permitted all IP traffic from PC-A to the host Server-A. We could, if we'd want to, specify an entire subnet by skipping the `host` keyword and instead providing the network and _wildcard mask_ for the hosts.
+
+Similarly, to set up only HTTP traffic to flow between PC-B and server B, we'd proceed by:
+```
+R1(config)#access-list 100 permit ?
+  <0-255>       An IP protocol number
+  ahp           Authentication Header Protocol
+  eigrp         Cisco's EIGRP routing protocol
+  esp           Encapsulation Security Payload
+  gre           Cisco's GRE tunneling
+  icmp          Internet Control Message Protocol
+  igmp          Internet Gateway Message Protocol
+  ip            Any Internet Protocol
+  ipinip        IP in IP tunneling
+  nos           KA9Q NOS compatible IP over IP tunneling
+  object-group  Service object group
+  ospf          OSPF routing protocol
+  pcp           Payload Compression Protocol
+  pim           Protocol Independent Multicast
+  sctp          Stream Control Transmission Protocol
+  tcp           Transmission Control Protocol
+  udp           User Datagram Protocol
+```
+As we can see, there's no HTTP option, but there are several other protocols that work primarily on Layer 3 or 4. We know that HTTP uses TCP port 80, so we can directly specify it:
+```
+R1(config)#access-list 100 permit tcp host 10.1.1.102 host 192.168.1.3
+```
+
+Now, we need a way to specify the exact port which'll be used. The way to filter the port is via using the `eq` keyword (short for _equals_). Our options are:
+```
+R1(config)#access-list 100 permit tcp host 10.1.1.102 host 192.168.1.3 eq ?
+  <0-65535>    Port number
+  bgp          Border Gateway Protocol (179)
+  chargen      Character generator (19)
+  cmd          Remote commands (rcmd, 514)
+  daytime      Daytime (13)
+  discard      Discard (9)
+  domain       Domain Name Service (53)
+  drip         Dynamic Routing Information Protocol (3949)
+  echo         Echo (7)
+  exec         Exec (rsh, 512)
+  finger       Finger (79)
+  ftp          File Transfer Protocol (21)
+  ftp-data     FTP data connections (20)
+  gopher       Gopher (70)
+  hostname     NIC hostname server (101)
+  ident        Ident Protocol (113)
+  irc          Internet Relay Chat (194)
+  klogin       Kerberos login (543)
+  kshell       Kerberos shell (544)
+  login        Login (rlogin, 513)
+  lpd          Printer service (515)
+  nntp         Network News Transport Protocol (119)
+  onep-plain   ONEP Cleartext (15001)
+  onep-tls     ONEP TLS (15002)
+  pim-auto-rp  PIM Auto-RP (496)
+  pop2         Post Office Protocol v2 (109)
+  pop3         Post Office Protocol v3 (110)
+  smtp         Simple Mail Transport Protocol (25)
+  sunrpc       Sun Remote Procedure Call (111)
+  tacacs       TAC Access Control System (49)
+  talk         Talk (517)
+  telnet       Telnet (23)
+  time         Time (37)
+  uucp         Unix-to-Unix Copy Program (540)
+  whois        Nicname (43)
+  www          World Wide Web (HTTP, 80)
+```
+
+So, we can directly specify the port number, or just specify `www`, which refers to HTTP on port 80:
+```
+R1(config)#access-list 100 permit tcp host 10.1.1.102 host 192.168.1.3 eq www
+```
+
+Now, we can just apply the ACl and we'd be done:
+```
+R1(config)#int e0/0
+R1(config-if)#ip access-group 100 in
+```
+
+Now, we can confirm if our ACL is working. First, we check the ACL and confirm if an interface has it enabled, using:
+```
+R1#sh access-l
+Extended IP access list 100
+    10 permit ip host 10.1.1.101 host 192.168.1.2
+    20 permit tcp host 10.1.1.102 host 192.168.1.3 eq www
+R1#sh ip int e0/0 | i access list
+  Outgoing access list is not set
+  Inbound  access list is 100
+```
+
+Now we can confirm if it works by first pinging both server A and B from PC-A:
+```
+PC-A> ping 192.168.1.2 -c 2
+84 bytes from 192.168.1.2 icmp_seq=1 ttl=63 time=2.363 ms
+84 bytes from 192.168.1.2 icmp_seq=2 ttl=63 time=3.727 ms
+
+PC-A> ping 192.168.1.3 -c 2
+*10.1.1.1 icmp_seq=1 ttl=255 time=0.000 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=2 ttl=255 time=0.000 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+Now for PC-B, pings should fail, but HTTP traffic should succeed from PC-B, and everything should fail from PC-A:
+```
+PC-B> ping 192.168.1.2 -c 2
+*10.1.1.1 icmp_seq=1 ttl=255 time=1.442 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=2 ttl=255 time=1.829 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+PC-B> ping 192.168.1.3 -c 2
+*10.1.1.1 icmp_seq=1 ttl=255 time=0.000 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=2 ttl=255 time=0.000 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+Note that for this to work, Server 2 must have a webserver running. Here, we have the http server running on an Alpine Linux VM. Now, telnet has a feature that allows us to login to any open port. However, since we're using a _VPCS_ host, we've to use **rlogin**:
+```
+PC-B> rlogin ?
+
+rlogin [ip] port
+  Telnet to port at ip (default 127.0.0.1) relative to host PC.
+  To attach to the console of a virtual router running on port 2000 of this
+  host PC, use rlogin 2000
+  To telnet to the port 2004 of a remote host 10.1.1.1, use
+  rlogin 10.1.1.1 2004
+```
