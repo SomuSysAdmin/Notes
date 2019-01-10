@@ -5972,3 +5972,66 @@ We can have two types of ACLs:
 - **Extended ACL** - In extended ACLs, we can permit/deny traffic based on both source and destination IP addresses.
 
 # Standard ACL
+In a standard Access Control List, we are able to permit/deny traffic on the basis of the source IP only. This may be a single host or an entire subnet, specified with a **wildcard mask**. In the topology below, we want PC-A to have access to both server A and B, but block PC-B from accessing either. Thus, we can create an ACL at the router to allow traffic from PC-A and with the implicit deny at the end, the rest will be achieved automatically. Each ACL has a number associated with it and standard ACLs must have a number between *1 and 99*.  Access control lists are defined with the `access-list` command in global configuration mode. To only allow PC-A to access both servers, we use:
+```
+Router(config)#access-list 1 permit host 10.1.1.101
+```
+The implicit deny any statement, at the bottom of our list, that we _don't have to type_ would be: `access-list 1 deny any`.
+
+Now that we have the list ready, we need to apply it to an interface in either an inbound or outbound direction. In this case, we want to apply it to the interface **R1 Gi0/0**. So, we use the `ip access-group` command with the list number and the direction:
+```
+R1(config)#int g0/0
+R1(config-if)#ip access-group 1 in
+```
+This applies our ACL. So, now we're able to ping Server A and B from PC-A but not PC-B:
+```
+PC-A> ping 192.168.1.2 -c 3
+192.168.1.2 icmp_seq=1 timeout
+192.168.1.2 icmp_seq=2 timeout
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=63 time=4.346 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=63 time=6.300 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=63 time=3.768 ms
+
+PC-A> ping 192.168.1.3       
+192.168.1.3 icmp_seq=1 timeout
+192.168.1.3 icmp_seq=2 timeout
+84 bytes from 192.168.1.3 icmp_seq=3 ttl=63 time=3.880 ms
+84 bytes from 192.168.1.3 icmp_seq=4 ttl=63 time=2.760 ms
+84 bytes from 192.168.1.3 icmp_seq=5 ttl=63 time=4.729 ms
+
+PC-B> ping 192.168.1.2 -c 3
+*10.1.1.1 icmp_seq=1 ttl=255 time=3.945 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=2 ttl=255 time=3.284 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=3 ttl=255 time=3.842 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+PC-B> ping 192.168.1.3 -c 3
+*10.1.1.1 icmp_seq=1 ttl=255 time=3.865 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=2 ttl=255 time=3.855 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=3 ttl=255 time=3.857 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+There are actually extended number ranges for ACLs, and there can be several types of lists, even based on MAC addresses! They're listed below:
+```
+R1(config)#access-list ?
+  <1-99>            IP standard access list
+  <100-199>         IP extended access list
+  <1100-1199>       Extended 48-bit MAC address access list
+  <1300-1999>       IP standard access list (expanded range)
+  <200-299>         Protocol type-code access list
+  <2000-2699>       IP extended access list (expanded range)
+  <2700-2799>       MPLS access list
+  <300-399>         DECnet access list
+  <700-799>         48-bit MAC address access list
+  compiled          Enable IP access-list compilation
+  dynamic-extended  Extend the dynamic ACL absolute timer
+  rate-limit        Simple rate-limit specific access list
+```
+
+We can see/verify the current ACLs using the `show access-lists` command:
+```
+R1#sh access-li  
+Standard IP access list 1
+    10 permit 10.1.1.101 (13 matches)
+```
+
+# Numbered Extended ACLs
