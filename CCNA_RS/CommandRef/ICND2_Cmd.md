@@ -6154,14 +6154,140 @@ PC-B> ping 192.168.1.3 -c 2
 *10.1.1.1 icmp_seq=2 ttl=255 time=0.000 ms (ICMP type:3, code:13, Communication administratively prohibited)
 ```
 
-Note that for this to work, Server 2 must have a webserver running. Here, we have the http server running on an Alpine Linux VM. Now, telnet has a feature that allows us to login to any open port. However, since we're using a _VPCS_ host, we've to use **rlogin**:
+Note that for this to work, Server 2 must have a webserver running. Here, we have the http server running on an Alpine Linux VM. We'll also be using an Alpine Linux host to connect to the server. We'll be using _curl_ to get a webpage hosted on the server. This has the result:
 ```
-PC-B> rlogin ?
+/ # curl http://192.168.1.3:80/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5</title>
+</head>
+<body>
+    HTTPD Server on Server-B is online
+</body>
+</html>
+```
+We can see that we are able to fetch webpages from the HTTP server, which would mean port 80 isn't blocked for PC-B.
 
-rlogin [ip] port
-  Telnet to port at ip (default 127.0.0.1) relative to host PC.
-  To attach to the console of a virtual router running on port 2000 of this
-  host PC, use rlogin 2000
-  To telnet to the port 2004 of a remote host 10.1.1.1, use
-  rlogin 10.1.1.1 2004
+# Named Extended ACLs
+ACLs don't have to be numbered. They can be named as well. This is true for standard ACLs as well as extended ACLs. Let us consider we want to make the same ACL as we did in the last exercise, but this time with a name for the ACL instead of a number. PC-A should only be able to reach Server A and PC-B should be the only one able to access Server-B's port 80.
+
+For named ACLs, instead of using the `access-list` command, we use the `ip access-list` command instead from the global configuration, and define whether it's a standard or an extended ACL, followed by the name:
 ```
+R1(config)#ip access-list extended ACC_CONT
+R1(config-ext-nacl)#
+```
+This brings us into the _extended named ACL config_ mode.
+
+Here, we can enter the `permit` or `deny` commands for the ACL. The commands will essentially be the same as last time, given we're looking for an identical functionality to the numbered ACL in the last exercise. The commands will be:
+```
+R1(config-ext-nacl)#permit ip host 10.1.1.101 host 192.168.1.2
+R1(config-ext-nacl)#permit tcp host 10.1.1.102 host 192.168.1.3 eq www
+```
+
+Now, we apply the ACL to an interface just like a numbered ACL, but with the name instead:
+```
+R1(config)#int e0/0
+R1(config-if)#ip access-group ACC_CONT in
+```
+
+We can now verify the ACL using:
+```
+R1#sh ip access-lists
+Extended IP access list ACC_CONT
+    10 permit ip host 10.1.1.101 host 192.168.1.2
+    20 permit tcp host 10.1.1.102 host 192.168.1.3 eq www
+R1#sh int e0/0 | i access
+R1#sh ip int e0/0 | i access list
+  Outgoing access list is not set
+  Inbound  access list is ACC_CONT
+```
+
+On PC-A we see that we only have access Server 1:
+```
+PC-A> ping 192.168.1.2
+192.168.1.2 icmp_seq=1 timeout
+192.168.1.2 icmp_seq=2 timeout
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=63 time=2.966 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=63 time=2.835 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=63 time=3.824 ms
+
+PC-A> ping 192.168.1.3
+*10.1.1.1 icmp_seq=1 ttl=255 time=1.841 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=2 ttl=255 time=1.835 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.1.1 icmp_seq=3 ttl=255 time=1.832 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+And on PC-B, we can't ping either servers:
+```
+/ # ping 192.168.1.2 -c 4
+PING 192.168.1.2 (192.168.1.2): 56 data bytes
+
+--- 192.168.1.2 ping statistics ---
+4 packets transmitted, 0 packets received, 100% packet loss
+/ # ping 192.168.1.3 -c 4
+PING 192.168.1.3 (192.168.1.3): 56 data bytes
+
+--- 192.168.1.3 ping statistics ---
+4 packets transmitted, 0 packets received, 100% packet loss
+```
+
+However, given that the HTTPD server on Server-B on port 80 is running, we should still be able to curl the index file in the www directory of Server B:
+```
+/ # curl http://192.168.1.3:80/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5</title>
+</head>
+<body>
+    HTTPD Server on Server-B is online
+</body>
+</html>
+```
+
+## Edogomg existing ACLs
+Let us examine the output of the `show access-lists` command:
+```
+R1#sh ip access-lists
+Extended IP access list ACC_CONT
+    10 permit ip host 10.1.1.101 host 192.168.1.2
+    20 permit tcp host 10.1.1.102 host 192.168.1.3 eq www
+```
+The number before every **Access Control Entry (_ACE_)** is called the *sequence number*. It determines the order in which the ACEs are applied.
+
+So, if we want an ACE to be applied before 20 and after 10, we could apply them with a sequence number between _11 and 19_. For example, if we want to nullify a bunch of ACEs after one specific ACE in an ACL, we could just add a `deny ip any any` entry in the middle of the ACL at the appropriate spot. We do this by:
+```
+R1(config)#ip access-list extended ACC_CONT
+R1(config-ext-nacl)#15 deny ip any any
+```
+
+We can now check the modified ACL:
+```
+R1#sh access-l
+Extended IP access list ACC_CONT
+    10 permit ip host 10.1.1.101 host 192.168.1.2 (5 matches)
+    15 deny ip any any
+    20 permit tcp host 10.1.1.102 host 192.168.1.3 eq www (4 matches)
+```
+The ACL above would block any traffic after sequence number 15, and hence, the only traffic allowed will be sequence 10.
+
+PC-A can still reach Server A:
+```
+PC-A> ping 192.168.1.2
+192.168.1.2 icmp_seq=1 timeout
+192.168.1.2 icmp_seq=2 timeout
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=63 time=2.912 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=63 time=2.835 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=63 time=2.838 ms
+```
+
+However, PC-B is no longer able to reach ServerB:
+```
+/ # curl http://192.168.1.3:80/index.html
+curl: (7) Failed to connect to 192.168.1.3 port 80: Host is unreachable
+```
+
+# ACL Considerations

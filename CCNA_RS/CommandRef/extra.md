@@ -325,3 +325,72 @@ R3(config)#ip route 0.0.0.0 0.0.0.0 s1/0
 %Default route without gateway, if not a point-to-point interface, may impact performance
 
 ```
+
+# Alpine Host Setup
+We need a HTTPD server, a utility like curl, telnet and a service launcher on our host.
+
+First connect to the internet via NAT and confirm connection with a ping to google. Then, the commands to do this are:
+```
+apk add mini_httpd
+apk add curl
+apk add openrc --no-cache
+apk add busybox-extras
+```
+
+We need to reboot the server now. Then, we enable the user of openrc and start the mini_httpd process:
+```
+touch /run/openrc/softlevel
+rc-service mini_httpd start
+```
+
+We'll now configure the server with:
+```
+mkdir /www
+chown minihttpd /www
+mv /etc/mini_httpd/mini_httpd.conf /etc/mini_httpd/mini_httpd.conf.orig
+vi /etc/mini_httpd/mini_httpd.conf
+```
+
+The bare-basic contents of `/etc/mini_httpd/mini_httpd.conf` are:
+```
+## do not leave empty lines in here!
+#host=www.example.org
+port=80
+user=minihttpd
+dir=/www
+nochroot
+```
+
+Now we create the homepage for the HTTP server with:
+```
+vi /www/index.html
+```
+
+The contents of the index file in the HTTPD server's www directory should be:
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>HTML5</title>
+</head>
+<body>
+    Server is online
+</body>
+</html>
+```
+
+Finally, we start the HTTPD service and to have the HTTPD server start at boot, we add it to the default run-level:
+```
+rc-service mini_httpd start
+rc-update add mini_httpd default
+```
+
+Now, we disconnect from the NAT cloud, erase the DHCP config and create a new config in `/etc/network/interfaces`:
+```
+auto eth0
+iface eth0 inet static
+       address 192.168.1.2
+       netmask 255.255.255.0
+       gateway 192.168.1.1
+```
