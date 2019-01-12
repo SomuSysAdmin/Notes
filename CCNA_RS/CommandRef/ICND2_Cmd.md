@@ -6291,3 +6291,13 @@ curl: (7) Failed to connect to 192.168.1.3 port 80: Host is unreachable
 ```
 
 # ACL Considerations
+The following are some of the design considerations for Access Control Lists:
+* The first consideration while using ACLs is whether we use a standard or an extended ACL. If we just need to specify the host, then a standard ACL will suffice, but if we want to mention the destination and/or port information, then we'll have to opt for extended ACLs.
+* We also have to consider which direction an ACL will be applied in - inbound and/or outbound. The rule is that we can only have 1 ACL in each direction in each interface. So, there can be a maximum of two ACLs per interface - one in the inbound and another in the outbound direction.
+* We have to put the more specific Access Control Entries (ACE) towards the top of the list.
+* We also have to remember that there's an _implicit deny any_ statement at the bottom of the ACL, even though it's not shown to us, and hence have to allow any traffic that needs to be allowed explicitly.
+* We should place standard ACLs as close to the destination as possible - because it just matches the source and we want to ensure that the ACL doesn't inadvertently drop packets for a destination network it's supposed to be able to access.
+* Extended ACLs should be placed near the source - because if the traffic is going to be dropped, it's better to do so early and not waste network resources carrying that data.
+* While ACLs are widely used to filter packets/traffic, they can also be used to **match traffic** which can then be used by another feature, such as using ACLs while configuring Network Address Translation (NAT).
+
+# Troubleshooting ACLs
