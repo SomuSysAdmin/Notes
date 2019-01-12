@@ -6301,3 +6301,55 @@ The following are some of the design considerations for Access Control Lists:
 * While ACLs are widely used to filter packets/traffic, they can also be used to **match traffic** which can then be used by another feature, such as using ACLs while configuring Network Address Translation (NAT).
 
 # Troubleshooting ACLs
+## ACL Troubleshooting Exercise 1
+Our first scenario is that we want traffic from PC-A to be unable to reach the `192.168.1.0/24` network, but here, our traffic from PC-B can't reach either. The ACL config is:
+```
+R1(config)#access-list 1 deny host 10.1.1.101
+R1(config)#interface e0/0
+R1(config-if)#ip access-group 1 in
+```
+
+The traffic gets denied because of the implicit `deny any any` at the end of each ACL and hence the traffic gets dropped by R1 for anything that originates in the `10.1.1.0/24` network. To permit the traffic, the first line should've been `permit host 10.1.1.102` and then we should let the implicit deny statement filter out traffic from PC-A.
+
+## ACL Troubleshooting Exercise 2
+In this exercise, we have the same symptom as last time where PC-B (`10.1.1.102/24`) which should be able to reach the `192.168.1.0/24` network can't. The configuration this time is:
+```
+R1(config)#access-list 2 deny host 10.1.1.0 0.0.0.255
+R1(config)#access-list 2 permit host 10.1.1.102
+R1(config)#interface e0/0
+R1(config-if)#ip access-group 1 in
+```
+
+The issue this time is that the more specefic entry for `10.1.1.102` comes after the general entry `deny host 10.1.1.0 0.0.0.255`, where the wild card mask already includes PC-B and hence the traffic has already been dropped by the time we're trying to permit it. The config instead should've been in the order:
+```
+R1(config)#access-list 2 permit host 10.1.1.102
+R1(config)#access-list 2 deny host 10.1.1.0 0.0.0.255
+```
+
+## ACL Troubleshooting Exercise 3
+Let us consider that the PC-A should be able to reach server 1 via TFTP and PC-B should be able to reach server 2 via FTP. However, PC-A can't reach the TFTP server. The configuration is:
+```
+R1(config)#access-list 101 permit tcp host 10.1.1.101 host 192.168.1.2 eq 69
+R1(config)#access-list 101 permit tcp host 10.1.1.102 host 192.168.1.3 eq ftp
+R1(config)#interface e0/0
+R1(config-if)#ip access-group 1 in
+```
+
+The issue here is that TFTP uses UDP at layer 4 and *not TCP*, which is why the UDP packets get dropped and PC-A can't reach the TFTP server. The correct config would be:
+```
+R1(config)#access-list 101 permit udp host 10.1.1.101 host 192.168.1.2 eq 69
+R1(config)#access-list 101 permit tcp host 10.1.1.102 host 192.168.1.3 eq ftp
+```
+
+## ACL Troubleshooting Exercise 4
+In this scenario we want PC-A to be able to reach both server 1 and server 2, while preventing PC-B from accessing either. However, neither PC can reach either server with the config at R1 being:
+```
+R1(config)#access-list 150 permit ip host 10.1.1.101 192.168.1.0 0.0.0.255
+R1(config)#access-list 150 deny ip host 10.1.1.102 192.168.1.0 0.0.0.255
+R1(config)#interface e0/1
+R1(config-if)#ip access-group 1 in
+```
+
+The wrong interface `e0/1` was used instead of `e0/0`. We could alternatively have used the ACL on `e0/1` but in the *outbound* direction. However, in the current scenario, the traffic from either hosts reach the server, but the implicit deny statement at the inbound interface of `e0/1` interface drops all traffic from the `192.168.1.0/24` network since it's not allowed in the ACL.
+
+# IPv6 ACLs
