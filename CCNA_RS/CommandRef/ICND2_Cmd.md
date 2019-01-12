@@ -6353,3 +6353,89 @@ R1(config-if)#ip access-group 1 in
 The wrong interface `e0/1` was used instead of `e0/0`. We could alternatively have used the ACL on `e0/1` but in the *outbound* direction. However, in the current scenario, the traffic from either hosts reach the server, but the implicit deny statement at the inbound interface of `e0/1` interface drops all traffic from the `192.168.1.0/24` network since it's not allowed in the ACL.
 
 # IPv6 ACLs
+In the case of IPv6 ACLs, we still have standard and extended ACLs just like in the case of IPv4, but the difference being in case of IPv6 standard ACL, we can also specify the destination IPv6 address. However, if we want to specify the port, we still need to use an extended ACL. IPv6 also **doesn't have numbered ACL - all ACLs are named**. So, the only way to tell a standard ACL from an extended ACL in IPv6 is to check if the port number is mentioned.
+
+We want to block any traffic from PC-A from reaching R2 but still be able to access R3. IPv6 is fully functional, and all devices on the network can reach each other, courtesy of IPv6 EIGRP. PC-A can reach both R2 and R3:
+```
+PC-A> sh ipv6     
+
+NAME              : PC-A[1]
+LINK-LOCAL SCOPE  : fe80::250:79ff:fe66:6800/64
+GLOBAL SCOPE      : 2001::2/64
+ROUTER LINK-LAYER : aa:bb:cc:00:01:00
+MAC               : 00:50:79:66:68:00
+LPORT             : 10010
+RHOST:PORT        : 127.0.0.1:10011
+MTU:              : 1500
+
+PC-A> ping 2002::2 -c 2
+
+2002::2 icmp6_seq=1 ttl=63 time=3.183 ms
+2002::2 icmp6_seq=2 ttl=63 time=3.198 ms
+
+PC-A> ping 2002::3 -c 2
+
+2002::3 icmp6_seq=1 ttl=63 time=3.126 ms
+2002::3 icmp6_seq=2 ttl=63 time=3.009 ms
+```
+
+To block access of PC-A to R3, we can use a standard ACL since we can specify the destination IP but don't need to specify a port. Our IPv6 ACL config should be:
+```
+R1(config)#ipv6 access-list BLOCK_PC-A
+R1(config-ipv6-acl)#deny host 2001::2 host 2002::3
+R1(config-ipv6-acl)#permit any any
+```
+We use the `permit any any` at the end there since we don't want the `deny any any` implicit statement blocking traffic between PC-A and R3.
+
+We can see the IPv6 ACLs available by:
+```
+R1#sh ipv6 access-list
+IPv6 access list BLOCK_PC-A
+    deny ipv6 host 2001::2 host 2002::3 sequence 10
+    permit ipv6 any any sequence 20
+```
+We can also see that in IPv6, the sequence numbers are preceded by the `sequence` keyword and are noted at the end of the ACL, unlike IPv4. We also accidentally blocked PC-A from R2 instead of R3. To rectify this, we use:
+```
+R1(config)#ipv6 access-list BLOCK_PC-A
+R1(config-ipv6-acl)#deny host 2001::2 host 2002::3 sequence 10
+R1(config-ipv6-acl)#end
+R1#sh ipv6 access-list
+IPv6 access list BLOCK_PC-A
+    deny ipv6 host 2001::2 host 2002::3 sequence 10
+    permit ipv6 any any sequence 20
+```
+
+To apply an IPv6 ACL to an interface, the IPv4 keyword of `access-group` becomes `traffic-filter`. So, to apply the ACL on interface **R1 E0/0**, we use:
+```
+R1(config)#int e0/0
+R1(config-if)#ipv6 traff
+R1(config-if)#ipv6 traffic-filter BLOCK_PC-A in
+```
+
+We can check which ACLs are applied on an interface using:
+```
+R1#sh ipv6 int e0/0 | i access
+  Inbound access list BLOCK_PC-A
+```
+
+We can finally try out the blocking from PC-A and PC-B:
+```
+PC-A> ping 2002::2 -c 2
+2002::2 icmp6_seq=1 ttl=63 time=13.974 ms
+2002::2 icmp6_seq=2 ttl=63 time=1.866 ms
+
+PC-A> ping 2002::3 -c 2
+*2001::1 icmp6_seq=1 ttl=64 time=0.000 ms (ICMP type:1, code:5, Source address failed ingress/egress policy)
+*2001::1 icmp6_seq=2 ttl=64 time=0.000 ms (ICMP type:1, code:5, Source address failed ingress/egress policy)
+
+PC-B> ping 2002::2 -c 2
+2002::2 icmp6_seq=1 ttl=63 time=1.992 ms
+2002::2 icmp6_seq=2 ttl=63 time=2.164 ms
+
+PC-B> ping 2002::3 -c 2  
+2002::3 icmp6_seq=1 ttl=63 time=0.000 ms
+2002::3 icmp6_seq=2 ttl=63 time=0.000 ms
+```
+Just as we desired, only PC-A is barred from accessing Server 2, but the rest of the devices can all reach one another.
+
+## Extended IPv6 ACL Config
