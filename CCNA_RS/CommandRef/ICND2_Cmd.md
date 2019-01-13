@@ -6439,3 +6439,31 @@ PC-B> ping 2002::3 -c 2
 Just as we desired, only PC-A is barred from accessing Server 2, but the rest of the devices can all reach one another.
 
 ## Extended IPv6 ACL Config
+Initially we can both ping and telnet from PC-B to R2 and R3, but we want only PC-B to telnet into R3 and nothing else. For this, we could edit the existing ACL on e0/0 of R1, but since we can have another ACL on the outbound port of e0/1 on R1, we'll use that instead:
+```
+R1(config)#ipv6 access-list TELNET_PC-B_R2
+R1(config-ipv6-acl)#permit tcp host 2002::3 host 2002::2 eq telnet
+R1(config-ipv6-acl)#int e0/1
+R1(config-if)#ipv6 traffic-filter TELNET_PC-B_R2 out
+```
+
+IPv6 uses the **Neighbour Discovery Protocol (_NDP_)** for neighbour solicitation and advertisements as well as router solicitation and advertisements. These NDP messages are ICMP based. This might be an issue since our ACL only allows telnet. However, on different Cisco routers, some form of implicit permit statements are included when we enable IPv6. So, by default the neighbour solicitation messages are allowed, but *not* router solicitation and advertisement messages. This will block router advertisements that EIGRP for IPv6 will send. To fix this, we need to use a couple of other permit statements:
+```
+R1(config-ipv6-acl)#permit icmp any any router-advertisement  
+R1(config-ipv6-acl)#permit icmp any any router-solicitation
+```
+
+Now, we're no longer able to ping either servers from PC-B:
+```
+/ # ping 2002::3
+PING 2002::3 (2002::3): 56 data bytes
+^C
+--- 2002::3 ping statistics ---
+2 packets transmitted, 0 packets received, 100% packet loss
+/ # ping 2002::2
+PING 2002::2 (2002::2): 56 data bytes
+^C
+--- 2002::2 ping statistics ---
+1 packets transmitted, 0 packets received, 100% packet loss
+```
+However, we can still telnet in.
