@@ -60,3 +60,16 @@ Solution:
 ```
 # dnf -y install kernel-devel
 ```
+
+## GLib doesn't have Gsettings Support
+Error:
+```
+[AppLoader] GLib does not have GSettings support.
+Failed to setup build environment.
+```
+
+Solution:
+Make sure the `make` program is  installed. Since VMware's make process requires other components of the "Development Tools" group, we can directly use: 
+```
+dnf -y groupinstall "Development Tools" 
+```
