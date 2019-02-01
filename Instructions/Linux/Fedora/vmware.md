@@ -54,3 +54,9 @@ Solution
 ```
 $ sudo dnf install libnsl
 ```
+## VMware can't find Kernel Header
+
+Solution:
+```
+# dnf -y install kernel-devel
+```
