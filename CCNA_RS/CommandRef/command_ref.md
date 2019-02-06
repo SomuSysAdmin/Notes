@@ -76,19 +76,21 @@ Enter TEXT message. End with the character '`'.
 +-------------------------+
 `
 ```
-Specifying speed                                `sw1(config-if)#speed 100`
-Specifying duplex                               `sw1(config-if)#duplex full`
+34. Specifying speed                                `sw1(config-if)#speed 100`
+35. Specifying duplex                               `sw1(config-if)#duplex full`
+36.
+
 
 ## Swtich specific
-34. Show CAM table                              `sw1#sh mac address-table`
-35. Show CAM table aging info                   `sw1#show mac address-table aging-time`
-36. Add static MAC address to sw                `sw1(config)#mac address-table static a820.6332.0087 vlan 1 interface gi 0/3`
-37. Adding switch management IP
+37. Show CAM table                              `sw1#sh mac address-table`
+38. Show CAM table aging info                   `sw1#show mac address-table aging-time`
+39. Add static MAC address to sw                `sw1(config)#mac address-table static a820.6332.0087 vlan 1 interface gi 0/3`
+40. Adding switch management IP
 ```
 sw1(config-if)#ip add 192.168.1.11 255.255.255.0
 sw1(config-if)#no shutdown
 ```
-38. Adding switch default gateway                `sw1(config)#ip default-gateway 192.168.1.1`
+41. Adding switch default gateway                `sw1(config)#ip default-gateway 192.168.1.1`
 
 
 
