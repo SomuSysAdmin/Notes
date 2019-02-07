@@ -72,7 +72,7 @@ R1(config-if)ip helper-address 172.16.1.2
 Now, whenever the router R1 encounters a DHCP Discover message on **R1 g0/0**, incoming from the client, it'll forward it to the DHCP server available at `172.16.1.2`.
 
 ### Bouncing an interface
-The act of bouncing an interface is to shut it down and then bring it back up. Once the help IP has been set, we can bounce the interface to cuase it to send out a DHCP broadcast.
+The act of bouncing an interface is to shut it down and then bring it back up. Once the help IP has been set, we can bounce the interface to cause it to send out a DHCP broadcast.
 
 # Configuring a Router as a DHCP server
 ## Excluded addresses
@@ -141,12 +141,12 @@ Inside + Local IP   Inside + Global IP
 10.1.1.1            192.0.2.101
 10.1.1.2            192.0.2.102
 ```
-The non-publicly routable and inside IP addresses here are called **Inside Local addresses** because they're inside out network and the publicly routable and inside addresses are called **Inside Global IP** addresses, because even though they're inside our network, they're publicly routable, i.e., global addresses.
+The non-publicly routable and inside IP addresses here are called **Inside Local addresses** because they're inside our network and the publicly routable and inside addresses are called **Inside Global IP** addresses, because even though they're inside our network, they're publicly routable, i.e., global addresses.
 
 It's also possible to have _Outside local_ addresses, but that's not commonly used and requires DNS modifications.
 
 ## Port Address Translation (PAT)
-Many times, especially on home networks, the users don't have the luxury of multiple static global IP addresses. In such cases, the router WAN interface on the router gets the global IP and can also map specific ports to internal local IP addresses to have the data flow to multiple devices using a single external global IP. The PAT enabled router does this by paying attention to the port numbers on the router to which the internal devices communicate. Thus multiple internal IP addresses share a single pulicly routable IP address.
+Many times, especially on home networks, the users don't have the luxury of multiple static global IP addresses. In such cases, the router WAN interface on the router gets the global IP and can also map specific ports to internal local IP addresses to have the data flow to multiple devices using a single external global IP. The PAT enabled router does this by paying attention to the port numbers on the router to which the internal devices communicate. Thus multiple internal IP addresses share a single publicly routable IP address.
 
 The combination of an IP address and a port number is called a **socket**. Thus, even though the IP address might not be unique while the data flows from the external server, the destination socket is always unique. The edge router will still use the same external IP to send data for multiple internal device, but will use unique port numbers to differentiate them, thus creating unique sockets for each for the server(s) to respond to. The Port Address Translation table will look like:
 
@@ -267,7 +267,7 @@ icmp 4.4.4.3:8691      10.1.1.102:8691    3.3.3.3:8691       3.3.3.3:8691
 --- 4.4.4.3            10.1.1.102         ---                ---
 ```
 
-# Port Address Translatin / NAT Overloading
+# Port Address Translation / NAT Overloading
 In some cases, especially in home networks, we may not have multiple global IPs available to form a pool. The single IP assigned to us by the ISP may be the only global IP, in which case we have to use PAT, where the IP address and the port number from the clients are used to form a unique socket to communicate with outside destination networks.
 
 The limit to this method is the 16-bit size for the port number, thus allowing us only about 65000 flows for every inside global IP address. PAT is used when we have more inside local addresses than inside global addresses, and thus can support multiple inside global addresses.

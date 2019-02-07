@@ -1,3 +1,32 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [CCNA Command Cheat Sheet](#ccna-command-cheat-sheet)
+  - [General Device Config](#general-device-config)
+  - [L2 Swtich specific](#l2-swtich-specific)
+    - [VLANs](#vlans)
+    - [Trunking](#trunking)
+    - [Troubleshooting](#troubleshooting)
+    - [Switch Security](#switch-security)
+    - [Voice VLANs](#voice-vlans)
+    - [VTP](#vtp)
+  - [Router/L3 Switch Specific](#routerl3-switch-specific)
+    - [Routing Fundamentals](#routing-fundamentals)
+      - [IPv4 Static Routing](#ipv4-static-routing)
+      - [IPv6 Static Routing](#ipv6-static-routing)
+    - [CEF, ARP and Passive Interfaces](#cef-arp-and-passive-interfaces)
+    - [RIPv2](#ripv2)
+    - [DHCP](#dhcp)
+    - [NAT](#nat)
+      - [Static NAT](#static-nat)
+      - [Dynamic NAT with IP pool](#dynamic-nat-with-ip-pool)
+      - [Port Address Translation (PAT)/NAT Overloading](#port-address-translation-patnat-overloading)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# CCNA Command Cheat Sheet
+## General Device Config
 1. View how we're connected to the switch           `show line`
 2. Enter privileged mode                            `enable`
 3. Exit privileged mode                             `disable`
@@ -82,7 +111,7 @@ Enter TEXT message. End with the character '`'.
 37. Save configuration							`copy run start` OR `wr`
 
 
-## Swtich specific
+## L2 Swtich specific
 38. Show CAM table                              `sw1#sh mac address-table`
 39. Show CAM table aging info                   `sw1#show mac address-table aging-time`
 40. Add static MAC address to sw                `sw1(config)#mac address-table static a820.6332.0087 vlan 1 interface gi 0/3`
@@ -162,18 +191,199 @@ sw1(config)#errdisable recovery interval 30
 65. Show port-sec details for an interface					`sw1#sh port-sec int g0/1`
 
 ### Voice VLANs
-
-
-
+66. Setting single Access VLAN for both data and voice with .1p markings for QoS:
+```
+sw1(config-if)#switchport mode access
+sw1(config-if)#switchport access vlan 300
+sw1(config-if)#switchport voice vlan dot1p
+```
+67. Setting Multi-Access VLAN for CDP:
+```
+sw1(config-if)#switchport mode access
+sw1(config-if)#switchport access vlan 300
+sw1(config-if)#switchport voice vlan 400
+```
+68. Dot1q trunk for LLDP and CDP:
+* Set port to trunk mode and data VLAN as native
+* Designate voice VLAN
+* Prune unnecessary VLANs
+```
+sw1(config-if)#switchport trunk encapsulation dot1q
+sw1(config-if)#switchport mode trunk
+sw1(config-if)#switchport trunk native vlan 300
+sw1(config-if)#switchport voice vlan 400
+sw1(config-if)#switchport trunk allowed vlan 300,400
+```
+69. Get switch port trunk and voice VLAN details:
+```
+sw1#sh int g0/1 switchport
+```
 
 ### VTP
-1. Set VTP mode to server       `sw1(config)#vtp mode server`
-2. Set VTP mode to client       `sw1(config)#vtp mode client`
-3. Set VTP domain name          `sw1(config)#vtp domain VTPDEMO`
-4. Set VTP password             `sw1(config)#vtp password S3cret`
-5. Check VTP Status             `sw1#sh vtp status`
-6. Reset VTP CRN            
+70. Set VTP mode to server       `sw1(config)#vtp mode server`
+71. Set VTP mode to client       `sw1(config)#vtp mode client`
+72. Set VTP domain name          `sw1(config)#vtp domain VTPDEMO`
+73. Set VTP password             `sw1(config)#vtp password S3cret`
+74. Check VTP Status             `sw1#sh vtp status`
+75. Reset VTP CRN            
 ```
 sw1(config)#vtp mode transparent
 sw1(config)#vtp mode server
+```
+
+## Router/L3 Switch Specific
+Assigning IPv4 Address to interface
+```
+r2(config)#int g0/3
+r2(config-if)#ip addr 172.16.5.1 255.255.255.0
+r2(config-if)#no shut
+```
+Viewing IP Address assignments	`r2#sh ip int br`
+Assigning IPv6 Link-local Address to interface
+```
+r2(config)#ipv6 unicast-routing
+r2(config)#int g0/3
+r2(config-if)#ipv6 enable
+```
+Assigning IPv6 Global unicast address to interface
+```
+r2(config)#ipv6 unicast-routing
+r2(config)#int g0/3
+r2(config-if)#ipv6 address 2000::4/64
+```
+View IPv6 Address assignments	`r2#sh ipv6 int br`
+
+### Routing Fundamentals
+#### IPv4 Static Routing
+Show existing routes			`R1#sh ip route`
+Static routing with exit interface (Serial links ONLY!)
+```
+R1(config)#ip route 198.51.100.0 255.255.255.0 gi0/0
+```
+Static routing with next hop IP
+```
+R1(config)#ip route 203.0.113.0 255.255.255.0 10.0.0.6
+```
+Static host routing (/32 subnet mask) with permanent effect (doesn't get removed from routing table even if interface goes down)
+```
+R1(config)#ip route 203.0.113.100 255.255.255.255 10.0.0.2 permanent
+```
+Static default route/gateway of last resort configuration
+```
+BR1(config)#ip route 0.0.0.0 0.0.0.0 10.0.0.1
+```
+Floating static route (or backup route) configuration (AD=125>120, which is AD for RIPv2)
+```
+R1(config)#ip route 203.0.113.0 255.255.255.0 10.0.0.6 125
+```
+
+#### IPv6 Static Routing
+Show existing routes			`R1#sh ipv6 route`
+IPv6 Static routing with exit interface (Serial links ONLY!)
+```
+R1(config)#ipv6 route 2004::/64 g0/2 2002::2
+```
+IPv6 Static routing with next hop IP
+```
+R1(config)#ipv6 route 2005::/64 2003::2
+```
+IPv6 Routing with Link local interface
+```
+R1(config)#ipv6 route 2004::/64 g0/2 FE80::EC1:8FFF:FEC5:C701
+```
+IPv6 Static host routing (/128 subnet mask)
+```
+R1(config)#ipv6 route 2004::100/128 2002::2
+```
+IPv6 Static default route/gateway of last resort configuration
+```
+BR1(config)#ipv6 route ::/0 s1/0
+```
+Floating IPv6 Static route (or backup route) configuration (AD=125>120, which is AD for RIPv2)
+```
+R1(config)#ipv6 route 2006::/64 2002::2 125
+```
+
+### CEF, ARP and Passive Interfaces
+Show L3 Forwarding Info Base (FIB)		`R1#sh ip cef`
+Show L2 Adjacency table 				`R1#sh adjacency`
+Show ARP cache							`sh ip arp`
+Define a passive interface				`R1(config-router)#passive-interface Gi0/0`
+Define all interfaces as passive and then define exceptions
+```
+R1(config-router)#passive-interface default
+R1(config-router)#no passive-interface Gi0/0
+```
+
+### RIPv2
+Turn on RIPv2
+```
+R1(config)#router rip
+R1(config-router)#version 2
+R1(config-router)#network 172.16.0.0
+R1(config-router)#network 192.168.1.0
+```
+Turn off RIPv2 Auto-summarization					`R2(config-router)#no auto-summary`
+Trigger immediate update in RIPv2					`R2#clear ip route *`
+
+### DHCP
+Configure Router's interface to get IP via DHCP 	`R1(config-if)ip address dhcp`
+Configure router as DHCP relay agent				`R1(config-if)ip helper-address 172.16.1.2`
+DHCP configuration
+```
+R1(config)#ip dhcp excluded-addresses 10.1.1.1     10.1.1.100
+R1(config)#ip dhcp excluded-addresses 10.1.1.200   10.1.1.254
+R1(config)#ip dhcp pool PC
+R1(config-dhcp)#network 10.1.1.0 255.255.255.0
+R1(config-dhcp)#default-router 10.1.1.1
+R1(config-dhcp)#dns-server 192.168.1.1
+```
+
+Show existing DHCP pools							`DHCP#sh ip dhcp pool`
+Show existing DHCP leases							`DHCP#sh ip dhcp binding`
+
+### NAT
+#### Static NAT
+First we define which interface is _inside_ the network and which is _outside_ our network. In this case,
+**R1 Gi0/1** = LAN port ; host IP `10.1.1.100`
+**R1 Gi0/0** = WAN port ; WAN IP `4.4.4.4`, provided by the ISP.
+Steps for Static NAT:
+* Configure the inside and outside NAT interfaces
+* Map `10.1.1.100` to  `4.4.4.2`:
+```
+R1(config)#int g0/1
+R1(config-if)#ip nat inside
+R1(config-if)#int g0/0
+R1(config-if)#ip nat outside
+R1(config-if)#exit
+R1(config)#ip nat inside source static 10.1.1.100 4.4.4.2
+```
+
+Show NAT Table and translations						`R1#sh ip nat translations`
+
+#### Dynamic NAT with IP pool
+Steps for DNAT are:
+* Define insidce and outside interfaces
+* Define IP pool (here with IP `4.4.4.2` and `4.4.4.3`)
+* Define ACL to match inside hosts (here `10.1.1.0/8`)
+* Map inside local hosts (ACL) to inside global IP pool
+```
+R1(config)#int g0/1
+R1(config-if)#ip nat inside
+R1(config-if)#int g0/0
+R1(config-if)#ip nat outside
+R1(config)#ip nat pool DNAT_POOL 4.4.4.2 4.4.4.3 netmask 255.255.255.0
+R1(config)#access-list 1 permit 10.1.1.0 0.0.0.255
+R1(config)#ip nat inside source list 1 pool DNAT_POOL
+```
+
+#### Port Address Translation (PAT)/NAT Overloading
+Same as DNAT, but requires the `overload` command to allow PAT
+```
+R1(config)#int g0/1
+R1(config-if)#ip nat inside
+R1(config-if)#int g0/0
+R1(config-if)#ip nat outside
+R1(config)#access-list 1 permit 10.1.1.0 0.0.0.255
+R1(config)#ip nat inside source list 1 int g0/0 overload
 ```
