@@ -124,7 +124,47 @@ sw1(config-if)#sw tr allowed vlan except 300
 54. Show interface status/details				`sw1#sh int g0/0`
 
 ### Switch Security
-55. 
+55. Enabling port security
+```
+sw1(config-if)#sw mo access
+sw1(config-if)#sw port-sec
+```
+56. Setting max MAC addrs allowed on a port		`sw1(config-if)#sw port-sec max 2`
+57. Setting MAC addrs allowed on a port			`sw1(config-if)#sw port-sec mac-address 0001.0a1b.0010`
+58. Sticky MAC addrs							`sw1(config-if)#sw port-sec mac-address sticky`
+59. Port Security Violation
+* Protect mode - Drop packets from restricted MAC addrs
+* Restrict mode - Drop packets from restricted MAC addrs and increase **security violation counter**
+* Shutdown mode - Shut down the port on encountering a packet from restricted MAC addrs
+```
+sw1(config-if)#sw port-sec violation ?
+  protect 	Security violation protect mode
+  restrict 	Security violation restrict mode
+  shutdown 	Security violation shutdown mode
+```
+60. Find out if interface is shut down due to port-sec violation
+```
+sw1#sh int g0/1
+GigabitEthernet0/1 is down, line protocol is down (err-disabled)
+```
+61. Port-sec violation recovery - fix issue and then bounce port
+```
+sw1(config-if)#shut
+sw1(config-if)#no shut
+```
+62. Automatically bring port back up after port-sec violation
+```
+sw1(config)#errdisable recovery cause psecure-violation
+sw1(config)#errdisable recovery interval 30
+```
+63. Show security violation counter (in restrict mode)		`sw1#sh port-sec`
+64. Show MAC addrs allowed on a port						`sw1#sh port-sec addr`
+65. Show port-sec details for an interface					`sw1#sh port-sec int g0/1`
+
+### Voice VLANs
+
+
+
 
 ### VTP
 1. Set VTP mode to server       `sw1(config)#vtp mode server`
@@ -132,7 +172,7 @@ sw1(config-if)#sw tr allowed vlan except 300
 3. Set VTP domain name          `sw1(config)#vtp domain VTPDEMO`
 4. Set VTP password             `sw1(config)#vtp password S3cret`
 5. Check VTP Status             `sw1#sh vtp status`
-6. Reset VTP CRN                
+6. Reset VTP CRN            
 ```
 sw1(config)#vtp mode transparent
 sw1(config)#vtp mode server
