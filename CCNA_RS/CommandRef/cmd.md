@@ -359,8 +359,8 @@ R1(config)#clock timezone IST 5 30
 Let us consider that the server **R2** follows EST, that also has daylight savings time. So, we also have to allow the router to follow DST when required. We want to point it to our local NTP server, which is **R1** on `2.2.2.2`.
 
 ```
-R1(config)#ntp server 2.2.2.2
-R1(config)#clock timezone EST -5
+R2(config)#ntp server 2.2.2.2
+R2(config)#clock timezone EST -5
 *Dec 15 06:26:19.710: %SYS-6-CLOCKUPDATE: System clock has been updated from 06:26:19 UTC Sat Dec 15 2018 to 01:29:03 EST Sat Dec 15 2018, configured from console by console.
 R2(config)#clock summer-time EDT recurring
 *Dec 15 06:29:03.857: %SYS-6-CLOCKUPDATE: System clock has been updated from 01:29:03 EST Sat Dec 15 2018 to 01:29:03 EST Sat Dec 15 2018, configured from console by console.

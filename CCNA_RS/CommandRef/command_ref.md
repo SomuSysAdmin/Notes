@@ -387,3 +387,55 @@ R1(config-if)#ip nat outside
 R1(config)#access-list 1 permit 10.1.1.0 0.0.0.255
 R1(config)#ip nat inside source list 1 int g0/0 overload
 ```
+
+### NTP
+#### NTP Server Config
+Setting time manually on the router and using it as the NTP server:
+```
+NTP#clock set 10:02:00 15 Dec 2018
+NTP(config)#clock timezone IST 5 30
+NTP(config)#ntp master 5	! Stratum num - only needed for manual time configs
+NTP(config)#int loopback 1
+NTP(config-if)#ip addr 1.1.1.1 255.255.255.255
+```
+
+Configuring a local NTP master clock:
+````
+R1(config)#ntp server 1.1.1.1
+R1(config)#clock timezone IST 5 30
+R1(config)#int loopback 1
+R1(config-if)#ip addr 2.2.2.2 255.255.255.255
+````
+
+#### NTP Client configuration
+```
+R1(config)#ntp server 1.1.1.1
+R1(config)#clock timezone IST 5 30
+```
+Using a local server:
+```
+R2(config)#ntp server 2.2.2.2
+R2(config)#clock timezone EST -5
+R2(config)#clock summer-time EDT recurring
+```
+
+Show current date and time				`R2#show clock`
+Show NTP servers configured				`R2#show ntp associations`
+Show NTP Status							`R1#sh ntp status`
+
+### CDP
+CDP multicast advertisement address = 	`01-00-0c-cc-cc-cc`
+Show CDP Neighbourship info				`sw2#sh cdp neighbors`
+Show Detailed CDP info					`sw2#sh cdp neighbors detail`
+Get CDP info about a single neighbour	`sw2#sh cdp entry sw3`
+Show CDP settings on the device			`sw2#sh cdp`
+Show CDP Interface details				`sw2#sh cdp int g0/1`
+Change CDP Config/Timers				`sw2(config)#cdp ?`
+Turning CDP off and on
+```
+sw2(config)#no cdp run
+sw2(config)#cdp run
+```
+Turn off CDP on a single interface		`sw2(config-if)#no cdp enable`
+
+### LLDP
