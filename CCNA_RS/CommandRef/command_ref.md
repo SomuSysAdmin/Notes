@@ -76,24 +76,57 @@ Enter TEXT message. End with the character '`'.
 +-------------------------+
 `
 ```
-34. Specifying speed                                `sw1(config-if)#speed 100`
-35. Specifying duplex                               `sw1(config-if)#duplex full`
-36.
+34. Disabling Auto Negotiation					`no negotiation auto`
+35. Specifying speed                            `sw1(config-if)#speed 100`
+36. Specifying duplex                           `sw1(config-if)#duplex full`
+37. Save configuration							`copy run start` OR `wr`
 
 
 ## Swtich specific
-37. Show CAM table                              `sw1#sh mac address-table`
-38. Show CAM table aging info                   `sw1#show mac address-table aging-time`
-39. Add static MAC address to sw                `sw1(config)#mac address-table static a820.6332.0087 vlan 1 interface gi 0/3`
-40. Adding switch management IP
+38. Show CAM table                              `sw1#sh mac address-table`
+39. Show CAM table aging info                   `sw1#show mac address-table aging-time`
+40. Add static MAC address to sw                `sw1(config)#mac address-table static a820.6332.0087 vlan 1 interface gi 0/3`
+41. Adding switch management IP
 ```
 sw1(config-if)#ip add 192.168.1.11 255.255.255.0
 sw1(config-if)#no shutdown
 ```
-41. Adding switch default gateway                `sw1(config)#ip default-gateway 192.168.1.1`
+42. Adding switch default gateway               `sw1(config)#ip default-gateway 192.168.1.1`
 
+### VLANs
+43. Show existing VLANs							`sw1#sh vlans`
+44. Creating a new VLAN
+```
+sw1(config)#vlan 100
+sw1(config-vlan)#name ACCT
+```
+45. Deleting a VLAN								`sw1(config)#no vlan 100`
+46. Assigning a port to a VLAN					
+```
+sw1(config)#int gi0/0
+sw1(config-if)#switchport access vlan 100
+```
 
+### Trunking
+47. Show existing trunks						`sw1# sh int trunk`
+48. Setting trunk encapsulation					`sw1(config-if)#switchport trunk encapsulation dot1q`
+49. Changing trunk's native VLAN				`sw1(config-if)#switchport trunk native vlan 100`
+50. Changing trunk mode to on					`sw1(config-if)#switchport mode trunk`
+51. Changing trunk mode to dynamic desirable	`sw1(config-if)#switchport mode dyn des`
+52. VLAN Pruning/Allowing only certain VLANs on trunk
+```
+sw1(config-if)#sw tr allowed vlan 1,100
+sw1(config-if)#sw tr allowed vlan except 300
+```
 
+### Troubleshooting
+53. Clearing MAC table 							`sw1#clear arp-cache`
+54. Show interface status/details				`sw1#sh int g0/0`
+
+### Switch Security
+55. 
+
+### VTP
 1. Set VTP mode to server       `sw1(config)#vtp mode server`
 2. Set VTP mode to client       `sw1(config)#vtp mode client`
 3. Set VTP domain name          `sw1(config)#vtp domain VTPDEMO`
