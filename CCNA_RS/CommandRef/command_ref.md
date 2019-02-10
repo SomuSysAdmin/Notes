@@ -27,12 +27,12 @@
 
 # CCNA Command Cheat Sheet
 ## General Device Config
-1. View how we're connected to the switch           `show line`
-2. Enter privileged mode                            `enable`
-3. Exit privileged mode                             `disable`
-4. Enter line configuration mode                    `conf t`
-5. Exit current configuration mode                  `exit`
-6. Exit all configuration mode                      `end`
+1. View how we're connected to the device           `sw1>show line`
+2. Enter privileged mode                            `sw1>enable`
+3. Exit privileged mode                             `sw1>disable`
+4. Enter line configuration mode                    `sw1>conf t`
+5. Exit current configuration mode                  `sw1>exit`
+6. Exit all configuration mode                      `sw1>end`
 7. Enter interface config mode
 ```
 sw1#conf t
@@ -49,16 +49,16 @@ sw1(config)#line vty 0 5
 sw1(config-line)#password cisco
 sw1(config-line)#login
 ```
-10. Show running configuration                  `sh run`
-11. Ping an IP                                  `ping 192.168.0.1`
-12. See which input transports are allowed      `sh line vty 0`
+10. Show running configuration                  `sw1>sh run`
+11. Ping an IP                                  `sw1>ping 192.168.0.1`
+12. See which input transports are allowed      `sw1>sh line vty 0`
 13. Allow telnet and SSH as transport
 ```
 sw1(config)#line vty 0 6
 sw1(config-line)#transport input telnet ssh
 ```
-14. Login via telnet                            `sw2>telnet 192.168.1.11`
-15. Show history buffer                         `sh history`
+14. Login via telnet                            `sw1>telnet 192.168.1.11`
+15. Show history buffer                         `sw1>sh history`
 16. Change history buffer size
 ```
 sw1(config)#line vty 0 6
@@ -81,19 +81,19 @@ sw1(config-line)#login local
 ```
 
 19. Login with SSH                              `sw2#ssh -l cisco 192.168.1.11`
-20. Show device version                         `sh ver`
-21. View running configuration                  `sh run`
-22. View saved configuration                    `sh start`
+20. Show device version                         `sw1>sh ver`
+21. View running configuration                  `sw1>sh run`
+22. View saved configuration                    `sw1>sh start`
 23. Setting device hostname                     `sw(config)#hostname sw1`
 24. Setting enable password                     `sw1(config)#enable password cisco`
 25. Setting enable encrypted hash               `sw1(config)#enable secret somu`
 26. Setting exec timeout                        `sw1(config-line)#exec-timeout 5 30`
 27. Setting sync logging                        `sw1(config-line)#logg syn`
 28. Setting terminal length                     `sw1(config-line)#len 36`
-29. Encrypting passwords                            `sw1(config)#service password-encryption`
-30. Creating user with privilege level              `sw1(config)#username somu privilege 15 password cisco`
-31. Creating user with hash                         `sw1(config)#username somu privilege 15 algorithm-type scrypt secret cisco`
-32. Removing user                                   `sw1(config)#no username somu`
+29. Encrypting passwords                        `sw1(config)#service password-encryption`
+30. Creating user with privilege level          `sw1(config)#username somu privilege 15 password cisco`
+31. Creating user with hash                     `sw1(config)#username somu privilege 15 algorithm-type scrypt secret cisco`
+32. Removing user                               `sw1(config)#no username somu`
 33. Creating banner
 ```
 sw1(config)#banner login `
@@ -105,10 +105,10 @@ Enter TEXT message. End with the character '`'.
 +-------------------------+
 `
 ```
-34. Disabling Auto Negotiation					`no negotiation auto`
+34. Disabling Auto Negotiation					`sw1(config-if)#no negotiation auto`
 35. Specifying speed                            `sw1(config-if)#speed 100`
 36. Specifying duplex                           `sw1(config-if)#duplex full`
-37. Save configuration							`copy run start` OR `wr`
+37. Save configuration							`sw1(config)#copy run start` OR `sw1(config)#wr`
 
 
 ## L2 Swtich specific
@@ -307,7 +307,7 @@ R1(config)#ipv6 route 2006::/64 2002::2 125
 ### CEF, ARP and Passive Interfaces
 Show L3 Forwarding Info Base (FIB)		`R1#sh ip cef`
 Show L2 Adjacency table 				`R1#sh adjacency`
-Show ARP cache							`sh ip arp`
+Show ARP cache							`R1#sh ip arp`
 Define a passive interface				`R1(config-router)#passive-interface Gi0/0`
 Define all interfaces as passive and then define exceptions
 ```
@@ -388,6 +388,7 @@ R1(config)#access-list 1 permit 10.1.1.0 0.0.0.255
 R1(config)#ip nat inside source list 1 int g0/0 overload
 ```
 
+## Services and troubleshooting
 ### NTP
 #### NTP Server Config
 Setting time manually on the router and using it as the NTP server:
@@ -439,3 +440,118 @@ sw2(config)#cdp run
 Turn off CDP on a single interface		`sw2(config-if)#no cdp enable`
 
 ### LLDP
+Start LLDP                              `sw2(config)#lldp run`
+Show LLDP details                       `sw2#sh lldp`
+Stop transmitting LLDP on an interface, for either transmission or reception:
+```
+sw2(config-if)#no lldp transmit
+sw2(config-if)#no lldp receive
+```
+
+Select which information should be sent/received via LLDP:
+```
+sw2(config)#lldp tlv-select ?
+  4-wire-power-management  Cisco 4-wire Power via MDI TLV
+  mac-phy-cfg              IEEE 802.3 MAC/Phy Configuration/status TLV
+  management-address       Management Address TLV
+  port-description         Port Description TLV
+  port-vlan                Port VLAN ID TLV
+  power-management         IEEE 802.3 DTE Power via MDI TLV
+  system-capabilities      System Capabilities TLV
+  system-description       System Description TLV
+  system-name              System Name TLV
+```
+
+Show LLDP neighbours                    `sw2#sh lldp neighbors`
+Show LLDP neighbour details             `sw2#sh lldp neighbors detail`
+
+### Boot Options and File System
+The config register can be set to boot the router in a specific mode, the LSB of which may be:
+* 0x0                 Boot in ROM Monitor Mode
+* 0x1                 Boot to first flash image
+* 0x2 - 0xF           Boot to a specific flash image by getting config from NVRAM.
+
+Boot in ROM monitor mode via config register    `R1(config)#config-register 0x2100`
+
+Show entire file system                         `R1#show file systems`
+Show the directories *recursively*              `R1#show flash:`
+Show the immediate contents of Directory        `R1#dir nvram:`
+Create new directory                            `R1#mkdir OUTPUT`
+Change directory                                `R1#cd OUTPUT`
+Show current directory                          `R1#pwd`
+Delete directory                                `R1#rmdir OUTPUT`
+
+Create file from output of a command            `R1#sh ip int br | redirect flash0:/OUTPUT/int_br`
+Show file                                       `R1#more int_br`
+Delete file                                     `R1#delete int_br`
+Copy file                                       `R1#copy int_br outputFile`
+
+Upgrading IOS:
+```
+R1#copy tftp: flash:
+R1(config)#boot system flash:c3725-adventerprisek9-mz.124-15.T14.bin
+R1(config)# no boot system flash:c3500-adventerprisek9-mz.122-3.T2.bin
+```
+
+#### Password Reset
+The steps to reset the password are:
+* Have physical access to the device to reboot it; connect to router via console
+* Enter ROM monitor mode by entering the *break* sequence
+* In ROM monitor mode enter the confreg command to set boot mode to **0x2142**. This will boot the router ignoring the startup config at next boot, thus bypassing the password.
+* Reboot and enter privileged mode
+* Overwrite running config with startup config
+* Use `enable secret` to over-write the existing password
+* Restore config register to `0x2102`
+* Save running config to startup config and reboot
+
+```
+rommon 2 > confreg 0x2142
+rommon 3 > reset
+
+[reboot router]
+
+Router>en
+Router#copy start run
+Router#conf t
+Router(config)#enable secret cisco
+Router(config)#config-register 0x2102
+Router#copy run start
+Router#reload
+```
+
+#### Troubleshooting and debugging
+Ping an IP                                      `R1#ping 4.4.4.4`
+Ping an IP a certain number of times            `R1#ping 4.4.4.4 repeat 99999`
+Ping IP with repeat, packet size and timeout    `R1#ping 4.4.4.4 size 1500 timeout 0 repeat 99999`
+Extended Ping                                   `R1#ping`
+Trace route to a host                           `R1#traceroute 203.0.113.2`
+Turn on terminal montitor                       `R1#terminal monitor`
+
+Debugging a feature                             `R1#debug ip rip`
+Turn off debugging                              `R1#u all`
+
+Show CPU usage                                  `R3#show processes cpu`
+Show RAM usage                                  `R3#show processes memory sorted`
+
+### STP
+#### PVST+
+Show existing spanning trees on a VLAN          `sw1#sh spanning-tree vlan 100`
+Show detailed spanning tree info on a VLAN      `w1#sh span vlan 100 detail`
+Change bridge priority                          `sw1(config)#spanning-tree vlan 100 priority 41060`
+Changing STP bridge parameters
+```
+sw1(config)#spanning-tree vlan 100 ?
+  forward-time  Set the forward delay for the spanning tree
+  hello-time    Set the hello interval for the spanning tree
+  max-age       Set the max age interval for the spanning tree
+  priority      Set the bridge priority for the spanning tree
+  root          Configure switch as root
+```
+Change port priority                            `sw2(config-if)#spanning-tree port-priority 192`
+Change port cost                                `sw3(config-if)#spanning-tree cost 3`
+
+Setting switch as primary root bridge           `sw1(config)#spanning-tree vlan 100 root primary`
+Setting switch as secondary root bridge         `sw1(config)#spanning-tree vlan 200 root secondary`
+
+#### RPVST+
+See if switch is using PVST+ or RPVST+          `sw1#sh spanning-tree summary`

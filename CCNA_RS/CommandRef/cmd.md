@@ -604,8 +604,7 @@ sw2(config-if)#no lldp transmit
 sw2(config-if)#no lldp receive
 ```
 
-  We can also choose which parameters to advertise or not in the global config:
-
+We can also choose which parameters to advertise or not in the global config:
 ```
 sw2(config)#lldp tlv-select ?
   4-wire-power-management  Cisco 4-wire Power via MDI TLV
@@ -620,7 +619,6 @@ sw2(config)#lldp tlv-select ?
 ```
 
 We can view the LLDP details using:
-
 ```
 sw2#sh lldp neighbors
 Capability codes:
@@ -635,7 +633,6 @@ Total entries displayed: 2
 ```
 
 To get a more detailed view, we use:
-
 ```
 sw2#sh lldp neighbors detail
 ------------------------------------------------
@@ -697,7 +694,7 @@ Just like ohter Operating Systems, the first thing the router does after powerin
 Once POST is completed, the router executes the bootstrap code that locates and executes the Cisco IOS software. Once done, the IOS instance takes the place of the bootstrap code, which isn't executed till the next boot/reboot.
 
 ## Cisco IOS Software
-After the bootstrap code is execute, as stated in the previous section, the bootstrap code locates the Cisco IOS image. The storage is generally `flash:`, although this might not necessarily be the case, depending on how much storage speace is left in the flash memory. Thus, sometimes it might be necessary to boot from a remote TFTP server.
+After the bootstrap code is executed, as stated in the previous section, the bootstrap code locates the Cisco IOS image. The storage is generally `flash:`, although this might not necessarily be the case, depending on how much storage speace is left in the flash memory. Thus, sometimes it might be necessary to boot from a remote TFTP server.
 
 ## Load Cisco IOS software
 The Operating System for Cisco devices, IOS, is then loaded into the memory, i.e., RAM. The IOS software itself supports different feature sets. Once the IOS instance is loaded, the next step is to look for the default/start up configuration.
@@ -890,15 +887,7 @@ The method to bypass the password verification is to first set the configuration
 
 During the ROM monitor mode, we set the configuration register to **0x2142** using the `confreg` command:
 ```
-rRouter>en
-Router#copy start run
-Destination filename [running-config]?
-% Login disabled on line 2, until 'password' is set
-% Login disabled on line 3, until 'password' is set
-% Login disabled on line 4, until 'password' is set
-% Login disabled on line 5, until 'password' is set
-% Login disabled on line 6, until 'password' is set
-2717 bytes copied in 0.252 secs (10782 bytes/sec)ommon 2 > confreg 0x2142
+rommon 2 > confreg 0x2142
 rommon 3 > reset
 ```
 
@@ -946,7 +935,7 @@ In the above case, once pinging from `192.168.0.1` succeeds, we may try pinging 
 If this fails, but the pinging from the other interface succeeds, it might indicate routing issues between the interfaces.
 
 ## Repeat
-While trying to isolate layer 1 issues, such as equipment cabling or ports, a **sustained ping** can be very useful. Thus, we'll know the moment a ping succeeds instead of changing something and then pinging again to see if it works. So, we can use something like `ping 4.4.4.4 repeat 99999` and once we want to stop the pings, we just need to use the keycombo **Ctrl+Shift+6**. This keycombo will also work to stop `traceroute`.
+While trying to isolate layer 1 issues, such as equipment cabling or ports, a **sustained ping** can be very useful. Thus, we'll know the moment a ping succeeds instead of changing something and then pinging again to see if it works. So, we can use something like `ping 4.4.4.4 repeat 99999` and once we want to stop the pings, we just need to use the keycombo **Ctrl+Shift+6**. This key-combo will also work to stop `traceroute`.
 
 ## Load Generator
 Ping can also be used as a simplistic load generator, which we can use to _emulate_ heavy traffic on the line. For this, we need to send large data packets approaching our MTU size, (`1500B`), ping as fast as we can and then repeat for a while. Here, the success is irrelevant since we're just trying to generate some load on the network. The command, in this case, will be:
