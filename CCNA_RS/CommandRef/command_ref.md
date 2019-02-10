@@ -126,7 +126,7 @@ Enter TEXT message. End with the character '`'.
 37. Save configuration							`sw1(config)#copy run start` OR `sw1(config)#wr`
 
 
-## L2 Swtich specific
+## L2/L3 Swtich specific
 38. Show CAM table                              `sw1#sh mac address-table`
 39. Show CAM table aging info                   `sw1#show mac address-table aging-time`
 40. Add static MAC address to sw                `sw1(config)#mac address-table static a820.6332.0087 vlan 1 interface gi 0/3`
@@ -346,7 +346,50 @@ sw2(config)#port-channel load-balance ?
   src-mac      Src Mac Addr
 ```
 
-## Router/L3 Switch Specific
+### L3 Switch IP Routing
+#### Router on a Stick
+We have a switch configuration such as below, such that two devices on two VLANs are connected to the switch, and a trunk port leads to the router.
+```
+sw#sh int status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/0                        connected    trunk      a-full   auto RJ45
+Gi0/1                        connected    10         a-full   auto RJ45
+Gi0/2                        connected    20         a-full   auto RJ45
+Gi0/3                        connected    1          a-full   auto RJ45
+```
+
+We have to configure the Router's end of the trunk with logical sub-interfaces with each sub-interface belonging to a different VLAN:
+```
+R1(config)#int g0/0.1
+R1(config-subif)#encapsulation dot1q 10
+R1(config-subif)#ip addr 192.168.1.1 255.255.255.0
+R1(config-subif)#int g0/0.2
+R1(config-subif)#encap dot 20
+R1(config-subif)#ip addr 172.16.1.1 255.255.255.0
+R1(config-subif)#int g0/0
+R1(config-if)#no shut
+```
+
+Show VLANs on a router/L3-Switch:           `R1#show vlans`
+
+#### SVIs and routed ports
+Steps to enable routing on L3 switches:
+* Create an SVI for each subnet/VLAN
+* Turn on `ip routing`
+* Convert port leading to router to a routed port and assign an IP
+```
+sw1(config)#int vlan 10
+sw1(config-if)#ip addr 192.168.1.1 255.255.255.0
+sw1(config-if)#no shut
+sw1(config-if)#int vlan 20
+sw1(config-if)#ip addr 172.16.1.1 255.255.255.0
+sw1(config-if)#no shut
+sw1(config-if)#exit
+sw1(config)#ip routing
+```
+
+## Router Specific
 Assigning IPv4 Address to interface
 ```
 r2(config)#int g0/3
@@ -503,7 +546,25 @@ R1(config)#access-list 1 permit 10.1.1.0 0.0.0.255
 R1(config)#ip nat inside source list 1 int g0/0 overload
 ```
 
+### OSPFv2
+We have to start OPSF with a process ID and also every OSPF instance must have a backbone area (area 0):
+```
+R2(config)#router ospf 1
+R2(config-router)#network 2.2.2.2 0.0.0.0 area 1
+R2(config-router)#network 192.168.0.0 0.0.0.3 area 0
+R2(config-router)#network 192.168.0.4 0.0.0.3 area 0  
+```
+Include an interface in OSPF directly               `R2(config-if)#ip ospf 1 area 1`
+Show which dynamic routing protocol is being used   `R2#sh ip proto`
+Show all routes in the IP routing table             `R2#sh ip route`
+Show interfaces participating in OSPF               `R2#sh ip ospf int br`
+Show OSPF neighbours                                `R2#show ip ospf neighbor`
+View OSPF's Link State Database                     `R2#sh ip ospf database`
+Show OSPF interface details for interface           `R1#sh ip ospf int g0/1`
 
+Change OSPF reference bandwidths                    `R2(config-router)#auto-cost reference-bandwidth 100000`
+Change OSPF interface cost                          `R2(config-if)#ip ospf cost 100`
+Change OSPF network type for interface              `R2(config-if)#ip ospf network ethernet`
 
 ## Services and troubleshooting
 ### NTP
