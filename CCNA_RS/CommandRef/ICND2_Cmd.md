@@ -850,7 +850,7 @@ Desirable           No      Yes     Yes
 If one side is set to _on_ an other to _desirable_, they still won't form an EtherChannel since they both want to form an EtherChannel but one side is willing to negotiate via PAgP frames while the other side just ignores it. Similarly, if both sides are set to _auto_, both sides want to negotiate but neither will start the negotiation by sending PAgP frames.
 
 ## Link Aggregation Control Protocol (_LACP_)
-LACP has identical prot control modes to _PAgP_, with just the _auto_ mode being called **Passive** mode here and the _desirable_ mode being called **Active** mode. Thus, the possible port combinations for EtherChannel formation are:
+LACP has identical protocol control modes to _PAgP_, with just the _auto_ mode being called **Passive** mode here and the _desirable_ mode being called **Active** mode. Thus, the possible port combinations for EtherChannel formation are:
 ```
 LACP Channel mode   On      Passive     Active
 =================   ======  =======     =========
@@ -1196,7 +1196,6 @@ sw2(config)#sp eth guard misconf
 ## Load-Balancing
 In case we get poor performance from the EtherChannel, one reason may be improper load-balancing which we might resolve by changing the load-balancing algorithm. We can see the current algorithm using the `show etherchannel load-balancing` command:
 ```
-
 sw2#sh etherch load
 EtherChannel Load-Balancing Configuration:
         src-dst-ip

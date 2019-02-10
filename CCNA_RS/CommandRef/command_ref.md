@@ -11,6 +11,12 @@
     - [Switch Security](#switch-security)
     - [Voice VLANs](#voice-vlans)
     - [VTP](#vtp)
+    - [STP](#stp)
+      - [PVST+](#pvst)
+      - [RPVST+](#rpvst)
+    - [EtherChannel](#etherchannel)
+      - [L2 EtherChannel](#l2-etherchannel)
+      - [L3 EtherChannel](#l3-etherchannel)
   - [Router/L3 Switch Specific](#routerl3-switch-specific)
     - [Routing Fundamentals](#routing-fundamentals)
       - [IPv4 Static Routing](#ipv4-static-routing)
@@ -22,6 +28,15 @@
       - [Static NAT](#static-nat)
       - [Dynamic NAT with IP pool](#dynamic-nat-with-ip-pool)
       - [Port Address Translation (PAT)/NAT Overloading](#port-address-translation-patnat-overloading)
+  - [Services and troubleshooting](#services-and-troubleshooting)
+    - [NTP](#ntp)
+      - [NTP Server Config](#ntp-server-config)
+      - [NTP Client configuration](#ntp-client-configuration)
+    - [CDP](#cdp)
+    - [LLDP](#lldp)
+    - [Boot Options and File System](#boot-options-and-file-system)
+      - [Password Reset](#password-reset)
+      - [Troubleshooting and debugging](#troubleshooting-and-debugging)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -231,6 +246,106 @@ sw1(config)#vtp mode transparent
 sw1(config)#vtp mode server
 ```
 
+### STP
+#### PVST+
+Show existing spanning trees on a VLAN          `sw1#sh spanning-tree vlan 100`
+Show detailed spanning tree info on a VLAN      `w1#sh span vlan 100 detail`
+Change bridge priority                          `sw1(config)#spanning-tree vlan 100 priority 41060`
+Changing STP bridge parameters
+```
+sw1(config)#spanning-tree vlan 100 ?
+  forward-time  Set the forward delay for the spanning tree
+  hello-time    Set the hello interval for the spanning tree
+  max-age       Set the max age interval for the spanning tree
+  priority      Set the bridge priority for the spanning tree
+  root          Configure switch as root
+```
+Change port priority                            `sw2(config-if)#spanning-tree port-priority 192`
+Change port cost                                `sw3(config-if)#spanning-tree cost 3`
+
+Setting switch as primary root bridge           `sw1(config)#spanning-tree vlan 100 root primary`
+Setting switch as secondary root bridge         `sw1(config)#spanning-tree vlan 200 root secondary`
+
+#### RPVST+
+See if switch is using PVST+ or RPVST+          `sw1#sh spanning-tree summary`
+Switch to RPVST+                                `sw1(config)#span mode rapid-pvst`
+Chaning link type of an interface               
+```
+sw1(config-if)#span link-type ?
+  point-to-point  Consider the interface as point-to-point
+  shared          Consider the interface as shared
+```
+Changing interface to an edge port              `sw1(config-if)#span portfast`
+Enable port fast globally                       `sw4(config)#spanning-tree portfast default`
+See if portfast is active on an interface       `sw1#sh spanning-tree int g0/2 portfast`
+Enable BPDUGuard on an interface                `sw1(config-if)#spanning-tree bpduguard enable`
+Turn on BPDUGuard on all edge ports             `sw1(config)#spanning-tree portfast edge bpduguard default`
+
+### EtherChannel
+#### L2 EtherChannel
+Steps to form an L2 EtherChannel:
+* Ensure all participating ports have the same speed, duplex and VLAN assignments
+* Ensure either a cross-over cable is used for the two connecting switches OR MDI-X is turned on (requires auto-speed and duplex)
+```
+sw2(config)#int ran g0/1-2
+sw2(config-if-range)#speed auto
+sw2(config-if-range)#duplex auto
+sw2(config-if-range)#mdix auto
+sw2(config-if-range)#channel-group 1 mode desirable
+```
+
+Set EtherChannel Protocol (PAgP or LACP):
+```
+sw2(config-if-range)#channel-group 1 mode ?
+  active     Enable LACP unconditionally
+  auto       Enable PAgP only if a PAgP device is detected
+  desirable  Enable PAgP unconditionally
+  on         Enable Etherchannel only
+  passive    Enable LACP only if a LACP device is detected
+```
+
+Convert Port-Channel/EtherChannel to dot1q trunk:
+```
+sw2(config)#int po1
+sw2(config-if)#switchport trunk encap dot1q
+sw2(config-if)#sw mode trunk
+```
+
+Show Port-Channel details               `sw2#sh int po1`
+
+#### L3 EtherChannel
+Steps for L3 EtherChannel creation:
+* Create an L2 EtherChannel/port-channel
+* Turn both the individual ports as well as the port channel to a **routed port**
+* Assign IP and other L3 config
+* Bring up the individual interfaces as well as the port channel
+```
+sw2(config)#int ran g0/1-2
+sw2(config-if-range)#neg auto
+sw2(config-if-range)#no switchport
+sw2(config-if-range)#channel-group 1 mode on
+sw2(config-if-range)#no shut
+sw2(config-if-range)#int po1
+sw2(config-if)#no switchport
+sw2(config-if)#ip addr 10.1.1.1 255.255.255.252
+```
+
+Show port-channels                              `sw2#sh etherchannel summary`
+Show port-channel details                       `sw2#sh etherchannel port-channel`
+Turn on EtherChannel Misconfig Guard            `sw2(config)#sp eth guard misconf`
+
+Show EtherChannel load-balancing algorithm      `sw2#sh etherchannel load`
+Set EtherChannel load-balancing algorithm
+```
+sw2(config)#port-channel load-balance ?
+  dst-ip       Dst IP Addr
+  dst-mac      Dst Mac Addr
+  src-dst-ip   Src XOR Dst IP Addr
+  src-dst-mac  Src XOR Dst Mac Addr
+  src-ip       Src IP Addr
+  src-mac      Src Mac Addr
+```
+
 ## Router/L3 Switch Specific
 Assigning IPv4 Address to interface
 ```
@@ -388,6 +503,8 @@ R1(config)#access-list 1 permit 10.1.1.0 0.0.0.255
 R1(config)#ip nat inside source list 1 int g0/0 overload
 ```
 
+
+
 ## Services and troubleshooting
 ### NTP
 #### NTP Server Config
@@ -532,26 +649,3 @@ Turn off debugging                              `R1#u all`
 
 Show CPU usage                                  `R3#show processes cpu`
 Show RAM usage                                  `R3#show processes memory sorted`
-
-### STP
-#### PVST+
-Show existing spanning trees on a VLAN          `sw1#sh spanning-tree vlan 100`
-Show detailed spanning tree info on a VLAN      `w1#sh span vlan 100 detail`
-Change bridge priority                          `sw1(config)#spanning-tree vlan 100 priority 41060`
-Changing STP bridge parameters
-```
-sw1(config)#spanning-tree vlan 100 ?
-  forward-time  Set the forward delay for the spanning tree
-  hello-time    Set the hello interval for the spanning tree
-  max-age       Set the max age interval for the spanning tree
-  priority      Set the bridge priority for the spanning tree
-  root          Configure switch as root
-```
-Change port priority                            `sw2(config-if)#spanning-tree port-priority 192`
-Change port cost                                `sw3(config-if)#spanning-tree cost 3`
-
-Setting switch as primary root bridge           `sw1(config)#spanning-tree vlan 100 root primary`
-Setting switch as secondary root bridge         `sw1(config)#spanning-tree vlan 200 root secondary`
-
-#### RPVST+
-See if switch is using PVST+ or RPVST+          `sw1#sh spanning-tree summary`
