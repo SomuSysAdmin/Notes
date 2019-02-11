@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Network Management](#network-management)
+- [Network Management Protocols](#network-management-protocols)
+- [Syslog Server](#syslog-server)
+- [Syslog Configuration and Verification](#syslog-configuration-and-verification)
+  - [Seeing logging messages and verifying config](#seeing-logging-messages-and-verifying-config)
+  - [Fields in Syslog Messages](#fields-in-syslog-messages)
+- [SNMP Operation](#snmp-operation)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Network Management
 # Network Management Protocols
 # Syslog Server
