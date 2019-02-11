@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+  - [Frame Relays](#frame-relays)
+  - [Frame relay Configuration and Verification](#frame-relay-configuration-and-verification)
+    - [Inverse ARP](#inverse-arp)
+    - [Frame Relay Maps](#frame-relay-maps)
+    - [Frame Relay Sub-Interfaces](#frame-relay-sub-interfaces)
+    - [Frame Relay Point-to-Point Sub-Interfaces](#frame-relay-point-to-point-sub-interfaces)
+- [Alpine Host Setup](#alpine-host-setup)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Frame Relays
 Frame relay is a layer 2 WAN technology that's a service provided by _Frame relay service providers_. It sends layer 2 frames over a **Private Virtual Circuit (_PVC_)** that are marked with **Data Link Connection Identifiers (_DLCI_s)** numbers (pronounced *del-Cs*). In modern days, it's used less given the popularity of cable modems and DSL connections - but in the past, these used to be the _go-to_ WAN technology for small-businesses, because it could provide a connection to the internet or other branch offices at a reasonable price compared to erstwhile leased lines. It uses DLCIs to form multiple Permanent Virtual Circuits (PVCs).
 
