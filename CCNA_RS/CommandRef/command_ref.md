@@ -562,9 +562,10 @@ Show OSPF neighbours                                `R2#show ip ospf neighbor`
 View OSPF's Link State Database                     `R2#sh ip ospf database`
 Show OSPF interface details for interface           `R1#sh ip ospf int g0/1`
 
-Change OSPF reference bandwidths                    `R2(config-router)#auto-cost reference-bandwidth 100000`
+Change OSPF reference bandwidths (Mbps; def=100)    `R2(config-router)#auto-cost reference-bandwidth 100000`
 Change OSPF interface cost                          `R2(config-if)#ip ospf cost 100`
 Change OSPF network type for interface              `R2(config-if)#ip ospf network ethernet`
+
 
 ## Services and troubleshooting
 ### NTP
