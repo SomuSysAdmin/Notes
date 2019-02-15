@@ -3,6 +3,11 @@
 
 ## Config Cheat Sheet
 * In BGP, since it's a path vector protocol, the neighbours need to be configured manually, and won't be discovered automatically like EIGRP or OSPF.
+* A TCP session is established between sessions.
+* BGP Advertises:
+	- **Network prefix and length**: together called **NLRI (_Network Layer Reachability Information_)**.
+	- **Path Attributes**: A collection of info/attributes about the network used for path selection.
+* BGP's metric is AS-hops.
 * In neighbour config, we need to mention both mention neighbour's IP address and AS number of the remote AS in which the neighbour resides.
 * If the remote AS is the same AS as this router, then it's iBGP - otherwise eBGP.
 * Other than neighbor, the network also needs to be specified - and these will be the network(s) advertised
@@ -33,7 +38,7 @@ Established			Routers have established a BGP peering session; BGP is working.
 ### Criteria for maintaining BGP neighbourship:
 * Neighbour must be explicitly declared with the **correct AS number**.
 * All required neighbours should be advertised correctly.
-* The network command uses a subnet mask and **not** a wildcard mask. 
+* The network command uses a subnet mask and **not** a wildcard mask.
 * The network command looks for a route in the IP routing table that matches the network command's route **exactly**. So, if our IP routing table has a `4.4.4.4/32` route and the loopback interface configured with `4.4.4.4/32`, but our network is for `4.4.4.0/24`, BGP still won't advertise it. Here, the loopback is a `/32` network and BGP is looking for `4.4.4.4/24`, and the mask itself must match exactly!
 
 ### BGP Config
@@ -135,7 +140,7 @@ Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
  * i 17.1.1.0/24      17.1.1.2                 0    100      0 i
  *>                   0.0.0.0                  0         32768 i
 ```
-So, both the `8.8.8.0/24` and the `17.1.1.0/24` networks were learnt via iBGP, demonstrated by the `*>i`.
+So, both the `8.8.8.0/24` and the `17.1.1.0/24` networks were learnt via iBGP, demonstrated by the `*>i`. The value of '*i*' in the Path shows that the network is within the same AS, i.e., learnt via iBGP. In case of eBGP, the path would contain the AS number for the remote AS. 
 
 Now we can configure an eBGP link with R3 from R2:
 ```
