@@ -14,7 +14,8 @@ Start BGP on router					`R1(config)#router bgp 65001	! 65001 = AS number`
 Configuring a neighbour				`R1(config-router)#neighbor 172.16.1.2 remote-as 65002`
 Advertising a network 				`R1(config-router)#network 17.1.1.0 mask 255.255.255.0`
 Show AS number and BGP state		`R1#sh ip bgp summary`
-Show BGP neighbours/BGP version		`R1#sh ip bgp neighbors`
+Show BGP neighbours/BGP version		`R1#sh ip bgp neighbors		!Also shows iBGP or eBGP`
+Show ongoing TCP sessions			`R4#sh tcp brief`
 
 ### BGP States
 The possible BGP states in the output of the `sh ip bgp summary` are:
@@ -28,6 +29,12 @@ OpenSent/Active		An open message was sent to try and establish peering.
 OpenConfirm			Router received a reply to the open message.
 Established			Routers have established a BGP peering session; BGP is working.
 ```
+
+### Criteria for maintaining BGP neighbourship:
+* Neighbour must be explicitly declared with the **correct AS number**.
+* All required neighbours should be advertised correctly.
+* The network command uses a subnet mask and **not** a wildcard mask. 
+* The network command looks for a route in the IP routing table that matches the network command's route **exactly**. So, if our IP routing table has a `4.4.4.4/32` route and the loopback interface configured with `4.4.4.4/32`, but our network is for `4.4.4.0/24`, BGP still won't advertise it. Here, the loopback is a `/32` network and BGP is looking for `4.4.4.4/24`, and the mask itself must match exactly!
 
 ### BGP Config
 We configure R1 to be in AS 65001:
@@ -155,3 +162,72 @@ Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State
 15.1.1.2        4        65002       0       0        1    0    0 never    Idle
 ```
 We can see that we're currently peering with `8.8.8.1` but not `15.1.1.2` since BGP hasn't been configured yet on it.
+
+We can also confirm that the relationship with 8.8.8.1 is via an eBGP peering by the `external link` in :
+```
+R3#sh ip bgp nei
+BGP neighbor is 8.8.8.1,  remote AS 65001, external link
+  BGP version 4, remote router ID 17.1.1.2
+  BGP state = Established, up for 00:06:42
+  ...
+```
+
+We can see which routes we learnt via BGP:
+```
+R3#sh ip route bgp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+...
+      17.0.0.0/24 is subnetted, 1 subnets
+B        17.1.1.0 [20/0] via 8.8.8.1, 00:09:10
+```
+
+Ping and traceroute now yield:
+```
+R3#ping 17.1.1.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 17.1.1.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 9/10/14 ms
+R3#traceroute 17.1.1.1
+Type escape sequence to abort.
+Tracing the route to 17.1.1.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 8.8.8.1 7 msec 10 msec 5 msec
+  2 17.1.1.1 [AS 65001] 8 msec 8 msec 6 msec
+```
+
+Finally, we configure R4 as:
+```
+R4(config)#router bgp 65002
+R4(config-router)#neighbor 15.1.1.1 remote 65002
+*Feb 15 09:54:23.985: %BGP-5-ADJCHANGE: neighbor 15.1.1.1 Up
+R4(config-router)#network 15.1.1.0 mask 255.255.255.0
+```
+
+On R4, the routes learnt via BGP will be:
+```
+R4#sh ip route bgp
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      8.0.0.0/24 is subnetted, 1 subnets
+B        8.8.8.0 [200/0] via 15.1.1.1, 00:02:27
+      17.0.0.0/24 is subnetted, 1 subnets
+B        17.1.1.0 [200/0] via 8.8.8.1, 00:02:22
+```
+
+Each router in the BGP _chain_ has a TCP session established with its (directly adjacent) neighbour:
+```
+R4#sh tcp br
+TCB       Local Address               Foreign Address             (state)
+10B83578  15.1.1.2.179               15.1.1.1.31454              ESTAB
+```
