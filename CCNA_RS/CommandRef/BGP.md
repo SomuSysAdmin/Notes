@@ -1,26 +1,31 @@
 # BGP
-## BGP Fundamentals
-
-## Config Cheat Sheet
 * In BGP, since it's a path vector protocol, the neighbours need to be configured manually, and won't be discovered automatically like EIGRP or OSPF.
 * A TCP session is established between sessions.
 * BGP Advertises:
 	- **Network prefix and length**: together called **NLRI (_Network Layer Reachability Information_)**.
 	- **Path Attributes**: A collection of info/attributes about the network used for path selection.
-* BGP's metric is AS-hops.
+* BGP's metric is AS-hops - for same number of AS hops.
+* BGP doesn't consider bandwidth in metric calculation.
+* Neighbours need not be adjacent - they can be several hops away.
 * In neighbour config, we need to mention both mention neighbour's IP address and AS number of the remote AS in which the neighbour resides.
 * If the remote AS is the same AS as this router, then it's iBGP - otherwise eBGP.
 * Other than neighbor, the network also needs to be specified - and these will be the network(s) advertised
 * We provide the network subnet mask instead of the wildcard mask in the neighbor command.
 * BGP has its own routing table other than the IP routing table of the router.
 
-### Commands
-Start BGP on router					`R1(config)#router bgp 65001	! 65001 = AS number`
-Configuring a neighbour				`R1(config-router)#neighbor 172.16.1.2 remote-as 65002`
-Advertising a network 				`R1(config-router)#network 17.1.1.0 mask 255.255.255.0`
-Show AS number and BGP state		`R1#sh ip bgp summary`
-Show BGP neighbours/BGP version		`R1#sh ip bgp neighbors		!Also shows iBGP or eBGP`
-Show ongoing TCP sessions			`R4#sh tcp brief`
+## BGP Path selection criteria
+Some of the BGP path selection criteria are:
+* Weight - locally significant - higher preferred.
+* Local preference - locally significant - higher preferred.
+* AS_PATH length - number of AS's in the AS_PATH attribute - lower preferred.
+* Origin type - How the path was injected in BGP: (in order of preference)
+	- I = IGP
+	- E = EGP
+	- ?  = Incomplete info
+* Paths - eBGP preferred over iBGP
+* Age - Oldest BGP route is preferred
+* Router ID - Route received from lowest RID preferred. - *tie breaker*.
+* Neighbour IP - Route received from neighbour with lowest IP preferred. - *tie breaker*.
 
 ### BGP States
 The possible BGP states in the output of the `sh ip bgp summary` are:
@@ -35,11 +40,73 @@ OpenConfirm			Router received a reply to the open message.
 Established			Routers have established a BGP peering session; BGP is working.
 ```
 
+## BGP Data-Structures
+BGP has a couple of tables:
+* **BGP Neighbour table** - contains Neighbour's IP address, AS number and state of relationship
+* **BGP Table/Routing Info Base (RIB)** - Contains all routes known to BGP and some of them end up in the IP routing table.
+
+Some Reasons why a route in BGP RIB may not end up in the routing table are:
+* A route with a lesser AD is available, perhaps a static route or a directly connected route.
+* Next hop address isn't reachable.
+
+## BGP Message types
+There are 4 types of BGP messages:
+- Open message
+- Keepalive
+- Update
+- Notification
+
+### Neighbourship formation
+* Initially, BGP state is idle.
+* R1 initiates a TCP session with R2, causing both to go in a **connect** state.
+* R1 will then send an **open message** to R2, in which it sends various info about itself. This causes them to go in a **OpenSent/Active** state.
+* R2 will then reply to R1's open message with an Open message of its own, which causes both to transition to a **OpenConfirm** state.
+* Both routers will now send a *keepalive* to one another, to signify that they're still up and active, and finally, BGP peering will transition to **Established**.
+* If a keepalive isn't received, that router will send out a notification and transition back to the idle state.
+
+### Open message contents
+The Open message that the routers send one another contains:
+* BGP version (*=4 currently*).
+* Local AS number
+* Hold time
+* Router ID
+* Optional parameters.
+
+The **keepalive** message is just a message header that keeps the hold timer from expiring.
+
+The **Update messages** sent by BGP contain information such as:
+- withdrawn routes
+- path attributes
+- NLRI/advertisements.
+
+**Notification/Error Message** - messages generated when there's an error. For example, when a keepalive isn't received, the BGP peer will send out a notification via a notification message, containing the:
+- Error code
+- Error sub-code
+- Information about the error.
+
+## Config Cheat Sheet
+### Commands
+Start BGP on router					`R1(config)#router bgp 65001	! 65001 = AS number`
+Set Router ID Statically			`R1(config-router)#bgp router-id 1.1.1.1`
+Configuring a neighbour				`R1(config-router)#neighbor 172.16.1.2 remote-as 65002`
+Advertising a network 				`R1(config-router)#network 17.1.1.0 mask 255.255.255.0`
+Advertising a network with next hop	`R1(config-router)#network 17.1.1.0 mask 255.255.255.0 next-hop-self`
+Show AS number and BGP state		`R1#sh ip bgp summary`
+Show BGP neighbours/BGP version		`R1#sh ip bgp neighbors		!Also shows iBGP or eBGP`
+Show ongoing TCP sessions			`R4#sh tcp brief`
+
 ### Criteria for maintaining BGP neighbourship:
 * Neighbour must be explicitly declared with the **correct AS number**.
 * All required neighbours should be advertised correctly.
 * The network command uses a subnet mask and **not** a wildcard mask.
 * The network command looks for a route in the IP routing table that matches the network command's route **exactly**. So, if our IP routing table has a `4.4.4.4/32` route and the loopback interface configured with `4.4.4.4/32`, but our network is for `4.4.4.0/24`, BGP still won't advertise it. Here, the loopback is a `/32` network and BGP is looking for `4.4.4.4/24`, and the mask itself must match exactly!
+
+### Next hop self
+If we have R0 connected to R1 in the above topology, when advertising the remote AS 65002's networks, R1 won't change the _next-hop_ from R2's IP of `2.2.2.2` to it's own IP `1.1.1.1`. Thus, if R0 doesn't know how to get to 2.2.2.2, it won't be able to reach the 65002 AS. To solve this, while declaring the network for BGP, we can say:
+```
+R1(config-router)#network 17.1.1.0 mask 255.255.255.0 next-hop-self
+```
+Now, on getting the advertisement, R0 will see that the next hop should be R1, and R1 will relay the packet to R2 to reach the remote AS.
 
 ### BGP Config
 We configure R1 to be in AS 65001:
@@ -140,7 +207,7 @@ Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
  * i 17.1.1.0/24      17.1.1.2                 0    100      0 i
  *>                   0.0.0.0                  0         32768 i
 ```
-So, both the `8.8.8.0/24` and the `17.1.1.0/24` networks were learnt via iBGP, demonstrated by the `*>i`. The value of '*i*' in the Path shows that the network is within the same AS, i.e., learnt via iBGP. In case of eBGP, the path would contain the AS number for the remote AS. 
+So, both the `8.8.8.0/24` and the `17.1.1.0/24` networks were learnt via iBGP, demonstrated by the `*>i`. The value of '*i*' in the Path shows that the network is within the same AS, i.e., learnt via iBGP. In case of eBGP, the path would contain the AS number for the remote AS, followed by `i`. Thus, if we have to go through ASNs : 65004, 65003 and then 65001 to reach a network, then the path will be: `65004 65003 65001 i`.
 
 Now we can configure an eBGP link with R3 from R2:
 ```
