@@ -95,3 +95,13 @@ description     Detailed information about the syslog event.
 ```
 
 # SNMP Operation
+SNMP is a protocol used to configure, monitor and receive alerts from managed network devices. The server that acts as the central point of operation for SNMP is called the **SNMP Manager**. The devices that it queries are called **SNMP Agents**, which may be a switch, a router, other servers, etc.
+
+Inside each SNMP agent, there's a **Management Information Base (_MIB_)** which contains several **Object Identifiers(_OID_s)**. An object is a collection of variables contained within the MIB that the SNMP server can query and configure. While the SNMP manager can query these agents for the values of one or more OIDs, the agents may themselves send notifications proactively, called **SNMP Traps**, typically when certain thresholds are exceeded. An example will be a notification sent when the agent crosses a preset value of CPU/Memory utilization.
+
+## SNMP Versions
+1. SNMPv1 - Used *community strings* (like passwords) for community strings, which weren't secure.
+2. SNMPv2c - Allowed a single query to retrieve more OIDs at once, thus reducing the number of queries required. Still used community strings. Still used in a lot of networks.
+3. SNMPv3 - Much more secure since it supports authentication, integrity checks as well as encryption.
+
+## SNMPv2 Configuration and Verification

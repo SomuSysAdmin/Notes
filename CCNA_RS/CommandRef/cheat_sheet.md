@@ -265,6 +265,20 @@ sw2(config-track)#int g0/0
 sw2(config-if)#standby 10 track 1 dec 20
 ```
 
+### GLBP Config
+```
+sw2(config)#int g0/0
+sw2(config-if)#glbp 10 ip 10.1.1.1
+sw2(config-if)#glbp 10 priority 110
+sw2(config-if)#glbp 10 weighting 5
+sw2(config-if)#glbp 10 load-balancing weighted
+sw2(config-if)#glbp 10 authentication md5 key-string cisco123
+```
+
+* Virtual MAC addresses are assigned by the **Active Virtual Gateway (_AVG_)**.
+* Virtual MAC address is in the format : `0007.B40X.xxyy`, Xxx is the 10-bit wide GLBP group number (hence only the 2 LSBs from X are used for the group number), and yy is a different number for each router (01, 02, 03, or 04).
+* There can be 1024 GLBP groups per interface and 4 AVFs per group.
+
 ## Access Control Lists (_ACL_)
 We can have two types of ACLs:
 - **Standard ACL** - In standard ACLs, we can _filter_ the traffic only on the basis of source IP addresses.

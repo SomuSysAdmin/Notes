@@ -69,7 +69,18 @@ Failed to setup build environment.
 ```
 
 Solution:
-Make sure the `make` program is  installed. Since VMware's make process requires other components of the "Development Tools" group, we can directly use: 
+Make sure the `make` program is  installed. Since VMware's make process requires other components of the "Development Tools" group, we can directly use:
 ```
-dnf -y groupinstall "Development Tools" 
+dnf -y groupinstall "Development Tools"
+```
+
+## VMware Promiscuous mode
+```
+The virtual machine's operating system has attempted to enable promiscuous mode on adapter 'Ethernet0'. This is not allowed for security reasons.
+Please go to the Web page "http://vmware.com/info?id=161" for help enabling promiscuous mode in the virtual machine.
+```
+
+Solution
+```
+chmod a+rw /dev/vmnet0
 ```
