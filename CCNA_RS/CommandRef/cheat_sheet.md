@@ -57,15 +57,15 @@ Hold x3		15s				180s
 ```
 ! Enable RIPv2 IPv4 routing
 router rip
-	version 2
-	! Disable RIPv2 automatic summarization
-	no auto-summary
-	! Designate RIPv2 interfaces by network
-	network <network>
-	! Identify unicast-only neighbors
-	neighbor <IP-address>
-	! Designate passive interfaces
-	passive-interface {interface| default}
+    version 2
+    ! Disable RIPv2 automatic summarization
+    no auto-summary
+    ! Designate RIPv2 interfaces by network
+    network <network>
+    ! Identify unicast-only neighbors
+    neighbor <IP-address>
+    ! Designate passive interfaces
+    passive-interface {interface| default}
 
 show ip[v6] protocols
 show ip[v6] rip database
@@ -209,19 +209,19 @@ sh ipv6 eigrp topo all
 
 ### AD Values
 ```
-	Route Source 			Default Distance Values
-	=====================	=======================
+    Route Source 			Default Distance Values
+    =====================	=======================
 *	Connected interface 	0
 *	Static route 			1
-	EIGRP summary route 	5
+    EIGRP summary route 	5
 *	External BGP 			20
 *	Internal EIGRP 			90
-	IGRP 					100
+    IGRP 					100
 *	OSPF 					110
-	IS-IS 					115
+    IS-IS 					115
 *	RIP					 	120
-	EGP 					140
-	On Demand Routing (ODR) 160
+    EGP 					140
+    On Demand Routing (ODR) 160
 *	External EIGRP 			170
 *	Internal BGP 			200
 *	Unknown* 				255	! Router discards these routes
@@ -465,7 +465,7 @@ Legacy ST	Rapid ST
 Root port	Root port
 Designated	Designated
 Blocking	Alternate
-			Backup
+    Backup
 ```
 
 #### PVST+
@@ -565,4 +565,52 @@ sw2(config)#port-channel load-balance ?
   src-dst-mac  Src XOR Dst Mac Addr
   src-ip       Src IP Addr
   src-mac      Src Mac Addr
+```
+
+### PPP
+Advantages of PPP:
+* Authentication with PAP/CHAP
+* Data Compression
+* Error Checking and Correction
+* Combining multiple physical interfaces into a single logical interface called a _multilink interface_.
+
+Subprotocols for PPP:
+Some of the important protocols that work in conjunction with each other and PPP to provide the functionality of PPP are:
+* **Link Control Protocol (_LCP_)** - TUsed by PPP to setup, destroy or maintain the connections.
+* **Network Control Protocols (_NCPs_)** - There are several different NCPs, one for each protocol used, that negotiates the configuration of that protocol. PPP can support multiple Layer 3 and 2 protocols, and each of the protocols that are encapsulated by PPP is given their own NCP to control that protocol. For ex, IPCP for IP, CDPCP for CDP.
+
+#### PPP Auth - Password Authentication Protocol (_PAP_)
+* **One way auth** - only client authenticates to server.
+* **Less secure** - clear-text sent across network
+```
+R1(config)#int s1/0
+R1(config-if)#encap ppp
+R1(config)#exit
+R1(config)#username papuser password pappass
+R1(config)#int s1/0
+R1(config-if)#ppp authentication pap
+
+R2(config)#int s1/0
+R2(config-if)#encap ppp
+R2(config-if)#ppp pap sent-username papuser password pappass
+```
+
+#### PPP Auth - Challenge Handshake Authentication Protocol (_CHAP_)
+* **Two way auth** - both server and client authenticate to each other.
+* **More secure** - has of the password is sent on the network.
+* Username is for the other router; password on both routers is same. 
+```
+R1(config-if)#int s1/1
+R1(config-if)#encap ppp
+R1(config-if)#exit
+R1(config)#username R2 password chappass
+R1(config)#int s1/1
+R1(config-if)#ppp authentication chap
+
+R2(config-if)#int s1/1
+R2(config-if)#encap ppp
+R2(config-if)#exit
+R2(config)#username R1 password chappass
+R2(config)#int s1/1
+R2(config-if)#ppp authentication chap
 ```

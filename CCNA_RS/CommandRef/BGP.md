@@ -303,3 +303,86 @@ R4#sh tcp br
 TCB       Local Address               Foreign Address             (state)
 10B83578  15.1.1.2.179               15.1.1.1.31454              ESTAB
 ```
+
+### BGP Peer Groups
+Unlike other protocols, BGP sends updates on a individual neighbour basis. This means the CPU has to create and send updates for each neighbour. If filtering such as sending selective neighbours certain prefixe, i.e., IP prefix list, then that can increase the CPU demand even more! Thus, if we have several peers that receive the same update, we can put all of them in the same **peer group**, who will all receive the same update. We can then have the CPU create the update just once for the entire peer group, thus dramatically reducing the load on the CPU. This can be very beneficial in large networks.
+
+Let us consider we have the following IP prefix list configured:
+```
+R2#sh ip prefix-list RFC1918_BLOCK
+ip prefix-list RFC1918_BLOCK: 5 entries
+   seq 5 deny 10.0.0.0/8 le 32
+   seq 10 deny 172.16.0.0/12 le 32
+   seq 15 deny 192.168.0.0/16 le 32
+   seq 20 permit 0.0.0.0/0
+   seq 25 permit 0.0.0.0/0 ge 8
+```
+We want this list to block incoming traffic with *RFC-1918 (private) addresses* from coming in from the ISP1 and ISP2 routers. Instead of applying these filters individually for BGP, we can put them in a peer group.
+
+We have to create a new peer group in BGP configuration mode and then apply the prefix list to the peer group in the inbound direction (since we don't want RFC 1918 addresses coming in in the inbound direction):
+```
+R2(config)#router bgp 65001       
+R2(config-router)#neighbor ROUTE-PG peer-group
+R2(config-router)#neighbor ROUTE-PG prefix-list RFC1919_BLOCK in
+```
+
+Now we have to add the neighbours to the peer group:
+```
+R2(config-router)#neighbor 198.51.100.2 peer-group ROUTE-PG
+*Feb 17 07:51:04.473: %BGP-5-NBR_RESET: Neighbor 198.51.100.2 reset (Member added to peergroup)
+*Feb 17 07:51:04.488: %BGP-5-ADJCHANGE: neighbor 198.51.100.2 Down Member added to peergroup
+*Feb 17 07:51:04.488: %BGP_SESSION-5-ADJCHANGE: neighbor 198.51.100.2 IPv4 Unicast topology base removed from session  Member added to peergroup
+*Feb 17 07:51:05.037: %BGP-5-ADJCHANGE: neighbor 198.51.100.2 Up
+
+R2(config-router)#neighbor 198.51.100.6 peer-group ROUTE-PG
+*Feb 17 07:51:24.236: %BGP-5-NBR_RESET: Neighbor 198.51.100.6 reset (Member added to peergroup)
+*Feb 17 07:51:24.248: %BGP-5-ADJCHANGE: neighbor 198.51.100.6 Down Member added to peergroup
+*Feb 17 07:51:24.253: %BGP_SESSION-5-ADJCHANGE: neighbor 198.51.100.6 IPv4 Unicast topology base removed from session  Member added to peergroup
+*Feb 17 07:51:24.524: %BGP-5-ADJCHANGE: neighbor 198.51.100.6 Up
+```
+
+Now route advertisements by BGP sent to both neighbours will be the same, and calculated once, since they're in the same peer group.
+
+## Advanced BGP Concepts
+### The Weight Attribute
+The weight attribute of a BGP route is a cisco-specific path attribute where routes with a higher weight are preferred. It's a way for a router to prefer paths from one neighbour rather than another neighbour.
+
+In the topology below, we have two routes leading out to the internet (*AS-65003*) where our target `9.9.9.9` resides. The one to ISP1 is a fractional T1 with **768Kbps** bandwidth while the one to ISP2 is a complete T1 with a **1.544Mbps** bandwidth. Since the link to R2 has a greater bandwidth, we would prefer to reach it via ISP1, but that's not the case right now:
+```
+R2#sh ip route bgp
+...
+	9.0.0.0/32 is subnetted, 1 subnets
+B        9.9.9.9 [20/0] via 198.51.100.2, 00:03:25
+...
+R2#sh ip bgp
+...
+
+Network          Next Hop            Metric LocPrf Weight Path
+*   9.9.9.9/32       198.51.100.6                           0 65004 65003 i
+*>                   198.51.100.2                           0 65002 65003 i
+```
+This is because BGP doesn't use bandwidth as a metric or a factor in choosing which path to use.
+
+To assign the weight to a route, we need to create a **route-map**:
+```
+R2(config)#route-map RT-WEIGHT
+R2(config-route-map)#set weight 10
+R2(config-route-map)#exit
+```
+
+Now we apply the route map to that particular neighbor:
+```
+R2(config)#router bgp 65001
+R2(config-router)#neighbor 198.51.100.6 route-map RT-WEIGHT in
+R2#clear ip bgp * soft
+```
+The last line makes the router do a *soft* reset of the peer settings on this router without dropping the existing TCP sessions.
+
+Now we can see that our preferred route is the one being used:
+```
+R2#sh ip bgp
+...
+     Network          Next Hop            Metric LocPrf Weight Path
+ *>  9.9.9.9/32       198.51.100.6                          10 65004 65003 i
+ *                    198.51.100.2                           0 65002 65003 i
+```
